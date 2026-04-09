@@ -6,38 +6,34 @@
   <title>时间序列预测 | USTC-AGI Time Series</title>
   <meta
     name="description"
-    content="USTC-AGI 研究组在时间序列预测方向的工作探索，从深度表征学习、多模态语义理解，到慢思考认知推理与自主交互智能体。"
+    content="USTC-AGI 研究组在时间序列预测方向的工作探索，涵盖深度表征学习、多模态语义理解、慢思考认知推理与自主交互智能体。"
   />
   <style>
     :root {
-      --bg: #f7f8f6;
+      --bg: #f6f7f5;
       --surface: #ffffff;
-      --text: #16181d;
+      --line: #e7e9ee;
+      --text: #171a1f;
       --muted: #667085;
-      --line: #e7eaee;
       --teal: #0f766e;
-      --teal-soft: #dff6f2;
+      --teal-soft: #ebf8f6;
       --orange: #d35400;
-      --orange-soft: #fff1e6;
+      --orange-soft: #fff3e8;
       --blue: #1d4ed8;
       --blue-soft: #edf4ff;
       --plum: #7c3aed;
       --plum-soft: #f3edff;
-      --shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+      --shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
-      background:
-        radial-gradient(circle at top left, rgba(20, 184, 166, 0.08), transparent 28%),
-        radial-gradient(circle at top right, rgba(29, 78, 216, 0.08), transparent 24%),
-        linear-gradient(180deg, #fbfcfb 0%, var(--bg) 100%);
-      color: var(--text);
       font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #fbfcfb 0%, var(--bg) 100%);
       line-height: 1.7;
     }
 
@@ -47,7 +43,7 @@
     }
 
     .container {
-      width: min(1180px, calc(100vw - 40px));
+      width: min(1120px, calc(100vw - 40px));
       margin: 0 auto;
     }
 
@@ -55,26 +51,26 @@
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(231, 234, 238, 0.9);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(231, 233, 238, 0.95);
     }
 
     .top-nav .container {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
+      gap: 20px;
       padding: 16px 0;
     }
 
     .nav-brand {
-      font-size: 1.05rem;
+      font-size: 1.04rem;
       font-weight: 800;
       letter-spacing: -0.02em;
     }
 
-    .nav-brand span { color: #2d8f88; }
+    .nav-brand span { color: #2a9088; }
 
     .nav-links {
       display: flex;
@@ -87,7 +83,7 @@
       padding: 9px 14px;
       border-radius: 999px;
       color: #4b5563;
-      font-size: 0.94rem;
+      font-size: 0.93rem;
       font-weight: 700;
       transition: background 0.18s ease, color 0.18s ease;
     }
@@ -100,45 +96,35 @@
     .nav-links .nav-primary {
       background: linear-gradient(135deg, #0f766e, #2aa89e);
       color: #fff;
-      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.22);
+      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.2);
     }
 
     main {
       padding: 34px 0 72px;
     }
 
-    .hero {
-      background:
-        linear-gradient(135deg, rgba(15, 118, 110, 0.08), rgba(29, 78, 216, 0.04)),
-        var(--surface);
-      border: 1px solid rgba(209, 250, 229, 0.8);
-      border-radius: 28px;
+    .hero,
+    .section-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 24px;
       box-shadow: var(--shadow);
-      overflow: hidden;
     }
 
-    .hero-topline {
-      height: 6px;
-      background: linear-gradient(90deg, var(--teal), #25c3b2, #60a5fa);
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(300px, 0.8fr);
-      gap: 26px;
-      padding: 36px;
+    .hero {
+      padding: 34px;
+      margin-bottom: 24px;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
       padding: 8px 14px;
       border-radius: 999px;
-      border: 1px solid #b8ece4;
-      background: #ecfbf8;
+      background: var(--teal-soft);
+      border: 1px solid #cbece7;
       color: var(--teal);
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -146,44 +132,43 @@
 
     h1 {
       margin: 16px 0 14px;
-      font-size: clamp(2.3rem, 5vw, 4rem);
-      line-height: 1.05;
+      font-size: clamp(2.1rem, 4.8vw, 3.4rem);
+      line-height: 1.08;
       letter-spacing: -0.04em;
     }
 
-    .hero h1 span { color: var(--teal); }
+    h1 span { color: var(--teal); }
 
-    .hero-lead {
+    .hero p {
       margin: 0;
+      max-width: 820px;
       color: #475467;
-      font-size: 1.04rem;
-      max-width: 760px;
+      font-size: 1.02rem;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 24px;
+      margin-top: 22px;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      min-height: 48px;
+      min-height: 46px;
       padding: 0 18px;
       border-radius: 14px;
       border: 1px solid transparent;
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       font-weight: 800;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
     }
 
     .btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
     }
 
     .btn-primary {
@@ -197,78 +182,12 @@
       color: #344054;
     }
 
-    .hero-side {
-      display: grid;
-      gap: 14px;
+    section + section {
+      margin-top: 22px;
     }
 
-    .side-card {
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.04);
-    }
-
-    .side-label {
-      color: var(--muted);
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .side-value {
-      margin-top: 8px;
-      font-size: 1.08rem;
-      font-weight: 800;
-      line-height: 1.45;
-    }
-
-    .anchor-nav {
-      position: sticky;
-      top: 78px;
-      z-index: 10;
-      margin-top: 18px;
-    }
-
-    .anchor-nav .container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.88);
-      border: 1px solid rgba(231, 234, 238, 0.9);
-      border-radius: 18px;
-      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
-      backdrop-filter: blur(10px);
-    }
-
-    .anchor-nav a {
-      padding: 8px 12px;
-      border-radius: 999px;
-      background: #f5f7fa;
-      color: #475467;
-      font-size: 0.9rem;
-      font-weight: 700;
-    }
-
-    .anchor-nav a:hover {
-      background: #e9f7f5;
-      color: var(--teal);
-    }
-
-    section {
-      padding-top: 34px;
-      scroll-margin-top: 150px;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 18px;
+    .section-card {
+      padding: 28px;
     }
 
     .section-kicker {
@@ -280,218 +199,126 @@
     }
 
     h2 {
-      margin: 8px 0 0;
-      font-size: clamp(1.65rem, 3vw, 2.4rem);
+      margin: 8px 0 12px;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
       line-height: 1.15;
       letter-spacing: -0.03em;
     }
 
-    .section-note {
-      margin: 0;
-      max-width: 520px;
-      color: #667085;
-      font-size: 0.95rem;
-    }
-
-    .overview-card,
-    .evolution-card,
-    .closing-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 28px;
-    }
-
-    .overview-card p,
-    .closing-card p {
+    .section-card > p {
       margin: 0;
       color: #475467;
-      font-size: 1rem;
-    }
-
-    .overview-card p + p,
-    .closing-card p + p {
-      margin-top: 14px;
     }
 
     .track-grid,
     .work-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
+      gap: 16px;
+      margin-top: 20px;
     }
 
-    .track-card,
-    .work-card {
-      background: var(--surface);
+    .track,
+    .work {
       border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
+      border-radius: 20px;
+      padding: 22px;
+      background: #fff;
     }
 
-    .track-topline {
-      height: 5px;
-    }
-
-    .track-body,
-    .work-body {
-      padding: 24px;
-    }
-
-    .track-badge {
+    .track-tag,
+    .work-tag {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
       padding: 7px 12px;
       border-radius: 999px;
       font-size: 0.8rem;
       font-weight: 800;
-      letter-spacing: 0.02em;
-      margin-bottom: 14px;
     }
 
-    .track-card h3,
-    .work-card h3 {
-      margin: 0;
-      font-size: 1.45rem;
+    .tag-teal { background: var(--teal-soft); color: var(--teal); }
+    .tag-orange { background: var(--orange-soft); color: var(--orange); }
+    .tag-blue { background: var(--blue-soft); color: var(--blue); }
+    .tag-plum { background: var(--plum-soft); color: var(--plum); }
+
+    .track h3,
+    .work h3 {
+      margin: 14px 0 10px;
+      font-size: 1.28rem;
       line-height: 1.2;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.02em;
     }
 
-    .track-card p,
-    .work-card p {
-      margin: 14px 0 0;
+    .track p,
+    .work p {
+      margin: 0;
       color: #475467;
     }
 
-    .focus-list {
+    .chip-list {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 18px;
+      margin-top: 16px;
     }
 
-    .focus-list span {
-      padding: 8px 12px;
+    .chip-list span {
+      padding: 8px 11px;
       border-radius: 999px;
-      background: #f6f8fb;
-      border: 1px solid #e5eaf0;
+      background: #f7f8fb;
+      border: 1px solid #e7ebf2;
       color: #475467;
-      font-size: 0.88rem;
+      font-size: 0.84rem;
       font-weight: 700;
     }
 
-    .mini-work-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .mini-work {
-      padding: 14px 16px;
-      border-radius: 18px;
-      border: 1px solid #e7edf3;
-      background: #fbfcfd;
-    }
-
-    .mini-work strong {
-      display: block;
-      font-size: 1rem;
-      line-height: 1.4;
-    }
-
-    .mini-work p {
-      margin-top: 8px;
-      font-size: 0.93rem;
-    }
-
-    .mini-links,
-    .work-links {
+    .links {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 12px;
+      margin-top: 16px;
     }
 
-    .mini-links a,
-    .mini-links span,
-    .work-links a {
+    .links a,
+    .links span {
       display: inline-flex;
       align-items: center;
       padding: 7px 11px;
       border-radius: 999px;
-      border: 1px solid #d8e0e8;
+      border: 1px solid #d9e1e8;
       background: #fff;
       color: #344054;
       font-size: 0.84rem;
       font-weight: 800;
     }
 
-    .mini-links span {
+    .links span {
       color: #98a2b3;
-      background: #f8fafc;
+      background: #fafbfc;
     }
 
-    .evolution-grid {
+    .simple-list {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
+      gap: 12px;
       margin-top: 18px;
     }
 
-    .evolution-step {
-      position: relative;
-      padding: 20px 18px;
-      border-radius: 20px;
-      border: 1px solid #e5ecf2;
-      background: linear-gradient(180deg, #ffffff, #f9fbfd);
+    .simple-item {
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
     }
 
-    .step-index {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: #eff7f6;
-      color: var(--teal);
-      font-size: 0.9rem;
-      font-weight: 900;
+    .simple-item strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1.45;
     }
 
-    .evolution-step h3 {
-      margin: 14px 0 8px;
-      font-size: 1.08rem;
-      letter-spacing: -0.02em;
-    }
-
-    .evolution-step p {
-      margin: 0;
-      color: #667085;
-      font-size: 0.93rem;
-    }
-
-    .work-meta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: #f3f7fa;
+    .simple-item p {
+      margin: 8px 0 0;
       color: #475467;
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .closing-card {
-      background:
-        linear-gradient(135deg, rgba(15, 118, 110, 0.06), rgba(29, 78, 216, 0.04)),
-        #ffffff;
     }
 
     footer {
@@ -511,21 +338,9 @@
       line-height: 1.6;
     }
 
-    .teal-line { background: linear-gradient(90deg, #0f766e, #19b2a2); }
-    .orange-line { background: linear-gradient(90deg, #d35400, #f97316); }
-    .blue-line { background: linear-gradient(90deg, #1d4ed8, #60a5fa); }
-    .plum-line { background: linear-gradient(90deg, #7c3aed, #a855f7); }
-
-    .teal-badge { background: var(--teal-soft); color: var(--teal); border: 1px solid #bee9e2; }
-    .orange-badge { background: var(--orange-soft); color: var(--orange); border: 1px solid #f7cfb0; }
-    .blue-badge { background: var(--blue-soft); color: var(--blue); border: 1px solid #c8dafd; }
-    .plum-badge { background: var(--plum-soft); color: var(--plum); border: 1px solid #ddd1fe; }
-
-    @media (max-width: 980px) {
-      .hero-grid,
+    @media (max-width: 900px) {
       .track-grid,
-      .work-grid,
-      .evolution-grid {
+      .work-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -540,20 +355,17 @@
         width: 100%;
       }
 
-      .hero-grid,
-      .overview-card,
-      .track-body,
-      .work-body,
-      .closing-card {
+      .container {
+        width: min(1120px, calc(100vw - 24px));
+      }
+
+      .hero,
+      .section-card {
         padding: 22px;
       }
 
-      .container {
-        width: min(1180px, calc(100vw - 24px));
-      }
-
       h1 {
-        font-size: 2.1rem;
+        font-size: 2rem;
       }
     }
   </style>
@@ -574,394 +386,147 @@
 
   <main>
     <div class="container">
-      <header class="hero" id="overview">
-        <div class="hero-topline"></div>
-        <div class="hero-grid">
-          <div>
-            <span class="eyebrow">Time Series Forecasting</span>
-            <h1><span>时间序列预测</span> 研究探索</h1>
-            <p class="hero-lead">
-              USTC-AGI 研究组将时间序列预测视为一个持续演进的智能过程，而不只是单次前向输出。
-              我们从深度表征学习出发，逐步走向多模态语义理解、慢思考认知推理与自主交互智能体，
-              系统探索从“看懂时间序列”到“能够规划并行动”的预测新范式。
-            </p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="../papers/">查看论文列表</a>
-              <a class="btn btn-secondary" href="../cast-claw/">相关系统 CastClaw</a>
-              <a class="btn btn-secondary" href="../index.html#research-tracks">返回研究成果</a>
-            </div>
-          </div>
-          <div class="hero-side">
-            <div class="side-card">
-              <div class="side-label">研究主线</div>
-              <div class="side-value">深度表征学习 · 多模态语义理解 · 慢思考认知推理 · 自主交互智能体</div>
-            </div>
-            <div class="side-card">
-              <div class="side-label">代表工作</div>
-              <div class="side-value">SAN · GPHTF · CrossTimeNet · TimeReasoner · Time-R1 · MemCast · AlphaCast · Cast-R1</div>
-            </div>
-            <div class="side-card">
-              <div class="side-label">核心判断</div>
-              <div class="side-value">预测系统需要同时具备表示能力、语义理解、显式推理和可执行行动能力。</div>
-            </div>
-          </div>
+      <header class="hero">
+        <span class="eyebrow">Time Series Forecasting</span>
+        <h1><span>时间序列预测</span> 研究探索</h1>
+        <p>
+          USTC-AGI 研究组把时间序列预测看作一个持续演进的智能过程。我们的工作从深度表征学习出发，
+          逐步走向多模态语义理解、慢思考认知推理与自主交互智能体，探索从“看懂时间序列”到“能够规划并行动”的预测范式。
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="../papers/">查看论文列表</a>
+          <a class="btn btn-secondary" href="../cast-claw/">CastClaw</a>
+          <a class="btn btn-secondary" href="../index.html#research-tracks">返回首页</a>
         </div>
       </header>
-    </div>
 
-    <nav class="anchor-nav" aria-label="页内导航">
-      <div class="container">
-        <a href="#overview-detail">总体思路</a>
-        <a href="#tracks">四条主线</a>
-        <a href="#evolution">方法演进</a>
-        <a href="#works">代表工作</a>
-        <a href="#vision">研究判断</a>
-      </div>
-    </nav>
-
-    <div class="container">
-      <section id="overview-detail">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Overview</div>
-            <h2>从模型能力增强，走向预测智能体</h2>
-          </div>
-          <p class="section-note">
-            我们不把这几条路线看成相互割裂的任务，而是把它们视为时间序列预测能力逐步外化与升级的连续谱。
-          </p>
-        </div>
-        <div class="overview-card">
-          <p>
-            早期时序预测研究更多关注如何提升模型对非平稳性、长短期依赖和复杂动态结构的刻画能力，因此我们的工作首先落在
-            <strong>深度表征学习</strong> 上，围绕归一化机制、层次生成式建模、自监督表示学习和预测后修正等问题展开，提升模型对数据本身的理解能力。
-          </p>
-          <p>
-            随着真实场景中背景知识、上下文事件和跨域迁移需求不断增强，我们进一步引入
-            <strong>多模态语义理解</strong>，探索如何把语言模型、文本上下文和更细粒度的 token 语义引入预测过程，让模型不只“拟合序列”，还能“理解情境”。
-          </p>
-          <p>
-            在此基础上，我们继续推进到 <strong>慢思考认知推理</strong>，让模型具备分析、反思、经验调用与分步决策能力；再进一步，发展为
-            <strong>自主交互智能体</strong>，使系统能够主动调用工具、与人协同、在环境中闭环执行复杂预测任务。
-          </p>
-        </div>
+      <section class="section-card">
+        <div class="section-kicker">Overview</div>
+        <h2>总体思路</h2>
+        <p>
+          我们不把预测理解成一次性输出，而是把它拆成一条能力演进链：先通过深度模型提升对动态结构的表征能力，
+          再引入语义信息理解复杂情境，进一步加入慢思考推理与经验记忆，最后让系统具备工具调用、人机协同与闭环执行能力。
+        </p>
       </section>
 
-      <section id="tracks">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Tracks</div>
-            <h2>四条研究主线</h2>
-          </div>
-          <p class="section-note">
-            下面四块内容对应我们在时间序列预测中逐步形成的能力分层，也是这个独立页面后续继续扩展的主结构。
-          </p>
-        </div>
-
+      <section class="section-card">
+        <div class="section-kicker">Tracks</div>
+        <h2>四条探索主线</h2>
         <div class="track-grid">
-          <article class="track-card">
-            <div class="track-topline teal-line"></div>
-            <div class="track-body">
-              <span class="track-badge teal-badge">Direction 1</span>
-              <h3>深度表征学习</h3>
-              <p>
-                这一方向关注如何提升模型对复杂动态模式的基础建模能力，包括非平稳性处理、层次生成式预测、
-                自监督表示学习、解耦式预测与实例级后修正。核心目标是让模型先“看懂序列结构”，再谈高层推理与行动。
-              </p>
-              <div class="focus-list">
-                <span>非平稳性建模</span>
-                <span>层次生成式预测</span>
-                <span>自监督表示</span>
-                <span>预测后修正</span>
-              </div>
-              <div class="mini-work-list">
-                <div class="mini-work">
-                  <strong>SAN / GPHTF / TimeDART</strong>
-                  <p>从归一化视角、生成式预训练与扩散自监督表示学习三个层面，持续增强预测模型的底层表示能力。</p>
-                  <div class="mini-links">
-                    <a href="https://mingyue-cheng.github.io/files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">SAN PDF</a>
-                    <a href="https://arxiv.org/pdf/2402.16516.pdf" target="_blank" rel="noopener">GPHTF PDF</a>
-                    <a href="https://github.com/Melmaphother/TimeDART" target="_blank" rel="noopener">TimeDART Code</a>
-                  </div>
-                </div>
-                <div class="mini-work">
-                  <strong>FDF / Post-hoc Revision</strong>
-                  <p>在预测框架设计与实例感知修正层面继续推进，让系统既能建模也能在输出后进行针对性纠偏。</p>
-                  <div class="mini-links">
-                    <a href="https://arxiv.org/pdf/2410.13253" target="_blank" rel="noopener">FDF PDF</a>
-                    <a href="https://arxiv.org/pdf/2505.23583" target="_blank" rel="noopener">Revision PDF</a>
-                  </div>
-                </div>
-              </div>
+          <article class="track">
+            <span class="track-tag tag-teal">深度表征学习</span>
+            <h3>提升模型对复杂动态结构的理解能力</h3>
+            <p>
+              围绕非平稳性建模、层次生成式预测、自监督表示学习、解耦式预测和预测后修正，
+              持续加强模型对时间序列本身的建模能力。
+            </p>
+            <div class="chip-list">
+              <span>SAN</span>
+              <span>GPHTF</span>
+              <span>TimeDART</span>
+              <span>FDF</span>
+              <span>Post-hoc Revision</span>
+            </div>
+            <div class="links">
+              <a href="https://mingyue-cheng.github.io/files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">SAN PDF</a>
+              <a href="https://arxiv.org/pdf/2402.16516.pdf" target="_blank" rel="noopener">GPHTF PDF</a>
+              <a href="https://github.com/Melmaphother/TimeDART" target="_blank" rel="noopener">TimeDART Code</a>
             </div>
           </article>
 
-          <article class="track-card">
-            <div class="track-topline orange-line"></div>
-            <div class="track-body">
-              <span class="track-badge orange-badge">Direction 2</span>
-              <h3>多模态语义理解</h3>
-              <p>
-                这一方向探索如何把语言模型的语义空间、上下文背景和跨域知识引入预测任务，让模型从单纯的数值拟合扩展到
-                对“场景、事件、任务语义”的联合理解，为后续 reasoning 与 agent 化奠定认知基础。
-              </p>
-              <div class="focus-list">
-                <span>跨域迁移</span>
-                <span>语言模型对齐</span>
-                <span>上下文建模</span>
-                <span>细粒度 Token 语义</span>
-              </div>
-              <div class="mini-work-list">
-                <div class="mini-work">
-                  <strong>CrossTimeNet</strong>
-                  <p>通过语言模型驱动的跨域预训练，将通用语义能力迁移到时序表征学习，增强模型在复杂场景中的可迁移性与解释性。</p>
-                  <div class="mini-links">
-                    <a href="https://arxiv.org/pdf/2403.12372.pdf" target="_blank" rel="noopener">PDF</a>
-                    <a href="https://github.com/Mingyue-Cheng/CrossTimeNet" target="_blank" rel="noopener">Code</a>
-                    <a href="https://mingyue-cheng.github.io/files/posters/crosstimenet-poster.pdf" target="_blank" rel="noopener">Poster</a>
-                  </div>
-                </div>
-                <div class="mini-work">
-                  <strong>TokenCast</strong>
-                  <p>进一步沿着细粒度 token 语义建模推进，尝试把多模态语义对齐能力直接注入预测过程中的时序理解阶段。</p>
-                  <div class="mini-links">
-                    <span>公开链接整理中</span>
-                  </div>
-                </div>
-              </div>
+          <article class="track">
+            <span class="track-tag tag-orange">多模态语义理解</span>
+            <h3>让模型不只拟合数值，也理解情境</h3>
+            <p>
+              这一方向探索把语言模型、文本上下文和更细粒度的语义线索引入预测任务，
+              增强模型在跨域迁移和复杂场景中的情境理解能力。
+            </p>
+            <div class="chip-list">
+              <span>CrossTimeNet</span>
+              <span>TokenCast</span>
+              <span>上下文建模</span>
+              <span>跨域预训练</span>
+            </div>
+            <div class="links">
+              <a href="https://arxiv.org/pdf/2403.12372.pdf" target="_blank" rel="noopener">CrossTimeNet PDF</a>
+              <a href="https://github.com/Mingyue-Cheng/CrossTimeNet" target="_blank" rel="noopener">CrossTimeNet Code</a>
+              <span>TokenCast 链接整理中</span>
             </div>
           </article>
 
-          <article class="track-card">
-            <div class="track-topline blue-line"></div>
-            <div class="track-body">
-              <span class="track-badge blue-badge">Direction 3</span>
-              <h3>慢思考认知推理</h3>
-              <p>
-                我们进一步把时序预测重构为一个“分析问题、提出假设、逐步推理、经验回看”的认知过程，
-                不再把预测视为一步到位的黑箱输出，而是让模型显式地产生分析链路与反思机制。
-              </p>
-              <div class="focus-list">
-                <span>链式分析</span>
-                <span>强化学习推理</span>
-                <span>经验记忆</span>
-                <span>逐步决策</span>
-              </div>
-              <div class="mini-work-list">
-                <div class="mini-work">
-                  <strong>TimeReasoner / Time-R1</strong>
-                  <p>系统研究“慢思考”推理在时序预测中的价值，并进一步用强化学习训练具备更强分步决策能力的 reasoning 模型。</p>
-                  <div class="mini-links">
-                    <a href="https://dl.acm.org/doi/10.1145/3773966.3777931" target="_blank" rel="noopener">TimeReasoner PDF</a>
-                    <a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">TimeReasoner Code</a>
-                    <a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">Time-R1 PDF</a>
-                    <a href="https://github.com/lqzxt/Time-R1" target="_blank" rel="noopener">Time-R1 Code</a>
-                  </div>
-                </div>
-                <div class="mini-work">
-                  <strong>MemCast</strong>
-                  <p>把经验积累与记忆调用引入预测过程，使系统能够利用历史任务经验进行条件化 reasoning 和持续演进。</p>
-                  <div class="mini-links">
-                    <a href="https://www.arxiv.org/pdf/2602.03164" target="_blank" rel="noopener">PDF</a>
-                  </div>
-                </div>
-              </div>
+          <article class="track">
+            <span class="track-tag tag-blue">慢思考认知推理</span>
+            <h3>把预测过程显式化为分析与反思</h3>
+            <p>
+              我们让模型具备链式分析、逐步决策、经验回看与记忆调用能力，
+              推动时间序列预测从黑箱前向计算走向可解释的认知过程。
+            </p>
+            <div class="chip-list">
+              <span>TimeReasoner</span>
+              <span>Time-R1</span>
+              <span>MemCast</span>
+              <span>经验记忆</span>
+            </div>
+            <div class="links">
+              <a href="https://dl.acm.org/doi/10.1145/3773966.3777931" target="_blank" rel="noopener">TimeReasoner PDF</a>
+              <a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">TimeReasoner Code</a>
+              <a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">Time-R1 PDF</a>
+              <a href="https://www.arxiv.org/pdf/2602.03164" target="_blank" rel="noopener">MemCast PDF</a>
             </div>
           </article>
 
-          <article class="track-card">
-            <div class="track-topline plum-line"></div>
-            <div class="track-body">
-              <span class="track-badge plum-badge">Direction 4</span>
-              <h3>自主交互智能体</h3>
-              <p>
-                在这一阶段，预测系统不再只是 reasoning 模型，而是能够主动调用工具、规划实验流程、与人交互并闭环执行任务的智能体。
-                研究重点从“如何推理”扩展为“如何在环境中行动并持续优化决策”。
-              </p>
-              <div class="focus-list">
-                <span>工具调用</span>
-                <span>人机协同</span>
-                <span>自主规划</span>
-                <span>闭环执行</span>
-              </div>
-              <div class="mini-work-list">
-                <div class="mini-work">
-                  <strong>AlphaCast / Cast-R1</strong>
-                  <p>分别代表人机协同共推理与工具增强强化学习预测智能体两条路线，推动预测系统从辅助分析迈向自主决策。</p>
-                  <div class="mini-links">
-                    <a href="https://arxiv.org/pdf/2511.08947" target="_blank" rel="noopener">AlphaCast PDF</a>
-                    <a href="https://github.com/SkyeGT/AlphaCast_Official" target="_blank" rel="noopener">AlphaCast Code</a>
-                    <a href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener">Cast-R1 PDF</a>
-                    <a href="https://github.com/Xiaoyu-Tao/Cast-R1-TS" target="_blank" rel="noopener">Cast-R1 Code</a>
-                  </div>
-                </div>
-                <div class="mini-work">
-                  <strong>CastClaw / Agentic Forecasting Position</strong>
-                  <p>进一步把预测流程组织成完整的多智能体工作流，并从范式层面对 Agentic Time Series Forecasting 给出系统性判断。</p>
-                  <div class="mini-links">
-                    <a href="../cast-claw/" rel="noopener">CastClaw 页面</a>
-                    <a href="../cast-claw/docs/" rel="noopener">用户文档</a>
-                    <a href="https://arxiv.org/pdf/2602.01776.pdf" target="_blank" rel="noopener">Position PDF</a>
-                  </div>
-                </div>
-              </div>
+          <article class="track">
+            <span class="track-tag tag-plum">自主交互智能体</span>
+            <h3>让预测系统具备规划、执行与协同能力</h3>
+            <p>
+              这一方向关注工具调用、人机协同与多智能体工作流，把预测系统从模型升级为可在环境中闭环执行任务的智能体。
+            </p>
+            <div class="chip-list">
+              <span>AlphaCast</span>
+              <span>Cast-R1</span>
+              <span>CastClaw</span>
+              <span>Agentic Forecasting</span>
+            </div>
+            <div class="links">
+              <a href="https://arxiv.org/pdf/2511.08947" target="_blank" rel="noopener">AlphaCast PDF</a>
+              <a href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener">Cast-R1 PDF</a>
+              <a href="../cast-claw/" rel="noopener">CastClaw 页面</a>
+              <a href="../cast-claw/docs/" rel="noopener">用户文档</a>
             </div>
           </article>
         </div>
       </section>
 
-      <section id="evolution">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Evolution</div>
-            <h2>方法演进脉络</h2>
+      <section class="section-card">
+        <div class="section-kicker">Selected Works</div>
+        <h2>代表性工作</h2>
+        <div class="simple-list">
+          <div class="simple-item">
+            <strong>Adaptive Normalization for Non-stationary Time Series Forecasting / Generative Pretrained Hierarchical Transformer</strong>
+            <p>代表了我们在非平稳性处理与生成式预测建模上的早期探索。</p>
           </div>
-          <p class="section-note">
-            这四条路线并不是并列堆砌，而是能力逐步升级的演化链条，从表征到语义，再到 reasoning 与 agency。
-          </p>
-        </div>
-        <div class="evolution-card">
-          <div class="evolution-grid">
-            <div class="evolution-step">
-              <span class="step-index">1</span>
-              <h3>看懂数据</h3>
-              <p>通过深度表征学习提升模型对趋势、周期、突变与非平稳结构的感知能力。</p>
-            </div>
-            <div class="evolution-step">
-              <span class="step-index">2</span>
-              <h3>理解语境</h3>
-              <p>把文本上下文、跨域知识与更高层语义引入预测过程，增强情境感知与迁移能力。</p>
-            </div>
-            <div class="evolution-step">
-              <span class="step-index">3</span>
-              <h3>学会分析</h3>
-              <p>让模型具备链式推理、经验回看与多轮反思能力，把预测转化为显式认知过程。</p>
-            </div>
-            <div class="evolution-step">
-              <span class="step-index">4</span>
-              <h3>能够行动</h3>
-              <p>进一步让系统调用工具、规划流程、请求人类反馈并完成闭环执行，形成预测智能体。</p>
-            </div>
+          <div class="simple-item">
+            <strong>CrossTimeNet / TokenCast</strong>
+            <p>代表了从序列建模走向语义理解的路线，强调跨域迁移与多模态语义对齐。</p>
+          </div>
+          <div class="simple-item">
+            <strong>TimeReasoner / Time-R1 / MemCast</strong>
+            <p>代表了慢思考、强化学习 reasoning 和经验记忆驱动预测三条主路线。</p>
+          </div>
+          <div class="simple-item">
+            <strong>AlphaCast / Cast-R1 / CastClaw</strong>
+            <p>代表了人机协同、工具增强决策和多智能体工作流三类智能体式预测系统。</p>
           </div>
         </div>
       </section>
 
-      <section id="works">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Selected Works</div>
-            <h2>代表工作</h2>
-          </div>
-          <p class="section-note">
-            这里优先展示最能代表四条主线的公开工作，后续可以继续把更多论文、海报与项目页接入这个页面。
-          </p>
-        </div>
-
-        <div class="work-grid">
-          <article class="work-card">
-            <div class="work-body">
-              <span class="work-meta">2023 · Forecasting</span>
-              <h3>Adaptive Normalization for Non-stationary Time Series Forecasting</h3>
-              <p>从 temporal slice 视角处理非平稳时序，为后续更强的表示学习与鲁棒预测提供基础建模视角。</p>
-              <div class="work-links">
-                <a href="https://mingyue-cheng.github.io/files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">PDF</a>
-                <a href="https://github.com/icantnamemyself/SAN" target="_blank" rel="noopener">Code</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="work-card">
-            <div class="work-body">
-              <span class="work-meta">2024 · Forecasting</span>
-              <h3>Generative Pretrained Hierarchical Transformer for Time Series Forecasting</h3>
-              <p>把生成式预训练引入时序预测，在模型表达与泛化能力之间建立新的平衡点。</p>
-              <div class="work-links">
-                <a href="https://arxiv.org/pdf/2402.16516.pdf" target="_blank" rel="noopener">PDF</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="work-card">
-            <div class="work-body">
-              <span class="work-meta">2025 · Semantics</span>
-              <h3>CrossTimeNet</h3>
-              <p>通过语言模型驱动的跨域预训练，探索语义空间与时序表征之间的对齐问题，推动预测向“语义感知”迈进。</p>
-              <div class="work-links">
-                <a href="https://arxiv.org/pdf/2403.12372.pdf" target="_blank" rel="noopener">PDF</a>
-                <a href="https://github.com/Mingyue-Cheng/CrossTimeNet" target="_blank" rel="noopener">Code</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="work-card">
-            <div class="work-body">
-              <span class="work-meta">2025 · Representation</span>
-              <h3>TimeDART / FDF</h3>
-              <p>分别从扩散式自监督表征与解耦式预测框架两个层面，强化基础预测模型的表示与生成能力。</p>
-              <div class="work-links">
-                <a href="https://arxiv.org/html/2410.05711v1" target="_blank" rel="noopener">TimeDART PDF</a>
-                <a href="https://github.com/Melmaphother/TimeDART" target="_blank" rel="noopener">TimeDART Code</a>
-                <a href="https://arxiv.org/pdf/2410.13253" target="_blank" rel="noopener">FDF PDF</a>
-                <a href="https://github.com/zjt-gpu/FDF" target="_blank" rel="noopener">FDF Code</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="work-card">
-            <div class="work-body">
-              <span class="work-meta">2026 · Reasoning</span>
-              <h3>TimeReasoner / Time-R1 / MemCast</h3>
-              <p>围绕慢思考、强化学习 reasoning 与经验记忆三条路线，把“推理式预测”从概念验证推进到系统方法。</p>
-              <div class="work-links">
-                <a href="https://dl.acm.org/doi/10.1145/3773966.3777931" target="_blank" rel="noopener">TimeReasoner PDF</a>
-                <a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">TimeReasoner Code</a>
-                <a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">Time-R1 PDF</a>
-                <a href="https://github.com/lqzxt/Time-R1" target="_blank" rel="noopener">Time-R1 Code</a>
-                <a href="https://www.arxiv.org/pdf/2602.03164" target="_blank" rel="noopener">MemCast PDF</a>
-              </div>
-            </div>
-          </article>
-
-          <article class="work-card">
-            <div class="work-body">
-              <span class="work-meta">2026 · Agent</span>
-              <h3>AlphaCast / Cast-R1 / CastClaw</h3>
-              <p>把交互、工具调用、人类经验与流程编排引入预测系统，推动时序预测从模型升级为可执行智能体。</p>
-              <div class="work-links">
-                <a href="https://arxiv.org/pdf/2511.08947" target="_blank" rel="noopener">AlphaCast PDF</a>
-                <a href="https://github.com/SkyeGT/AlphaCast_Official" target="_blank" rel="noopener">AlphaCast Code</a>
-                <a href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener">Cast-R1 PDF</a>
-                <a href="https://github.com/Xiaoyu-Tao/Cast-R1-TS" target="_blank" rel="noopener">Cast-R1 Code</a>
-                <a href="../cast-claw/" rel="noopener">CastClaw</a>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <section id="vision">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Perspective</div>
-            <h2>我们的研究判断</h2>
-          </div>
-          <p class="section-note">
-            这也是这个页面最想传达的主旨：未来的时序预测系统，不会停留在单模型精度竞赛，而会逐步演化为具有认知与执行能力的开放系统。
-          </p>
-        </div>
-        <div class="closing-card">
-          <p>
-            第一，仅靠更大的预测模型并不足以解决真实环境中的复杂问题。高质量预测系统需要同时具备稳健表征、情境理解、显式推理与执行闭环能力。
-          </p>
-          <p>
-            第二，多模态语义理解与慢思考认知推理并不是附加功能，而是在复杂预测任务中提升可解释性、可泛化性与可靠性的关键中间层。
-          </p>
-          <p>
-            第三，自主交互智能体并不意味着完全替代人类。我们更看重的是“可控的自主性”，即系统能够主动分析和执行，同时在关键节点引入人类经验，实现稳定的人机协同预测。
-          </p>
-          <p>
-            这也是 USTC-AGI 研究组在时间序列预测方向持续推进的总体路线：从深度表征学习出发，跨越语义理解与慢思考推理，最终构建真正可用、可控、可进化的预测智能体。
-          </p>
-        </div>
+      <section class="section-card">
+        <div class="section-kicker">Perspective</div>
+        <h2>研究判断</h2>
+        <p>
+          我们的基本判断是：未来的时间序列预测系统，不会停留在单模型精度竞赛，而会逐步演化为同时具备表征能力、
+          语义理解、显式推理与执行闭环的开放系统。这也是 USTC-AGI 研究组在这一方向持续推进的整体路线。
+        </p>
       </section>
     </div>
   </main>
