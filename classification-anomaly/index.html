@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>时间序列预测 | USTC-AGI Time Series</title>
+  <title>时序分类与异常检测 | USTC-AGI Time Series</title>
   <meta
     name="description"
-    content="USTC-AGI 研究组在时间序列预测方向的工作探索，涵盖深度表征学习、多模态语义理解、慢思考认知推理与自主交互智能体。"
+    content="USTC-AGI 研究组在时间序列分类与异常检测方向的代表性工作，涵盖判别表征学习、多模态分类理解、工业异常检测与 Agent 式异常分析。"
   />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -211,19 +211,16 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
       padding: 26px 26px 24px;
     }
-
     .section-card h3 {
       font-size: 1.2rem;
       font-weight: 800;
       margin-bottom: 12px;
       color: #111;
     }
-
     .section-card p {
       color: #555;
       font-size: 0.97rem;
     }
-
     .section-card p + p {
       margin-top: 12px;
     }
@@ -234,7 +231,6 @@
       gap: 10px;
       margin-top: 18px;
     }
-
     .page-btn {
       display: inline-flex;
       align-items: center;
@@ -247,7 +243,6 @@
       border: 1px solid transparent;
       transition: transform .18s, box-shadow .18s, background .18s, border-color .18s, color .18s;
     }
-
     .page-btn:hover,
     .page-btn:active {
       transform: translateY(-1px);
@@ -257,24 +252,27 @@
       border-color: #99e6d8;
       color: #0f766e;
     }
-
     .page-btn-primary {
       background: #0f766e;
       color: #fff;
       border-color: #0f766e;
     }
-
     .page-btn-primary:hover,
     .page-btn-primary:active {
       background: #f0fdf9;
       border-color: #99e6d8;
       color: #0f766e;
     }
-
     .page-btn-secondary {
       background: #fff;
       color: #444;
       border-color: #d8d8d8;
+    }
+    .page-btn-secondary:hover,
+    .page-btn-secondary:active {
+      background: #f0fdf9;
+      border-color: #99e6d8;
+      color: #0f766e;
     }
 
     .track-grid,
@@ -284,7 +282,6 @@
       gap: 18px;
       margin-top: 18px;
     }
-
     .track-card,
     .work-card {
       border: 1px solid #ececec;
@@ -292,7 +289,6 @@
       background: #fcfcfb;
       padding: 20px;
     }
-
     .track-tag,
     .work-tag {
       display: inline-flex;
@@ -303,11 +299,10 @@
       font-weight: 700;
       margin-bottom: 12px;
     }
-
-    .tag-teal { background: #e7faf6; color: #0f766e; border: 1px solid #bde7de; }
+    .tag-red { background: #fff1ef; color: #c0392b; border: 1px solid #f4c3bd; }
     .tag-orange { background: #fff3e8; color: #d35400; border: 1px solid #f2cfb2; }
     .tag-blue { background: #eef4ff; color: #1d4ed8; border: 1px solid #cdddff; }
-    .tag-purple { background: #f4efff; color: #7c3aed; border: 1px solid #ddccff; }
+    .tag-teal { background: #e7faf6; color: #0f766e; border: 1px solid #bde7de; }
 
     .track-card h4,
     .work-card h4 {
@@ -317,37 +312,31 @@
       color: #111;
       margin-bottom: 10px;
     }
-
     .track-card p,
     .work-card p {
-      font-size: 0.94rem;
+      font-size: 0.92rem;
       color: #555;
+      line-height: 1.75;
     }
 
-    .chip-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 16px;
-    }
-
-    .chip-list span {
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: #fff;
-      border: 1px solid #e5e7eb;
-      color: #555;
-      font-size: 0.82rem;
-      font-weight: 600;
-    }
-
+    .chip-list,
     .link-list {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 16px;
+      margin-top: 14px;
     }
-
+    .chip-list span {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f6f6f4;
+      border: 1px solid #ecece8;
+      color: #555;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
     .link-list a,
     .link-list span {
       display: inline-flex;
@@ -360,7 +349,6 @@
       font-size: 0.82rem;
       font-weight: 600;
     }
-
     .link-list span {
       color: #999;
       background: #f8f8f8;
@@ -416,7 +404,6 @@
 </head>
 <body>
 
-<!-- ═══════════════════ TOP NAV ═══════════════════ -->
 <nav class="top-nav" aria-label="首页顶部导航">
   <div class="container">
     <a class="nav-brand" href="../index.html#hero-header">USTC-AGI <span>Time Series</span></a>
@@ -436,127 +423,104 @@
   </div>
 </nav>
 
-<!-- ═══════════════════ HEADER ═══════════════════ -->
 <header id="hero-header" role="button" tabindex="0" aria-label="点击刷新当前页面"
         onclick="location.reload()">
   <div class="container">
-    <h1><span class="highlight">Time Series Forecasting</span> 方向工作介绍</h1>
+    <h1><span class="highlight">Classification & Anomaly</span> 时序分类与异常检测</h1>
     <p class="header-sub">
       中国科学技术大学 · 认知智能全国重点实验室 AGI 研究组<br>
-      围绕深度表征学习、多模态语义理解、慢思考认知推理与自主交互智能体，系统探索时间序列预测的新范式
+      围绕判别表征学习、多模态分类理解与工业异常检测，持续推进时间序列理解与诊断方向研究
     </p>
   </div>
 </header>
 
-<!-- ═══════════════════ MAIN ═══════════════════ -->
 <main>
   <div class="container">
 
     <div class="section-intro">
       <h2>页面概览</h2>
-      <p>这一页聚焦 USTC-AGI 研究组在时间序列预测方向的主要探索路线与代表性工作。</p>
+      <p>这一页聚焦 USTC-AGI 研究组在时间序列分类与异常检测方向的代表性工作、典型场景和可访问资源。</p>
     </div>
 
     <div class="content-stack">
       <section class="section-card">
-        <h3>总体思路</h3>
+        <h3>时间序列分类</h3>
         <p>
-          我们不把时间序列预测理解为一次性输出，而是把它看作一条持续演进的能力链：
-          先提升模型对复杂动态结构的表征能力，再引入语义信息理解复杂情境，
-          进一步加入慢思考推理与经验记忆，最终让系统具备工具调用、人机协同与闭环执行能力。
+          我们围绕单变量与多变量时序的判别表征学习持续开展研究，关注从传统判别建模到多模态语言建模、
+          从监督分类到跨域迁移与 zero-shot 理解的能力拓展。
         </p>
-        <p>
-          这条路线对应四个相互衔接的方向：深度表征学习、多模态语义理解、慢思考认知推理、自主交互智能体。
-        </p>
-        <div class="btn-row">
-          <a class="page-btn page-btn-primary" href="../papers/">查看论文列表</a>
-          <a class="page-btn page-btn-secondary" href="../cast-claw/">CastClaw</a>
-          <a class="page-btn page-btn-secondary" href="../index.html#research-tracks">返回首页</a>
+        <div class="track-grid">
+          <article class="track-card">
+            <span class="track-tag tag-red">判别表征学习</span>
+            <h4>FormerTime / ConvTimeNet</h4>
+            <p>代表了我们在层次化多尺度建模、卷积式表征提取与高质量分类特征学习方面的持续积累。</p>
+            <div class="chip-list">
+              <span>多尺度表征</span>
+              <span>判别学习</span>
+              <span>时序分类</span>
+            </div>
+            <div class="link-list">
+              <a href="https://mingyue-cheng.github.io/files/papers/formertime-www2023.pdf" target="_blank" rel="noopener">FormerTime PDF</a>
+              <a href="https://github.com/Mingyue-Cheng/FormerTime" target="_blank" rel="noopener">FormerTime Code</a>
+              <a href="https://arxiv.org/pdf/2403.01493" target="_blank" rel="noopener">ConvTimeNet PDF</a>
+            </div>
+          </article>
+
+          <article class="track-card">
+            <span class="track-tag tag-orange">多模态分类理解</span>
+            <h4>InstrucTime / InstructTime++ / HiTime</h4>
+            <p>把语言建模与语义对齐能力引入时序分类任务，推进从纯数值判别走向多模态理解与指令驱动分类。</p>
+            <div class="chip-list">
+              <span>多模态语言建模</span>
+              <span>语义对齐</span>
+              <span>指令微调</span>
+            </div>
+            <div class="link-list">
+              <a href="https://dl.acm.org/doi/abs/10.1145/3701551.3703499" target="_blank" rel="noopener">InstrucTime PDF</a>
+              <a href="https://github.com/Mingyue-Cheng/InstructTime" target="_blank" rel="noopener">InstrucTime Code</a>
+              <a href="https://arxiv.org/abs/2601.14968" target="_blank" rel="noopener">InstructTime++</a>
+              <a href="https://arxiv.org/pdf/2410.18686" target="_blank" rel="noopener">HiTime PDF</a>
+            </div>
+          </article>
         </div>
       </section>
 
       <section class="section-card">
-        <h3>四条探索主线</h3>
+        <h3>时间序列异常检测</h3>
+        <p>
+          我们关注工业与真实环境中的无监督、少样本与上下文感知异常检测问题，
+          重点探索从模式感知、误报抑制到 Agent 式诊断分析的完整方法链。
+        </p>
         <div class="track-grid">
           <article class="track-card">
-            <span class="track-tag tag-teal">深度表征学习</span>
-            <h4>提升模型对复杂动态结构的理解能力</h4>
-            <p>
-              围绕非平稳性建模、层次生成式预测、自监督表示学习、解耦式预测和预测后修正，
-              持续加强模型对时间序列本身的建模能力。
-            </p>
+            <span class="track-tag tag-blue">工业场景异常检测</span>
+            <h4>AnomaMind</h4>
+            <p>结合多粒度模式感知、上下文推理与可解释报告生成，面向工业时序场景提供更稳健的异常检测能力。</p>
             <div class="chip-list">
-              <span>SAN</span>
-              <span>GPHTF</span>
-              <span>TimeDART</span>
-              <span>FDF</span>
-              <span>Post-hoc Revision</span>
+              <span>工业时序</span>
+              <span>无监督</span>
+              <span>少样本</span>
+              <span>诊断报告</span>
             </div>
             <div class="link-list">
-              <a href="https://mingyue-cheng.github.io/files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">SAN PDF</a>
-              <a href="https://arxiv.org/pdf/2402.16516.pdf" target="_blank" rel="noopener">GPHTF PDF</a>
-              <a href="https://github.com/Melmaphother/TimeDART" target="_blank" rel="noopener">TimeDART Code</a>
+              <a href="https://arxiv.org/pdf/2602.13807" target="_blank" rel="noopener">AnomaMind PDF</a>
+              <a href="https://github.com/Xiaoyu-Tao/AnomaMind-TS" target="_blank" rel="noopener">AnomaMind Code</a>
             </div>
           </article>
 
           <article class="track-card">
-            <span class="track-tag tag-orange">多模态语义理解</span>
-            <h4>让模型不只拟合数值，也理解情境</h4>
-            <p>
-              这一方向探索把语言模型、文本上下文和更细粒度的语义线索引入预测任务，
-              增强模型在跨域迁移和复杂场景中的情境理解能力。
-            </p>
+            <span class="track-tag tag-teal">基准与典型场景</span>
+            <h4>从标准 benchmark 到真实诊断任务</h4>
+            <p>覆盖 MSL、SMAP、SMD、PSM、SWaT 等标准基准，并关注工业设备运行状态、流程异常与事件级报警分析。</p>
             <div class="chip-list">
-              <span>CrossTimeNet</span>
-              <span>TokenCast</span>
-              <span>上下文建模</span>
-              <span>跨域预训练</span>
+              <span>MSL</span>
+              <span>SMAP</span>
+              <span>SMD</span>
+              <span>PSM</span>
+              <span>SWaT</span>
             </div>
             <div class="link-list">
-              <a href="https://arxiv.org/pdf/2403.12372.pdf" target="_blank" rel="noopener">CrossTimeNet PDF</a>
-              <a href="https://github.com/Mingyue-Cheng/CrossTimeNet" target="_blank" rel="noopener">CrossTimeNet Code</a>
-              <span>TokenCast 链接整理中</span>
-            </div>
-          </article>
-
-          <article class="track-card">
-            <span class="track-tag tag-blue">慢思考认知推理</span>
-            <h4>把预测过程显式化为分析与反思</h4>
-            <p>
-              我们让模型具备链式分析、逐步决策、经验回看与记忆调用能力，
-              推动时间序列预测从黑箱前向计算走向可解释的认知过程。
-            </p>
-            <div class="chip-list">
-              <span>TimeReasoner</span>
-              <span>Time-R1</span>
-              <span>MemCast</span>
-              <span>经验记忆</span>
-            </div>
-            <div class="link-list">
-              <a href="https://dl.acm.org/doi/10.1145/3773966.3777931" target="_blank" rel="noopener">TimeReasoner PDF</a>
-              <a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">TimeReasoner Code</a>
-              <a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">Time-R1 PDF</a>
-              <a href="https://www.arxiv.org/pdf/2602.03164" target="_blank" rel="noopener">MemCast PDF</a>
-            </div>
-          </article>
-
-          <article class="track-card">
-            <span class="track-tag tag-purple">自主交互智能体</span>
-            <h4>让预测系统具备规划、执行与协同能力</h4>
-            <p>
-              这一方向关注工具调用、人机协同与多智能体工作流，把预测系统从模型升级为可在环境中闭环执行任务的智能体。
-            </p>
-            <div class="chip-list">
-              <span>AlphaCast</span>
-              <span>Cast-R1</span>
-              <span>CastClaw</span>
-              <span>Agentic Forecasting</span>
-            </div>
-            <div class="link-list">
-              <a href="https://arxiv.org/pdf/2511.08947" target="_blank" rel="noopener">AlphaCast PDF</a>
-              <a href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener">Cast-R1 PDF</a>
-              <a href="../cast-claw/">CastClaw 页面</a>
-              <a href="../cast-claw/docs/">用户文档</a>
+              <span>更多数据与评测内容持续整理中</span>
             </div>
           </article>
         </div>
@@ -566,37 +530,39 @@
         <h3>代表性工作</h3>
         <div class="work-grid">
           <article class="work-card">
-            <span class="work-tag tag-teal">基础建模</span>
-            <h4>Adaptive Normalization / GPHTF / TimeDART</h4>
-            <p>代表了我们在非平稳性建模、生成式预测与自监督表征学习上的持续推进。</p>
+            <span class="work-tag tag-red">分类表示</span>
+            <h4>FormerTime / ConvTimeNet</h4>
+            <p>代表了从层次化时序表示到卷积式分类建模的核心工作积累。</p>
           </article>
 
           <article class="work-card">
-            <span class="work-tag tag-orange">语义理解</span>
-            <h4>CrossTimeNet / TokenCast</h4>
-            <p>代表了从纯序列建模走向多模态语义理解与跨域迁移的路线。</p>
+            <span class="work-tag tag-orange">多模态分类</span>
+            <h4>InstrucTime / InstructTime++ / HiTime</h4>
+            <p>代表了把语言模型、多模态语义和指令学习引入时间序列分类任务的路线。</p>
           </article>
 
           <article class="work-card">
-            <span class="work-tag tag-blue">认知推理</span>
-            <h4>TimeReasoner / Time-R1 / MemCast</h4>
-            <p>代表了慢思考、强化学习 reasoning 和经验记忆驱动预测三条主线。</p>
+            <span class="work-tag tag-blue">异常检测</span>
+            <h4>AnomaMind</h4>
+            <p>代表了面向工业场景的 Agent 式异常检测与上下文推理分析能力。</p>
           </article>
 
           <article class="work-card">
-            <span class="work-tag tag-purple">智能体系统</span>
-            <h4>AlphaCast / Cast-R1 / CastClaw</h4>
-            <p>代表了人机协同、工具增强决策和多智能体工作流三类智能体式预测系统。</p>
+            <span class="work-tag tag-teal">研究场景</span>
+            <h4>活动识别 / 故障诊断 / 医疗事件 / 工业质检</h4>
+            <p>覆盖从标准 benchmark 到真实应用诊断任务的多类典型场景。</p>
           </article>
         </div>
+        <div class="btn-row">
+          <a class="page-btn page-btn-primary" href="../papers/">查看论文列表</a>
+          <a class="page-btn page-btn-secondary" href="../index.html#research-tracks">返回首页</a>
+        </div>
       </section>
-
     </div>
 
   </div>
 </main>
 
-<!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer>
   <div class="container">
     <p>

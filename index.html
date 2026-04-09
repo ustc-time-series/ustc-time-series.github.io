@@ -379,6 +379,9 @@
     .btn-enter-forecast   { background: #0f766e; color: #fff; border-color: #0f766e; }
     .btn-enter-forecast:hover,
     .btn-enter-forecast:active   { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
+    .btn-enter-classify   { background: #c0392b; color: #fff; border-color: #c0392b; }
+    .btn-enter-classify:hover,
+    .btn-enter-classify:active   { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
     .btn-enter-anomaly    { background: #d35400; color: #fff; border-color: #d35400; }
     .btn-enter-anomaly:hover,
     .btn-enter-anomaly:active    { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
@@ -465,13 +468,13 @@
     <a class="nav-brand" href="#hero-header">USTC-AGI <span>Time Series</span></a>
     <div class="nav-links">
       <a href="#hero-header">首页</a>
-      <div class="nav-dropdown">
-        <button class="nav-dropdown-toggle" type="button" aria-expanded="false">研究方向</button>
-        <div class="nav-dropdown-menu" role="menu">
-          <a href="forecasting/" role="menuitem">时间序列预测</a>
-          <a href="#track-classification-anomaly" role="menuitem">时序分类与异常检测</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle" type="button" aria-expanded="false">研究方向</button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="forecasting/" role="menuitem">时间序列预测</a>
+            <a href="classification-anomaly/" role="menuitem">时序分类与异常检测</a>
+          </div>
         </div>
-      </div>
       <a href="papers/">论文列表</a>
       <a href="systems/">领域应用</a>
       <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">GitHub</a>
@@ -573,6 +576,7 @@
             </div>
           </div>
           <div class="card-links">
+            <a class="card-btn btn-enter-classify" href="classification-anomaly/">查看主页 →</a>
             <a class="card-btn btn-outline" href="https://arxiv.org/abs/2601.14968" target="_blank" rel="noopener">InstructTime++</a>
           </div>
         </div>
@@ -601,7 +605,7 @@
             </div>
           </div>
           <div class="card-links">
-            <a class="card-btn btn-enter-anomaly" href="anomaly/">查看主页 →</a>
+            <a class="card-btn btn-enter-anomaly" href="classification-anomaly/">查看主页 →</a>
             <a class="card-btn btn-outline" href="https://github.com/Xiaoyu-Tao/AnomaMind-TS" target="_blank" rel="noopener">AnomaMind</a>
           </div>
         </div>
