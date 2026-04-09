@@ -155,99 +155,6 @@
       scroll-margin-top: 92px;
     }
 
-    /* ── News / Updates ─────────────────────────────── */
-    .news-section {
-      margin-bottom: 56px;
-      padding: 24px 26px 26px;
-      border-radius: 16px;
-      background: #fff;
-      border: 1px solid #e8e8e8;
-    }
-    .news-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 18px;
-    }
-    .news-kicker {
-      display: inline-flex;
-      align-items: center;
-      padding: 3px 10px;
-      margin-bottom: 10px;
-      border-radius: 999px;
-      border: 1px solid #e5e5e5;
-      background: #fafafa;
-      color: #666;
-      font-size: 0.74rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-    }
-    .news-header h2 {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #111;
-      line-height: 1.3;
-    }
-    .news-header p {
-      max-width: 620px;
-      color: #666;
-      font-size: 0.95rem;
-      line-height: 1.75;
-    }
-    .news-board {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-    .news-item {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      padding: 16px 18px;
-      border-radius: 12px;
-      background: #fcfcfc;
-      border: 1px solid #ececec;
-    }
-    .news-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 0.76rem;
-    }
-    .news-tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: #f7f7f7;
-      color: #666;
-      border: 1px solid #e4e4e4;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-    }
-    .news-tag-teal { background: #e6fbf7; color: #0f766e; border-color: #99e6d8; }
-    .news-tag-blue { background: #eef4ff; color: #1a56db; border-color: #b8d4f5; }
-    .news-tag-orange { background: #fef3e2; color: #d35400; border-color: #f5cba7; }
-    .news-tag-purple { background: #f5eef8; color: #7d3c98; border-color: #d2b4de; }
-    .news-status {
-      color: #8a8a8a;
-      font-weight: 600;
-      white-space: nowrap;
-    }
-    .news-item h3 {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: #111;
-      line-height: 1.4;
-    }
-    .news-item p {
-      color: #555;
-      font-size: 0.86rem;
-      line-height: 1.65;
-    }
-
     /* ── Project cards ─────────────────────────────── */
     .project-grid {
       display: grid;
@@ -489,15 +396,6 @@
         padding: 7px 12px;
         font-size: 0.81rem;
       }
-      .news-section {
-        padding: 22px 18px 24px;
-        margin-bottom: 44px;
-      }
-      .news-header {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 18px;
-      }
       header h1 { font-size: 1.7rem; }
       .project-grid { grid-template-columns: 1fr; }
       .project-card-wide { grid-column: auto; }
@@ -517,6 +415,7 @@
       <a href="#hero-header" class="nav-primary">首页概览</a>
       <a href="#research-tracks">研究成果</a>
       <a href="#application-systems">应用系统</a>
+      <a href="papers/">论文列表</a>
       <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div>
@@ -537,43 +436,6 @@
 <!-- ═══════════════════ MAIN ═══════════════════ -->
 <main>
   <div class="container">
-
-    <!-- ── Latest Updates ── -->
-    <div class="news-section section-anchor" id="updates">
-      <div class="news-header">
-        <div>
-          <span class="news-kicker">LATEST UPDATES</span>
-          <h2>最新动态</h2>
-          <p>研究组在时间序列分析方向的最新进展与成果发布。</p>
-        </div>
-      </div>
-      <div class="news-board">
-        <div class="news-item">
-          <div class="news-meta">
-            <span class="news-tag news-tag-teal">Forecasting · RL</span>
-            <span class="news-status">2025</span>
-          </div>
-          <h3>Cast-R1 — 工具增强强化学习驱动的时间序列预测</h3>
-          <p>提出将 Agentic RL 引入时序预测任务：模型通过动态调用数据分析、特征工程等工具，自主完成复杂场景下的多步预测，在 ETTh/ETTm 等标准基准上取得显著提升。</p>
-        </div>
-        <div class="news-item">
-          <div class="news-meta">
-            <span class="news-tag news-tag-orange">Anomaly Detection</span>
-            <span class="news-status">2025</span>
-          </div>
-          <h3>AnomaMind — 面向工业时序异常检测的 Agent 框架</h3>
-          <p>面向真实工业场景，AnomaMind 通过多粒度模式感知与上下文推理，显著降低误报率，支持无监督与少样本两种检测模式。</p>
-        </div>
-        <div class="news-item">
-          <div class="news-meta">
-            <span class="news-tag news-tag-blue">Foundation Model</span>
-            <span class="news-status">2024–2025</span>
-          </div>
-          <h3>InstructTime — 指令驱动的通用时序基础模型</h3>
-          <p>通过大规模多域预训练与指令微调，InstructTime 在 zero-shot 时序预测、分类与插补任务上实现跨领域泛化，无需针对特定数据集重训练。</p>
-        </div>
-      </div>
-    </div>
 
     <!-- ── Research Tracks ── -->
     <div class="section-intro section-anchor" id="research-tracks">
