@@ -203,25 +203,6 @@
       flex-direction: column;
       flex: 1;
     }
-    .card-tag {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-      border-radius: 5px;
-      padding: 3px 10px;
-      margin-bottom: 14px;
-      align-self: flex-start;
-    }
-    .tag-forecast   { background: #e6fbf7; color: #0f766e; border: 1px solid #99e6d8; }
-    .tag-anomaly    { background: #fef3e2; color: #d35400; border: 1px solid #f5cba7; }
-    .tag-foundation { background: #eef4ff; color: #1a56db; border: 1px solid #b8d4f5; }
-    .tag-agentic    { background: #f5eef8; color: #7d3c98; border: 1px solid #d2b4de; }
-    .tag-systems    { background: #eafaf1; color: #1e8449; border: 1px solid #a9dfbf; }
-    .tag-evaluation { background: #fef5e7; color: #b9770e; border: 1px solid #f8c471; }
-    .tag-classify   { background: #fff0ee; color: #c0392b; border: 1px solid #f5c6c2; }
-
     .project-card h3 {
       font-size: 1.25rem;
       font-weight: 800;
@@ -449,7 +430,7 @@
     <!-- ── Research Tracks ── -->
     <div class="section-intro section-anchor" id="research-tracks">
       <h2>研究成果</h2>
-      <p>USTC-AGI 研究组在 Time Series Analysis 方向的代表性工作，涵盖预测、异常检测、基础模型与 Agentic 分析等多个方向。</p>
+      <p>USTC-AGI 研究组在 Time Series Analysis 方向的代表性工作，涵盖预测、分类、异常检测、时序推理、基础模型与 Agentic 分析等多个方向。</p>
     </div>
 
     <div class="project-grid">
@@ -458,7 +439,6 @@
       <div class="project-card project-card-wide">
         <div class="card-accent accent-forecast"></div>
         <div class="card-body">
-          <span class="card-tag tag-forecast">Time Series Forecasting</span>
           <h3>时间序列预测</h3>
           <p class="card-desc">
             围绕时间序列预测中的多模态语义建模、慢思考认知推理与自主交互智能体三条路径，系统探索从表征理解到决策规划的能力演进。
@@ -506,7 +486,6 @@
       <div class="project-card">
         <div class="card-accent accent-classify"></div>
         <div class="card-body">
-          <span class="card-tag tag-classify">Time Series Classification</span>
           <h3>时间序列分类</h3>
           <p class="card-desc">
             聚焦单变量与多变量时序的判别表征学习，覆盖活动识别、故障诊断、医疗事件分类等典型场景。
@@ -535,7 +514,6 @@
       <div class="project-card">
         <div class="card-accent accent-anomaly"></div>
         <div class="card-body">
-          <span class="card-tag tag-anomaly">Anomaly Detection</span>
           <h3>时间序列异常检测</h3>
           <p class="card-desc">
             聚焦单变量与多变量时序的无监督及少样本异常检测，兼顾点异常、上下文异常与模式级异常。
@@ -565,7 +543,6 @@
       <div class="project-card">
         <div class="card-accent accent-foundation"></div>
         <div class="card-body">
-          <span class="card-tag tag-foundation">Time Series Foundation Models</span>
           <h3>时序基础模型</h3>
           <p class="card-desc">
             探索大规模时序预训练范式，构建跨领域、跨任务的通用时序表征与指令对齐能力。
@@ -595,7 +572,6 @@
       <div class="project-card">
         <div class="card-accent accent-evaluation"></div>
         <div class="card-body">
-          <span class="card-tag tag-evaluation">Benchmark &amp; Evaluation</span>
           <h3>时间序列分析评测</h3>
           <p class="card-desc">
             围绕时间序列分析与模型开发的系统性评测，设计多维度评估框架，覆盖预测精度、鲁棒性、泛化能力与计算效率。
@@ -624,7 +600,6 @@
       <div class="project-card project-card-wide">
         <div class="card-accent accent-agentic"></div>
         <div class="card-body">
-          <span class="card-tag tag-agentic">Agentic Time Series Analysis</span>
           <h3>Agentic Time Series Analysis</h3>
           <p class="card-desc">
             将 LLM Agent 能力引入时序分析全链路，探索自动化特征工程、模型选择、结果解释与人机协同预测工作流。
@@ -731,7 +706,7 @@
       &middot; State Key Laboratory of Cognitive Intelligence, USTC
     </p>
     <p class="footer-funding">
-      本项目研究资助来源：国家自然科学基金委、国家科技重大攻关专项、华为技术合作项目
+      本项目研究资助来源：国家双一流建设经费、国家自然科学基金委、华为技术合作项目
     </p>
   </div>
 </footer>

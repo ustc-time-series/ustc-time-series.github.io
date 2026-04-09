@@ -43,6 +43,10 @@
       margin: 0 auto;
       padding: 0 20px;
     }
+    .top-nav .container,
+    footer .container {
+      max-width: 1180px;
+    }
 
     .top-nav {
       position: sticky;
@@ -232,6 +236,21 @@
       vertical-align: middle;
     }
 
+    footer {
+      background: #1c1c1c;
+      color: #999;
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.84rem;
+    }
+    footer a { color: #5ecfc6; }
+    footer .footer-funding {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.6;
+    }
+
     @media (max-width: 640px) {
       .top-nav .container {
         align-items: flex-start;
@@ -270,10 +289,10 @@
   <div class="container">
     <a class="nav-brand" href="../index.html#hero-header">USTC-AGI <span>Time Series</span></a>
     <div class="nav-links">
-      <a href="../index.html#hero-header">首页概览</a>
+      <a href="../index.html#hero-header" class="nav-primary">首页概览</a>
       <a href="../index.html#research-tracks">研究成果</a>
       <a href="../index.html#application-systems">应用系统</a>
-      <a href="./" class="nav-primary">论文列表</a>
+      <a href="../papers/">论文列表</a>
       <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">GitHub</a>
     </div>
   </div>
@@ -394,6 +413,19 @@
     </section>
   </div>
 </main>
+
+<footer>
+  <div class="container">
+    <p>
+      &copy; 2024–2026 Time Series Analysis Group &middot;
+      <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
+      &middot; State Key Laboratory of Cognitive Intelligence, USTC
+    </p>
+    <p class="footer-funding">
+      本项目研究资助来源：国家双一流建设经费、国家自然科学基金委、华为技术合作项目
+    </p>
+  </div>
+</footer>
 
 <script>
   (function () {
