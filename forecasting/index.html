@@ -459,25 +459,45 @@
 
     <div class="content-stack">
       <section class="section-card">
-        <h3>四条探索主线</h3>
+        <h3>五条探索主线</h3>
         <div class="track-grid">
           <article class="track-card">
             <span class="track-tag tag-teal">深度表征学习</span>
             <h4>提升模型对复杂动态结构的理解能力</h4>
             <p>
-              围绕非平稳性建模、层次生成式预测、自监督表示学习、解耦式预测和预测后修正，
+              围绕非平稳性建模、层次生成式预测、解耦式预测和预测后修正，
               持续加强模型对时间序列本身的建模能力。
             </p>
             <div class="chip-list">
               <span>SAN</span>
               <span>GPHTF</span>
-              <span>TimeDART</span>
               <span>FDF</span>
               <span>Post-hoc Revision</span>
             </div>
             <div class="link-list">
               <a href="https://mingyue-cheng.github.io/files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">SAN PDF</a>
               <a href="https://arxiv.org/pdf/2402.16516.pdf" target="_blank" rel="noopener">GPHTF PDF</a>
+              <a href="https://arxiv.org/pdf/2410.13253" target="_blank" rel="noopener">FDF PDF</a>
+            </div>
+          </article>
+
+          <article class="track-card">
+            <span class="track-tag tag-blue">自监督预训练</span>
+            <h4>用大规模预训练增强通用时序表征能力</h4>
+            <p>
+              这一方向聚焦 masked autoencoder、扩散式自回归建模与大规模预训练范式，
+              通过无标注或弱监督数据学习更具迁移性的时间序列表征。
+            </p>
+            <div class="chip-list">
+              <span>TimeMAE</span>
+              <span>TimeDART</span>
+              <span>Masked Autoencoder</span>
+              <span>自监督表示</span>
+            </div>
+            <div class="link-list">
+              <a href="https://arxiv.org/pdf/2303.00320" target="_blank" rel="noopener">TimeMAE PDF</a>
+              <a href="https://github.com/Mingyue-Cheng/TimeMAE" target="_blank" rel="noopener">TimeMAE Code</a>
+              <a href="https://arxiv.org/html/2410.05711v1" target="_blank" rel="noopener">TimeDART PDF</a>
               <a href="https://github.com/Melmaphother/TimeDART" target="_blank" rel="noopener">TimeDART Code</a>
             </div>
           </article>
