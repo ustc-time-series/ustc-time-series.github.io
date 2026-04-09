@@ -1,0 +1,202 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="planner" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+    <linearGradient id="forecaster" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="critic" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="960" height="620" fill="url(#bg)" rx="12"/>
+
+  <!-- ====== LAYER 1: Human Expert ====== -->
+  <rect x="40" y="20" width="880" height="68" rx="12" fill="#f59e0b" opacity="0.1" stroke="#f59e0b" stroke-width="1" stroke-opacity="0.35"/>
+  <text x="60" y="40" fill="#fbbf24" font-size="11" font-weight="700" letter-spacing="1.5">LAYER 1</text>
+  <text x="130" y="40" fill="#fde68a" font-size="11" letter-spacing="0.5">HUMAN EXPERT</text>
+
+  <rect x="60" y="50" width="148" height="28" rx="7" fill="#f59e0b" opacity="0.18" stroke="#f59e0b" stroke-width="0.7" stroke-opacity="0.45"/>
+  <text x="76" y="68" fill="#fde68a" font-size="11">Form + Dataset</text>
+
+  <rect x="222" y="50" width="148" height="28" rx="7" fill="#f59e0b" opacity="0.18" stroke="#f59e0b" stroke-width="0.7" stroke-opacity="0.45"/>
+  <text x="238" y="68" fill="#fde68a" font-size="11">CAST.md Constraints</text>
+
+  <rect x="384" y="50" width="130" height="28" rx="7" fill="#f59e0b" opacity="0.18" stroke="#f59e0b" stroke-width="0.7" stroke-opacity="0.45"/>
+  <text x="400" y="68" fill="#fde68a" font-size="11">Skills Review</text>
+
+  <rect x="528" y="50" width="148" height="28" rx="7" fill="#f59e0b" opacity="0.18" stroke="#f59e0b" stroke-width="0.7" stroke-opacity="0.45"/>
+  <text x="544" y="68" fill="#fde68a" font-size="11">人在回路反馈</text>
+
+  <rect x="690" y="50" width="148" height="28" rx="7" fill="#f59e0b" opacity="0.18" stroke="#f59e0b" stroke-width="0.7" stroke-opacity="0.45"/>
+  <text x="706" y="68" fill="#fde68a" font-size="11">Model Selection</text>
+
+  <!-- Bidirectional arrows L1 <-> L2 -->
+  <polygon points="246,92 250,86 254,92" fill="#fbbf24" opacity="0.5"/>
+  <polygon points="246,100 250,106 254,100" fill="#818cf8" opacity="0.5"/>
+  <polygon points="476,92 480,86 484,92" fill="#fbbf24" opacity="0.5"/>
+  <polygon points="476,100 480,106 484,100" fill="#818cf8" opacity="0.5"/>
+  <polygon points="706,92 710,86 714,92" fill="#fbbf24" opacity="0.5"/>
+  <polygon points="706,100 710,106 714,100" fill="#818cf8" opacity="0.5"/>
+
+  <!-- ====== LAYER 2: Three Agents ====== -->
+  <rect x="40" y="110" width="880" height="150" rx="12" fill="#334155" opacity="0.3" stroke="#475569" stroke-width="0.8"/>
+  <text x="60" y="130" fill="#94a3b8" font-size="11" font-weight="700" letter-spacing="1.5">LAYER 2</text>
+  <text x="130" y="130" fill="#cbd5e1" font-size="11" letter-spacing="0.5">THREE-AGENT COLLABORATION (Tab Switch)</text>
+
+  <!-- Planner -->
+  <rect x="60" y="144" width="260" height="104" rx="10" fill="url(#planner)" opacity="0.13" stroke="#818cf8" stroke-width="1" filter="url(#shadow)"/>
+  <rect x="60" y="144" width="260" height="30" rx="10" fill="url(#planner)" opacity="0.3"/>
+  <rect x="60" y="164" width="260" height="10" rx="0" fill="url(#planner)" opacity="0.3"/>
+  <circle cx="78" cy="159" r="5" fill="#c7d2fe"/>
+  <text x="90" y="163" fill="#e0e7ff" font-size="14" font-weight="700">Planner</text>
+  <text x="198" y="162" fill="#a5b4fc" font-size="10" opacity="0.8">Pre-Forecast</text>
+  <text x="76" y="192" fill="#c7d2fe" font-size="11">Qualitative Analysis (WebSearch)</text>
+  <text x="76" y="210" fill="#c7d2fe" font-size="11">Quantitative Diagnosis (Stats)</text>
+  <text x="76" y="228" fill="#c7d2fe" font-size="11">Skills Generation &amp; Pre-Report</text>
+
+  <!-- Forecaster -->
+  <rect x="350" y="144" width="260" height="104" rx="10" fill="url(#forecaster)" opacity="0.13" stroke="#22d3ee" stroke-width="1" filter="url(#shadow)"/>
+  <rect x="350" y="144" width="260" height="30" rx="10" fill="url(#forecaster)" opacity="0.3"/>
+  <rect x="350" y="164" width="260" height="10" rx="0" fill="url(#forecaster)" opacity="0.3"/>
+  <circle cx="368" cy="159" r="5" fill="#a5f3fc"/>
+  <text x="380" y="163" fill="#cffafe" font-size="14" font-weight="700">Forecaster</text>
+  <text x="498" y="162" fill="#67e8f9" font-size="10" opacity="0.8">Mid-Forecast</text>
+  <text x="366" y="192" fill="#a5f3fc" font-size="11">Experiment Loop (Gen&#x2192;Eval&#x2192;Reflect)</text>
+  <text x="366" y="210" fill="#a5f3fc" font-size="11">主动追问与人在回路</text>
+  <text x="366" y="228" fill="#a5f3fc" font-size="11">Budget Control &amp; Stop Conditions</text>
+
+  <!-- Critic -->
+  <rect x="640" y="144" width="260" height="104" rx="10" fill="url(#critic)" opacity="0.13" stroke="#c084fc" stroke-width="1" filter="url(#shadow)"/>
+  <rect x="640" y="144" width="260" height="30" rx="10" fill="url(#critic)" opacity="0.3"/>
+  <rect x="640" y="164" width="260" height="10" rx="0" fill="url(#critic)" opacity="0.3"/>
+  <circle cx="658" cy="159" r="5" fill="#e9d5ff"/>
+  <text x="670" y="163" fill="#f3e8ff" font-size="14" font-weight="700">Critic</text>
+  <text x="748" y="162" fill="#d8b4fe" font-size="10" opacity="0.8">Post-Forecast</text>
+  <text x="656" y="192" fill="#e9d5ff" font-size="11">Test-Set Validation (Isolated Ctx)</text>
+  <text x="656" y="210" fill="#e9d5ff" font-size="11">Multi-Level Visualization</text>
+  <text x="656" y="228" fill="#e9d5ff" font-size="11">Decision-Grade Final Report</text>
+
+  <!-- Agent flow arrows -->
+  <line x1="322" y1="195" x2="348" y2="195" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
+  <polygon points="345,192 351,195 345,198" fill="#94a3b8" opacity="0.5"/>
+  <line x1="612" y1="195" x2="638" y2="195" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.5"/>
+  <polygon points="635,192 641,195 635,198" fill="#94a3b8" opacity="0.5"/>
+
+  <!-- Arrows L2 -> L3 -->
+  <polygon points="186,262 190,269 194,262" fill="#818cf8" opacity="0.45"/>
+  <polygon points="476,262 480,269 484,262" fill="#22d3ee" opacity="0.45"/>
+  <polygon points="766,262 770,269 774,262" fill="#c084fc" opacity="0.45"/>
+
+  <!-- ====== LAYER 3: Tools & Skills ====== -->
+  <rect x="40" y="275" width="880" height="108" rx="12" fill="#10b981" opacity="0.07" stroke="#34d399" stroke-width="0.8" stroke-opacity="0.35"/>
+  <text x="60" y="295" fill="#6ee7b7" font-size="11" font-weight="700" letter-spacing="1.5">LAYER 3</text>
+  <text x="130" y="295" fill="#a7f3d0" font-size="11" letter-spacing="0.5">TOOLS &amp; SKILLS</text>
+
+  <!-- Tool row 1 -->
+  <rect x="60" y="306" width="120" height="28" rx="6" fill="#10b981" opacity="0.16" stroke="#34d399" stroke-width="0.6"/>
+  <text x="74" y="324" fill="#a7f3d0" font-size="11">AnalyzeDataset</text>
+
+  <rect x="192" y="306" width="120" height="28" rx="6" fill="#10b981" opacity="0.16" stroke="#34d399" stroke-width="0.6"/>
+  <text x="203" y="324" fill="#a7f3d0" font-size="11">GenerateModel</text>
+
+  <rect x="324" y="306" width="148" height="28" rx="6" fill="#10b981" opacity="0.16" stroke="#34d399" stroke-width="0.6"/>
+  <text x="338" y="324" fill="#a7f3d0" font-size="11">EvaluateExperiment</text>
+
+  <rect x="484" y="306" width="128" height="28" rx="6" fill="#10b981" opacity="0.16" stroke="#34d399" stroke-width="0.6"/>
+  <text x="498" y="324" fill="#a7f3d0" font-size="11">ForecastReflect</text>
+
+  <rect x="624" y="306" width="108" height="28" rx="6" fill="#10b981" opacity="0.16" stroke="#34d399" stroke-width="0.6"/>
+  <text x="641" y="324" fill="#a7f3d0" font-size="11">WebSearch</text>
+
+  <rect x="744" y="306" width="160" height="28" rx="6" fill="#10b981" opacity="0.16" stroke="#34d399" stroke-width="0.6"/>
+  <text x="758" y="324" fill="#a7f3d0" font-size="11">Bash / Read / Write</text>
+
+  <!-- Tool row 2 -->
+  <rect x="60" y="344" width="108" height="28" rx="6" fill="#f59e0b" opacity="0.13" stroke="#fbbf24" stroke-width="0.6"/>
+  <text x="74" y="362" fill="#fde68a" font-size="11">SKILL.md</text>
+
+  <rect x="180" y="344" width="128" height="28" rx="6" fill="#f59e0b" opacity="0.13" stroke="#fbbf24" stroke-width="0.6"/>
+  <text x="194" y="362" fill="#fde68a" font-size="11">ForecastState</text>
+
+  <rect x="320" y="344" width="118" height="28" rx="6" fill="#f59e0b" opacity="0.13" stroke="#fbbf24" stroke-width="0.6"/>
+  <text x="334" y="362" fill="#fde68a" font-size="11">ForecastTask</text>
+
+  <rect x="450" y="344" width="118" height="28" rx="6" fill="#f59e0b" opacity="0.13" stroke="#fbbf24" stroke-width="0.6"/>
+  <text x="464" y="362" fill="#fde68a" font-size="11">history.jsonl</text>
+
+  <rect x="580" y="344" width="100" height="28" rx="6" fill="#f59e0b" opacity="0.13" stroke="#fbbf24" stroke-width="0.6"/>
+  <text x="598" y="362" fill="#fde68a" font-size="11">Subagent</text>
+
+  <rect x="692" y="344" width="212" height="28" rx="6" fill="#f59e0b" opacity="0.13" stroke="#fbbf24" stroke-width="0.6"/>
+  <text x="706" y="362" fill="#fde68a" font-size="11">MCP / Plugin Hook</text>
+
+  <!-- Arrows L3 -> L4 -->
+  <polygon points="476,387 480,394 484,387" fill="#34d399" opacity="0.45"/>
+
+  <!-- ====== LAYER 4: Core Engine ====== -->
+  <rect x="40" y="400" width="880" height="88" rx="12" fill="#3b82f6" opacity="0.07" stroke="#60a5fa" stroke-width="0.8" stroke-opacity="0.35"/>
+  <text x="60" y="420" fill="#93c5fd" font-size="11" font-weight="700" letter-spacing="1.5">LAYER 4</text>
+  <text x="130" y="420" fill="#bfdbfe" font-size="11" letter-spacing="0.5">CORE ENGINE  (TypeScript / Bun / Effect-TS)</text>
+
+  <rect x="60" y="432" width="130" height="42" rx="8" fill="#3b82f6" opacity="0.13" stroke="#60a5fa" stroke-width="0.6"/>
+  <text x="74" y="450" fill="#bfdbfe" font-size="11" font-weight="600">Session Processor</text>
+  <text x="84" y="465" fill="#93c5fd" font-size="10" opacity="0.8">Agentic Loop</text>
+
+  <rect x="204" y="432" width="120" height="42" rx="8" fill="#3b82f6" opacity="0.13" stroke="#60a5fa" stroke-width="0.6"/>
+  <text x="218" y="450" fill="#bfdbfe" font-size="11" font-weight="600">Context Mgmt</text>
+  <text x="224" y="465" fill="#93c5fd" font-size="10" opacity="0.8">Compaction</text>
+
+  <rect x="338" y="432" width="130" height="42" rx="8" fill="#3b82f6" opacity="0.13" stroke="#60a5fa" stroke-width="0.6"/>
+  <text x="349" y="450" fill="#bfdbfe" font-size="11" font-weight="600">Permission Gate</text>
+  <text x="360" y="465" fill="#93c5fd" font-size="10" opacity="0.8">Data Isolation</text>
+
+  <rect x="482" y="432" width="108" height="42" rx="8" fill="#3b82f6" opacity="0.13" stroke="#60a5fa" stroke-width="0.6"/>
+  <text x="502" y="450" fill="#bfdbfe" font-size="11" font-weight="600">Event Bus</text>
+  <text x="509" y="465" fill="#93c5fd" font-size="10" opacity="0.8">PubSub</text>
+
+  <rect x="604" y="432" width="130" height="42" rx="8" fill="#3b82f6" opacity="0.13" stroke="#60a5fa" stroke-width="0.6"/>
+  <text x="618" y="450" fill="#bfdbfe" font-size="11" font-weight="600">LLM Provider</text>
+  <text x="630" y="465" fill="#93c5fd" font-size="10" opacity="0.8">20+ Models</text>
+
+  <rect x="748" y="432" width="156" height="42" rx="8" fill="#3b82f6" opacity="0.13" stroke="#60a5fa" stroke-width="0.6"/>
+  <text x="768" y="450" fill="#bfdbfe" font-size="11" font-weight="600">SQLite + Drizzle</text>
+  <text x="784" y="465" fill="#93c5fd" font-size="10" opacity="0.8">Persistence</text>
+
+  <!-- Arrows L4 -> L5 -->
+  <polygon points="476,492 480,499 484,492" fill="#60a5fa" opacity="0.45"/>
+
+  <!-- ====== LAYER 5: Python ML Runtime ====== -->
+  <rect x="40" y="505" width="880" height="75" rx="12" fill="#ec4899" opacity="0.07" stroke="#f472b6" stroke-width="0.8" stroke-opacity="0.35"/>
+  <text x="60" y="525" fill="#f9a8d4" font-size="11" font-weight="700" letter-spacing="1.5">LAYER 5</text>
+  <text x="130" y="525" fill="#fbcfe8" font-size="11" letter-spacing="0.5">PYTHON ML RUNTIME  (uv / PyTorch / Time-Series-Library)</text>
+
+  <rect x="60" y="538" width="155" height="28" rx="6" fill="#ec4899" opacity="0.13" stroke="#f472b6" stroke-width="0.6"/>
+  <text x="78" y="556" fill="#fbcfe8" font-size="11">42 Models Registry</text>
+
+  <rect x="230" y="538" width="145" height="28" rx="6" fill="#ec4899" opacity="0.13" stroke="#f472b6" stroke-width="0.6"/>
+  <text x="248" y="556" fill="#fbcfe8" font-size="11">Experiment Runner</text>
+
+  <rect x="390" y="538" width="155" height="28" rx="6" fill="#ec4899" opacity="0.13" stroke="#f472b6" stroke-width="0.6"/>
+  <text x="408" y="556" fill="#fbcfe8" font-size="11">Deterministic Eval</text>
+
+  <rect x="560" y="538" width="128" height="28" rx="6" fill="#ec4899" opacity="0.13" stroke="#f472b6" stroke-width="0.6"/>
+  <text x="582" y="556" fill="#fbcfe8" font-size="11">Data Provider</text>
+
+  <rect x="703" y="538" width="200" height="28" rx="6" fill="#ec4899" opacity="0.13" stroke="#f472b6" stroke-width="0.6"/>
+  <text x="721" y="556" fill="#fbcfe8" font-size="11">Metrics (MSE/MAE/WAPE)</text>
+
+</svg>
