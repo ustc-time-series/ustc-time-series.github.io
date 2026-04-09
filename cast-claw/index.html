@@ -8,6 +8,13 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+    :root {
+      --ui-highlight-bg: #f0fdf9;
+      --ui-highlight-bg-strong: #e6fbf8;
+      --ui-highlight-border: #99e6d8;
+      --ui-highlight-text: #0f766e;
+      --ui-highlight-shadow: rgba(15, 118, 110, 0.10);
+    }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
                    "PingFang SC", "Hiragino Sans GB", sans-serif;
@@ -38,9 +45,10 @@
       flex-shrink: 0; padding: 13px 18px;
       font-size: 0.87rem; font-weight: 500; color: #555;
       border-bottom: 2px solid transparent;
-      transition: color .2s, border-color .2s; white-space: nowrap;
+      transition: color .2s, border-color .2s, background .2s; white-space: nowrap;
     }
-    .nav-bar a:hover { color: #d35400; border-bottom-color: #d35400; text-decoration: none; }
+    .nav-bar a:hover,
+    .nav-bar a:active { color: var(--ui-highlight-text); background: var(--ui-highlight-bg); border-bottom-color: var(--ui-highlight-border); text-decoration: none; }
     .nav-home { font-weight: 700; color: #d35400 !important; border-right: 1px solid #e8e8e8; }
 
     /* ── Header ─────────────────────────────────── */
@@ -64,7 +72,8 @@
     }
     .affiliation { margin-top: 10px; font-size: 0.88rem; color: #999; text-align: center; text-justify: auto; }
     .affiliation a { color: inherit; text-decoration: none; }
-    .affiliation a:hover { color: #d35400; text-decoration: underline; }
+    .affiliation a:hover,
+    .affiliation a:active { color: var(--ui-highlight-text); text-decoration: underline; }
     .btn-row {
       display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 24px;
     }
@@ -72,13 +81,16 @@
       display: inline-flex; align-items: center; gap: 7px;
       padding: 9px 20px; border-radius: 7px; font-size: 0.88rem; font-weight: 600;
       border: 1.5px solid transparent; cursor: pointer;
-      transition: transform .18s, box-shadow .18s, background .18s; text-decoration: none;
+      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s, color .18s; text-decoration: none;
     }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.13); text-decoration: none; }
+    .btn:hover,
+    .btn:active { transform: translateY(-2px); box-shadow: 0 6px 18px var(--ui-highlight-shadow); background: var(--ui-highlight-bg); border-color: var(--ui-highlight-border); color: var(--ui-highlight-text); text-decoration: none; }
     .btn-primary { background: #d35400; color: #fff; border-color: #d35400; }
-    .btn-primary:hover { background: #b94600; }
+    .btn-primary:hover,
+    .btn-primary:active { background: var(--ui-highlight-bg); border-color: var(--ui-highlight-border); color: var(--ui-highlight-text); }
     .btn-secondary { background: #fff; color: #222; border-color: #d0d0d0; }
-    .btn-secondary:hover { background: #f8f8f8; border-color: #aaa; }
+    .btn-secondary:hover,
+    .btn-secondary:active { background: var(--ui-highlight-bg); border-color: var(--ui-highlight-border); color: var(--ui-highlight-text); }
 
     /* ── Section ────────────────────────────────── */
     section { padding: 64px 0; scroll-margin-top: 46px; }
@@ -113,9 +125,10 @@
     .feature-card {
       background: #fff; border: 1px solid #e6e6e6; border-radius: 12px;
       padding: 22px 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: transform .22s, box-shadow .22s;
+      transition: transform .22s, box-shadow .22s, border-color .22s, background .22s;
     }
-    .feature-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.10); }
+    .feature-card:hover,
+    .feature-card:active { transform: translateY(-3px); box-shadow: 0 8px 24px var(--ui-highlight-shadow); border-color: var(--ui-highlight-border); background: #fcfffe; }
     .feature-icon { font-size: 1.8rem; margin-bottom: 10px; line-height: 1; }
     .feature-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; color: #111; }
     .feature-card p {
@@ -356,7 +369,8 @@
       padding: 10px 14px; border: 1px solid #e6e6e6; font-size: 0.9rem; text-align: left;
     }
     .team-table th { background: #fef3e2; color: #d35400; font-weight: 700; }
-    .team-table tr:hover td { background: #fffaf5; }
+    .team-table tr:hover td,
+    .team-table tr:active td { background: var(--ui-highlight-bg); }
 
     /* ── Pill links ─────────────────────────────── */
     .pill-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
@@ -364,13 +378,16 @@
       display: inline-flex; align-items: center; gap: 6px;
       padding: 7px 16px; border-radius: 7px; font-size: 0.84rem; font-weight: 600;
       border: 1.5px solid transparent;
-      transition: transform .16s, box-shadow .16s; text-decoration: none;
+      transition: transform .16s, box-shadow .16s, background .16s, border-color .16s, color .16s; text-decoration: none;
     }
-    .pill:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.12); text-decoration: none; }
+    .pill:hover,
+    .pill:active { transform: translateY(-1px); box-shadow: 0 4px 12px var(--ui-highlight-shadow); background: var(--ui-highlight-bg); border-color: var(--ui-highlight-border); color: var(--ui-highlight-text); text-decoration: none; }
     .pill-orange { background: #d35400; color: #fff; border-color: #d35400; }
-    .pill-orange:hover { background: #b94600; }
+    .pill-orange:hover,
+    .pill-orange:active { background: var(--ui-highlight-bg); border-color: var(--ui-highlight-border); color: var(--ui-highlight-text); }
     .pill-out { background: #fff; color: #333; border-color: #d0d0d0; }
-    .pill-out:hover { background: #f5f5f5; border-color: #aaa; }
+    .pill-out:hover,
+    .pill-out:active { background: var(--ui-highlight-bg); border-color: var(--ui-highlight-border); color: var(--ui-highlight-text); }
 
     /* ── Footer ─────────────────────────────────── */
     footer { background: #1c1c1c; color: #999; text-align: center; padding: 28px 24px; font-size: 0.84rem; }

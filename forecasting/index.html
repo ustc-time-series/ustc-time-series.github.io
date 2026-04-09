@@ -82,7 +82,8 @@
       color: #555;
       transition: color .18s, background .18s, border-color .18s, transform .18s;
     }
-    .nav-links a:hover {
+    .nav-links a:hover,
+    .nav-links a:active {
       color: #0f766e;
       background: #f0fdf9;
       border-color: #99e6d8;
@@ -189,13 +190,17 @@
       font-size: 0.88rem;
       font-weight: 700;
       border: 1px solid transparent;
-      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s;
+      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s, color .18s;
     }
 
-    .page-btn:hover {
+    .page-btn:hover,
+    .page-btn:active {
       transform: translateY(-1px);
       text-decoration: none;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 6px 14px rgba(15, 118, 110, 0.10);
+      background: #f0fdf9;
+      border-color: #99e6d8;
+      color: #0f766e;
     }
 
     .page-btn-primary {
@@ -204,10 +209,11 @@
       border-color: #0f766e;
     }
 
-    .page-btn-primary:hover {
-      background: #0b5f59;
-      border-color: #0b5f59;
-      color: #fff;
+    .page-btn-primary:hover,
+    .page-btn-primary:active {
+      background: #f0fdf9;
+      border-color: #99e6d8;
+      color: #0f766e;
     }
 
     .page-btn-secondary {
