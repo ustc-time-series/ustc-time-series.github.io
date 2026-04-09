@@ -9,250 +9,268 @@
     content="USTC-AGI 研究组在时间序列预测方向的工作探索，涵盖深度表征学习、多模态语义理解、慢思考认知推理与自主交互智能体。"
   />
   <style>
-    :root {
-      --bg: #f6f7f5;
-      --surface: #ffffff;
-      --line: #e7e9ee;
-      --text: #171a1f;
-      --muted: #667085;
-      --teal: #0f766e;
-      --teal-soft: #ebf8f6;
-      --orange: #d35400;
-      --orange-soft: #fff3e8;
-      --blue: #1d4ed8;
-      --blue-soft: #edf4ff;
-      --plum: #7c3aed;
-      --plum-soft: #f3edff;
-      --shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
-    }
-
-    * { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
     body {
-      margin: 0;
-      font-family: "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
-      color: var(--text);
-      background: linear-gradient(180deg, #fbfcfb 0%, var(--bg) 100%);
-      line-height: 1.7;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                   "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: #f7f7f5;
+      color: #1a1a1a;
+      line-height: 1.8;
+      font-size: 16px;
+      text-align: justify;
+      text-justify: inter-ideograph;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: #0f766e; text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     .container {
-      width: min(1120px, calc(100vw - 40px));
+      max-width: 1180px;
       margin: 0 auto;
+      padding: 0 20px;
     }
 
     .top-nav {
       position: sticky;
       top: 0;
-      z-index: 20;
+      z-index: 120;
       background: rgba(255, 255, 255, 0.94);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(231, 233, 238, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e8e8e8;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
     }
-
     .top-nav .container {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
-      padding: 16px 0;
+      gap: 18px;
+      min-height: 64px;
     }
-
     .nav-brand {
-      font-size: 1.04rem;
+      flex-shrink: 0;
+      font-size: 0.92rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
+      color: #111;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
     }
-
-    .nav-brand span { color: #2a9088; }
-
+    .nav-brand span { color: #0f766e; }
     .nav-links {
       display: flex;
       align-items: center;
+      justify-content: flex-end;
       gap: 8px;
-      flex-wrap: wrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 10px 0;
+      width: 100%;
     }
-
+    .nav-links::-webkit-scrollbar { display: none; }
     .nav-links a {
-      padding: 9px 14px;
+      flex-shrink: 0;
+      padding: 8px 14px;
       border-radius: 999px;
-      color: #4b5563;
-      font-size: 0.93rem;
-      font-weight: 700;
-      transition: background 0.18s ease, color 0.18s ease;
+      border: 1px solid transparent;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #555;
+      transition: color .18s, background .18s, border-color .18s, transform .18s;
     }
-
     .nav-links a:hover {
-      background: #edf7f5;
-      color: var(--teal);
+      color: #0f766e;
+      background: #f0fdf9;
+      border-color: #99e6d8;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+    .nav-links a.nav-primary {
+      color: #fff;
+      background: #0f766e;
+      border-color: #0f766e;
+      box-shadow: 0 6px 14px rgba(15, 118, 110, 0.18);
+    }
+    .nav-links a.nav-primary:hover {
+      color: #fff;
+      background: #0b5f59;
+      border-color: #0b5f59;
     }
 
-    .nav-links .nav-primary {
-      background: linear-gradient(135deg, #0f766e, #2aa89e);
-      color: #fff;
-      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.2);
+    header {
+      background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
+      border-bottom: 1px solid #e8e8e8;
+      padding: 72px 0 56px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    header:hover {
+      background: linear-gradient(160deg, #fdffff 50%, #e6fbf8 100%);
+    }
+    header:active {
+      transform: scale(0.997);
+    }
+    header:focus-visible {
+      outline: 3px solid rgba(15, 118, 110, 0.2);
+      outline-offset: -6px;
+    }
+    header h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #111;
+    }
+    header h1 .highlight { color: #0f766e; }
+    header .header-sub {
+      margin-top: 14px;
+      font-size: 0.97rem;
+      color: #666;
+      line-height: 1.75;
     }
 
     main {
-      padding: 34px 0 72px;
+      flex: 1;
+      padding: 40px 0 80px;
     }
 
-    .hero,
+    .section-intro {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .section-intro h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 10px;
+    }
+    .section-intro p {
+      font-size: 0.97rem;
+      color: #555;
+    }
+
+    .content-stack {
+      display: grid;
+      gap: 20px;
+    }
+
     .section-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      padding: 26px 26px 24px;
     }
 
-    .hero {
-      padding: 34px;
-      margin-bottom: 24px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: var(--teal-soft);
-      border: 1px solid #cbece7;
-      color: var(--teal);
-      font-size: 0.8rem;
+    .section-card h3 {
+      font-size: 1.2rem;
       font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      margin-bottom: 12px;
+      color: #111;
     }
 
-    h1 {
-      margin: 16px 0 14px;
-      font-size: clamp(2.1rem, 4.8vw, 3.4rem);
-      line-height: 1.08;
-      letter-spacing: -0.04em;
+    .section-card p {
+      color: #555;
+      font-size: 0.97rem;
     }
 
-    h1 span { color: var(--teal); }
-
-    .hero p {
-      margin: 0;
-      max-width: 820px;
-      color: #475467;
-      font-size: 1.02rem;
+    .section-card p + p {
+      margin-top: 12px;
     }
 
-    .hero-actions {
+    .btn-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 22px;
+      gap: 10px;
+      margin-top: 18px;
     }
 
-    .btn {
+    .page-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 46px;
-      padding: 0 18px;
-      border-radius: 14px;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
       border: 1px solid transparent;
-      font-size: 0.94rem;
-      font-weight: 800;
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s;
     }
 
-    .btn:hover {
+    .page-btn:hover {
       transform: translateY(-1px);
-      box-shadow: 0 10px 18px rgba(15, 23, 42, 0.08);
+      text-decoration: none;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--teal), #15988e);
+    .page-btn-primary {
+      background: #0f766e;
+      color: #fff;
+      border-color: #0f766e;
+    }
+
+    .page-btn-primary:hover {
+      background: #0b5f59;
+      border-color: #0b5f59;
       color: #fff;
     }
 
-    .btn-secondary {
+    .page-btn-secondary {
       background: #fff;
-      border-color: #d7dde5;
-      color: #344054;
-    }
-
-    section + section {
-      margin-top: 22px;
-    }
-
-    .section-card {
-      padding: 28px;
-    }
-
-    .section-kicker {
-      color: var(--teal);
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    h2 {
-      margin: 8px 0 12px;
-      font-size: clamp(1.5rem, 3vw, 2.2rem);
-      line-height: 1.15;
-      letter-spacing: -0.03em;
-    }
-
-    .section-card > p {
-      margin: 0;
-      color: #475467;
+      color: #444;
+      border-color: #d8d8d8;
     }
 
     .track-grid,
     .work-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
     }
 
-    .track,
-    .work {
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 22px;
-      background: #fff;
+    .track-card,
+    .work-card {
+      border: 1px solid #ececec;
+      border-radius: 14px;
+      background: #fcfcfb;
+      padding: 20px;
     }
 
     .track-tag,
     .work-tag {
       display: inline-flex;
       align-items: center;
-      padding: 7px 12px;
+      padding: 6px 12px;
       border-radius: 999px;
       font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .tag-teal { background: #e7faf6; color: #0f766e; border: 1px solid #bde7de; }
+    .tag-orange { background: #fff3e8; color: #d35400; border: 1px solid #f2cfb2; }
+    .tag-blue { background: #eef4ff; color: #1d4ed8; border: 1px solid #cdddff; }
+    .tag-purple { background: #f4efff; color: #7c3aed; border: 1px solid #ddccff; }
+
+    .track-card h4,
+    .work-card h4 {
+      font-size: 1.04rem;
       font-weight: 800;
+      line-height: 1.45;
+      color: #111;
+      margin-bottom: 10px;
     }
 
-    .tag-teal { background: var(--teal-soft); color: var(--teal); }
-    .tag-orange { background: var(--orange-soft); color: var(--orange); }
-    .tag-blue { background: var(--blue-soft); color: var(--blue); }
-    .tag-plum { background: var(--plum-soft); color: var(--plum); }
-
-    .track h3,
-    .work h3 {
-      margin: 14px 0 10px;
-      font-size: 1.28rem;
-      line-height: 1.2;
-      letter-spacing: -0.02em;
-    }
-
-    .track p,
-    .work p {
-      margin: 0;
-      color: #475467;
+    .track-card p,
+    .work-card p {
+      font-size: 0.94rem;
+      color: #555;
     }
 
     .chip-list {
@@ -263,62 +281,38 @@
     }
 
     .chip-list span {
-      padding: 8px 11px;
+      padding: 7px 10px;
       border-radius: 999px;
-      background: #f7f8fb;
-      border: 1px solid #e7ebf2;
-      color: #475467;
-      font-size: 0.84rem;
-      font-weight: 700;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      color: #555;
+      font-size: 0.82rem;
+      font-weight: 600;
     }
 
-    .links {
+    .link-list {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
       margin-top: 16px;
     }
 
-    .links a,
-    .links span {
+    .link-list a,
+    .link-list span {
       display: inline-flex;
       align-items: center;
-      padding: 7px 11px;
+      padding: 7px 10px;
       border-radius: 999px;
-      border: 1px solid #d9e1e8;
+      border: 1px solid #d8d8d8;
       background: #fff;
-      color: #344054;
-      font-size: 0.84rem;
-      font-weight: 800;
+      color: #444;
+      font-size: 0.82rem;
+      font-weight: 600;
     }
 
-    .links span {
-      color: #98a2b3;
-      background: #fafbfc;
-    }
-
-    .simple-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .simple-item {
-      padding: 16px 18px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: #fff;
-    }
-
-    .simple-item strong {
-      display: block;
-      font-size: 1rem;
-      line-height: 1.45;
-    }
-
-    .simple-item p {
-      margin: 8px 0 0;
-      color: #475467;
+    .link-list span {
+      color: #999;
+      background: #f8f8f8;
     }
 
     footer {
@@ -328,9 +322,7 @@
       padding: 28px 24px;
       font-size: 0.84rem;
     }
-
     footer a { color: #5ecfc6; }
-
     footer .footer-funding {
       margin-top: 12px;
       font-size: 0.82rem;
@@ -338,84 +330,95 @@
       line-height: 1.6;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 640px) {
+      .top-nav .container {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+      .nav-brand { white-space: normal; }
+      .nav-links {
+        justify-content: flex-start;
+        padding-top: 2px;
+      }
+      .nav-links a {
+        padding: 7px 12px;
+        font-size: 0.81rem;
+      }
+      header h1 { font-size: 1.7rem; }
       .track-grid,
       .work-grid {
         grid-template-columns: 1fr;
       }
-    }
-
-    @media (max-width: 720px) {
-      .top-nav .container {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .nav-links {
-        width: 100%;
-      }
-
-      .container {
-        width: min(1120px, calc(100vw - 24px));
-      }
-
-      .hero,
-      .section-card {
-        padding: 22px;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
+      main { padding: 40px 0 60px; }
+      .container { padding: 0 16px; }
     }
   </style>
 </head>
 <body>
-  <nav class="top-nav" aria-label="顶部导航">
-    <div class="container">
-      <a class="nav-brand" href="../index.html#hero-header">USTC-AGI <span>Time Series</span></a>
-      <div class="nav-links">
-        <a class="nav-primary" href="../index.html#hero-header">首页概览</a>
-        <a href="../index.html#research-tracks">研究成果</a>
-        <a href="../index.html#application-systems">应用系统</a>
-        <a href="../papers/">论文列表</a>
-        <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">GitHub</a>
-      </div>
+
+<!-- ═══════════════════ TOP NAV ═══════════════════ -->
+<nav class="top-nav" aria-label="首页顶部导航">
+  <div class="container">
+    <a class="nav-brand" href="../index.html#hero-header">USTC-AGI <span>Time Series</span></a>
+    <div class="nav-links">
+      <a href="../index.html#hero-header" class="nav-primary">首页概览</a>
+      <a href="../index.html#research-tracks">研究成果</a>
+      <a href="../index.html#application-systems">应用系统</a>
+      <a href="../papers/">论文列表</a>
+      <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">GitHub</a>
     </div>
-  </nav>
+  </div>
+</nav>
 
-  <main>
-    <div class="container">
-      <header class="hero">
-        <span class="eyebrow">Time Series Forecasting</span>
-        <h1><span>时间序列预测</span> 研究探索</h1>
-        <p>
-          USTC-AGI 研究组把时间序列预测看作一个持续演进的智能过程。我们的工作从深度表征学习出发，
-          逐步走向多模态语义理解、慢思考认知推理与自主交互智能体，探索从“看懂时间序列”到“能够规划并行动”的预测范式。
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="../papers/">查看论文列表</a>
-          <a class="btn btn-secondary" href="../cast-claw/">CastClaw</a>
-          <a class="btn btn-secondary" href="../index.html#research-tracks">返回首页</a>
-        </div>
-      </header>
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header id="hero-header" role="button" tabindex="0" aria-label="点击刷新当前页面"
+        onclick="location.reload()">
+  <div class="container">
+    <h1><span class="highlight">Time Series Forecasting</span> 方向工作介绍</h1>
+    <p class="header-sub">
+      中国科学技术大学 · 认知智能全国重点实验室 AGI 研究组<br>
+      围绕深度表征学习、多模态语义理解、慢思考认知推理与自主交互智能体，系统探索时间序列预测的新范式
+    </p>
+  </div>
+</header>
 
+<!-- ═══════════════════ MAIN ═══════════════════ -->
+<main>
+  <div class="container">
+
+    <div class="section-intro">
+      <h2>页面概览</h2>
+      <p>这一页聚焦 USTC-AGI 研究组在时间序列预测方向的主要探索路线与代表性工作。</p>
+    </div>
+
+    <div class="content-stack">
       <section class="section-card">
-        <div class="section-kicker">Overview</div>
-        <h2>总体思路</h2>
+        <h3>总体思路</h3>
         <p>
-          我们不把预测理解成一次性输出，而是把它拆成一条能力演进链：先通过深度模型提升对动态结构的表征能力，
-          再引入语义信息理解复杂情境，进一步加入慢思考推理与经验记忆，最后让系统具备工具调用、人机协同与闭环执行能力。
+          我们不把时间序列预测理解为一次性输出，而是把它看作一条持续演进的能力链：
+          先提升模型对复杂动态结构的表征能力，再引入语义信息理解复杂情境，
+          进一步加入慢思考推理与经验记忆，最终让系统具备工具调用、人机协同与闭环执行能力。
         </p>
+        <p>
+          这条路线对应四个相互衔接的方向：深度表征学习、多模态语义理解、慢思考认知推理、自主交互智能体。
+        </p>
+        <div class="btn-row">
+          <a class="page-btn page-btn-primary" href="../papers/">查看论文列表</a>
+          <a class="page-btn page-btn-secondary" href="../cast-claw/">CastClaw</a>
+          <a class="page-btn page-btn-secondary" href="../index.html#research-tracks">返回首页</a>
+        </div>
       </section>
 
       <section class="section-card">
-        <div class="section-kicker">Tracks</div>
-        <h2>四条探索主线</h2>
+        <h3>四条探索主线</h3>
         <div class="track-grid">
-          <article class="track">
+          <article class="track-card">
             <span class="track-tag tag-teal">深度表征学习</span>
-            <h3>提升模型对复杂动态结构的理解能力</h3>
+            <h4>提升模型对复杂动态结构的理解能力</h4>
             <p>
               围绕非平稳性建模、层次生成式预测、自监督表示学习、解耦式预测和预测后修正，
               持续加强模型对时间序列本身的建模能力。
@@ -427,16 +430,16 @@
               <span>FDF</span>
               <span>Post-hoc Revision</span>
             </div>
-            <div class="links">
+            <div class="link-list">
               <a href="https://mingyue-cheng.github.io/files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">SAN PDF</a>
               <a href="https://arxiv.org/pdf/2402.16516.pdf" target="_blank" rel="noopener">GPHTF PDF</a>
               <a href="https://github.com/Melmaphother/TimeDART" target="_blank" rel="noopener">TimeDART Code</a>
             </div>
           </article>
 
-          <article class="track">
+          <article class="track-card">
             <span class="track-tag tag-orange">多模态语义理解</span>
-            <h3>让模型不只拟合数值，也理解情境</h3>
+            <h4>让模型不只拟合数值，也理解情境</h4>
             <p>
               这一方向探索把语言模型、文本上下文和更细粒度的语义线索引入预测任务，
               增强模型在跨域迁移和复杂场景中的情境理解能力。
@@ -447,16 +450,16 @@
               <span>上下文建模</span>
               <span>跨域预训练</span>
             </div>
-            <div class="links">
+            <div class="link-list">
               <a href="https://arxiv.org/pdf/2403.12372.pdf" target="_blank" rel="noopener">CrossTimeNet PDF</a>
               <a href="https://github.com/Mingyue-Cheng/CrossTimeNet" target="_blank" rel="noopener">CrossTimeNet Code</a>
               <span>TokenCast 链接整理中</span>
             </div>
           </article>
 
-          <article class="track">
+          <article class="track-card">
             <span class="track-tag tag-blue">慢思考认知推理</span>
-            <h3>把预测过程显式化为分析与反思</h3>
+            <h4>把预测过程显式化为分析与反思</h4>
             <p>
               我们让模型具备链式分析、逐步决策、经验回看与记忆调用能力，
               推动时间序列预测从黑箱前向计算走向可解释的认知过程。
@@ -467,7 +470,7 @@
               <span>MemCast</span>
               <span>经验记忆</span>
             </div>
-            <div class="links">
+            <div class="link-list">
               <a href="https://dl.acm.org/doi/10.1145/3773966.3777931" target="_blank" rel="noopener">TimeReasoner PDF</a>
               <a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">TimeReasoner Code</a>
               <a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">Time-R1 PDF</a>
@@ -475,9 +478,9 @@
             </div>
           </article>
 
-          <article class="track">
-            <span class="track-tag tag-plum">自主交互智能体</span>
-            <h3>让预测系统具备规划、执行与协同能力</h3>
+          <article class="track-card">
+            <span class="track-tag tag-purple">自主交互智能体</span>
+            <h4>让预测系统具备规划、执行与协同能力</h4>
             <p>
               这一方向关注工具调用、人机协同与多智能体工作流，把预测系统从模型升级为可在环境中闭环执行任务的智能体。
             </p>
@@ -487,61 +490,70 @@
               <span>CastClaw</span>
               <span>Agentic Forecasting</span>
             </div>
-            <div class="links">
+            <div class="link-list">
               <a href="https://arxiv.org/pdf/2511.08947" target="_blank" rel="noopener">AlphaCast PDF</a>
               <a href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener">Cast-R1 PDF</a>
-              <a href="../cast-claw/" rel="noopener">CastClaw 页面</a>
-              <a href="../cast-claw/docs/" rel="noopener">用户文档</a>
+              <a href="../cast-claw/">CastClaw 页面</a>
+              <a href="../cast-claw/docs/">用户文档</a>
             </div>
           </article>
         </div>
       </section>
 
       <section class="section-card">
-        <div class="section-kicker">Selected Works</div>
-        <h2>代表性工作</h2>
-        <div class="simple-list">
-          <div class="simple-item">
-            <strong>Adaptive Normalization for Non-stationary Time Series Forecasting / Generative Pretrained Hierarchical Transformer</strong>
-            <p>代表了我们在非平稳性处理与生成式预测建模上的早期探索。</p>
-          </div>
-          <div class="simple-item">
-            <strong>CrossTimeNet / TokenCast</strong>
-            <p>代表了从序列建模走向语义理解的路线，强调跨域迁移与多模态语义对齐。</p>
-          </div>
-          <div class="simple-item">
-            <strong>TimeReasoner / Time-R1 / MemCast</strong>
-            <p>代表了慢思考、强化学习 reasoning 和经验记忆驱动预测三条主路线。</p>
-          </div>
-          <div class="simple-item">
-            <strong>AlphaCast / Cast-R1 / CastClaw</strong>
+        <h3>代表性工作</h3>
+        <div class="work-grid">
+          <article class="work-card">
+            <span class="work-tag tag-teal">基础建模</span>
+            <h4>Adaptive Normalization / GPHTF / TimeDART</h4>
+            <p>代表了我们在非平稳性建模、生成式预测与自监督表征学习上的持续推进。</p>
+          </article>
+
+          <article class="work-card">
+            <span class="work-tag tag-orange">语义理解</span>
+            <h4>CrossTimeNet / TokenCast</h4>
+            <p>代表了从纯序列建模走向多模态语义理解与跨域迁移的路线。</p>
+          </article>
+
+          <article class="work-card">
+            <span class="work-tag tag-blue">认知推理</span>
+            <h4>TimeReasoner / Time-R1 / MemCast</h4>
+            <p>代表了慢思考、强化学习 reasoning 和经验记忆驱动预测三条主线。</p>
+          </article>
+
+          <article class="work-card">
+            <span class="work-tag tag-purple">智能体系统</span>
+            <h4>AlphaCast / Cast-R1 / CastClaw</h4>
             <p>代表了人机协同、工具增强决策和多智能体工作流三类智能体式预测系统。</p>
-          </div>
+          </article>
         </div>
       </section>
 
       <section class="section-card">
-        <div class="section-kicker">Perspective</div>
-        <h2>研究判断</h2>
+        <h3>研究判断</h3>
         <p>
-          我们的基本判断是：未来的时间序列预测系统，不会停留在单模型精度竞赛，而会逐步演化为同时具备表征能力、
-          语义理解、显式推理与执行闭环的开放系统。这也是 USTC-AGI 研究组在这一方向持续推进的整体路线。
+          我们的基本判断是：未来的时间序列预测系统，不会停留在单模型精度竞赛，
+          而会逐步演化为同时具备表征能力、语义理解、显式推理与执行闭环的开放系统。
         </p>
       </section>
     </div>
-  </main>
 
-  <footer>
-    <div class="container">
-      <p>
-        &copy; 2024–2026 Time Series Analysis Group &middot;
-        <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
-        &middot; State Key Laboratory of Cognitive Intelligence, USTC
-      </p>
-      <p class="footer-funding">
-        本项目研究资助来源：国家双一流建设经费、国家自然科学基金委、华为技术合作项目
-      </p>
-    </div>
-  </footer>
+  </div>
+</main>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="container">
+    <p>
+      &copy; 2024–2026 Time Series Analysis Group &middot;
+      <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
+      &middot; State Key Laboratory of Cognitive Intelligence, USTC
+    </p>
+    <p class="footer-funding">
+      本项目研究资助来源：国家双一流建设经费、国家自然科学基金委、华为技术合作项目
+    </p>
+  </div>
+</footer>
+
 </body>
 </html>
