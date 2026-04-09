@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>系统研发 | USTC-AGI Time Series</title>
+  <meta
+    name="description"
+    content="USTC-AGI 研究组在城市电力负荷、新能源发电、云服务流量等时间序列预测应用场景中的系统研发探索，以及 CastClaw 研发系统介绍。"
+  />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                   "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: #f7f7f5;
+      color: #1a1a1a;
+      line-height: 1.8;
+      font-size: 16px;
+      text-align: justify;
+      text-justify: inter-ideograph;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: #0f766e; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 120;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e8e8e8;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+    .top-nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 64px;
+    }
+    .nav-brand {
+      flex-shrink: 0;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #111;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .nav-brand span { color: #0f766e; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 10px 0;
+      width: 100%;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a {
+      flex-shrink: 0;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #555;
+      transition: color .18s, background .18s, border-color .18s, transform .18s;
+    }
+    .nav-links a:hover {
+      color: #0f766e;
+      background: #f0fdf9;
+      border-color: #99e6d8;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+    .nav-links a.nav-primary {
+      color: #fff;
+      background: #0f766e;
+      border-color: #0f766e;
+      box-shadow: 0 6px 14px rgba(15, 118, 110, 0.18);
+    }
+    .nav-links a.nav-primary:hover {
+      color: #fff;
+      background: #0b5f59;
+      border-color: #0b5f59;
+    }
+
+    header {
+      background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
+      border-bottom: 1px solid #e8e8e8;
+      padding: 72px 0 56px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    header:hover {
+      background: linear-gradient(160deg, #fdffff 50%, #e6fbf8 100%);
+    }
+    header:active {
+      transform: scale(0.997);
+    }
+    header:focus-visible {
+      outline: 3px solid rgba(15, 118, 110, 0.2);
+      outline-offset: -6px;
+    }
+    header h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #111;
+    }
+    header h1 .highlight { color: #0f766e; }
+    header .header-sub {
+      margin-top: 14px;
+      font-size: 0.97rem;
+      color: #666;
+      line-height: 1.75;
+    }
+
+    main {
+      flex: 1;
+      padding: 40px 0 80px;
+    }
+
+    .section-intro {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .section-intro h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 10px;
+    }
+    .section-intro p {
+      font-size: 0.97rem;
+      color: #555;
+    }
+
+    .content-stack {
+      display: grid;
+      gap: 20px;
+    }
+
+    .section-card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      padding: 26px 26px 24px;
+    }
+
+    .section-card h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+      color: #111;
+    }
+
+    .section-card p {
+      color: #555;
+      font-size: 0.97rem;
+    }
+
+    .section-card p + p {
+      margin-top: 12px;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .page-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 16px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s;
+    }
+
+    .page-btn:hover {
+      transform: translateY(-1px);
+      text-decoration: none;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .page-btn-primary {
+      background: #0f766e;
+      color: #fff;
+      border-color: #0f766e;
+    }
+    .page-btn-primary:hover {
+      background: #0b5f59;
+      border-color: #0b5f59;
+      color: #fff;
+    }
+    .page-btn-secondary {
+      background: #fff;
+      color: #444;
+      border-color: #d8d8d8;
+    }
+    .page-btn-secondary:hover {
+      background: #f8f8f8;
+      border-color: #bdbdbd;
+      color: #222;
+    }
+
+    .scenario-grid,
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .focus-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .scenario-card,
+    .focus-card {
+      border: 1px solid #e8e8e8;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
+      padding: 18px;
+    }
+
+    .scenario-tag,
+    .focus-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+      border: 1px solid #99e6d8;
+      background: #e6fbf7;
+      color: #0f766e;
+    }
+
+    .scenario-card h4,
+    .focus-card h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 10px;
+    }
+
+    .scenario-card p,
+    .focus-card p {
+      font-size: 0.92rem;
+      color: #555;
+      line-height: 1.75;
+    }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .chip-list span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: #f6f6f4;
+      border: 1px solid #ecece8;
+      color: #555;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .system-shell {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .system-panel,
+    .system-side {
+      border: 1px solid #e8e8e8;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
+      padding: 20px;
+    }
+
+    .system-panel h4,
+    .system-side h4 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 10px;
+    }
+
+    .system-panel p,
+    .system-side p {
+      font-size: 0.93rem;
+      color: #555;
+      line-height: 1.8;
+    }
+
+    .capability-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .capability-item {
+      border-radius: 12px;
+      border: 1px solid #ecece8;
+      background: #fafaf8;
+      padding: 14px 14px 13px;
+    }
+
+    .capability-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.94rem;
+      color: #111;
+    }
+
+    .capability-item span {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    footer {
+      background: #1c1c1c;
+      color: #999;
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.84rem;
+    }
+    footer a { color: #5ecfc6; }
+    footer .footer-funding {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 960px) {
+      .scenario-grid,
+      .focus-grid,
+      .system-shell {
+        grid-template-columns: 1fr;
+      }
+      .focus-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .top-nav .container {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 2px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+      .nav-brand { white-space: normal; }
+      .nav-links {
+        justify-content: flex-start;
+        padding-top: 2px;
+      }
+      .nav-links a {
+        padding: 7px 12px;
+        font-size: 0.81rem;
+      }
+      header h1 { font-size: 1.7rem; }
+      .scenario-grid,
+      .focus-grid {
+        grid-template-columns: 1fr;
+      }
+      main { padding: 40px 0 60px; }
+      .container { padding: 0 16px; }
+      .section-card,
+      .system-panel,
+      .system-side,
+      .scenario-card,
+      .focus-card {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav" aria-label="首页顶部导航">
+  <div class="container">
+    <a class="nav-brand" href="../index.html#hero-header">USTC-AGI <span>Time Series</span></a>
+    <div class="nav-links">
+      <a href="../index.html#hero-header">首页概览</a>
+      <a href="../index.html#research-tracks">研究方向</a>
+      <a href="../papers/">论文列表</a>
+      <a href="../systems/" class="nav-primary">系统研发</a>
+      <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header id="hero-header" role="button" tabindex="0" aria-label="点击刷新当前页面"
+        onclick="location.reload()">
+  <div class="container">
+    <h1><span class="highlight">System Development</span> 系统研发</h1>
+    <p class="header-sub">
+      中国科学技术大学 · 认知智能全国重点实验室 AGI 研究组<br>
+      面向城市电力负荷、新能源发电、云服务流量等真实预测场景，持续推进时间序列预测的应用研究与系统研发
+    </p>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <div class="section-intro">
+      <h2>页面概览</h2>
+      <p>这一页聚焦 USTC-AGI 研究组在时间序列预测真实应用场景中的研究探索，以及支撑相关工作的 CastClaw 研发系统。</p>
+    </div>
+
+    <div class="content-stack">
+      <section class="section-card">
+        <h3>总体定位</h3>
+        <p>
+          我们关注的不是抽象 benchmark 上的单点最优，而是时间序列预测在真实环境中的完整问题形态：
+          数据是否稳定、场景是否持续变化、外生因素是否充分可用、决策流程是否允许人机协同、系统是否能够形成可复用的研发闭环。
+        </p>
+        <p>
+          围绕这些问题，课题组持续面向城市电力负荷、新能源发电、云服务流量等应用场景开展研究，并把相关方法、工具与流程逐步沉淀为可复用的系统能力。
+        </p>
+        <div class="btn-row">
+          <a class="page-btn page-btn-primary" href="../cast-claw/">CastClaw</a>
+          <a class="page-btn page-btn-secondary" href="../cast-claw/docs/">用户文档</a>
+          <a class="page-btn page-btn-secondary" href="../papers/">论文列表</a>
+          <a class="page-btn page-btn-secondary" href="../index.html#application-systems">返回首页</a>
+        </div>
+      </section>
+
+      <section class="section-card">
+        <h3>应用研究场景</h3>
+        <div class="scenario-grid">
+          <article class="scenario-card">
+            <span class="scenario-tag">城市电力负荷</span>
+            <h4>面向城市级与区域级用电需求预测</h4>
+            <p>
+              聚焦负荷曲线中的强周期性、节假日扰动、天气影响与突发变化，
+              支撑调度规划、峰谷平衡与需求侧响应等关键任务。
+            </p>
+            <div class="chip-list">
+              <span>天气感知</span>
+              <span>节假日效应</span>
+              <span>多尺度周期</span>
+              <span>负荷调度</span>
+            </div>
+          </article>
+
+          <article class="scenario-card">
+            <span class="scenario-tag">新能源发电</span>
+            <h4>面向光伏与风电出力的波动预测</h4>
+            <p>
+              针对新能源出力的间歇性、爬坡事件与气象耦合问题，
+              关注多源观测融合、短临波动刻画与不确定性建模。
+            </p>
+            <div class="chip-list">
+              <span>光伏预测</span>
+              <span>风电预测</span>
+              <span>气象耦合</span>
+              <span>不确定性</span>
+            </div>
+          </article>
+
+          <article class="scenario-card">
+            <span class="scenario-tag">云服务流量</span>
+            <h4>面向云资源调度与容量规划的流量预测</h4>
+            <p>
+              围绕流量突发、业务周期变化与资源成本约束，
+              探索支持弹性伸缩、容量预算和服务稳定性的预测策略。
+            </p>
+            <div class="chip-list">
+              <span>弹性伸缩</span>
+              <span>流量突发</span>
+              <span>容量规划</span>
+              <span>成本约束</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card">
+        <h3>CastClaw 研发系统</h3>
+        <div class="system-shell">
+          <div class="system-panel">
+            <h4>面向真实预测工作流的人机协同智能体框架</h4>
+            <p>
+              CastClaw 是课题组围绕时间序列预测研发构建的工作台系统。它不把预测任务简化为单次模型训练，
+              而是把数据理解、特征构建、模型选择、实验执行、结果分析和人类确认统一组织到一个可交互的工作流中。
+            </p>
+            <p>
+              在应用研究中，CastClaw 更像是一个可以反复复用的研发载体：它帮助研究者快速进入新场景、组合已有能力、
+              保留关键判断节点，并把场景经验逐步沉淀为长期可复用的策略资产。
+            </p>
+            <div class="btn-row">
+              <a class="page-btn page-btn-primary" href="../cast-claw/">查看主页</a>
+              <a class="page-btn page-btn-secondary" href="../cast-claw/docs/">用户文档</a>
+              <a class="page-btn page-btn-secondary" href="https://github.com/SkyeGT/CastClaw" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+
+          <aside class="system-side">
+            <h4>核心能力</h4>
+            <div class="capability-list">
+              <div class="capability-item">
+                <strong>多智能体协同</strong>
+                <span>通过 Planner、Forecaster、Critic 组织问题分析、模型执行与结果反思。</span>
+              </div>
+              <div class="capability-item">
+                <strong>插件化工具链</strong>
+                <span>把数据分析、特征工程与经典时序模型封装为可调用、可组合的运行时能力。</span>
+              </div>
+              <div class="capability-item">
+                <strong>人在回路</strong>
+                <span>在关键节点保留人工确认与策略修正，兼顾自动化效率与研究可控性。</span>
+              </div>
+              <div class="capability-item">
+                <strong>经验沉淀</strong>
+                <span>将场景经验和可复用策略持续积累，形成跨任务、跨会话的研发资产。</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section-card">
+        <h3>从场景问题到系统闭环</h3>
+        <div class="focus-grid">
+          <article class="focus-card">
+            <span class="focus-tag">场景诊断</span>
+            <h4>先理解问题，再建模</h4>
+            <p>围绕数据粒度、周期结构、外生变量和业务约束，先做任务诊断，再决定建模路线。</p>
+          </article>
+
+          <article class="focus-card">
+            <span class="focus-tag">多源建模</span>
+            <h4>把结构与语义同时接入</h4>
+            <p>结合数值序列、气象信息、业务上下文和场景先验，提高模型对真实环境的感知能力。</p>
+          </article>
+
+          <article class="focus-card">
+            <span class="focus-tag">人机协同</span>
+            <h4>保留关键判断节点</h4>
+            <p>在模型选择、实验切换和结果审阅等关键环节引入研究者判断，避免盲目自动化。</p>
+          </article>
+
+          <article class="focus-card">
+            <span class="focus-tag">持续迭代</span>
+            <h4>让研发过程能够复用</h4>
+            <p>把场景经验、策略模板和执行流程固化为长期资产，支持后续任务快速迁移与扩展。</p>
+          </article>
+        </div>
+      </section>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>
+      &copy; 2024–2026 Time Series Analysis Group &middot;
+      <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
+      &middot; State Key Laboratory of Cognitive Intelligence, USTC
+    </p>
+    <p class="footer-funding">
+      本项目研究资助来源：国家双一流建设经费、国家自然科学基金委、华为技术合作项目
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
