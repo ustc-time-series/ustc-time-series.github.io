@@ -105,6 +105,38 @@
       transform: translateY(-1px);
     }
 
+    header {
+      background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
+      border-bottom: 1px solid #e8e8e8;
+      padding: 72px 0 56px;
+      text-align: center;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    header:hover {
+      background: linear-gradient(160deg, #fdffff 50%, #e6fbf8 100%);
+    }
+    header:active {
+      transform: scale(0.997);
+    }
+    header:focus-visible {
+      outline: 3px solid rgba(15, 118, 110, 0.2);
+      outline-offset: -6px;
+    }
+    header h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #111;
+    }
+    header h1 .highlight { color: #0f766e; }
+    header .header-sub {
+      margin-top: 14px;
+      font-size: 0.97rem;
+      color: #666;
+      line-height: 1.75;
+    }
+
     main {
       flex: 1;
       padding: 40px 0 80px;
@@ -267,6 +299,17 @@
     </div>
   </div>
 </nav>
+
+<header id="hero-header" role="button" tabindex="0" aria-label="点击刷新当前页面"
+        onclick="location.reload()">
+  <div class="container">
+    <h1><span class="highlight">Time Series Publications</span> 论文列表</h1>
+    <p class="header-sub">
+      中国科学技术大学 · 认知智能全国重点实验室 AGI 研究组<br>
+      汇集 Time Series 方向代表性工作，保留论文标题、作者、会议信息与 PDF / Code 外链
+    </p>
+  </div>
+</header>
 
 <main>
   <div class="container">
