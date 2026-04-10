@@ -280,7 +280,7 @@
     .track-grid,
     .work-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 18px;
       margin-top: 18px;
     }
@@ -308,6 +308,7 @@
     .tag-orange { background: #fff3e8; color: #d35400; border: 1px solid #f2cfb2; }
     .tag-blue { background: #eef4ff; color: #1d4ed8; border: 1px solid #cdddff; }
     .tag-purple { background: #f4efff; color: #7c3aed; border: 1px solid #ddccff; }
+    .tag-rose { background: #fff0f3; color: #be123c; border: 1px solid #fda4af; }
 
     .track-card h4,
     .work-card h4 {
@@ -407,7 +408,7 @@
       header h1 { font-size: 1.7rem; }
       .track-grid,
       .work-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
       }
       main { padding: 40px 0 60px; }
       .container { padding: 0 16px; }
@@ -459,7 +460,7 @@
 
     <div class="content-stack">
       <section class="section-card">
-        <h3>五条探索主线</h3>
+        <h3>六大技术路径</h3>
         <div class="track-grid">
           <article class="track-card">
             <span class="track-tag tag-teal">深度表征学习</span>
@@ -468,17 +469,6 @@
               围绕非平稳性建模、层次生成式预测、解耦式预测和预测后修正，
               持续加强模型对时间序列本身的建模能力。
             </p>
-            <div class="chip-list">
-              <span>SAN</span>
-              <span>GPHTF</span>
-              <span>FDF</span>
-              <span>Post-hoc Revision</span>
-            </div>
-            <div class="link-list">
-              <a href="https://mingyue-cheng.github.io/files/papers/san-neurips2024.pdf" target="_blank" rel="noopener">SAN PDF</a>
-              <a href="https://arxiv.org/pdf/2402.16516.pdf" target="_blank" rel="noopener">GPHTF PDF</a>
-              <a href="https://arxiv.org/pdf/2410.13253" target="_blank" rel="noopener">FDF PDF</a>
-            </div>
           </article>
 
           <article class="track-card">
@@ -488,18 +478,15 @@
               这一方向聚焦 masked autoencoder、扩散式自回归建模与大规模预训练范式，
               通过无标注或弱监督数据学习更具迁移性的时间序列表征。
             </p>
-            <div class="chip-list">
-              <span>TimeMAE</span>
-              <span>TimeDART</span>
-              <span>Masked Autoencoder</span>
-              <span>自监督表示</span>
-            </div>
-            <div class="link-list">
-              <a href="https://arxiv.org/pdf/2303.00320" target="_blank" rel="noopener">TimeMAE PDF</a>
-              <a href="https://github.com/Mingyue-Cheng/TimeMAE" target="_blank" rel="noopener">TimeMAE Code</a>
-              <a href="https://arxiv.org/html/2410.05711v1" target="_blank" rel="noopener">TimeDART PDF</a>
-              <a href="https://github.com/Melmaphother/TimeDART" target="_blank" rel="noopener">TimeDART Code</a>
-            </div>
+          </article>
+
+          <article class="track-card">
+            <span class="track-tag tag-rose">时序基础模型</span>
+            <h4>构建面向时间序列的大规模基础模型</h4>
+            <p>
+              探索统一架构下的时序基础模型，涵盖大规模多域预训练、零样本迁移与跨任务泛化，
+              推动时间序列走向像语言模型一样的通用智能范式。
+            </p>
           </article>
 
           <article class="track-card">
@@ -509,17 +496,6 @@
               这一方向探索把语言模型、文本上下文和更细粒度的语义线索引入预测任务，
               增强模型在跨域迁移和复杂场景中的情境理解能力。
             </p>
-            <div class="chip-list">
-              <span>CrossTimeNet</span>
-              <span>TokenCast</span>
-              <span>上下文建模</span>
-              <span>跨域预训练</span>
-            </div>
-            <div class="link-list">
-              <a href="https://arxiv.org/pdf/2403.12372.pdf" target="_blank" rel="noopener">CrossTimeNet PDF</a>
-              <a href="https://github.com/Mingyue-Cheng/CrossTimeNet" target="_blank" rel="noopener">CrossTimeNet Code</a>
-              <span>TokenCast 链接整理中</span>
-            </div>
           </article>
 
           <article class="track-card">
@@ -529,18 +505,6 @@
               我们让模型具备链式分析、逐步决策、经验回看与记忆调用能力，
               推动时间序列预测从黑箱前向计算走向可解释的认知过程。
             </p>
-            <div class="chip-list">
-              <span>TimeReasoner</span>
-              <span>Time-R1</span>
-              <span>MemCast</span>
-              <span>经验记忆</span>
-            </div>
-            <div class="link-list">
-              <a href="https://dl.acm.org/doi/10.1145/3773966.3777931" target="_blank" rel="noopener">TimeReasoner PDF</a>
-              <a href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">TimeReasoner Code</a>
-              <a href="https://www.arxiv.org/pdf/2508.09191" target="_blank" rel="noopener">Time-R1 PDF</a>
-              <a href="https://www.arxiv.org/pdf/2602.03164" target="_blank" rel="noopener">MemCast PDF</a>
-            </div>
           </article>
 
           <article class="track-card">
@@ -549,18 +513,6 @@
             <p>
               这一方向关注工具调用、人机协同与多智能体工作流，把预测系统从模型升级为可在环境中闭环执行任务的智能体。
             </p>
-            <div class="chip-list">
-              <span>AlphaCast</span>
-              <span>Cast-R1</span>
-              <span>CastClaw</span>
-              <span>Agentic Forecasting</span>
-            </div>
-            <div class="link-list">
-              <a href="https://arxiv.org/pdf/2511.08947" target="_blank" rel="noopener">AlphaCast PDF</a>
-              <a href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener">Cast-R1 PDF</a>
-              <a href="../cast-claw/">CastClaw 页面</a>
-              <a href="../cast-claw/docs/">用户文档</a>
-            </div>
           </article>
         </div>
       </section>
@@ -590,6 +542,12 @@
             <span class="work-tag tag-purple">智能体系统</span>
             <h4>AlphaCast / Cast-R1 / CastClaw</h4>
             <p>代表了人机协同、工具增强决策和多智能体工作流三类智能体式预测系统。</p>
+          </article>
+
+          <article class="work-card">
+            <span class="work-tag tag-rose">基础模型</span>
+            <h4>时序基础模型系列</h4>
+            <p>代表了我们在大规模多域预训练与零样本跨任务泛化方向的探索。</p>
           </article>
         </div>
       </section>
