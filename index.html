@@ -311,6 +311,14 @@
       border: 1px solid #c2e8e3;
       background: linear-gradient(180deg, #fbfefe 0%, #f0fdfb 100%);
     }
+    .subdomain-card.era-dl {
+      border-color: #c5d8f5;
+      background: linear-gradient(180deg, #fafbff 0%, #eef4ff 100%);
+    }
+    .subdomain-card.era-llm {
+      border-color: #ddd0f8;
+      background: linear-gradient(180deg, #fdfaff 0%, #f5efff 100%);
+    }
     .subdomain-label {
       display: inline-flex;
       align-self: flex-start;
@@ -322,6 +330,16 @@
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.04em;
+    }
+    .era-dl .subdomain-label {
+      border-color: #a8c4f0;
+      background: #ddeaff;
+      color: #1d4ed8;
+    }
+    .era-llm .subdomain-label {
+      border-color: #c4aaf5;
+      background: #ede5ff;
+      color: #6d28d9;
     }
     .subdomain-header {
       display: flex;
@@ -515,7 +533,34 @@
             围绕时间序列预测中的多模态语义理解、慢思考认知推理与自主交互智能体，系统探索从情境上下文理解、长思维链推理到自主决策的能力演进。
           </p>
           <div class="subdomain-grid">
-            <div class="subdomain-card">
+            <div class="subdomain-card era-dl">
+              <span class="subdomain-label">深度表征学习</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">📐</span>
+                <div>
+                  <p class="subdomain-desc">围绕非平稳性建模、层次生成式预测与解耦式预测，持续加强模型对时间序列本身的建模能力。</p>
+                </div>
+              </div>
+            </div>
+            <div class="subdomain-card era-dl">
+              <span class="subdomain-label">自监督预训练</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🔁</span>
+                <div>
+                  <p class="subdomain-desc">聚焦 masked autoencoder 与扩散式自回归建模，通过无标注数据学习更具迁移性的时序表征。</p>
+                </div>
+              </div>
+            </div>
+            <div class="subdomain-card era-dl">
+              <span class="subdomain-label">时序基础模型</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🏗️</span>
+                <div>
+                  <p class="subdomain-desc">探索大规模多域预训练与零样本迁移，推动时间序列走向通用智能范式。</p>
+                </div>
+              </div>
+            </div>
+            <div class="subdomain-card era-llm">
               <span class="subdomain-label">多模态语义理解</span>
               <div class="subdomain-header">
                 <span class="subdomain-icon">🧩</span>
@@ -524,7 +569,7 @@
                 </div>
               </div>
             </div>
-            <div class="subdomain-card">
+            <div class="subdomain-card era-llm">
               <span class="subdomain-label">慢思考认知推理</span>
               <div class="subdomain-header">
                 <span class="subdomain-icon">🧠</span>
@@ -533,7 +578,7 @@
                 </div>
               </div>
             </div>
-            <div class="subdomain-card">
+            <div class="subdomain-card era-llm">
               <span class="subdomain-label">自主交互智能体</span>
               <div class="subdomain-header">
                 <span class="subdomain-icon">🤖</span>
@@ -545,7 +590,11 @@
           </div>
           <div class="card-links">
             <a class="card-btn btn-enter-forecast" href="forecasting/">查看主页 →</a>
+            <a class="card-btn btn-outline" href="https://arxiv.org/pdf/2403.01493" target="_blank" rel="noopener">ConvTimeNet</a>
+            <a class="card-btn btn-outline" href="https://github.com/Mingyue-Cheng/TimeMAE" target="_blank" rel="noopener">TimeMAE</a>
+            <a class="card-btn btn-outline" href="https://github.com/realwangjiahao/TimeReasoner" target="_blank" rel="noopener">TimeReasoner</a>
             <a class="card-btn btn-outline" href="https://github.com/Xiaoyu-Tao/Cast-R1-TS" target="_blank" rel="noopener">Cast-R1</a>
+            <a class="card-btn btn-outline" href="cast-claw/">CastClaw</a>
           </div>
         </div>
       </div>
