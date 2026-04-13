@@ -85,12 +85,42 @@
     }
     .btn:hover,
     .btn:active { transform: translateY(-2px); box-shadow: 0 6px 18px var(--ui-highlight-shadow); background: var(--ui-highlight-bg); border-color: var(--ui-highlight-border); color: var(--ui-highlight-text); text-decoration: none; }
-    .btn-primary { background: #d35400; color: #fff; border-color: #d35400; }
+    .btn-primary { background: #fff; color: #d35400; border-color: #f5cba7; }
     .btn-primary:hover,
-    .btn-primary:active { background: var(--ui-highlight-bg); border-color: var(--ui-highlight-border); color: var(--ui-highlight-text); }
+    .btn-primary:active { background: #fff; border-color: #f5cba7; color: #d35400; }
     .btn-secondary { background: #fff; color: #222; border-color: #d0d0d0; }
     .btn-secondary:hover,
     .btn-secondary:active { background: var(--ui-highlight-bg); border-color: var(--ui-highlight-border); color: var(--ui-highlight-text); }
+    .btn-disabled {
+      background: #f6f6f4;
+      color: #8a8a8a;
+      border-color: #ddddda;
+      cursor: default;
+      box-shadow: none;
+    }
+    .btn-disabled:hover,
+    .btn-disabled:active {
+      transform: none;
+      box-shadow: none;
+      background: #f6f6f4;
+      border-color: #ddddda;
+      color: #8a8a8a;
+      text-decoration: none;
+    }
+    .hero-media {
+      margin-top: 18px;
+      text-align: center;
+    }
+    .hero-media-label {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: #8a8a8a;
+      letter-spacing: 0.04em;
+    }
+    .hero-media .pill-links {
+      justify-content: center;
+      margin-top: 10px;
+    }
 
     /* ── Section ────────────────────────────────── */
     section { padding: 64px 0; scroll-margin-top: 46px; }
@@ -428,7 +458,6 @@
       自主交互与人机协同双驱的新一代时间序列预测智能体<br>
       多智能体协同、插件化能力生态、Skill 驱动策略层、流程自主编排与持续进化
     </p>
-    <p class="affiliation"><a href="https://ustcagi.github.io/" target="_blank" rel="noopener">中国科学技术大学 · 认知智能全国重点实验室 AGI 组</a></p>
     <div class="btn-row">
       <a class="btn btn-primary" href="https://github.com/SkyeGT/CastClaw" target="_blank" rel="noopener">
         <svg viewBox="0 0 16 16" fill="currentColor" style="width:14px;height:14px">
@@ -436,7 +465,15 @@
         </svg>
         GitHub
       </a>
-      <a class="btn btn-secondary" href="docs/">用户文档</a>
+      <a class="btn btn-secondary" href="docs/">用户文档与使用指南</a>
+      <span class="btn btn-disabled">技术文档 Coming Soon</span>
+    </div>
+    <div class="hero-media">
+      <div class="hero-media-label">媒体报道</div>
+      <div class="pill-links">
+        <a class="pill pill-out" href="https://mp.weixin.qq.com/s/FW5f39GvGnSjwLVOP_NDmw?scene=2" target="_blank" rel="noopener">时空探索之旅</a>
+        <a class="pill pill-out" href="https://mp.weixin.qq.com/s/3AtikLSjFjQg6-JoZj4UxQ" target="_blank" rel="noopener">智猩猩报道</a>
+      </div>
     </div>
   </div>
 </header>
@@ -446,11 +483,11 @@
   <div class="container">
     <a href="../index.html" class="nav-home">Agentic AI</a>
     <a href="#overview">项目概览</a>
-    <a href="#key-highlights">关键特色介绍</a>
-    <a href="#system-design">系统概要设计</a>
-    <a href="#plugin-toolbox">插件工具箱</a>
-    <a href="#workflow">设计理念与Workflow</a>
     <a href="#interaction-modes">交互模式</a>
+    <a href="#workflow">智能工作流</a>
+    <a href="#key-highlights">关键特色</a>
+    <a href="#system-design">系统架构</a>
+    <a href="#plugin-toolbox">工具插件</a>
     <a href="#quickstart">使用指南</a>
     <a href="#team">关于我们</a>
   </div>
@@ -1283,12 +1320,6 @@ Reflection & Report</div>
         </tr>
       </tbody>
     </table>
-
-    <h3 class="sub-title">媒体报道</h3>
-    <ul>
-      <li><a href="https://mp.weixin.qq.com/s/FW5f39GvGnSjwLVOP_NDmw?scene=2" target="_blank" rel="noopener">时空探索之报道</a></li>
-    </ul>
-
     <h3 class="sub-title">致谢</h3>
     <p>
       CastClaw 借鉴了 <a href="https://github.com/anomalyco/opencode" target="_blank" rel="noopener">OpenCode</a>（CLI 框架基础）与 <a href="https://github.com/thuml/Time-Series-Library" target="_blank" rel="noopener">Time Series Library</a>（ML 后端模型库）的源代码，在此致以诚挚感谢。本项目也受到了 <a href="https://github.com/codingonion/OpenClaw" target="_blank" rel="noopener">OpenClaw</a> 源码实现思路的启发。本项目得到了中国科学技术大学与华为 2012 应用场景创新实验室校企合作基金的鼎力支持；同时，研发过程中所需的计算资源由华为昇腾 AI 百校计划全力保障。
