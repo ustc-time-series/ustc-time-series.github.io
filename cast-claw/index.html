@@ -450,6 +450,7 @@
     <a href="#system-design">系统概要设计</a>
     <a href="#plugin-toolbox">插件工具箱</a>
     <a href="#workflow">设计理念与Workflow</a>
+    <a href="#interaction-modes">交互模式</a>
     <a href="#quickstart">使用指南</a>
     <a href="#team">关于我们</a>
   </div>
@@ -476,6 +477,149 @@
     <p>
       进一步地，CastClaw 突破了传统模型“被动响应”的局限，具备与环境进行自主交互的能力。它以 <strong>CastRuntime</strong> 作为执行核心，以 <strong>CastSkill</strong> 作为策略层，再通过 <strong>CastSense</strong>、<strong>CastFeat</strong>、<strong>CastZoo</strong> 等插件能力模块完成时序诊断、表示构建与模型编排；在关键节点上，还能够引入人类专家的判断，实现人机协同决策。这种从“模型预测”迈向“智能体决策”的转变，或将为时间序列研究打开一条通往认知智能的新路径。
     </p>
+  </div>
+</section>
+
+<!-- ═══════════════════ INTERACTION MODES ═══════════════════ -->
+<section id="interaction-modes" class="alt">
+  <div class="container">
+    <h2 class="section-title">三种交互模式</h2>
+    <div class="tldr">
+      <strong>核心思路：</strong>
+      CastClaw 并非只有一种固定的交互方式，而是根据用户角色与使用场景，提供三种层次递进的协作模式——从深度决策支持的<strong>苏格拉底式交互</strong>，到人机实时共建的<strong>认知伴随式交互</strong>，再到生态插件化的<strong>通专融合式交互</strong>，覆盖科研全链路的不同需求。
+    </div>
+
+    <div class="highlight-stack">
+
+      <!-- 模式一：苏格拉底式 -->
+      <div class="highlight-panel" style="border-top:4px solid #1a5276;">
+        <div class="highlight-head">
+          <span class="highlight-index" style="background:#1a5276;">01</span>
+          <h3 class="highlight-title">苏格拉底式交互（Socratic Interaction）</h3>
+        </div>
+        <p><strong>关键词：需求澄清 → 任务建模 → 一次性生成预测方案。</strong>Agent 扮演"咨询专家"角色，通过多轮启发式对话消除预测目标的模糊性，只有当预测计划被用户最终确认后才正式启动任务。</p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">❓</div>
+            <h4>启发式提问</h4>
+            <p>用户输入"预测下周电力负荷"，Agent 不直接运行模型，而是反问："是否需要考虑工业节假日计划？是否融合天气预报数据？"</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h4>目标精炼</h4>
+            <p>通过 2–3 轮对话，逐步明确预测的时间粒度（Granularity）、置信区间要求，以及关键外生变量的取舍。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📋</div>
+            <h4>计划确认后执行</h4>
+            <p>在启动前展示一份结构化"预测计划书"，用户确认时间粒度、关键变量与置信区间后，Agent 才正式进入预测流程。</p>
+          </div>
+        </div>
+        <div class="pill-links" style="margin-top:18px;">
+          <span class="pill pill-out">复杂科研课题</span>
+          <span class="pill pill-out">重大决策支持</span>
+          <span class="pill pill-out">AI4Science 项目</span>
+          <span class="pill pill-out" style="color:#1a5276;border-color:#aed6f1;">核心价值：防止"垃圾入，垃圾出"</span>
+        </div>
+      </div>
+
+      <!-- 模式二：认知伴随式 -->
+      <div class="highlight-panel" style="border-top:4px solid #117a65;">
+        <div class="highlight-head">
+          <span class="highlight-index" style="background:#117a65;">02</span>
+          <h3 class="highlight-title">认知伴随式交互（Cognitive Accompaniment）</h3>
+        </div>
+        <p><strong>关键词：边做边想 → 实时介入 → 人机共建预测。</strong>这是一种"人在回路（Human-in-the-loop）"的动态交互，Agent 将内部思考逻辑和中间状态实时透明地展示给用户，并允许随时中断修正。</p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📡</div>
+            <h4>透明化流式输出</h4>
+            <p>在数据清洗、特征提取、模型训练阶段，实时输出中间特征图（如注意力热力图），让执行过程始终可观测。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">✋</div>
+            <h4>即时介入（Interruptible）</h4>
+            <p>用户发现平滑窗口（Window Size）设置不合理时，可立即中断并在监控面板上修正参数，Agent 调整后继续执行。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🔁</div>
+            <h4>反馈进化（RLAIF）</h4>
+            <p>记录用户在执行过程中的点赞 / 踩 / 修改操作，作为基于 AI 反馈的强化学习信号，持续优化 Agent 的决策偏好。</p>
+          </div>
+        </div>
+        <div class="pill-links" style="margin-top:18px;">
+          <span class="pill pill-out">模型调优阶段</span>
+          <span class="pill pill-out">实验探索过程</span>
+          <span class="pill pill-out">实时监控场景</span>
+          <span class="pill pill-out" style="color:#117a65;border-color:#a9dfbf;">核心价值：建立人机信任，降低黑盒感</span>
+        </div>
+      </div>
+
+      <!-- 模式三：通专融合式 -->
+      <div class="highlight-panel" style="border-top:4px solid #d35400;">
+        <div class="highlight-head">
+          <span class="highlight-index" style="background:#d35400;">03</span>
+          <h3 class="highlight-title">通专融合式交互（General-Specialist Fusion）</h3>
+        </div>
+        <p><strong>关键词：Claude Code + Plugin + 专业能力注入。</strong>将 CastClaw 作为一个能力插件（Skill / MCP Server），利用通用 LLM（如 Claude Code）作为前端接口，CastClaw 提供专业预测算力，分工互补，无缝渲染结果。</p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🔗</div>
+            <h4>自然语言桥接</h4>
+            <p>在 Claude Code 的终端里，用户直接下令 <code>/castclaw predict ./sales.csv</code>，无需切换工具或环境。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🤝</div>
+            <h4>能力互补</h4>
+            <p>Claude Code 负责代码编写、环境配置和通用逻辑分析；CastClaw 负责深度的 VQ-VAE 表征、多维时序建模和归因分析。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h4>无缝结果渲染</h4>
+            <p>预测生成的趋势图、误差分布图和带关键驱动因素的 Markdown 报告，直接在通用 AI 的 UI 中统一展示。</p>
+          </div>
+        </div>
+        <div class="pill-links" style="margin-top:18px;">
+          <span class="pill pill-out">工程开发</span>
+          <span class="pill pill-out">日常学术调研</span>
+          <span class="pill pill-out">开发者工具链</span>
+          <span class="pill pill-out" style="color:#d35400;border-color:#f5cba7;">核心价值：借力 Claude 生态降低使用门槛</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 对比表 -->
+    <h3 class="sub-title" style="margin-top:36px;">三种模式横向对比</h3>
+    <table class="team-table">
+      <thead>
+        <tr><th>模式</th><th>用户角色</th><th>CastClaw 角色</th><th>关键动作</th><th>交付物</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>苏格拉底式</strong></td>
+          <td>决策者</td>
+          <td>咨询专家</td>
+          <td>反思、澄清、规划</td>
+          <td>深度预测报告 + 归因建议</td>
+        </tr>
+        <tr>
+          <td><strong>认知伴随式</strong></td>
+          <td>协同开发者</td>
+          <td>智能搭档</td>
+          <td>监控、反馈、即时调整</td>
+          <td>动态过程可视化 + 迭代结果</td>
+        </tr>
+        <tr>
+          <td><strong>通专融合式</strong></td>
+          <td>终端用户</td>
+          <td>专业插件</td>
+          <td>调用、转换、标准输出</td>
+          <td>预测 API 结果 + 渲染图表</td>
+        </tr>
+      </tbody>
+    </table>
+
   </div>
 </section>
 
@@ -550,7 +694,7 @@
       <div id="skill-evolution" class="highlight-panel highlight-panel-skill">
         <div class="highlight-head">
           <span class="highlight-index">03</span>
-          <h3 class="highlight-title">基于 Skill 的自主进化</h3>
+          <h3 class="highlight-title">基于 Skill 的持续进化</h3>
         </div>
         <p>CastClaw 将 Planner 生成并经人类审核的技能文件视为可以长期积累的<strong>系统经验</strong>。这些 Skill 不只服务于单次实验，而是会持续沉淀模型选择策略、参数搜索空间、适用条件与风险提示；随着 Skill 的不断积累，CastClaw 可以在新任务中更快启动、更准决策，并逐步实现面向预测任务的自主进化。</p>
         <div class="feature-grid">
