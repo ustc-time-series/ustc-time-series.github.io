@@ -53,15 +53,84 @@
 
     /* ── Header ─────────────────────────────────── */
     header {
+      position: relative;
+      overflow: hidden;
       background: linear-gradient(160deg, #ffffff 55%, #fef3e2 100%);
       border-bottom: 1px solid #f5cba7;
       padding: 64px 0 48px; text-align: center;
     }
     header .container {
+      position: relative;
+      z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+    }
+    .hero-refresh-sheen {
+      position: absolute;
+      top: -20%;
+      bottom: -20%;
+      left: -30%;
+      width: 26%;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.72) 48%, rgba(255,255,255,0) 100%);
+      transform: skewX(-24deg) translateX(0);
+    }
+    .hero-clickable { cursor: pointer; }
+    .hero-refresh-wave {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 2px solid rgba(230, 126, 34, 0.24);
+      background: rgba(245, 203, 167, 0.22);
+      transform: translate(-50%, -50%) scale(0.2);
+      pointer-events: none;
+      z-index: 1;
+      animation: hero-wave 0.85s ease-out forwards;
+    }
+    header.hero-refreshing .hero-refresh-sheen {
+      animation: hero-sheen 0.9s ease;
+    }
+    header.hero-refreshing .header-logo {
+      animation: hero-logo-refresh 0.75s ease;
+    }
+    header.hero-refreshing h1 {
+      animation: hero-title-refresh 0.75s ease;
+    }
+    header.hero-refreshing .subtitle,
+    header.hero-refreshing .btn-row,
+    header.hero-refreshing .hero-media {
+      animation: hero-copy-refresh 0.75s ease;
+    }
+    @keyframes hero-sheen {
+      0% { opacity: 0; transform: skewX(-24deg) translateX(0); }
+      12% { opacity: 1; }
+      100% { opacity: 0; transform: skewX(-24deg) translateX(560%); }
+    }
+    @keyframes hero-wave {
+      0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.2); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(11); }
+    }
+    @keyframes hero-logo-refresh {
+      0% { transform: scale(1) translateY(0); filter: saturate(1); }
+      28% { transform: scale(0.985) translateY(2px); filter: saturate(0.92); }
+      62% { transform: scale(1.018) translateY(-2px); filter: saturate(1.06); }
+      100% { transform: scale(1) translateY(0); filter: saturate(1); }
+    }
+    @keyframes hero-title-refresh {
+      0% { transform: translateY(0); opacity: 1; }
+      25% { transform: translateY(3px); opacity: 0.84; }
+      62% { transform: translateY(-2px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes hero-copy-refresh {
+      0% { transform: translateY(0); opacity: 1; }
+      30% { transform: translateY(4px); opacity: 0.76; }
+      100% { transform: translateY(0); opacity: 1; }
     }
     header h1 { font-size: 2rem; font-weight: 800; color: #111; line-height: 1.3; }
     header h1 .hl { color: #d35400; }
@@ -450,11 +519,12 @@
 <body>
 
 <!-- ═══════════════════ HEADER ═══════════════════ -->
-<header>
+<header id="heroHeader">
+  <div class="hero-refresh-sheen" aria-hidden="true"></div>
   <div class="container">
-    <img src="assets/logo.jpeg" alt="CastClaw" class="header-logo" />
-    <h1><span class="hl">CastClaw</span></h1>
-    <p class="subtitle">
+    <img src="assets/logo.jpeg" alt="CastClaw" class="header-logo hero-clickable" />
+    <h1 class="hero-clickable"><span class="hl">CastClaw</span></h1>
+    <p class="subtitle hero-clickable">
       自主交互与人机协同双驱的新一代时间序列预测智能体<br>
       多智能体协同、插件化能力生态、Skill 驱动策略层、流程自主编排与持续进化
     </p>
@@ -1345,5 +1415,38 @@ Reflection & Report</div>
     </p>
   </div>
 </footer>
+<script>
+  (function () {
+    const heroHeader = document.getElementById('heroHeader');
+    if (!heroHeader) return;
+
+    let refreshTimer = null;
+
+    function triggerHeroRefresh(event) {
+      if (event.target.closest('a, button')) return;
+
+      heroHeader.classList.remove('hero-refreshing');
+      void heroHeader.offsetWidth;
+      heroHeader.classList.add('hero-refreshing');
+
+      if (refreshTimer) clearTimeout(refreshTimer);
+      refreshTimer = window.setTimeout(function () {
+        heroHeader.classList.remove('hero-refreshing');
+      }, 900);
+
+      const rect = heroHeader.getBoundingClientRect();
+      const wave = document.createElement('span');
+      wave.className = 'hero-refresh-wave';
+      wave.style.left = (event.clientX - rect.left) + 'px';
+      wave.style.top = (event.clientY - rect.top) + 'px';
+      heroHeader.appendChild(wave);
+      wave.addEventListener('animationend', function () {
+        wave.remove();
+      });
+    }
+
+    heroHeader.addEventListener('click', triggerHeroRefresh);
+  })();
+</script>
 </body>
 </html>
