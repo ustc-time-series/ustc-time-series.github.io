@@ -983,40 +983,40 @@ Reflection & Report</div>
 <!-- ═══════════════════ WORKFLOW ═══════════════════ -->
 <section id="workflow">
   <div class="container">
-    <h2 class="section-title">智能体设计理念</h2>
+    <h2 class="section-title">模拟专家思维的智能工作流</h2>
     <div class="tldr">
       <strong>核心思路：</strong>
-      CastClaw 不只是“调用训练脚本”的外壳，更是一套围绕<strong>插件动作空间（Plugin Action Space）</strong>组织起来的智能体工作台。不同智能体会通过 CastSkill 调度插件能力完成时序认知、表示生成、模型调用、实验反思与报告整理；整体运行遵循 <strong>Perception → Representation → Action → Reflection</strong> 的闭环。
+      CastClaw 希望模拟的不是“批量跑模型”的流水线，而是<strong>时序预测专家的思维顺序</strong>：先把任务问清楚，再看数据与场景，再提出策略假设，再用实验逐步验证，最后基于证据复盘并给出结论。Planner、Forecaster 与 Critic 的分工，本质上是在系统里重建这种 <strong>“诊断 → 假设 → 验证 → 复盘”</strong> 的专家式工作流。
     </div>
 
     <div class="feature-grid">
 
       <div class="feature-card">
         <div class="feature-icon">🗂️</div>
-        <h4>Planner Action Space</h4>
-        <p>任务解析、目标列/时间列确认、插件路线规划、趋势与季节性诊断、WebSearch 定性研究、技能草案生成与约束注入。</p>
+        <h4>像专家一样先诊断问题</h4>
+        <p>Planner 不急着跑实验，而是先澄清任务定义、确认约束、理解行业背景并体检数据结构，先形成对“问题是什么、风险在哪里、该从哪条路线切入”的初步判断。</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">🔬</div>
-        <h4>Forecaster Action Space</h4>
-        <p>读取实验历史、选择技能与插件组合、调用 CastFeat / CastZoo 与 <code>generate_model</code>、预算检查、失败归因、<code>forecast_reflect</code> 反思记录，以及人在回路暂停与反馈融合。</p>
+        <h4>像专家一样带着假设验证</h4>
+        <p>Forecaster 不是盲目穷举模型，而是读取已有证据与 Skill 假设，小步快跑地组织实验、识别失败原因、控制预算，并在必要时引入人类反馈完成纠偏。</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">📊</div>
-        <h4>Critic Action Space</h4>
-        <p>聚合结果、按时序特征拆解性能、对比插件路线与模型族表现、生成可视化脚本、整理结论和输出最终 Markdown 报告。</p>
+        <h4>像专家一样基于证据复盘</h4>
+        <p>Critic 负责把实验结果从“谁分数更高”提升到“为什么有效、在什么条件下有效、还存在哪些风险”，将性能分解、图表证据和结论建议整理为可审查的最终报告。</p>
       </div>
 
     </div>
 
-    <h3 class="sub-title">Agentic Workflow</h3>
+    <h3 class="sub-title">模拟专家思维的 Agentic Workflow</h3>
     <div class="feature-grid" style="grid-template-columns:1fr;margin-top:16px;">
       <div class="feature-card" style="border-top:4px solid #d35400;">
         <div class="feature-icon">🧭</div>
-        <h4>流程自主编排</h4>
-        <p>CastClaw 遵循严格的 Agentic Workflow，阶段转换由 <code>forecast_state</code> 工具强制执行——<strong>不可跳过任何阶段</strong>，确保每次实验过程可追溯、可复现。</p>
+        <h4>不是盲目跑模型，而是按专家顺序推进</h4>
+        <p>CastClaw 遵循严格的阶段化工作流，阶段转换由 <code>forecast_state</code> 工具强制执行——<strong>不可跳过任何阶段</strong>。这意味着系统必须先完成问题诊断，再形成策略假设，再进入实验验证与报告复盘，确保每次预测都可追溯、可解释、可复现。</p>
       </div>
     </div>
 
@@ -1029,8 +1029,8 @@ Reflection & Report</div>
         </div>
         <div class="step-body">
           <span class="step-tag">Planner</span>
-          <h4>初始化（Init）</h4>
-          <p>定义预测任务：数据集路径、目标列、时间列、预测步长（Horizon）、回看长度（Look-back）、训练/验证/测试分割比例、评估指标与考虑的模型族。Planner 调用 <code>forecast_state init</code> 创建 <code>.forecast/</code> 目录，<code>forecast_task</code> 冻结 <code>task.json</code>。可选使用 <code>/cast-creation</code> 生成项目约束文件。</p>
+          <h4>先把问题定义清楚</h4>
+          <p>专家不会在任务模糊时直接开跑。Planner 首先定义预测任务：数据集路径、目标列、时间列、预测步长（Horizon）、回看长度（Look-back）、训练/验证/测试分割比例、评估指标与候选模型族；随后调用 <code>forecast_state init</code> 创建 <code>.forecast/</code> 目录，并用 <code>forecast_task</code> 冻结 <code>task.json</code>。必要时还可用 <code>/cast-creation</code> 生成项目级约束文件。</p>
         </div>
       </div>
 
@@ -1041,8 +1041,8 @@ Reflection & Report</div>
         </div>
         <div class="step-body">
           <span class="step-tag">Planner</span>
-          <h4>预测前分析（Pre-forecast Analysis）</h4>
-          <p>Planner 并发启动两个子智能体：<strong>定性轨道</strong>网络调研预测领域（行业背景、关键事件、风险因素）；<strong>定量轨道</strong>调用 CastSense 分析数据集统计特征（趋势、季节性、平稳性、波动率、异常值）。双轨结果融合为 <code>.forecast/reports/pre-forecast.md</code>，驱动后续技能检索与插件路线选择。</p>
+          <h4>再做背景研判与数据体检</h4>
+          <p>专家在动手前会先理解场景。Planner 并发启动两条分析轨道：<strong>定性轨道</strong> 调研行业背景、关键事件与潜在风险；<strong>定量轨道</strong> 调用 CastSense 诊断趋势、季节性、平稳性、波动率、异常值与分布变化。双轨结果融合为 <code>.forecast/reports/pre-forecast.md</code>，作为后续策略判断的证据基础。</p>
         </div>
       </div>
 
@@ -1053,8 +1053,8 @@ Reflection & Report</div>
         </div>
         <div class="step-body">
           <span class="step-tag">Planner · 人类审核</span>
-          <h4>技能审核（Skill Audit）</h4>
-          <p>基于预测前分析，Planner 生成 2–4 个结构化<strong>技能文件</strong>，每个文件包含：适用条件、参数搜索空间、特征模板（配置 JSON）及针对当前数据集的风险警告。人类审核并确认后，阶段正式过渡到实验循环。</p>
+          <h4>形成策略假设并做人类把关</h4>
+          <p>基于前面的诊断证据，Planner 生成 2–4 个结构化<strong>技能文件</strong>，把“该尝试什么模型路线、在什么条件下尝试、风险点是什么”显式写出来。每个 Skill 都包含适用条件、参数搜索空间、特征模板（配置 JSON）及风险警告；经人类审核确认后，系统才进入实验循环。</p>
         </div>
       </div>
 
@@ -1065,8 +1065,8 @@ Reflection & Report</div>
         </div>
         <div class="step-body">
           <span class="step-tag">Forecaster · 人在回路</span>
-          <h4>预测迭代</h4>
-          <p>Forecaster 使用已确认技能迭代实验：读取当前最佳结果与近期失败历史 → 选取插件与模型配置 → 调用 CastFeat 构建表示 → 由 CastZoo 执行训练评估 → <code>forecast_reflect</code> 反思记录 → 预算检查 → 循环。停滞时触发人在回路暂停，等待并融合人类领域反馈后继续。</p>
+          <h4>带着假设做迭代验证</h4>
+          <p>Forecaster 使用已确认 Skill 组织实验：读取当前最佳结果与近期失败历史 → 选取插件与模型配置 → 调用 CastFeat 构建表示 → 由 CastZoo 执行训练评估 → 用 <code>forecast_reflect</code> 记录失败归因与改进线索 → 预算检查 → 进入下一轮。若长期停滞或结果异常，则触发人在回路暂停，让专家反馈进入下一轮决策。</p>
         </div>
       </div>
 
@@ -1077,8 +1077,8 @@ Reflection & Report</div>
         </div>
         <div class="step-body">
           <span class="step-tag">Critic</span>
-          <h4>后置报告（Post-forecast Report）</h4>
-          <p>Critic 读取全部实验产物，生成：各模型族最佳结果对比、按时序特征（趋势/季节性/平稳性）的性能分解、可视化脚本（时序图、误差分布图），以及结构化最终预测报告，输出至 <code>.forecast/reports/final-report.md</code>。</p>
+          <h4>最后做证据复盘与结论输出</h4>
+          <p>Critic 读取全部实验产物，完成一次类似专家复盘会的整理：比较各模型族最佳结果，按时序特征（趋势 / 季节性 / 平稳性）拆解性能，生成时序图与误差分布图，并输出结构化最终预测报告到 <code>.forecast/reports/final-report.md</code>。最终交付的不只是分数，更是可解释的判断依据与下一步建议。</p>
         </div>
       </div>
 
