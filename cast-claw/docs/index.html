@@ -804,6 +804,14 @@
       </div>
     </div>
     <div class="sidebar-group">
+      <div class="sidebar-group-title">交互模式</div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="#mode-socratic">苏格拉底式交互</a>
+        <a class="sidebar-link" href="#mode-accompaniment">认知伴随式交互</a>
+        <a class="sidebar-link" href="#mode-fusion">通专融合式交互</a>
+      </div>
+    </div>
+    <div class="sidebar-group">
       <div class="sidebar-group-title">CLI 命令参考</div>
       <div class="sidebar-links">
         <a class="sidebar-link" href="#launch-options">启动选项</a>
@@ -1020,6 +1028,69 @@
         <div class="callout warn">
           <strong>常见误区</strong>
           <p>CLI 是阶段驱动的任务工作台，不是单步问答界面。重点是"当前在哪个阶段，下一步由谁负责"。</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- ── 交互模式 ── -->
+    <section class="doc-section" id="interaction-modes" data-group-title="交互模式">
+      <h2>交互模式</h2>
+      <p>CastClaw 不只有一种固定使用方式。根据任务复杂度、用户角色和协作深度，你可以在三种交互模式之间切换：先澄清需求，再进入协同执行，或者把 CastClaw 作为专业能力模块接入更大的 AI 工作流。</p>
+
+      <article class="doc-block" id="mode-socratic" data-title="苏格拉底式交互">
+        <h3>苏格拉底式交互</h3>
+        <p>适用于任务目标还不清晰、约束条件尚未冻结的场景。CastClaw 会先通过提问帮你明确预测目标、时间粒度、外生变量、评价指标和资源预算，再进入正式执行。</p>
+        <table class="doc-table">
+          <thead>
+            <tr><th>关注点</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>适用阶段</td><td>项目初期、需求澄清、方案设计。</td></tr>
+            <tr><td>核心动作</td><td>连续追问、澄清假设、冻结预测计划。</td></tr>
+            <tr><td>用户要做什么</td><td>提供业务背景、确认目标列 / 时间列 / 预测步长 / 指标。</td></tr>
+          </tbody>
+        </table>
+        <div class="callout info">
+          <strong>使用建议</strong>
+          <p>如果你还说不清“到底要预测什么、以什么标准算成功”，先采用这种模式，避免在错误任务定义上消耗实验预算。</p>
+        </div>
+      </article>
+
+      <article class="doc-block" id="mode-accompaniment" data-title="认知伴随式交互">
+        <h3>认知伴随式交互</h3>
+        <p>适用于你希望一边运行、一边观察、一边纠偏的场景。系统会把阶段推进、Skill 审核、实验停滞和关键结果暴露给你，你可以在关键节点即时介入。</p>
+        <table class="doc-table">
+          <thead>
+            <tr><th>关注点</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>适用阶段</td><td>实验迭代、结果分析、人机协同调优。</td></tr>
+            <tr><td>核心动作</td><td>查看中间状态、审核 Skill、在停滞或异常时干预。</td></tr>
+            <tr><td>用户要做什么</td><td>监控预算、识别异常实验、在关键节点提供领域反馈。</td></tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <strong>典型触发点</strong>
+          <p>当 Forecaster 连续多轮无改善、结果突然劣化，或候选最优结果与你的领域常识冲突时，就应切入这种模式。</p>
+        </div>
+      </article>
+
+      <article class="doc-block" id="mode-fusion" data-title="通专融合式交互">
+        <h3>通专融合式交互</h3>
+        <p>适用于把 CastClaw 接入更大开发链路的场景。通用 AI 负责代码、环境和外围编排，CastClaw 负责时间序列预测的专业能力输出，两者通过 Skill、CLI 或插件接口协同。</p>
+        <table class="doc-table">
+          <thead>
+            <tr><th>关注点</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>适用阶段</td><td>工程集成、研究工作台、统一 Agent 入口。</td></tr>
+            <tr><td>核心动作</td><td>把 CastClaw 当作专业预测模块调用。</td></tr>
+            <tr><td>用户要做什么</td><td>定义输入输出边界，明确哪些能力由通用 AI 负责，哪些由 CastClaw 负责。</td></tr>
+          </tbody>
+        </table>
+        <div class="callout warn">
+          <strong>边界提醒</strong>
+          <p>这种模式最容易出现“谁负责什么”不清的问题。建议提前约定：任务定义与结果解释由谁主导，模型实验与报告生成由谁执行。</p>
         </div>
       </article>
     </section>

@@ -804,6 +804,14 @@
       </div>
     </div>
     <div class="sidebar-group">
+      <div class="sidebar-group-title">Interaction Modes</div>
+      <div class="sidebar-links">
+        <a class="sidebar-link" href="#mode-socratic">Socratic Interaction</a>
+        <a class="sidebar-link" href="#mode-accompaniment">Cognitive Accompaniment</a>
+        <a class="sidebar-link" href="#mode-fusion">General-Specialist Fusion</a>
+      </div>
+    </div>
+    <div class="sidebar-group">
       <div class="sidebar-group-title">CLI Reference</div>
       <div class="sidebar-links">
         <a class="sidebar-link" href="#launch-options">Launch Options</a>
@@ -1020,6 +1028,69 @@
         <div class="callout warn">
           <strong>Common misunderstanding</strong>
           <p>The CLI is a stage-driven task workspace, not a one-shot chat box. The important question is always: which stage are we in, and who acts next?</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- Interaction Modes -->
+    <section class="doc-section" id="interaction-modes" data-group-title="Interaction Modes">
+      <h2>Interaction Modes</h2>
+      <p>CastClaw is not limited to a single usage pattern. Depending on task ambiguity, collaboration depth, and engineering context, you can use it in three modes: clarify the problem first, co-drive the execution loop, or plug CastClaw into a broader AI workflow as a specialist forecasting module.</p>
+
+      <article class="doc-block" id="mode-socratic" data-title="Socratic Interaction">
+        <h3>Socratic Interaction</h3>
+        <p>This mode fits tasks whose goals are still vague. CastClaw asks questions first so you can pin down the target, time granularity, exogenous variables, evaluation metrics, and resource budget before execution begins.</p>
+        <table class="doc-table">
+          <thead>
+            <tr><th>Focus</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Best for</td><td>Early-stage planning, problem framing, and requirement clarification.</td></tr>
+            <tr><td>Core action</td><td>Iterative questioning, assumption cleanup, and forecast-plan freezing.</td></tr>
+            <tr><td>Your role</td><td>Provide domain context and confirm target column, timestamp, horizon, and metrics.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout info">
+          <strong>Recommendation</strong>
+          <p>If you cannot yet explain what should be forecasted or how success will be judged, start here. It is the lowest-cost way to avoid wasting budget on the wrong task definition.</p>
+        </div>
+      </article>
+
+      <article class="doc-block" id="mode-accompaniment" data-title="Cognitive Accompaniment">
+        <h3>Cognitive Accompaniment</h3>
+        <p>This mode fits iterative experimentation. The system surfaces phase transitions, Skill audits, stagnation signals, and key intermediate results so that you can observe and intervene while execution is in progress.</p>
+        <table class="doc-table">
+          <thead>
+            <tr><th>Focus</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Best for</td><td>Experiment loops, collaborative tuning, and result inspection.</td></tr>
+            <tr><td>Core action</td><td>Monitor internal state, review Skills, and intervene when runs stagnate or drift.</td></tr>
+            <tr><td>Your role</td><td>Watch the budget, spot anomalies, and inject domain feedback at critical points.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <strong>Typical trigger</strong>
+          <p>Use this mode when Forecaster stops improving, when metrics suddenly degrade, or when the current best result conflicts with domain common sense.</p>
+        </div>
+      </article>
+
+      <article class="doc-block" id="mode-fusion" data-title="General-Specialist Fusion">
+        <h3>General-Specialist Fusion</h3>
+        <p>This mode fits larger engineering workflows. A general AI agent handles code, environment, and orchestration, while CastClaw contributes specialist forecasting capabilities through Skills, CLI entry points, or plugin-style integration.</p>
+        <table class="doc-table">
+          <thead>
+            <tr><th>Focus</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Best for</td><td>Engineering integration, research workbenches, and unified agent entry points.</td></tr>
+            <tr><td>Core action</td><td>Use CastClaw as a specialist forecasting module inside a broader workflow.</td></tr>
+            <tr><td>Your role</td><td>Define clean input/output boundaries and decide which tasks belong to the general agent versus CastClaw.</td></tr>
+          </tbody>
+        </table>
+        <div class="callout warn">
+          <strong>Boundary warning</strong>
+          <p>This mode often fails when ownership is vague. Decide in advance who owns task definition and explanation, and who owns model execution and reporting.</p>
         </div>
       </article>
     </section>
