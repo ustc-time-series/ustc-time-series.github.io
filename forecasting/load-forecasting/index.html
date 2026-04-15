@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>电力负荷预测 | USTC-AGI Time Series</title>
+  <meta
+    name="description"
+    content="电力负荷预测任务综述与公开 Benchmark 数据集整理，涵盖 GEFCom、AEMO、ISO-NE、ETT、ECL 等主流数据集。"
+  />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                   "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: #f7f7f5;
+      color: #1a1a1a;
+      line-height: 1.8;
+      font-size: 16px;
+      text-align: justify;
+      text-justify: inter-ideograph;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a { color: #0f766e; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ── NAV ── */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 120;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e8e8e8;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+    .top-nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 64px;
+    }
+    .nav-brand {
+      flex-shrink: 0;
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: #111;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .nav-brand span { color: #0f766e; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      overflow: visible;
+      padding: 10px 0;
+      width: 100%;
+    }
+    .nav-links a,
+    .nav-dropdown-toggle {
+      flex-shrink: 0;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: #555;
+      transition: color .18s, background .18s, border-color .18s, transform .18s;
+    }
+    .nav-dropdown {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .nav-dropdown-toggle {
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+      font-family: inherit;
+      line-height: 1.2;
+    }
+    .nav-dropdown-toggle::after {
+      content: "";
+      display: inline-block;
+      margin-left: 7px;
+      vertical-align: middle;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid currentColor;
+      transition: transform .18s ease;
+    }
+    .nav-dropdown.open .nav-dropdown-toggle::after { transform: rotate(180deg); }
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 220px;
+      padding: 8px;
+      border-radius: 16px;
+      border: 1px solid #d9eee9;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 12px 28px rgba(15, 118, 110, 0.10);
+      display: none;
+      gap: 4px;
+      z-index: 30;
+    }
+    .nav-dropdown.open .nav-dropdown-menu { display: grid; }
+    .nav-dropdown-menu a {
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #555;
+      line-height: 1.4;
+    }
+    .nav-links a:hover, .nav-links a:active,
+    .nav-dropdown-toggle:hover, .nav-dropdown-toggle:active,
+    .nav-dropdown.open .nav-dropdown-toggle,
+    .nav-dropdown-menu a:hover, .nav-dropdown-menu a:active {
+      color: #0f766e;
+      background: #f0fdf9;
+      border-color: #99e6d8;
+      font-weight: 700;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+    .nav-active {
+      color: #0f766e !important;
+      background: #f0fdf9 !important;
+      border-color: #99e6d8 !important;
+      font-weight: 700 !important;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
+      border-bottom: 1px solid #e8e8e8;
+      padding: 64px 0 48px;
+      text-align: center;
+    }
+    .breadcrumb {
+      font-size: 0.84rem;
+      color: #888;
+      margin-bottom: 16px;
+    }
+    .breadcrumb a { color: #0f766e; }
+    .breadcrumb span { margin: 0 6px; color: #bbb; }
+    header h1 {
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1.25;
+      color: #111;
+    }
+    header h1 .highlight { color: #0f766e; }
+    header .header-sub {
+      margin-top: 14px;
+      font-size: 0.97rem;
+      color: #666;
+      line-height: 1.75;
+    }
+    .header-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 18px;
+    }
+    .header-tags span {
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: #e7faf6;
+      color: #0f766e;
+      border: 1px solid #bde7de;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    /* ── MAIN ── */
+    main { flex: 1; padding: 40px 0 80px; }
+
+    .content-stack { display: grid; gap: 20px; }
+
+    .section-card {
+      background: #fff;
+      border: 1px solid #e8e8e8;
+      border-radius: 16px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      padding: 28px 28px 26px;
+    }
+    .section-card h2 {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+      color: #111;
+    }
+    .section-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #111;
+    }
+    .section-card p {
+      color: #555;
+      font-size: 0.97rem;
+    }
+    .section-card p + p { margin-top: 10px; }
+
+    /* Task type cards */
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .task-card {
+      border: 1px solid #ececec;
+      border-radius: 14px;
+      background: #fcfcfb;
+      padding: 18px 16px;
+    }
+    .task-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 11px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .tag-teal   { background: #e7faf6; color: #0f766e; border: 1px solid #bde7de; }
+    .tag-blue   { background: #eef4ff; color: #1d4ed8; border: 1px solid #cdddff; }
+    .tag-orange { background: #fff3e8; color: #d35400; border: 1px solid #f2cfb2; }
+    .tag-purple { background: #f4efff; color: #7c3aed; border: 1px solid #ddccff; }
+    .tag-rose   { background: #fff0f3; color: #be123c; border: 1px solid #fda4af; }
+    .tag-gray   { background: #f5f5f5; color: #555;    border: 1px solid #e0e0e0; }
+
+    .task-card h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      line-height: 1.4;
+      color: #111;
+      margin-bottom: 6px;
+    }
+    .task-card p {
+      font-size: 0.875rem;
+      color: #666;
+      line-height: 1.55;
+    }
+
+    /* Dataset category cards */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .cat-card {
+      border: 1px solid #ececec;
+      border-radius: 14px;
+      background: #fcfcfb;
+      padding: 20px;
+    }
+    .cat-card h4 {
+      font-size: 1.0rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .cat-card p { font-size: 0.9rem; color: #666; line-height: 1.6; }
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+    .chip-list span {
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      color: #555;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Dataset detail cards */
+    .dataset-section { margin-top: 20px; }
+    .dataset-section h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e7faf6;
+    }
+    .dataset-list { display: grid; gap: 14px; }
+    .dataset-card {
+      border: 1px solid #ececec;
+      border-radius: 14px;
+      background: #fcfcfb;
+      padding: 20px 22px;
+    }
+    .dataset-card-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .dataset-card-header h4 {
+      font-size: 1.0rem;
+      font-weight: 800;
+      color: #111;
+      line-height: 1.4;
+      flex: 1;
+    }
+    .heat-badge {
+      flex-shrink: 0;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.77rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .heat-high   { background: #fef9c3; color: #92400e; border: 1px solid #fde68a; }
+    .heat-very-high { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+    .heat-mid    { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+    .heat-new    { background: #ede9fe; color: #7c3aed; border: 1px solid #c4b5fd; }
+
+    .dataset-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.82rem;
+      color: #555;
+      background: #f8f8f8;
+      border: 1px solid #ebebeb;
+      border-radius: 8px;
+      padding: 3px 9px;
+    }
+    .meta-item strong { color: #333; font-weight: 700; }
+    .dataset-card p { font-size: 0.9rem; color: #666; line-height: 1.6; }
+    .dataset-card p + p { margin-top: 6px; }
+    .link-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .link-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid #d8d8d8;
+      background: #fff;
+      color: #444;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: color .15s, background .15s, border-color .15s;
+    }
+    .link-chip:hover {
+      color: #0f766e;
+      background: #f0fdf9;
+      border-color: #99e6d8;
+      text-decoration: none;
+    }
+
+    /* Comparison table */
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 16px;
+      border-radius: 12px;
+      border: 1px solid #e8e8e8;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      min-width: 600px;
+    }
+    thead th {
+      background: #f0fdf9;
+      color: #0f766e;
+      font-weight: 700;
+      padding: 11px 14px;
+      text-align: left;
+      border-bottom: 2px solid #bde7de;
+      white-space: nowrap;
+    }
+    tbody tr:nth-child(even) { background: #fafafa; }
+    tbody tr:hover { background: #f5fdfb; }
+    tbody td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #ebebeb;
+      color: #444;
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    .td-highlight { font-weight: 700; color: #111; }
+    .td-easy   { color: #15803d; font-weight: 600; }
+    .td-medium { color: #d97706; font-weight: 600; }
+    .td-hard   { color: #dc2626; font-weight: 600; }
+
+    /* Recommendation section */
+    .rec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .rec-card {
+      border: 1px solid #ececec;
+      border-radius: 14px;
+      background: #fcfcfb;
+      padding: 18px 20px;
+    }
+    .rec-card h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #111;
+      margin-bottom: 10px;
+    }
+    .rec-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .rec-list li {
+      font-size: 0.88rem;
+      color: #555;
+      padding-left: 14px;
+      position: relative;
+    }
+    .rec-list li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: #0f766e;
+      font-weight: 700;
+    }
+    .rec-list li strong { color: #111; }
+
+    /* Stats bar */
+    .stats-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .stat-item {
+      flex: 1;
+      min-width: 120px;
+      background: #f0fdf9;
+      border: 1px solid #bde7de;
+      border-radius: 12px;
+      padding: 16px 18px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 1.7rem;
+      font-weight: 800;
+      color: #0f766e;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: #555;
+      margin-top: 5px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1c1c1c;
+      color: #999;
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.84rem;
+    }
+    footer a { color: #5ecfc6; }
+    footer .footer-funding {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .task-grid { grid-template-columns: 1fr 1fr; }
+      .cat-grid  { grid-template-columns: 1fr 1fr; }
+      .rec-grid  { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .top-nav .container {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 2px;
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+      .nav-brand { white-space: normal; }
+      .nav-links { justify-content: flex-start; flex-wrap: wrap; padding-top: 2px; }
+      .nav-links a { padding: 7px 12px; font-size: 0.81rem; }
+      .nav-dropdown-menu { left: 0; min-width: 200px; }
+      header h1 { font-size: 1.65rem; }
+      .task-grid { grid-template-columns: 1fr; }
+      .cat-grid  { grid-template-columns: 1fr; }
+      main { padding: 36px 0 56px; }
+      .container { padding: 0 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ TOP NAV ═══════════════════ -->
+<nav class="top-nav" aria-label="顶部导航">
+  <div class="container">
+    <a class="nav-brand" href="../../index.html#hero-header">USTC-AGI <span>Time Series</span></a>
+    <div class="nav-links">
+      <a href="../../index.html#hero-header">首页</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle" type="button" aria-expanded="false">研究方向</button>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="../../forecasting/" role="menuitem">时间序列预测</a>
+          <a href="../../classification-anomaly/" role="menuitem">时序分类与异常检测</a>
+        </div>
+      </div>
+      <a href="../../index.html#team-members">团队成员</a>
+      <a href="../../blog/">技术博客</a>
+      <a href="../../papers/">论文列表</a>
+      <a href="../../systems/">领域应用</a>
+      <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">
+        GitHub
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:12px;height:12px;margin-left:4px;vertical-align:-1px">
+          <path d="M6 3H13V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13 3L3 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header>
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="../../forecasting/">时间序列预测</a>
+      <span>/</span>
+      电力负荷预测
+    </div>
+    <h1><span class="highlight">电力负荷预测</span> 任务与 Benchmark 数据集</h1>
+    <p class="header-sub">
+      Electric Load Forecasting · 任务综述、公开数据集全景与推荐使用指引<br>
+      整理自 28 个主流数据集，覆盖竞赛、系统运营商、深度学习 Benchmark、智能电表等六大来源
+    </p>
+    <div class="header-tags">
+      <span>28 个数据集</span>
+      <span>6 大类别</span>
+      <span>GEFCom · ETT · ECL · AEMO</span>
+      <span>ISO-NE · ENTSO-E · PJM</span>
+      <span>BuildingsBench · Monash</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════ MAIN ═══════════════════ -->
+<main>
+  <div class="container">
+    <div class="content-stack">
+
+      <!-- 1. Task Introduction -->
+      <section class="section-card">
+        <h2>任务定义与分类</h2>
+        <p>
+          电力负荷预测（Electricity Load Forecasting）是根据历史用电量、气象条件、日历信息等输入，预测未来电力系统需求的时间序列预测任务。
+          它是智能电网调度、电力市场交易、需求侧管理与新能源消纳的核心技术，也是时序预测研究中场景最丰富、数据最完善的领域之一。
+        </p>
+        <div class="stats-bar">
+          <div class="stat-item">
+            <div class="stat-num">28</div>
+            <div class="stat-label">公开数据集</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">6</div>
+            <div class="stat-label">数据来源类别</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">35+</div>
+            <div class="stat-label">覆盖国家/地区</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">1分钟</div>
+            <div class="stat-label">最细时间粒度</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">900K</div>
+            <div class="stat-label">最大建筑数量</div>
+          </div>
+        </div>
+        <div class="task-grid">
+          <article class="task-card">
+            <span class="task-tag tag-rose">超短期预测</span>
+            <h4>时间范围：&lt; 1 小时</h4>
+            <p>用于实时调度、频率调节、自动发电控制（AGC）。要求极低延迟，通常采用在线学习或滚动预测方式。</p>
+          </article>
+          <article class="task-card">
+            <span class="task-tag tag-teal">短期预测</span>
+            <h4>时间范围：1 小时 ~ 1 周</h4>
+            <p>用于机组组合、日前调度、需求响应与现货市场竞价。是工程实践与学术研究最集中的预测粒度。</p>
+          </article>
+          <article class="task-card">
+            <span class="task-tag tag-blue">中期预测</span>
+            <h4>时间范围：1 周 ~ 1 月</h4>
+            <p>用于设备检修计划、电力合同签订与备用容量安排。受季节、温度和工业节律影响明显。</p>
+          </article>
+          <article class="task-card">
+            <span class="task-tag tag-purple">长期预测</span>
+            <h4>时间范围：> 1 月</h4>
+            <p>用于电网容量规划、基础设施投资和政策制定。需结合宏观经济与气候趋势，模型解释性要求高。</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- 2. Dataset Categories Overview -->
+      <section class="section-card">
+        <h2>数据集分类概览</h2>
+        <p>公开电力负荷预测数据集按来源性质可划分为六大类，各有不同的覆盖尺度、粒度和适用场景：</p>
+        <div class="cat-grid">
+          <article class="cat-card">
+            <span class="task-tag tag-rose">竞赛数据集</span>
+            <h4>GEFCom 系列</h4>
+            <p>有明确基准和排行榜，特别适合点预测与概率预测方法的横向对比。</p>
+            <div class="chip-list">
+              <span>GEFCom2012</span>
+              <span>GEFCom2014</span>
+              <span>GEFCom2017</span>
+            </div>
+          </article>
+          <article class="cat-card">
+            <span class="task-tag tag-teal">系统运营商官方数据</span>
+            <h4>ISO / TSO 公开数据</h4>
+            <p>来自电网运营机构，权威可靠，覆盖大区域，时间跨度长，持续更新。</p>
+            <div class="chip-list">
+              <span>ISO-NE</span>
+              <span>AEMO</span>
+              <span>PJM</span>
+              <span>ENTSO-E</span>
+              <span>EIA</span>
+              <span>ERCOT</span>
+            </div>
+          </article>
+          <article class="cat-card">
+            <span class="task-tag tag-blue">UCI / 学术机构</span>
+            <h4>标准学术数据集</h4>
+            <p>干净规整，ML 社区广泛使用，下载门槛极低，适合算法原型验证。</p>
+            <div class="chip-list">
+              <span>UCI ECL</span>
+              <span>UCI IHEPC</span>
+            </div>
+          </article>
+          <article class="cat-card">
+            <span class="task-tag tag-orange">深度学习 Benchmark</span>
+            <h4>TSLib / ETT 系列</h4>
+            <p>专为长序列时序预测（LTSF）设计，配套代码丰富，是所有主流模型的必测基准。</p>
+            <div class="chip-list">
+              <span>ETTh1/h2</span>
+              <span>ETTm1/m2</span>
+              <span>ECL (321)</span>
+              <span>Traffic</span>
+            </div>
+          </article>
+          <article class="cat-card">
+            <span class="task-tag tag-purple">智能电表数据</span>
+            <h4>户级 / 电路级分辨率</h4>
+            <p>含用户行为、需求响应实验信息，适合 NILM、住宅预测与隐私计算研究。</p>
+            <div class="chip-list">
+              <span>London LCL</span>
+              <span>CER Ireland</span>
+              <span>Pecan Street</span>
+              <span>AMPds2</span>
+            </div>
+          </article>
+          <article class="cat-card">
+            <span class="task-tag tag-gray">大规模综合数据集</span>
+            <h4>基础模型 / 多国数据</h4>
+            <p>规模庞大，覆盖多类建筑或多国，适合时序基础模型预训练与零样本评估。</p>
+            <div class="chip-list">
+              <span>BuildingsBench</span>
+              <span>Monash</span>
+              <span>Real-E</span>
+              <span>OPSD</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 3. Key Datasets Details -->
+      <section class="section-card">
+        <h2>重点数据集详情</h2>
+
+        <!-- 3.1 Competition -->
+        <div class="dataset-section">
+          <h3>竞赛系列数据集</h3>
+          <div class="dataset-list">
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>GEFCom2012 · Global Energy Forecasting Competition 2012 – Load Track</h4>
+                <span class="heat-badge heat-very-high">引用极高</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 1 小时</span>
+                <span class="meta-item"><strong>范围</strong> 2004–2008 年</span>
+                <span class="meta-item"><strong>地区</strong> 美国（匿名）</span>
+                <span class="meta-item"><strong>序列数</strong> 21（20 区域 + 总量）</span>
+                <span class="meta-item"><strong>特征</strong> 负荷 + 11 站气温</span>
+              </div>
+              <p>首个全球性电力预测竞赛，预测任务为回填 8 周缺失数据（backcasting）和正向预测（forecasting），以 MAPE 评估。奠定了短期负荷预测竞赛的标准范式。</p>
+              <div class="link-row">
+                <a class="link-chip" href="https://www.kaggle.com/c/global-energy-forecasting-competition-2012-load-forecasting" target="_blank" rel="noopener">Kaggle</a>
+                <a class="link-chip" href="http://blog.drhongtao.com/2016/07/gefcom2012-load-forecasting-data.html" target="_blank" rel="noopener">完整数据（含解答）</a>
+              </div>
+            </article>
+
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>GEFCom2014 · Probabilistic Load Forecasting Track</h4>
+                <span class="heat-badge heat-very-high">引用极高</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 1 小时</span>
+                <span class="meta-item"><strong>地区</strong> 美国新英格兰（ISO-NE，匿名）</span>
+                <span class="meta-item"><strong>任务数</strong> 15 个（Task 1~15）</span>
+                <span class="meta-item"><strong>评估指标</strong> Pinball Loss</span>
+              </div>
+              <p>概率负荷预测领域最常用基准，要求预测分位数而非点预测。包含约 7 年负荷数据与 9.75 年温度数据，被后续数百篇概率预测论文所采用。</p>
+              <div class="link-row">
+                <a class="link-chip" href="http://blog.drhongtao.com/2017/03/gefcom2014-load-forecasting-data.html" target="_blank" rel="noopener">官方数据页面</a>
+              </div>
+            </article>
+
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>GEFCom2017 · Hierarchical Probabilistic Load Forecasting</h4>
+                <span class="heat-badge heat-high">引用中高</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 1 小时</span>
+                <span class="meta-item"><strong>地区</strong> 美国新英格兰 8 区域</span>
+                <span class="meta-item"><strong>特色</strong> 层级预测 · 区域一致性约束</span>
+              </div>
+              <p>引入层级预测约束（hierarchical coherence），要求各区域预测结果与汇总层保持一致。是层级概率预测与多区域联合预测研究的核心基准。</p>
+              <div class="link-row">
+                <a class="link-chip" href="https://github.com/camroach87/gefcom2017data" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- 3.2 ISO/TSO -->
+        <div class="dataset-section">
+          <h3>系统运营商官方数据（ISO / TSO）</h3>
+          <div class="dataset-list">
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>ISO-NE · New England Hourly Load Data</h4>
+                <span class="heat-badge heat-very-high">引用 #1（47次）</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 1 小时</span>
+                <span class="meta-item"><strong>范围</strong> 2003 年至今</span>
+                <span class="meta-item"><strong>地区</strong> 美国新英格兰 6 州</span>
+                <span class="meta-item"><strong>特征</strong> 负荷 + 气温 + 日期类型</span>
+              </div>
+              <p>短期负荷预测文献中被引频率最高的数据集（综述统计第 1 位），GEFCom2014/2017 的数据基础。官网免费下载，数据质量高，持续更新至今。</p>
+              <div class="link-row">
+                <a class="link-chip" href="https://www.iso-ne.com/isoexpress/web/reports/load-and-demand" target="_blank" rel="noopener">ISO-NE 官方</a>
+              </div>
+            </article>
+
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>AEMO NEM · Australian National Electricity Market</h4>
+                <span class="heat-badge heat-very-high">引用 #2（35次）</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 30 分钟</span>
+                <span class="meta-item"><strong>范围</strong> 1998 年至今</span>
+                <span class="meta-item"><strong>地区</strong> 澳大利亚 5 州</span>
+                <span class="meta-item"><strong>序列数</strong> 5（NSW / QLD / SA / VIC / TAS）</span>
+              </div>
+              <p>澳大利亚电力市场运营商官方数据，覆盖时间最长（25 年以上）。含区域需求和实时区域参考电价（RRP），适用于短期区域预测和电价联合预测研究。</p>
+              <div class="link-row">
+                <a class="link-chip" href="https://www.aemo.com.au/energy-systems/electricity/national-electricity-market-nem/data-nem/aggregated-data" target="_blank" rel="noopener">AEMO 官方</a>
+              </div>
+            </article>
+
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>PJM · Hourly Energy Consumption（Kaggle 版）</h4>
+                <span class="heat-badge heat-high">引用 #6（11次）</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 1 小时</span>
+                <span class="meta-item"><strong>范围</strong> 2002–2018</span>
+                <span class="meta-item"><strong>地区</strong> 美国东部 14 区域</span>
+                <span class="meta-item"><strong>规模</strong> 145,336 条记录</span>
+              </div>
+              <p>获取门槛最低的美国区域负荷数据集之一，Kaggle 一键下载。覆盖美国东部 14 个 ISO 区域，是 LSTM / Transformer 等模型教程和快速原型的首选。</p>
+              <div class="link-row">
+                <a class="link-chip" href="https://www.kaggle.com/datasets/robikscube/hourly-energy-consumption" target="_blank" rel="noopener">Kaggle</a>
+                <a class="link-chip" href="https://dataminer2.pjm.com/" target="_blank" rel="noopener">PJM 官方 API</a>
+              </div>
+            </article>
+
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>ENTSO-E · European Transparency Platform</h4>
+                <span class="heat-badge heat-high">引用 #5（15次）</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 1 小时（部分 15 分钟）</span>
+                <span class="meta-item"><strong>范围</strong> 2015 年至今</span>
+                <span class="meta-item"><strong>地区</strong> 欧洲 35 国</span>
+                <span class="meta-item"><strong>序列数</strong> 35+ 国家级</span>
+              </div>
+              <p>按欧盟法规强制披露的透明度平台，包含实际负荷、预测负荷、各类能源发电量及跨境电力流。免费注册 API，是欧洲多国比较研究和可再生能源整合研究的标准数据源。</p>
+              <div class="link-row">
+                <a class="link-chip" href="https://transparency.entsoe.eu/" target="_blank" rel="noopener">ENTSO-E Transparency</a>
+                <a class="link-chip" href="https://github.com/EnergieID/entsoe-py" target="_blank" rel="noopener">Python 客户端</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- 3.3 Deep Learning Benchmark -->
+        <div class="dataset-section">
+          <h3>深度学习 Benchmark（TSLib 系列）</h3>
+          <p style="font-size:0.9rem;color:#666;margin-bottom:14px;">
+            以下数据集由清华大学 THUML 团队统一维护于
+            <a href="https://github.com/thuml/Time-Series-Library" target="_blank" rel="noopener">Time-Series-Library</a>，
+            是 Informer、Autoformer、FEDformer、PatchTST、iTransformer 等系列 LTSF 论文的标准基准，
+            全部托管于 <a href="https://huggingface.co/datasets/thuml/Time-Series-Library" target="_blank" rel="noopener">Hugging Face</a>（CC BY 4.0），一键下载。
+          </p>
+          <div class="dataset-list">
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>ETT · Electricity Transformer Temperature（ETTh1 / ETTh2 / ETTm1 / ETTm2）</h4>
+                <span class="heat-badge heat-very-high">LTSF 核心基准</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> h 系列 1h · m 系列 15min</span>
+                <span class="meta-item"><strong>范围</strong> 2016–2018 年（2 年）</span>
+                <span class="meta-item"><strong>地区</strong> 中国（省份匿名）</span>
+                <span class="meta-item"><strong>特征数</strong> 7（OT + 6 种负荷）</span>
+                <span class="meta-item"><strong>步数</strong> h: 17,420 · m: 69,680</span>
+              </div>
+              <p>
+                目标变量为变压器油温（OT），6 个协变量为高/中/低压有功/无功负荷。
+                由 Informer（AAAI 2021）论文发布，是目前公开的唯一来自中国大陆电网的大规模时序预测基准，
+                标准评估设置为预测 96 / 192 / 336 / 720 步。
+              </p>
+              <div class="link-row">
+                <a class="link-chip" href="https://github.com/zhouhaoyi/ETDataset" target="_blank" rel="noopener">GitHub</a>
+                <a class="link-chip" href="https://huggingface.co/datasets/thuml/Time-Series-Library" target="_blank" rel="noopener">Hugging Face</a>
+              </div>
+            </article>
+
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>ECL / Electricity · UCI ElectricityLoadDiagrams（321 条序列）</h4>
+                <span class="heat-badge heat-very-high">LTSF 必测基准</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 1 小时（原始 15min 重采样）</span>
+                <span class="meta-item"><strong>范围</strong> 2011–2014 年（4 年）</span>
+                <span class="meta-item"><strong>地区</strong> 葡萄牙</span>
+                <span class="meta-item"><strong>序列数</strong> 321 个工业/商业/住宅客户</span>
+                <span class="meta-item"><strong>步数</strong> 26,304</span>
+                <span class="meta-item"><strong>许可</strong> CC BY 4.0</span>
+              </div>
+              <p>
+                多变量长序列预测最广泛使用的基准数据集，LSTNet、Informer、PatchTST 等所有主流 LTSF 模型均在此评测。
+                TSLib 中的 <code>electricity.csv</code> 即为此数据集的处理版本。原始数据含 370 条序列，
+                去除部分低活跃客户后保留 321 条。
+              </p>
+              <div class="link-row">
+                <a class="link-chip" href="https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112014" target="_blank" rel="noopener">UCI 官方</a>
+                <a class="link-chip" href="https://huggingface.co/datasets/thuml/Time-Series-Library" target="_blank" rel="noopener">Hugging Face (TSLib)</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- 3.4 Smart Meter -->
+        <div class="dataset-section">
+          <h3>智能电表数据集（户级分辨率）</h3>
+          <div class="dataset-list">
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>London Smart Meters · Low Carbon London Programme</h4>
+                <span class="heat-badge heat-high">引用高</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 30 分钟</span>
+                <span class="meta-item"><strong>范围</strong> 2011–2014 年</span>
+                <span class="meta-item"><strong>地区</strong> 英国伦敦</span>
+                <span class="meta-item"><strong>用户数</strong> 5,560 住宅</span>
+                <span class="meta-item"><strong>规模</strong> ~1.67 亿行</span>
+              </div>
+              <p>含约 1,100 用户参与的动态分时电价（dToU）随机对照实验，适合需求响应研究。数据量庞大，Kaggle 和 Zenodo 均有整理版本。</p>
+              <div class="link-row">
+                <a class="link-chip" href="https://www.kaggle.com/datasets/jeanmidev/smart-meters-in-london" target="_blank" rel="noopener">Kaggle</a>
+                <a class="link-chip" href="https://zenodo.org/records/4656091" target="_blank" rel="noopener">Zenodo</a>
+              </div>
+            </article>
+
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>CER Ireland · Commission for Energy Regulation Smart Metering</h4>
+                <span class="heat-badge heat-high">引用 #7（10次）</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 30 分钟</span>
+                <span class="meta-item"><strong>范围</strong> 2009–2010（75 周）</span>
+                <span class="meta-item"><strong>地区</strong> 爱尔兰</span>
+                <span class="meta-item"><strong>用户数</strong> ~4,232 居民</span>
+              </div>
+              <p>含完整随机对照实验（RCT）设计，包含分时电价、智能显示器等多种干预方案，并附住户调查问卷。在开放访问学术数据集中引用次数最多（文献中第 7 位），需向 ISSDA 提交学术申请。</p>
+              <div class="link-row">
+                <a class="link-chip" href="https://www.cru.ie/" target="_blank" rel="noopener">ISSDA 申请入口</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- 3.5 Large-scale -->
+        <div class="dataset-section">
+          <h3>大规模综合数据集</h3>
+          <div class="dataset-list">
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>BuildingsBench · NREL 900K Buildings Short-Term Load Forecasting</h4>
+                <span class="heat-badge heat-new">新兴 · NeurIPS 2023</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 15 分钟</span>
+                <span class="meta-item"><strong>地区</strong> 美国全国</span>
+                <span class="meta-item"><strong>规模</strong> 预训练集 ~110GB（Parquet）</span>
+                <span class="meta-item"><strong>建筑数</strong> 550K 住宅 + 350K 商业</span>
+              </div>
+              <p>
+                目前规模最大的建筑能耗预测数据集，合成数据基于 NREL EULP 用 EnergyPlus 模拟生成。
+                配套 7 个真实评估数据集，专为时序基础模型预训练与零样本短期负荷预测而设计，
+                与 Chronos、TimesFM 等基础模型研究高度契合。
+              </p>
+              <div class="link-row">
+                <a class="link-chip" href="https://data.openei.org/submissions/5859" target="_blank" rel="noopener">OEDI 数据下载</a>
+                <a class="link-chip" href="https://github.com/NREL/BuildingsBench" target="_blank" rel="noopener">GitHub</a>
+              </div>
+            </article>
+
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>Monash Time Series Repository · 电力相关子集</h4>
+                <span class="heat-badge heat-high">引用高 · NeurIPS 2021</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>地区</strong> 全球多国</span>
+                <span class="meta-item"><strong>子集数</strong> 30+ 数据集 / 58 变体</span>
+              </div>
+              <p>
+                澳大利亚莫纳什大学维护的时序预测标准存档库，电力相关子集包括：
+                Electricity（321 序列 · 小时 / 周粒度）、Australian Electricity Demand（5 序列 · 30min）、
+                London Smart Meters（5,560 序列）等。所有数据集以统一格式发布，便于跨数据集比较。
+              </p>
+              <div class="link-row">
+                <a class="link-chip" href="https://forecastingdata.org/" target="_blank" rel="noopener">forecastingdata.org</a>
+                <a class="link-chip" href="https://huggingface.co/datasets/Monash-University/monash_tsf" target="_blank" rel="noopener">Hugging Face</a>
+              </div>
+            </article>
+
+            <article class="dataset-card">
+              <div class="dataset-card-header">
+                <h4>Real-E · Foundation Benchmark for Electricity Forecasting</h4>
+                <span class="heat-badge heat-new">新兴 · CIKM 2025</span>
+              </div>
+              <div class="dataset-meta">
+                <span class="meta-item"><strong>粒度</strong> 15 分钟 ~ 1 小时</span>
+                <span class="meta-item"><strong>范围</strong> 2014–2024（10 年）</span>
+                <span class="meta-item"><strong>地区</strong> 欧洲 39 国</span>
+                <span class="meta-item"><strong>能源类型</strong> 20 种（风、光、水、热、核……）</span>
+              </div>
+              <p>面向电力基础模型鲁棒性评估的大规模 benchmark，覆盖 10 年跨度、39 国、20 种能源类型，着重关注非平稳性和跨国迁移预测场景。</p>
+              <div class="link-row">
+                <a class="link-chip" href="https://arxiv.org/abs/2509.05768" target="_blank" rel="noopener">arXiv 论文</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Comparison Tables -->
+      <section class="section-card">
+        <h2>数据集横向对比</h2>
+
+        <h3 style="margin-top:0;margin-bottom:10px;">系统运营商数据集对比</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>数据集</th>
+                <th>机构</th>
+                <th>时间范围</th>
+                <th>粒度</th>
+                <th>地区 / 序列数</th>
+                <th>核心特征</th>
+                <th>访问方式</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-highlight">ISO-NE</td>
+                <td>美国新英格兰 ISO</td>
+                <td>2003 至今</td>
+                <td>1h</td>
+                <td>美国 6 州</td>
+                <td>负荷 + 气温</td>
+                <td class="td-easy">官网免费</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">AEMO NEM</td>
+                <td>澳大利亚 AEMO</td>
+                <td>1998 至今</td>
+                <td>30min</td>
+                <td>澳大利亚 5 州</td>
+                <td>需求 + 实时电价</td>
+                <td class="td-easy">官网免费</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">PJM</td>
+                <td>PJM Interconnection</td>
+                <td>2002 至今</td>
+                <td>1h</td>
+                <td>美国东部 14 区域</td>
+                <td>负荷（MW）</td>
+                <td class="td-easy">Kaggle / 官网</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">ENTSO-E</td>
+                <td>欧洲 TSO 联盟</td>
+                <td>2015 至今</td>
+                <td>1h / 15min</td>
+                <td>欧洲 35 国</td>
+                <td>负荷 + 发电 + 跨境流</td>
+                <td class="td-easy">API（免费注册）</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">EIA Grid Monitor</td>
+                <td>美国能源信息局</td>
+                <td>2015 至今</td>
+                <td>1h</td>
+                <td>美国 64 BA</td>
+                <td>需求 + 分类发电</td>
+                <td class="td-easy">API（免费注册）</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">ERCOT</td>
+                <td>德克萨斯电网</td>
+                <td>多年</td>
+                <td>1h</td>
+                <td>美国德州</td>
+                <td>系统负荷（MWh）</td>
+                <td class="td-easy">官网免费</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="margin-top:22px;margin-bottom:10px;">深度学习 Benchmark 数据集对比</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>数据集</th>
+                <th>来源</th>
+                <th>粒度</th>
+                <th>变量数</th>
+                <th>总步数</th>
+                <th>标准预测长度</th>
+                <th>获取难度</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-highlight">ETTh1 / ETTh2</td>
+                <td>中国电力（匿名）</td>
+                <td>1h</td>
+                <td>7</td>
+                <td>17,420</td>
+                <td>96 / 192 / 336 / 720</td>
+                <td class="td-easy">极易（GitHub / HF）</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">ETTm1 / ETTm2</td>
+                <td>中国电力（匿名）</td>
+                <td>15min</td>
+                <td>7</td>
+                <td>69,680</td>
+                <td>96 / 192 / 336 / 720</td>
+                <td class="td-easy">极易（GitHub / HF）</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">ECL / Electricity</td>
+                <td>葡萄牙（UCI）</td>
+                <td>1h</td>
+                <td>321</td>
+                <td>26,304</td>
+                <td>96 / 192 / 336 / 720</td>
+                <td class="td-easy">极易（UCI / HF）</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">Traffic</td>
+                <td>加州 Caltrans DOT</td>
+                <td>1h</td>
+                <td>862</td>
+                <td>17,544</td>
+                <td>96 / 192 / 336 / 720</td>
+                <td class="td-easy">极易（TSLib）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="margin-top:22px;margin-bottom:10px;">智能电表数据集对比</h3>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>数据集</th>
+                <th>来源国</th>
+                <th>粒度</th>
+                <th>用户数</th>
+                <th>特色</th>
+                <th>获取难度</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="td-highlight">London LCL</td>
+                <td>英国</td>
+                <td>30min</td>
+                <td>5,560</td>
+                <td>含 dToU 随机实验</td>
+                <td class="td-easy">易（Kaggle / Zenodo）</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">CER Ireland</td>
+                <td>爱尔兰</td>
+                <td>30min</td>
+                <td>~4,232</td>
+                <td>含 RCT 实验 + 问卷</td>
+                <td class="td-medium">中（ISSDA 学术申请）</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">Pecan Street</td>
+                <td>美国</td>
+                <td>1min</td>
+                <td>数百</td>
+                <td>电路级 + EV 充电</td>
+                <td class="td-medium">中（学术账户申请）</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">AMPds2</td>
+                <td>加拿大</td>
+                <td>1min</td>
+                <td>1（住宅）</td>
+                <td>电 / 水 / 气三表联合</td>
+                <td class="td-easy">易（Harvard Dataverse）</td>
+              </tr>
+              <tr>
+                <td class="td-highlight">UCI IHEPC</td>
+                <td>法国</td>
+                <td>1min</td>
+                <td>1（住宅）</td>
+                <td>含 3 个子表（厨房 / 洗衣 / 空调）</td>
+                <td class="td-easy">极易（UCI）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 5. Recommendations -->
+      <section class="section-card">
+        <h2>按研究场景的推荐数据集</h2>
+        <div class="rec-grid">
+          <article class="rec-card">
+            <span class="task-tag tag-teal" style="margin-bottom:10px;">短期负荷预测</span>
+            <h4>1h ~ 1天 ahead · 工程实用基准</h4>
+            <ul class="rec-list">
+              <li><strong>GEFCom2012 / 2014</strong> — 成熟基准，便于横向对比</li>
+              <li><strong>ISO-NE</strong> — 最高引用频率的学术数据集</li>
+              <li><strong>AEMO NEM</strong> — 澳大利亚区域预测标准</li>
+              <li><strong>PJM（Kaggle）</strong> — 下载最简单的美国区域数据</li>
+            </ul>
+          </article>
+          <article class="rec-card">
+            <span class="task-tag tag-orange" style="margin-bottom:10px;">长序列时序预测（LTSF）</span>
+            <h4>96 ~ 720 步 · 深度学习 benchmark</h4>
+            <ul class="rec-list">
+              <li><strong>ETTh1 / ETTh2 / ETTm1 / ETTm2</strong> — LTSF 领域标准基准</li>
+              <li><strong>ECL / Electricity（321 序列）</strong> — Informer / PatchTST 必测</li>
+              <li><strong>Traffic / Weather</strong> — 非电力，但同框评测常见</li>
+            </ul>
+          </article>
+          <article class="rec-card">
+            <span class="task-tag tag-rose" style="margin-bottom:10px;">概率预测 / 不确定性量化</span>
+            <h4>分位数 · 区间 · 场景预测</h4>
+            <ul class="rec-list">
+              <li><strong>GEFCom2014</strong> — Pinball Loss 标准框架，概率预测首选</li>
+              <li><strong>GEFCom2017</strong> — 层级概率预测场景</li>
+              <li><strong>NREL 多区域数据集</strong> — 含多分位点 scenario</li>
+            </ul>
+          </article>
+          <article class="rec-card">
+            <span class="task-tag tag-purple" style="margin-bottom:10px;">时序基础模型 / 零样本</span>
+            <h4>预训练 · 跨域迁移 · 通用评估</h4>
+            <ul class="rec-list">
+              <li><strong>BuildingsBench（NREL）</strong> — 90万建筑，专为零样本设计</li>
+              <li><strong>Real-E</strong> — 39国10年，跨国迁移评估</li>
+              <li><strong>Monash 电力子集</strong> — 统一格式，便于多数据集评估</li>
+            </ul>
+          </article>
+          <article class="rec-card">
+            <span class="task-tag tag-blue" style="margin-bottom:10px;">住宅 / 建筑级预测</span>
+            <h4>NILM · 需求响应 · 用户画像</h4>
+            <ul class="rec-list">
+              <li><strong>London LCL</strong> — 5,560 户，含 TOU 实验，Kaggle 直接下载</li>
+              <li><strong>CER Ireland</strong> — 含随机实验设计，行为分析首选</li>
+              <li><strong>Pecan Street</strong> — 电路级分解，NILM 金标准</li>
+            </ul>
+          </article>
+          <article class="rec-card">
+            <span class="task-tag tag-gray" style="margin-bottom:10px;">国内场景 / 中国数据</span>
+            <h4>中国大陆数据现状说明</h4>
+            <ul class="rec-list">
+              <li><strong>ETT</strong> — 唯一广泛使用的中国大陆电网公开数据</li>
+              <li><strong>2016 电工杯数据集</strong> — 含气象特征，国内引用 10 次</li>
+              <li>国家电网 / 南方电网数据整体保密，公开资源极为有限</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</main>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="container">
+    <p>
+      &copy; 2024–2026 Time Series Analysis Group &middot;
+      <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
+      &middot; State Key Laboratory of Cognitive Intelligence, USTC
+    </p>
+    <p class="footer-funding">
+      本项目研究资助来源：国家双一流建设经费、国家自然科学基金委
+    </p>
+  </div>
+</footer>
+
+<script>
+  (() => {
+    const dropdowns = document.querySelectorAll('.nav-dropdown');
+    const closeAll = () => {
+      dropdowns.forEach((d) => {
+        d.classList.remove('open');
+        const t = d.querySelector('.nav-dropdown-toggle');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      });
+    };
+    dropdowns.forEach((dropdown) => {
+      const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+      const links = dropdown.querySelectorAll('.nav-dropdown-menu a');
+      if (!toggle) return;
+      toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const willOpen = !dropdown.classList.contains('open');
+        closeAll();
+        dropdown.classList.toggle('open', willOpen);
+        toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      });
+      links.forEach((l) => l.addEventListener('click', closeAll));
+    });
+    document.addEventListener('click', closeAll);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
+  })();
+</script>
+
+</body>
+</html>
