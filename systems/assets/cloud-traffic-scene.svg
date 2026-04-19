@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-labelledby="title desc">
+  <title id="title">Cloud Traffic Forecasting Scene</title>
+  <desc id="desc">Poster-like cloud traffic forecasting scene with service graph, spike detection, and resource pool planning.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f6fcfe"/>
+      <stop offset="100%" stop-color="#ebf7fb"/>
+    </linearGradient>
+    <linearGradient id="head" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#115e59"/>
+      <stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0 L0 0 0 24" fill="none" stroke="#dfedf2" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="720" height="420" rx="28" fill="url(#bg)"/>
+  <rect width="720" height="420" rx="28" fill="url(#grid)" opacity="0.7"/>
+  <rect x="34" y="34" width="652" height="352" rx="28" fill="#ffffff" stroke="#d8eaf0"/>
+  <rect x="34" y="34" width="652" height="96" rx="28" fill="url(#head)"/>
+  <text x="68" y="76" fill="#d8f7ff" font-family="Segoe UI, PingFang SC, sans-serif" font-size="12" font-weight="700" letter-spacing="2">POSTER PANEL 03</text>
+  <text x="68" y="108" fill="#ffffff" font-family="Segoe UI, PingFang SC, sans-serif" font-size="28" font-weight="800">云服务流量与资源调度</text>
+  <text x="510" y="78" fill="#d8f7ff" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Burst Detection</text>
+  <text x="510" y="102" fill="#d8f7ff" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Elastic Scaling</text>
+
+  <rect x="64" y="162" width="296" height="126" rx="22" fill="#f4fbfd" stroke="#daeaf0"/>
+  <rect x="90" y="192" width="78" height="56" rx="14" fill="#d9eff5"/>
+  <rect x="206" y="176" width="78" height="72" rx="14" fill="#c6e5ee"/>
+  <rect x="322" y="202" width="78" height="46" rx="14" fill="#b4dceb"/>
+  <g stroke="#0891b2" stroke-width="6" stroke-linecap="round">
+    <line x1="168" y1="220" x2="206" y2="212"/>
+    <line x1="284" y1="212" x2="322" y2="224"/>
+  </g>
+  <g fill="#0e7490" font-family="Segoe UI, PingFang SC, sans-serif" font-size="15" font-weight="800">
+    <text x="108" y="225">API</text>
+    <text x="224" y="219">Cache</text>
+    <text x="342" y="229">Queue</text>
+  </g>
+
+  <rect x="396" y="162" width="116" height="186" rx="22" fill="#f4fbfd" stroke="#daeaf0"/>
+  <text x="424" y="192" fill="#4f6f77" font-family="Segoe UI, PingFang SC, sans-serif" font-size="15" font-weight="700">Resource Pool</text>
+  <rect x="428" y="214" width="52" height="22" rx="11" fill="#d8eff5"/>
+  <rect x="428" y="246" width="52" height="22" rx="11" fill="#c7e6ef"/>
+  <rect x="428" y="278" width="52" height="22" rx="11" fill="#b3dceb"/>
+  <rect x="428" y="310" width="52" height="22" rx="11" fill="#9fd1e7"/>
+
+  <rect x="530" y="162" width="124" height="186" rx="22" fill="#f4fbfd" stroke="#daeaf0"/>
+  <polyline points="548,310 566,304 584,278 602,286 620,246 638,256" fill="none" stroke="#0ea5e9" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="602" cy="286" r="9" fill="#ef4444"/>
+  <circle cx="620" cy="246" r="9" fill="#ef4444"/>
+  <text x="548" y="334" fill="#4c6d75" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Traffic spike alerts</text>
+
+  <rect x="64" y="314" width="286" height="36" rx="14" fill="#eef8fb" stroke="#daeaf0"/>
+  <rect x="364" y="314" width="146" height="36" rx="14" fill="#eef8fb" stroke="#daeaf0"/>
+  <rect x="524" y="314" width="130" height="36" rx="14" fill="#eef8fb" stroke="#daeaf0"/>
+  <text x="84" y="337" fill="#47666f" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Service topology and request flow</text>
+  <text x="388" y="337" fill="#47666f" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Capacity ladder</text>
+  <text x="548" y="337" fill="#47666f" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Burst markers</text>
+</svg>

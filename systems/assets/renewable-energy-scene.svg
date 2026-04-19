@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" role="img" aria-labelledby="title desc">
+  <title id="title">Renewable Energy Forecasting Scene</title>
+  <desc id="desc">Poster-like renewable energy forecasting scene with wind, solar, and weather-coupled output analysis.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fffb"/>
+      <stop offset="100%" stop-color="#edf8f2"/>
+    </linearGradient>
+    <linearGradient id="head" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#15803d"/>
+      <stop offset="100%" stop-color="#14b8a6"/>
+    </linearGradient>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0 L0 0 0 24" fill="none" stroke="#e0eee5" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="720" height="420" rx="28" fill="url(#bg)"/>
+  <rect width="720" height="420" rx="28" fill="url(#grid)" opacity="0.7"/>
+  <rect x="34" y="34" width="652" height="352" rx="28" fill="#ffffff" stroke="#d9ece1"/>
+  <rect x="34" y="34" width="652" height="96" rx="28" fill="url(#head)"/>
+  <text x="68" y="76" fill="#e4fff0" font-family="Segoe UI, PingFang SC, sans-serif" font-size="12" font-weight="700" letter-spacing="2">POSTER PANEL 02</text>
+  <text x="68" y="108" fill="#ffffff" font-family="Segoe UI, PingFang SC, sans-serif" font-size="28" font-weight="800">新能源出力波动预测</text>
+  <text x="506" y="78" fill="#e4fff0" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Weather Coupling</text>
+  <text x="506" y="102" fill="#e4fff0" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Uncertainty Aware</text>
+
+  <circle cx="132" cy="206" r="30" fill="#fde68a"/>
+  <path d="M114 206 C124 182 140 182 150 206" fill="none" stroke="#f59e0b" stroke-width="6" stroke-linecap="round"/>
+  <g fill="#bfe6cb">
+    <polygon points="76,318 174,318 150,266 100,266"/>
+    <polygon points="174,318 272,318 248,266 198,266"/>
+  </g>
+  <g stroke="#2c7a7b" stroke-width="4">
+    <line x1="88" y1="280" x2="160" y2="280"/>
+    <line x1="96" y1="296" x2="168" y2="296"/>
+    <line x1="186" y1="280" x2="258" y2="280"/>
+    <line x1="194" y1="296" x2="266" y2="296"/>
+  </g>
+  <g transform="translate(334 164)" stroke="#0f766e" stroke-width="8" stroke-linecap="round">
+    <line x1="0" y1="0" x2="0" y2="118"/>
+    <line x1="-46" y1="34" x2="0" y2="60"/>
+    <line x1="46" y1="34" x2="0" y2="60"/>
+    <line x1="0" y1="0" x2="0" y2="60"/>
+  </g>
+  <g transform="translate(424 146)" stroke="#0f766e" stroke-width="8" stroke-linecap="round">
+    <line x1="0" y1="10" x2="0" y2="136"/>
+    <line x1="-52" y1="46" x2="0" y2="76"/>
+    <line x1="52" y1="46" x2="0" y2="76"/>
+    <line x1="0" y1="10" x2="0" y2="76"/>
+  </g>
+
+  <rect x="502" y="160" width="152" height="144" rx="20" fill="#f5fbf7" stroke="#d9ece1"/>
+  <polyline points="522,270 546,246 570,252 594,216 618,226 638,196" fill="none" stroke="#16a34a" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M520 236 C534 216 550 214 562 228 C570 210 590 206 602 220 C616 206 632 210 642 228" fill="none" stroke="#94a3b8" stroke-width="5" stroke-linecap="round"/>
+  <text x="520" y="324" fill="#486258" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Power ramps under weather shifts</text>
+
+  <rect x="60" y="336" width="272" height="28" rx="14" fill="#eef8f2" stroke="#d9ece1"/>
+  <rect x="346" y="336" width="150" height="28" rx="14" fill="#eef8f2" stroke="#d9ece1"/>
+  <rect x="508" y="336" width="146" height="28" rx="14" fill="#eef8f2" stroke="#d9ece1"/>
+  <text x="78" y="355" fill="#476257" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Solar irradiation and cloud cover</text>
+  <text x="376" y="355" fill="#476257" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Wind speed field</text>
+  <text x="532" y="355" fill="#476257" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">Ramp event tags</text>
+</svg>

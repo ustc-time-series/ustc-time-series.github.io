@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 260" role="img" aria-labelledby="title desc">
+  <title id="title">Diagnosis Loop</title>
+  <desc id="desc">Poster-style loop diagram linking diagnosis, multi-source modeling, human-in-the-loop, and iterative refinement.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f7fffd"/>
+      <stop offset="100%" stop-color="#ecf8f5"/>
+    </linearGradient>
+    <linearGradient id="ringA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f766e"/>
+      <stop offset="100%" stop-color="#14b8a6"/>
+    </linearGradient>
+    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+      <path d="M20 0 L0 0 0 20" fill="none" stroke="#e0eee9" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="520" height="260" rx="24" fill="url(#bg)"/>
+  <rect width="520" height="260" rx="24" fill="url(#grid)" opacity="0.72"/>
+  <text x="28" y="34" fill="#0f766e" font-family="Segoe UI, PingFang SC, sans-serif" font-size="12" font-weight="700" letter-spacing="2">POSTER LOOP</text>
+  <text x="28" y="56" fill="#4d6862" font-family="Segoe UI, PingFang SC, sans-serif" font-size="14" font-weight="700">From domain problem framing to reusable forecasting workflow</text>
+
+  <circle cx="260" cy="140" r="82" fill="none" stroke="#d6ece7" stroke-width="22"/>
+  <path d="M260 58 A82 82 0 0 1 338 188" fill="none" stroke="url(#ringA)" stroke-width="22" stroke-linecap="round"/>
+  <path d="M338 188 A82 82 0 0 1 178 204" fill="none" stroke="#22c55e" stroke-width="22" stroke-linecap="round"/>
+  <path d="M178 204 A82 82 0 0 1 182 82" fill="none" stroke="#0891b2" stroke-width="22" stroke-linecap="round"/>
+  <path d="M182 82 A82 82 0 0 1 260 58" fill="none" stroke="#14b8a6" stroke-width="22" stroke-linecap="round"/>
+  <polygon points="342,186 356,189 346,200" fill="#22c55e"/>
+  <polygon points="176,208 164,215 163,202" fill="#0891b2"/>
+  <polygon points="180,79 180,65 193,71" fill="#14b8a6"/>
+
+  <rect x="202" y="111" width="116" height="58" rx="18" fill="#ffffff" stroke="#d8ece6"/>
+  <text x="260" y="135" text-anchor="middle" fill="#0f766e" font-family="Segoe UI, PingFang SC, sans-serif" font-size="18" font-weight="800">Problem</text>
+  <text x="260" y="157" text-anchor="middle" fill="#53706a" font-family="Segoe UI, PingFang SC, sans-serif" font-size="15">System Loop</text>
+
+  <rect x="198" y="18" width="124" height="28" rx="12" fill="#eef9f6" stroke="#d8ece6"/>
+  <rect x="354" y="124" width="118" height="28" rx="12" fill="#eef9f3" stroke="#d8ece6"/>
+  <rect x="202" y="220" width="124" height="28" rx="12" fill="#eef8fb" stroke="#d8ece6"/>
+  <rect x="50" y="124" width="112" height="28" rx="12" fill="#eef9f6" stroke="#d8ece6"/>
+  <text x="260" y="37" text-anchor="middle" fill="#0f766e" font-family="Segoe UI, PingFang SC, sans-serif" font-size="13" font-weight="700">场景诊断</text>
+  <text x="413" y="143" text-anchor="middle" fill="#1f7a47" font-family="Segoe UI, PingFang SC, sans-serif" font-size="13" font-weight="700">多源建模</text>
+  <text x="264" y="239" text-anchor="middle" fill="#0b6f91" font-family="Segoe UI, PingFang SC, sans-serif" font-size="13" font-weight="700">人机协同</text>
+  <text x="106" y="143" text-anchor="middle" fill="#0f8c84" font-family="Segoe UI, PingFang SC, sans-serif" font-size="13" font-weight="700">持续迭代</text>
+</svg>

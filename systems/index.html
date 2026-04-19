@@ -204,6 +204,26 @@
       gap: 20px;
     }
 
+    .hero-visual {
+      margin-top: 28px;
+      padding: 22px;
+      border-radius: 24px;
+      border: 1px solid #d9eee9;
+      background:
+        radial-gradient(circle at top left, rgba(15, 118, 110, 0.14), transparent 42%),
+        linear-gradient(135deg, #ffffff 0%, #f2fcfa 100%);
+      box-shadow: 0 18px 48px rgba(15, 118, 110, 0.08);
+    }
+
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(15, 118, 110, 0.10);
+    }
+
     .section-card {
       background: #fff;
       border: 1px solid #e8e8e8;
@@ -301,6 +321,36 @@
       padding: 18px;
     }
 
+    .scenario-media,
+    .system-figure,
+    .focus-figure {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      border: 1px solid #dfeee9;
+      background: linear-gradient(180deg, #f5fffc 0%, #eefaf7 100%);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+
+    .scenario-media {
+      margin: -2px -2px 16px;
+    }
+
+    .scenario-media img,
+    .system-figure img,
+    .focus-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .figure-caption {
+      padding: 10px 14px 12px;
+      font-size: 0.8rem;
+      color: #55706b;
+      line-height: 1.6;
+    }
+
     .scenario-tag,
     .focus-tag {
       display: inline-flex;
@@ -357,6 +407,10 @@
       margin-top: 18px;
     }
 
+    .system-figure {
+      margin-top: 18px;
+    }
+
     .system-panel,
     .system-side {
       border: 1px solid #e8e8e8;
@@ -404,6 +458,10 @@
       font-size: 0.88rem;
       color: #555;
       line-height: 1.7;
+    }
+
+    .focus-figure {
+      margin-bottom: 14px;
     }
 
     footer {
@@ -510,6 +568,9 @@
       中国科学技术大学 · 认知智能全国重点实验室 AGI 研究组<br>
       面向城市电力负荷、新能源发电、云服务流量等真实预测场景，持续推进时间序列预测的应用研究与系统建设
     </p>
+    <div class="hero-visual" aria-hidden="true">
+      <img src="./assets/domain-applications-overview.svg" alt="城市负荷、新能源发电与云服务流量三类时间序列应用场景总览图" />
+    </div>
   </div>
 </header>
 
@@ -526,6 +587,10 @@
         <h3>应用研究场景</h3>
         <div class="scenario-grid">
           <article class="scenario-card">
+            <div class="scenario-media">
+              <img src="./assets/power-load-scene.svg" alt="城市电力负荷预测场景示意图" />
+              <div class="figure-caption">将城市、气象与负荷曲线放进同一张分析视图，突出周期结构与调度需求。</div>
+            </div>
             <span class="scenario-tag">城市电力负荷</span>
             <h4>面向城市级与区域级用电需求预测</h4>
             <p>
@@ -541,6 +606,10 @@
           </article>
 
           <article class="scenario-card">
+            <div class="scenario-media">
+              <img src="./assets/renewable-energy-scene.svg" alt="新能源发电预测场景示意图" />
+              <div class="figure-caption">围绕风电与光伏出力波动，连接天气场、功率区间和爬坡事件。</div>
+            </div>
             <span class="scenario-tag">新能源发电</span>
             <h4>面向光伏与风电出力的波动预测</h4>
             <p>
@@ -556,6 +625,10 @@
           </article>
 
           <article class="scenario-card">
+            <div class="scenario-media">
+              <img src="./assets/cloud-traffic-scene.svg" alt="云服务流量预测场景示意图" />
+              <div class="figure-caption">把服务流量、资源池和告警波动关联起来，强调容量规划与弹性伸缩。</div>
+            </div>
             <span class="scenario-tag">云服务流量</span>
             <h4>面向云资源调度与容量规划的流量预测</h4>
             <p>
@@ -590,6 +663,10 @@
               <a class="page-btn page-btn-secondary" href="../cast-claw/docs/">用户文档</a>
               <a class="page-btn page-btn-secondary" href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener">GitHub</a>
             </div>
+            <div class="system-figure">
+              <img src="../cast-claw/assets/architecture.svg" alt="CastClaw 多智能体与运行时架构图" />
+              <div class="figure-caption">CastClaw 架构图展示了人类专家、三智能体协作、工具层、核心引擎与 Python 时序运行时的闭环关系。</div>
+            </div>
           </div>
 
           <aside class="system-side">
@@ -620,24 +697,36 @@
         <h3>从场景问题到系统闭环</h3>
         <div class="focus-grid">
           <article class="focus-card">
+            <div class="focus-figure">
+              <img src="./assets/diagnosis-loop.svg" alt="从场景诊断到持续迭代的闭环示意图" />
+            </div>
             <span class="focus-tag">场景诊断</span>
             <h4>先理解问题，再建模</h4>
             <p>围绕数据粒度、周期结构、外生变量和业务约束，先做任务诊断，再决定建模路线。</p>
           </article>
 
           <article class="focus-card">
+            <div class="focus-figure">
+              <img src="./assets/diagnosis-loop.svg" alt="多源建模闭环示意图" />
+            </div>
             <span class="focus-tag">多源建模</span>
             <h4>把结构与语义同时接入</h4>
             <p>结合数值序列、气象信息、业务上下文和场景先验，提高模型对真实环境的感知能力。</p>
           </article>
 
           <article class="focus-card">
+            <div class="focus-figure">
+              <img src="./assets/diagnosis-loop.svg" alt="人机协同闭环示意图" />
+            </div>
             <span class="focus-tag">人机协同</span>
             <h4>保留关键判断节点</h4>
             <p>在模型选择、实验切换和结果审阅等关键环节引入研究者判断，避免盲目自动化。</p>
           </article>
 
           <article class="focus-card">
+            <div class="focus-figure">
+              <img src="./assets/diagnosis-loop.svg" alt="持续迭代闭环示意图" />
+            </div>
             <span class="focus-tag">持续迭代</span>
             <h4>让研发过程能够复用</h4>
             <p>把场景经验、策略模板和执行流程固化为长期资产，支持后续任务快速迁移与扩展。</p>
