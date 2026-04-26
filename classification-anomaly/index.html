@@ -147,6 +147,12 @@
       text-decoration: none;
       transform: translateY(-1px);
     }
+    .nav-active {
+      color: #0f766e !important;
+      background: #f0fdf9 !important;
+      border-color: #99e6d8 !important;
+      font-weight: 700 !important;
+    }
 
     header {
       background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
@@ -403,11 +409,11 @@
     <div class="nav-links">
       <a href="../index.html#hero-header">首页</a>
       <div class="nav-dropdown">
-        <button class="nav-dropdown-toggle" type="button" aria-expanded="false">研究方向</button>
+        <button class="nav-dropdown-toggle nav-active" type="button" aria-expanded="false">研究方向</button>
         <div class="nav-dropdown-menu" role="menu">
           <a href="../forecasting/" role="menuitem">时间序列预测</a>
           <a href="../forecasting/load-forecasting/" role="menuitem">电力负荷预测</a>
-          <a href="../classification-anomaly/" role="menuitem">时间序列分类与异常检测</a>
+          <a class="nav-active" href="../classification-anomaly/" role="menuitem" aria-current="page">时间序列分类与异常检测</a>
         </div>
       </div>
       <a href="../index.html#team-members">团队成员</a>
