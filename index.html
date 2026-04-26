@@ -169,6 +169,13 @@
       line-height: 1.25;
       color: #111;
     }
+    .hero-logo {
+      display: block;
+      width: min(420px, 72vw);
+      height: auto;
+      margin: 0 auto 18px;
+      filter: drop-shadow(0 10px 24px rgba(15, 118, 110, 0.12));
+    }
     header h1 .highlight { color: #0f766e; }
     header .header-sub {
       margin-top: 14px;
@@ -560,6 +567,7 @@
         left: 0;
         min-width: 200px;
       }
+      .hero-logo { width: min(320px, 82vw); margin-bottom: 14px; }
       header h1 { font-size: 1.7rem; }
       .project-grid { grid-template-columns: 1fr; }
       .project-card-wide { grid-column: auto; }
@@ -587,11 +595,10 @@
           <button class="nav-dropdown-toggle" type="button" aria-expanded="false">研究方向</button>
           <div class="nav-dropdown-menu" role="menu">
             <a href="forecasting/" role="menuitem">时间序列预测</a>
-            <a href="classification-anomaly/" role="menuitem">时序分类与异常检测</a>
+            <a href="classification-anomaly/" role="menuitem">时间序列分类与异常检测</a>
           </div>
       </div>
       <a href="#team-members">团队成员</a>
-      <a href="blog/">技术博客</a>
       <a href="papers/">论文列表</a>
       <a href="systems/">应用研究</a>
       <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">
@@ -609,6 +616,7 @@
 <header id="hero-header" role="button" tabindex="0" aria-label="点击刷新当前页面"
         onclick="location.reload()">
   <div class="container">
+    <img class="hero-logo" src="asset/ts_logo.svg" alt="USTC Time Series Logo" />
     <h1><span class="highlight">Time Series Analysis</span> 研究方向工作介绍</h1>
     <p class="header-sub">
       中国科学技术大学 · 认知智能全国重点实验室 AGI 研究组<br>
