@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>论文列表 | Time Series Analysis</title>
   <meta name="description" content="USTC-AGI Time Series 方向论文列表，仅保留时间序列相关工作。" />
+  <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
   <style>
     :root {
       --accent: #0f766e;
@@ -165,18 +166,10 @@
       border-bottom: 1px solid #e8e8e8;
       padding: 72px 0 56px;
       text-align: center;
-      cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
     }
     header:hover {
       background: linear-gradient(160deg, #fdffff 50%, #e6fbf8 100%);
-    }
-    header:active {
-      transform: scale(0.997);
-    }
-    header:focus-visible {
-      outline: 3px solid rgba(15, 118, 110, 0.2);
-      outline-offset: -6px;
     }
     header h1 {
       font-size: 2.3rem;
@@ -356,6 +349,7 @@
         <button class="nav-dropdown-toggle" type="button" aria-expanded="false">研究方向</button>
         <div class="nav-dropdown-menu" role="menu">
           <a href="../forecasting/" role="menuitem">时间序列预测</a>
+          <a href="../forecasting/load-forecasting/" role="menuitem">电力负荷预测</a>
           <a href="../classification-anomaly/" role="menuitem">时间序列分类与异常检测</a>
         </div>
       </div>
@@ -373,8 +367,7 @@
   </div>
 </nav>
 
-<header id="hero-header" role="button" tabindex="0" aria-label="点击刷新当前页面"
-        onclick="location.reload()">
+<header id="hero-header">
   <div class="container">
     <h1><span class="highlight">Time Series Publications</span> 论文列表</h1>
     <p class="header-sub">
