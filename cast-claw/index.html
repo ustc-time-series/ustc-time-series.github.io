@@ -1232,33 +1232,24 @@ Reflection & Report</div>
     </div>
 
     <h3 class="sub-title">安装</h3>
-    <div class="code-block"><span class="comment"># 方式一：npm 全局安装（推荐）</span>
+    <div class="code-block"><span class="comment"># npm 全局安装（推荐）</span>
 <span class="cmd">npm</span> install -g castclaw</div>
 
     <h3 class="sub-title">验证安装</h3>
-    <div class="code-block"><span class="cmd">castclaw</span> --version
-<span class="cmd">cd</span> python && <span class="cmd">uv run python</span> -c <span class="str">"from castclaw_ml import runner; print('OK')"</span></div>
+    <div class="code-block"><span class="cmd">castclaw</span> --version</div>
 
     <h3 class="sub-title">配置 LLM</h3>
-    <div class="code-block"><span class="comment"># Anthropic（默认）</span>
-<span class="cmd">export</span> ANTHROPIC_API_KEY=sk-ant-...
+    <div class="code-block"><span class="comment"># 在终端中输入 castclaw，即可进入交互式配置 API Key</span>
+<span class="cmd">castclaw</span>
 
-<span class="comment"># 或 OpenAI / Google / OpenRouter</span>
-<span class="cmd">export</span> OPENAI_API_KEY=sk-...
-<span class="cmd">export</span> GOOGLE_GENERATIVE_AI_API_KEY=...
-
-<span class="comment"># castclaw.json 配置</span>
-{
-  <span class="str">"model"</span>: <span class="str">"anthropic/claude-sonnet-4-6"</span>
-}</div>
+<span class="comment"># 或在 castclaw 终端内部执行 /connect 来切换不同运营商</span>
+<span class="cmd">/connect</span></div>
 
     <h3 class="sub-title">开始预测</h3>
     <div class="code-block"><span class="comment"># 进入数据集所在目录，启动 CLI</span>
 <span class="cmd">cd</span> /path/to/your/dataset
 <span class="cmd">castclaw</span>
-
-<span class="comment"># 或指定模型</span>
-<span class="cmd">castclaw</span> --model anthropic/claude-sonnet-4-6</div>
+</div>
 
     <p style="margin-top: 16px;">CLI 启动后，在 <strong>Planner</strong> 标签页（<code>Ctrl+1</code>）中输入任务描述：</p>
     <div class="code-block"><span class="comment"># 示例：初始化一个能源消耗预测任务</span>
