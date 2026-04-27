@@ -178,6 +178,37 @@
       line-height: 1.75;
     }
 
+    .hero-highlights {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 840px;
+      margin: 24px auto 0;
+      text-align: left;
+    }
+    .hero-highlight {
+      min-height: 92px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid #d9eee9;
+      background: rgba(255, 255, 255, 0.78);
+      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.06);
+    }
+    .hero-highlight strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #0f766e;
+      font-size: 1.04rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+    .hero-highlight span {
+      display: block;
+      color: #555;
+      font-size: 0.84rem;
+      line-height: 1.65;
+    }
+
     main {
       flex: 1;
       padding: 40px 0 80px;
@@ -201,6 +232,40 @@
     .content-stack {
       display: grid;
       gap: 20px;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+    .overview-item {
+      border: 1px solid #e8e8e8;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
+      padding: 18px;
+    }
+    .overview-item .label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 0 10px;
+      border-radius: 999px;
+      border: 1px solid #99e6d8;
+      background: #e6fbf7;
+      color: #0f766e;
+      font-size: 0.74rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .overview-item h3 {
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+    .overview-item p {
+      font-size: 0.9rem;
+      line-height: 1.75;
     }
 
     .hero-visual {
@@ -399,6 +464,27 @@
       font-weight: 600;
     }
 
+    .scenario-detail {
+      display: grid;
+      gap: 8px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid #ecece8;
+    }
+    .scenario-detail div {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 10px;
+      align-items: start;
+      font-size: 0.84rem;
+      line-height: 1.65;
+      color: #555;
+    }
+    .scenario-detail strong {
+      color: #111;
+      font-weight: 800;
+    }
+
     .system-shell {
       display: grid;
       grid-template-columns: 1.4fr 1fr;
@@ -424,6 +510,10 @@
       font-weight: 800;
       color: #111;
       margin-bottom: 10px;
+    }
+
+    .system-side .task-title {
+      margin-top: 20px;
     }
 
     .system-panel p,
@@ -459,6 +549,69 @@
       line-height: 1.7;
     }
 
+    .workflow-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .workflow-step {
+      position: relative;
+      min-height: 178px;
+      padding: 18px;
+      border: 1px solid #e8e8e8;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
+    }
+    .workflow-step::before {
+      content: attr(data-step);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      margin-bottom: 14px;
+      border-radius: 50%;
+      background: #0f766e;
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+    .workflow-step h4 {
+      margin-bottom: 8px;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #111;
+    }
+    .workflow-step p {
+      font-size: 0.88rem;
+      line-height: 1.75;
+      color: #555;
+    }
+
+    .task-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .task-list span {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: #555;
+      line-height: 1.6;
+    }
+    .task-list span::before {
+      content: "";
+      flex: 0 0 auto;
+      width: 7px;
+      height: 7px;
+      margin-top: 10px;
+      border-radius: 50%;
+      background: #0f766e;
+    }
+
     .focus-figure {
       margin-bottom: 14px;
     }
@@ -481,7 +634,10 @@
     @media (max-width: 960px) {
       .scenario-grid,
       .focus-grid,
-      .system-shell {
+      .system-shell,
+      .overview-grid,
+      .workflow-steps,
+      .hero-highlights {
         grid-template-columns: 1fr;
       }
       .focus-grid {
@@ -564,6 +720,20 @@
       中国科学技术大学 · 认知智能全国重点实验室 AGI 研究组<br>
       面向城市电力负荷、新能源发电、云服务流量等真实预测场景，持续推进时间序列预测的应用研究与系统建设
     </p>
+    <div class="hero-highlights" aria-label="应用研究概览">
+      <div class="hero-highlight">
+        <strong>3 类真实场景</strong>
+        <span>城市电力负荷、新能源发电、云服务流量，覆盖能源与云基础设施中的高频预测问题。</span>
+      </div>
+      <div class="hero-highlight">
+        <strong>1 套智能体系统</strong>
+        <span>CastClaw 将任务诊断、实验执行、结果反思和人工确认组织成可复用工作流。</span>
+      </div>
+      <div class="hero-highlight">
+        <strong>闭环研发方法</strong>
+        <span>从场景理解到多源建模，再到系统沉淀，让预测研究更贴近真实业务约束。</span>
+      </div>
+    </div>
     <div class="hero-visual" aria-hidden="true">
       <img src="./assets/domain-applications-overview.svg" alt="城市负荷、新能源发电与云服务流量三类时间序列应用场景总览图" />
     </div>
@@ -573,12 +743,32 @@
 <main>
   <div class="container">
 
-    <div class="section-intro">
-      <h2>页面概览</h2>
-      <p>这一页聚焦 USTC-AGI 研究组在时间序列预测真实应用场景中的研究探索，以及支撑相关工作的 CastClaw 研发系统。</p>
-    </div>
-
     <div class="content-stack">
+      <section class="section-card">
+        <h3>研究地图</h3>
+        <p>
+          应用研究的目标不是把公开数据集上的模型指标直接搬到真实场景，而是把业务机制、外部变量、工程约束和模型能力放在同一个研发闭环中评估。
+          因此，页面按“场景问题、方法路径、系统支撑”组织，展示课题组如何将时间序列预测方法落到可复用的应用研究流程中。
+        </p>
+        <div class="overview-grid">
+          <div class="overview-item">
+            <span class="label">Problem</span>
+            <h3>真实预测问题</h3>
+            <p>面对周期变化、突发波动、外生因素和容量约束，先明确预测任务服务的调度、规划或运维目标。</p>
+          </div>
+          <div class="overview-item">
+            <span class="label">Method</span>
+            <h3>场景化建模路径</h3>
+            <p>围绕数据诊断、多源变量接入、模型组合和误差分析，形成可以随场景调整的研究流程。</p>
+          </div>
+          <div class="overview-item">
+            <span class="label">System</span>
+            <h3>CastClaw 工作台</h3>
+            <p>用智能体框架承载实验编排、工具调用和经验沉淀，让一次性实验逐步变成可复用能力。</p>
+          </div>
+        </div>
+      </section>
+
       <section class="section-card">
         <h3>应用研究场景</h3>
         <div class="scenario-grid">
@@ -599,6 +789,11 @@
               <span>多尺度周期</span>
               <span>负荷调度</span>
             </div>
+            <div class="scenario-detail">
+              <div><strong>问题</strong><span>峰谷变化和异常天气会破坏稳定周期，单纯历史外推难以支撑高峰调度。</span></div>
+              <div><strong>方法</strong><span>结合日历、气象和多粒度负荷特征，分析短期波动与长期季节结构。</span></div>
+              <div><strong>价值</strong><span>服务负荷预案、资源调度和需求响应策略，降低高峰运行风险。</span></div>
+            </div>
           </article>
 
           <article class="scenario-card">
@@ -617,6 +812,11 @@
               <span>风电预测</span>
               <span>气象耦合</span>
               <span>不确定性</span>
+            </div>
+            <div class="scenario-detail">
+              <div><strong>问题</strong><span>风速、云量和辐照变化带来强随机性，输出功率存在明显爬坡和短临突变。</span></div>
+              <div><strong>方法</strong><span>融合气象观测、出力曲线和不确定性估计，刻画波动区间和异常事件。</span></div>
+              <div><strong>价值</strong><span>支撑新能源并网、备用容量配置和短临调度，提升电力系统韧性。</span></div>
             </div>
           </article>
 
@@ -637,12 +837,42 @@
               <span>容量规划</span>
               <span>成本约束</span>
             </div>
+            <div class="scenario-detail">
+              <div><strong>问题</strong><span>业务活动和用户行为会造成非平稳流量，资源过配与欠配都会带来成本或稳定性问题。</span></div>
+              <div><strong>方法</strong><span>识别业务周期、突发窗口和资源使用关系，建立面向容量决策的预测视图。</span></div>
+              <div><strong>价值</strong><span>辅助弹性伸缩、容量预算和告警前置，减少服务抖动与资源浪费。</span></div>
+            </div>
           </article>
         </div>
       </section>
 
       <section class="section-card">
-        <h3>时序预测智能体CastClaw</h3>
+        <h3>研究流程</h3>
+        <p>
+          面向真实场景的预测研究通常需要多轮迭代。我们将流程拆成四个可复用阶段，让每一次应用研究都能留下数据诊断、模型实验和业务解释资产。
+        </p>
+        <div class="workflow-steps">
+          <article class="workflow-step" data-step="01">
+            <h4>任务界定</h4>
+            <p>明确预测对象、时间粒度、预测窗口、评估指标和业务决策场景，避免模型目标与应用目标脱节。</p>
+          </article>
+          <article class="workflow-step" data-step="02">
+            <h4>数据诊断</h4>
+            <p>检查缺失、异常、周期、漂移和外生变量，先理解序列结构，再决定特征与模型路线。</p>
+          </article>
+          <article class="workflow-step" data-step="03">
+            <h4>实验编排</h4>
+            <p>组合统计模型、深度模型和场景特征，形成可比较的实验矩阵，并保留关键人工确认节点。</p>
+          </article>
+          <article class="workflow-step" data-step="04">
+            <h4>结果沉淀</h4>
+            <p>将误差模式、可解释结论和可迁移策略整理成文档与 Skill，支持后续场景快速复用。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card">
+        <h3>时序预测智能体 CastClaw</h3>
         <div class="system-shell">
           <div class="system-panel">
             <h4>面向真实预测工作流的人机协同智能体框架</h4>
@@ -684,6 +914,13 @@
                 <strong>经验沉淀</strong>
                 <span>将场景经验和可复用策略持续积累，形成跨任务、跨会话的研发资产。</span>
               </div>
+            </div>
+            <h4 class="task-title">适用任务</h4>
+            <div class="task-list">
+              <span>给定新场景数据，快速完成任务澄清和数据诊断。</span>
+              <span>对比经典模型、深度模型与特征策略的有效性。</span>
+              <span>围绕误差峰值、异常窗口和业务约束生成分析报告。</span>
+              <span>把一次实验流程沉淀成可复用的预测 Skill。</span>
             </div>
           </aside>
         </div>
