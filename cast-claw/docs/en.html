@@ -1720,6 +1720,7 @@ domain_notes: ""</code></pre></div>
     );
 
     function renderOnThisPage(sectionId) {
+      if (!onThisPageLinks) return;
       const items = sectionBlocks.get(sectionId) || [];
       onThisPageLinks.innerHTML = items.map(function (item) {
         const title = item.dataset.title || item.querySelector("h3").textContent.trim();
@@ -1739,9 +1740,11 @@ domain_notes: ""</code></pre></div>
       sidebarLinks.forEach(function (link) {
         link.classList.toggle("active", link.getAttribute("href") === "#" + blockId);
       });
-      Array.from(onThisPageLinks.querySelectorAll(".aside-link")).forEach(function (link) {
-        link.classList.toggle("active", link.getAttribute("href") === "#" + blockId);
-      });
+      if (onThisPageLinks) {
+        Array.from(onThisPageLinks.querySelectorAll(".aside-link")).forEach(function (link) {
+          link.classList.toggle("active", link.getAttribute("href") === "#" + blockId);
+        });
+      }
     }
 
     function updateByHash() {
