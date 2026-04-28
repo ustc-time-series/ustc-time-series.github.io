@@ -268,24 +268,107 @@
       line-height: 1.75;
     }
 
-    .hero-visual {
+    .hero-workflow {
       margin-top: 28px;
-      padding: 22px;
+      padding: 24px;
       border-radius: 24px;
       border: 1px solid #d9eee9;
       background:
-        radial-gradient(circle at top left, rgba(15, 118, 110, 0.14), transparent 42%),
+        linear-gradient(rgba(15, 118, 110, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 118, 110, 0.04) 1px, transparent 1px),
         linear-gradient(135deg, #ffffff 0%, #f2fcfa 100%);
+      background-size: 36px 36px, 36px 36px, auto;
       box-shadow: 0 18px 48px rgba(15, 118, 110, 0.08);
+      text-align: left;
     }
 
-    .hero-visual img {
-      display: block;
-      width: 100%;
-      max-width: 960px;
-      margin: 0 auto;
+    .hero-workflow-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      padding: 0 4px;
+    }
+
+    .hero-workflow-head h2 {
+      font-size: 1.18rem;
+      line-height: 1.35;
+      color: #111;
+    }
+
+    .hero-workflow-head p {
+      max-width: 460px;
+      color: #5c706c;
+      font-size: 0.86rem;
+      line-height: 1.7;
+      text-align: left;
+    }
+
+    .hero-workflow-steps {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      counter-reset: hero-workflow;
+    }
+
+    .hero-workflow-step {
+      position: relative;
+      min-height: 168px;
+      padding: 16px 14px;
       border-radius: 18px;
-      box-shadow: 0 12px 30px rgba(15, 118, 110, 0.10);
+      border: 1px solid #d9eee9;
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.06);
+    }
+
+    .hero-workflow-step::before {
+      counter-increment: hero-workflow;
+      content: "0" counter(hero-workflow);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 26px;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      background: #e6fbf7;
+      color: #0f766e;
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-workflow-step::after {
+      content: "";
+      position: absolute;
+      top: 29px;
+      right: -11px;
+      width: 10px;
+      height: 10px;
+      border-top: 2px solid #42c6b7;
+      border-right: 2px solid #42c6b7;
+      transform: rotate(45deg);
+      background: transparent;
+      z-index: 1;
+    }
+
+    .hero-workflow-step:last-child::after {
+      display: none;
+    }
+
+    .hero-workflow-step h3 {
+      margin-bottom: 8px;
+      font-size: 0.98rem;
+      line-height: 1.35;
+      color: #111;
+    }
+
+    .hero-workflow-step p {
+      color: #52615e;
+      font-size: 0.82rem;
+      line-height: 1.65;
+      text-align: left;
     }
 
     .section-card {
@@ -637,8 +720,23 @@
       .system-shell,
       .overview-grid,
       .workflow-steps,
+      .hero-workflow-steps,
       .hero-highlights {
         grid-template-columns: 1fr;
+      }
+      .hero-workflow-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .hero-workflow-step {
+        min-height: auto;
+      }
+      .hero-workflow-step::after {
+        top: auto;
+        right: auto;
+        left: 28px;
+        bottom: -10px;
+        transform: rotate(135deg);
       }
       .focus-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -682,6 +780,10 @@
       .focus-card {
         padding-left: 18px;
         padding-right: 18px;
+      }
+      .hero-workflow {
+        padding: 18px;
+        border-radius: 18px;
       }
     }
   </style>
@@ -734,8 +836,33 @@
         <span>从场景理解到多源建模，再到系统沉淀，让预测研究更贴近真实业务约束。</span>
       </div>
     </div>
-    <div class="hero-visual" aria-hidden="true">
-      <img src="./assets/domain-applications-overview.svg" alt="城市负荷、新能源发电与云服务流量三类时间序列应用场景总览图" />
+    <div class="hero-workflow" aria-label="应用研究闭环">
+      <div class="hero-workflow-head">
+        <h2>从真实场景到可复用系统能力</h2>
+        <p>应用研究不止比较模型指标，而是把问题定义、数据质量、建模策略和系统沉淀放进同一个迭代闭环。</p>
+      </div>
+      <div class="hero-workflow-steps">
+        <article class="hero-workflow-step">
+          <h3>场景理解</h3>
+          <p>将调度、运维和容量规划目标转成预测窗口、时间粒度、评价指标与业务约束。</p>
+        </article>
+        <article class="hero-workflow-step">
+          <h3>数据诊断</h3>
+          <p>检查缺失、漂移、周期、异常和外部变量可用性，先判断数据是否支撑任务目标。</p>
+        </article>
+        <article class="hero-workflow-step">
+          <h3>多源建模</h3>
+          <p>组合历史序列、气象日历、业务事件和多模型基线，形成可解释的预测实验方案。</p>
+        </article>
+        <article class="hero-workflow-step">
+          <h3>智能体协同</h3>
+          <p>通过 Planner、Forecaster、Critic 编排实验、解释误差，并在关键节点引入人工确认。</p>
+        </article>
+        <article class="hero-workflow-step">
+          <h3>经验沉淀</h3>
+          <p>把有效模板、特征处理、模型组合和复盘结论沉淀为后续场景可复用的研究资产。</p>
+        </article>
+      </div>
     </div>
   </div>
 </header>
