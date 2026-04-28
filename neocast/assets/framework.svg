@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 720" role="img" aria-labelledby="title desc">
+  <title id="title">NeoCast system architecture</title>
+  <desc id="desc">Seven layer NeoCast architecture and closed research loop for time series forecasting model discovery</desc>
+  <defs>
+    <linearGradient id="layerA" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff7f5"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="layerB" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0fdf9"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="loopGrad" x1="252" y1="132" x2="908" y2="132" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c0392b"/>
+      <stop offset="0.5" stop-color="#e67e22"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#1a1a1a" flood-opacity="0.11"/>
+    </filter>
+  </defs>
+
+  <rect width="1160" height="720" rx="26" fill="#fbfaf7"/>
+
+  <g filter="url(#shadow)">
+    <rect x="72" y="44" width="1016" height="136" rx="20" fill="#ffffff" stroke="#ead9d4"/>
+    <text x="102" y="92" font-size="30" font-weight="800" font-family="Arial, Helvetica, sans-serif" fill="#111">Closed Research Loop</text>
+    <text x="102" y="126" font-size="18" font-family="Arial, Helvetica, sans-serif" fill="#666">The agent keeps only reproducible improvements under fixed protocol constraints.</text>
+    <path d="M374 132 H788" fill="none" stroke="url(#loopGrad)" stroke-width="8" stroke-linecap="round"/>
+    <path d="M790 132 l-22 -15 m22 15 l-22 15" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+      <circle cx="286" cy="132" r="34" fill="#fff7f5" stroke="#f0c8be" stroke-width="2"/>
+      <text x="286" y="126" font-size="13" font-weight="800" fill="#c0392b">Hypothesis</text>
+      <text x="286" y="145" font-size="12" fill="#555">问题归因</text>
+      <circle cx="462" cy="132" r="34" fill="#fffaf2" stroke="#f3d39b" stroke-width="2"/>
+      <text x="462" y="126" font-size="13" font-weight="800" fill="#b9770e">Recipe</text>
+      <text x="462" y="145" font-size="12" fill="#555">候选配方</text>
+      <circle cx="636" cy="132" r="34" fill="#f2fbff" stroke="#b9d9ee" stroke-width="2"/>
+      <text x="636" y="126" font-size="13" font-weight="800" fill="#2471a3">Experiment</text>
+      <text x="636" y="145" font-size="12" fill="#555">受控实验</text>
+      <circle cx="812" cy="132" r="34" fill="#f0fdf9" stroke="#a9e2d9" stroke-width="2"/>
+      <text x="812" y="126" font-size="13" font-weight="800" fill="#0f766e">Memory</text>
+      <text x="812" y="145" font-size="12" fill="#555">经验沉淀</text>
+    </g>
+  </g>
+
+  <g filter="url(#shadow)" font-family="Arial, Helvetica, sans-serif">
+    <rect x="72" y="220" width="1016" height="58" rx="14" fill="url(#layerA)" stroke="#ead9d4"/>
+    <text x="100" y="256" font-size="21" font-weight="800" fill="#c0392b">Human Control Layer</text>
+    <text x="392" y="256" font-size="17" fill="#555">定义任务 · 批准搜索空间 · 审核晋级 · 冻结测试集 · 回滚终止</text>
+
+    <rect x="72" y="292" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
+    <text x="100" y="328" font-size="21" font-weight="800" fill="#2471a3">Agent Orchestration Layer</text>
+    <text x="392" y="328" font-size="17" fill="#555">Research Manager · Diagnostic · Design · Coder · Runner · Analyst · Librarian</text>
+
+    <rect x="72" y="364" width="1016" height="58" rx="14" fill="url(#layerB)" stroke="#cdeae4"/>
+    <text x="100" y="400" font-size="21" font-weight="800" fill="#0f766e">Search Space Layer</text>
+    <text x="392" y="400" font-size="17" fill="#555">CandidateRecipe DSL · action registry · loss DSL · trainer DSL</text>
+
+    <rect x="72" y="436" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
+    <text x="100" y="472" font-size="21" font-weight="800" fill="#b9770e">Protocol Layer</text>
+    <text x="392" y="472" font-size="17" fill="#555">TaskSpec · split boundary · metric · budget · leakage prevention</text>
+
+    <rect x="72" y="508" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
+    <text x="100" y="544" font-size="21" font-weight="800" fill="#5d6d7e">Execution Layer</text>
+    <text x="392" y="544" font-size="17" fill="#555">Sandbox · static validator · training runner · artifact store</text>
+
+    <rect x="72" y="580" width="1016" height="58" rx="14" fill="url(#layerB)" stroke="#cdeae4"/>
+    <text x="100" y="616" font-size="21" font-weight="800" fill="#0f766e">Evaluation &amp; Memory Layers</text>
+    <text x="392" y="616" font-size="17" fill="#555">multi-stage evaluation · champion/challenger · lineage · reusable heuristics</text>
+  </g>
+</svg>

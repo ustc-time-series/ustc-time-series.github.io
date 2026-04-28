@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeoCast — Forecast Research Operating System</title>
+  <meta name="description" content="NeoCast 是面向时间序列预测小模型研发的自主研究智能体系统，将研究假设、模型配方、受控实验、评估归因与研究记忆串成可复现闭环。" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    :root {
+      --accent: #c0392b;
+      --accent-dark: #a93226;
+      --teal: #0f766e;
+      --blue: #2471a3;
+      --amber: #b9770e;
+      --text: #1a1a1a;
+      --muted: #5d5d5d;
+      --line: #e6e6e2;
+      --bg: #f7f7f5;
+      --card: #ffffff;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                   "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 16px;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: #f0f0ee;
+      border: 1px solid #e0e0de;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+      font-size: 0.85em;
+      color: var(--accent);
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid #e4e4e4;
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+    }
+    .nav-bar .container {
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+      gap: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .nav-bar .container::-webkit-scrollbar { display: none; }
+    .nav-bar a {
+      flex-shrink: 0;
+      padding: 13px 18px;
+      font-size: 0.87rem;
+      font-weight: 500;
+      color: #555;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .nav-bar a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-home {
+      font-weight: 700;
+      color: var(--accent) !important;
+      border-right: 1px solid #e8e8e8;
+    }
+
+    header {
+      background: linear-gradient(160deg, #ffffff 52%, #fff7f5 82%, #eefbf8 100%);
+      border-bottom: 1px solid #e8e8e8;
+      padding: 60px 0 48px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform .16s ease, opacity .16s ease, filter .16s ease;
+    }
+    header:hover { filter: saturate(1.02); }
+    header:active { transform: scale(0.995); }
+    .hero-logo {
+      width: min(100%, 520px);
+      margin: 0 auto 18px;
+    }
+    .hero-logo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+    header h1 {
+      margin-top: 12px;
+      font-size: 1.95rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: #111;
+    }
+    header h1 .highlight { color: var(--accent); }
+    .subtitle {
+      margin-top: 14px;
+      font-size: 1.02rem;
+      color: #555;
+      max-width: 690px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.7;
+      text-align: center;
+      text-justify: auto;
+    }
+    .affiliation {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: #999;
+      letter-spacing: 0.02em;
+      text-align: center;
+      text-justify: auto;
+    }
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 20px;
+      border-radius: 7px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s;
+      text-decoration: none;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.13);
+      text-decoration: none;
+      opacity: 1;
+    }
+    .btn-secondary { background: #fff; color: #222; border-color: #d0d0d0; }
+    .btn-secondary:hover { background: #f8f8f8; border-color: #aaa; }
+    .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    section { padding: 64px 0; scroll-margin-top: 46px; }
+    section.alt { background: #fff; }
+    section + section { border-top: 1px solid #e8e8e8; }
+    h2.section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--accent);
+      display: inline-block;
+    }
+    h3.sub-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #222;
+      margin: 32px 0 10px;
+    }
+    h3.sub-title:first-of-type { margin-top: 0; }
+    p { margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+
+    .tldr {
+      background: #fff8f7;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 22px;
+      font-size: 1.02rem;
+      color: #222;
+      margin-bottom: 32px;
+      line-height: 1.75;
+    }
+    .tldr strong { color: var(--accent); }
+
+    .stat-row {
+      display: flex;
+      gap: 18px;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+    .stat-box {
+      flex: 1;
+      min-width: 145px;
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      border-radius: 10px;
+      padding: 18px 20px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .stat-box .stat-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1.1;
+    }
+    .stat-box .stat-label {
+      font-size: 0.83rem;
+      color: #666;
+      margin-top: 6px;
+      line-height: 1.55;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+    .card-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 22px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid #e6e6e6;
+      border-radius: 10px;
+      padding: 22px 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      transition: transform .22s, box-shadow .22s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.10);
+    }
+    .card .card-icon { font-size: 1.65rem; margin-bottom: 10px; line-height: 1; }
+    .card h4 { font-size: 0.93rem; font-weight: 700; margin-bottom: 7px; color: #111; }
+    .card p { font-size: 0.87rem; color: #555; margin: 0; line-height: 1.65; }
+    .card-accent-red { border-left: 4px solid var(--accent); }
+    .card-accent-teal { border-left: 4px solid var(--teal); }
+    .card-accent-blue { border-left: 4px solid var(--blue); }
+    .card-accent-amber { border-left: 4px solid var(--amber); }
+
+    .pillar-list {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pillar-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      border-radius: 9px;
+      padding: 16px 20px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+    .pillar-num {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .pillar-text { flex: 1; }
+    .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; }
+    .pillar-text span { font-size: 0.88rem; color: #555; }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 1px solid #e4e4e4;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+    th {
+      background: var(--accent);
+      color: #fff;
+      padding: 11px 16px;
+      text-align: left;
+      font-weight: 600;
+    }
+    td { padding: 10px 16px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tr:nth-child(even) td { background: #fdf9f9; }
+    tr:last-child td { border-bottom: none; }
+
+    figure { margin: 28px 0; text-align: center; }
+    figure img {
+      max-width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.09);
+      background: #fff;
+    }
+    figcaption { margin-top: 10px; font-size: 0.84rem; color: #777; }
+
+    .feature-list {
+      list-style: none;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .feature-list li {
+      padding-left: 20px;
+      position: relative;
+      font-size: 0.95rem;
+      color: #333;
+    }
+    .feature-list li::before {
+      content: "▸";
+      color: var(--accent);
+      position: absolute;
+      left: 0;
+      top: 1px;
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 22px 0;
+    }
+    .pipeline-step {
+      min-height: 96px;
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      border-radius: 10px;
+      padding: 14px 12px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.04);
+    }
+    .pipeline-step strong { display: block; color: #111; font-size: 0.9rem; }
+    .pipeline-step span { display: block; color: #666; font-size: 0.78rem; line-height: 1.45; margin-top: 5px; }
+
+    .citation-box {
+      background: #f5f5f3;
+      border: 1px solid #e0e0de;
+      border-radius: 8px;
+      padding: 18px 20px;
+      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+      font-size: 0.82rem;
+      color: #333;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-top: 14px;
+      line-height: 1.7;
+    }
+
+    footer {
+      background: #1c1c1c;
+      color: #999;
+      text-align: center;
+      padding: 30px 24px;
+      font-size: 0.84rem;
+    }
+    footer a { color: #e87b6e; }
+    footer p + p { margin-top: 6px; }
+
+    body.page-refreshing header {
+      opacity: 0.72;
+      transform: scale(0.992);
+    }
+
+    @media (max-width: 720px) {
+      .hero-logo { width: min(100%, 340px); margin-bottom: 14px; }
+      header h1 { font-size: 1.45rem; }
+      section { padding: 48px 0; }
+      .card-grid-2 { grid-template-columns: 1fr; }
+      .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
+      h2.section-title { font-size: 1.25rem; }
+      .pipeline { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header id="top-refresh">
+  <div class="container">
+    <div class="hero-logo">
+      <img src="assets/logo_new.svg" alt="NeoResearch logo" />
+    </div>
+    <h1>NeoCast：<span class="highlight">时间序列小模型自主研究系统</span></h1>
+    <p class="subtitle">
+      将“研究假设 → 模型配方 → 受控实验 → 结果归因 → 研究记忆”串成闭环，
+      面向时间序列预测构建可复现、可审计、可持续积累的 Forecast Research Operating System。
+    </p>
+    <p class="affiliation">中国科学技术大学 · 认知智能全国重点实验室</p>
+
+    <div class="btn-row">
+      <a class="btn btn-secondary" href="#architecture">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+          <rect x="3" y="3" width="7" height="7" rx="1"/>
+          <rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/>
+          <rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+        系统架构
+      </a>
+      <a class="btn btn-secondary" href="#recipe">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 4h16v16H4z"/>
+          <path d="M8 8h8M8 12h8M8 16h5"/>
+        </svg>
+        CandidateRecipe
+      </a>
+      <a class="btn btn-secondary" href="#roadmap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 19c4-8 12-6 16-14"/>
+          <path d="M14 5h6v6"/>
+        </svg>
+        研发路线
+      </a>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <div class="container">
+    <a href="../" class="nav-home">USTC-AGI Time Series</a>
+    <a href="#intro">简介</a>
+    <a href="#problem">核心问题</a>
+    <a href="#architecture">系统架构</a>
+    <a href="#loop">研究闭环</a>
+    <a href="#recipe">配方搜索</a>
+    <a href="#protocol">评估治理</a>
+    <a href="#roadmap">路线图</a>
+  </div>
+</nav>
+
+<section id="intro" class="alt">
+  <div class="container">
+    <div class="tldr">
+      <strong>TL;DR：</strong>
+      NeoCast 不是“会聊天的时序助手”，也不是无边界 AutoML。
+      它把时间序列预测小模型研发变成一个<strong>受控自主研究闭环</strong>：
+      Agent 在固定数据、评估、预算和代码协议内提出候选结构与训练配方，自动实验、归因、保留有效增量，并把成功与失败沉淀为可迁移研究记忆。
+    </div>
+
+    <h2 class="section-title">项目简介</h2>
+    <p>
+      时间序列预测领域已经形成高度碎片化的模型生态：Autoformer、PatchTST、iTransformer、DLinear、FITS、TimeMixer 等方法分别从分解、patching、变量 token、频域与 mixing 等角度切入。
+      但每一个“小模型”的诞生，仍然需要研究员反复设计结构、调 loss、跑 ablation、记录经验。
+    </p>
+    <p>
+      NeoCast 的目标是把这类重复而高频的研究动作系统化：人定义任务边界、预算和研究方向，
+      Agent 在可审计的实验环境中完成候选生成、代码变更、训练评估、结果归因与记忆更新。
+      产物不是单次回答，而是可复现的模型、recipe、实验记录、报告和跨任务经验。
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num">7</div>
+        <div class="stat-label">系统层级<br>从 Human Control 到 Memory</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">12</div>
+        <div class="stat-label">核心服务模块<br>Task / Runner / Evaluator 等</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-label">评估层级<br>Dev / Reference / Blind</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">10m</div>
+        <div class="stat-label">MVP 单轮预算<br>快速 keep / discard</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="problem">
+  <div class="container">
+    <h2 class="section-title">核心问题</h2>
+    <p>
+      时间序列小模型研发不是简单的模型选择问题。真正困难的部分在于：模型结构、预处理、变量交互方式、预测头、训练目标和数据属性之间存在强耦合，而这些经验很难靠一次性搜索或自由代码生成稳定积累。
+    </p>
+    <div class="card-grid">
+      <div class="card card-accent-red">
+        <div class="card-icon">🔁</div>
+        <h4>研究过程高度重复</h4>
+        <p>同一类改动会在不同数据集、horizon 和变量设置下反复试验，人工记录与复盘成本高。</p>
+      </div>
+      <div class="card card-accent-amber">
+        <div class="card-icon">🧩</div>
+        <h4>模型生态碎片化</h4>
+        <p>不同论文模型往往绑定一整套设计，难以拆解成可组合、可审计的模块级 action。</p>
+      </div>
+      <div class="card card-accent-blue">
+        <div class="card-icon">📏</div>
+        <h4>评估容易被污染</h4>
+        <p>如果 Agent 能频繁读取 test 或修改数据切分，就会把研究系统变成隐性调参器。</p>
+      </div>
+      <div class="card card-accent-teal">
+        <div class="card-icon">🧠</div>
+        <h4>经验难以迁移</h4>
+        <p>“强季节性适合什么结构”“变量相关高时如何融合”这类经验需要跨任务沉淀。</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">系统边界</h3>
+    <ul class="feature-list">
+      <li>第一阶段聚焦 forecasting，不做开放式文献综述 Agent，不接管生产部署。</li>
+      <li>优先研究小模型：同时关注精度、参数量、延迟、稳定性与复现性。</li>
+      <li>先协议后智能：先冻结数据协议、评估协议、预算协议和代码边界，再让 Agent 在边界内创新。</li>
+    </ul>
+  </div>
+</section>
+
+<section id="architecture" class="alt">
+  <div class="container">
+    <h2 class="section-title">系统架构</h2>
+    <p>
+      NeoCast 的完整形态由七层组成：人类控制层负责边界和审批，Agent 编排层负责研究任务分解，
+      搜索空间层提供 CandidateRecipe DSL 与 action registry，协议层固定数据与评估规则，执行层运行隔离实验，评估层判断晋级，记忆层沉淀经验。
+    </p>
+
+    <figure>
+      <img src="assets/framework.svg" alt="NeoCast system architecture" />
+      <figcaption>NeoCast 将自主研究限制在固定协议和可审计闭环中，避免 Agent 自由修改全仓或反复窥探测试集。</figcaption>
+    </figure>
+
+    <h3 class="sub-title">核心服务模块</h3>
+    <div class="card-grid">
+      <div class="card">
+        <h4>Task / Dataset / Diagnostic</h4>
+        <p>创建 TaskSpec，绑定数据版本，抽取趋势、季节性、变量相关、缺失率等 TaskFingerprint。</p>
+      </div>
+      <div class="card">
+        <h4>Proposal / Patch / Validator</h4>
+        <p>基于任务指纹和记忆生成 CandidateRecipe，再转为配置或模板化 patch，并检查越权、预算和接口兼容性。</p>
+      </div>
+      <div class="card">
+        <h4>Runner / Evaluator</h4>
+        <p>在隔离执行环境中运行训练、收集 artifact、计算指标，并用统一晋级规则比较 challenger 与 champion。</p>
+      </div>
+      <div class="card">
+        <h4>Memory / Governance</h4>
+        <p>保存实验谱系、失败模式、相似任务经验，同时保护 reference test 和 blind test 的访问权限。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="loop">
+  <div class="container">
+    <h2 class="section-title">研究闭环</h2>
+    <p>
+      MVP 阶段采用 autoresearch 同构的最小文件结构：冻结的 <code>prepare_tsf.py</code> 负责数据加载与评估，
+      <code>train.py</code> 是 Agent 唯一可编辑实验层，<code>program.md</code> 则承载人类制定的研究策略与行为协议。
+    </p>
+
+    <ul class="pillar-list">
+      <li>
+        <div class="pillar-num">1</div>
+        <div class="pillar-text">
+          <strong>Round 0：建立基线</strong>
+          <span>先跑固定 baseline，例如 NLinear CI、MLP、PatchTST / iTransformer 参照，形成初始 champion 和结果记录。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">2</div>
+        <div class="pillar-text">
+          <strong>提出假设与候选配方</strong>
+          <span>Research Manager 读取 TaskFingerprint 和历史记忆，生成少量候选 recipe，而不是无限制搜索。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">3</div>
+        <div class="pillar-text">
+          <strong>验证、实验与晋级</strong>
+          <span>候选先经静态检查、smoke run、低保真实验，再进入 full validation；MVP 可退化为 full run 后 keep / discard。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">4</div>
+        <div class="pillar-text">
+          <strong>归因与记忆沉淀</strong>
+          <span>Analyst 判断提升是否可靠，Librarian 把成功/失败压缩成可复用经验，供下一轮 candidate 排序。</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>autoresearch</th>
+            <th>NeoCast MVP</th>
+            <th>角色</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>prepare.py</code></td>
+            <td><code>prepare_tsf.py</code></td>
+            <td>冻结数据加载、切分、标准化和评估协议</td>
+          </tr>
+          <tr>
+            <td><code>train.py</code></td>
+            <td><code>train.py</code></td>
+            <td>模型结构、loss、训练循环的受控实验层</td>
+          </tr>
+          <tr>
+            <td><code>program.md</code></td>
+            <td><code>program.md</code></td>
+            <td>人类定义研究策略、预算、keep / discard 规则</td>
+          </tr>
+          <tr>
+            <td><code>val_bpb</code></td>
+            <td><code>val_avg_mse</code></td>
+            <td>Agent 可见主指标，越低越好</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="recipe" class="alt">
+  <div class="container">
+    <h2 class="section-title">CandidateRecipe 配方搜索</h2>
+    <p>
+      NeoCast 的关键升级是从“选择完整模型族”转向 TimeRecipe 风格的模块级配方搜索。
+      Agent 不再直接问“用 PatchTST 还是 iTransformer”，而是在受限 registry 中选择 preprocessing、embedding、backbone、fusion、head 与 training strategy。
+    </p>
+
+    <div class="pipeline" aria-label="CandidateRecipe pipeline">
+      <div class="pipeline-step"><strong>Input</strong><span>固定数据协议与上下文窗口</span></div>
+      <div class="pipeline-step"><strong>Preprocess</strong><span>instance norm / decomposition</span></div>
+      <div class="pipeline-step"><strong>Embedding</strong><span>none / token / patch / invert</span></div>
+      <div class="pipeline-step"><strong>Backbone</strong><span>linear / mlp / tcn / transformer</span></div>
+      <div class="pipeline-step"><strong>Fusion</strong><span>temporal / feature / hybrid</span></div>
+      <div class="pipeline-step"><strong>Head</strong><span>linear / multi-horizon / quantile</span></div>
+      <div class="pipeline-step"><strong>Training</strong><span>loss / optimizer / schedule</span></div>
+      <div class="pipeline-step"><strong>Forecast</strong><span>受控评估与晋级</span></div>
+    </div>
+
+    <h3 class="sub-title">首批 Action Space</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>模块</th>
+            <th>候选 action</th>
+            <th>研究偏置</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Preprocessing</td>
+            <td><code>none</code>, <code>instance_norm</code>, <code>series_decomposition</code>, <code>seasonal_differencing</code></td>
+            <td>处理尺度漂移、趋势、季节性和缺失提示</td>
+          </tr>
+          <tr>
+            <td>Embedding</td>
+            <td><code>none</code>, <code>token</code>, <code>patch</code>, <code>invert</code>, <code>frequency</code></td>
+            <td>控制序列进入主干网络的表示粒度</td>
+          </tr>
+          <tr>
+            <td>Backbone</td>
+            <td><code>linear</code>, <code>mlp</code>, <code>rnn</code>, <code>tcn</code>, <code>transformer</code>, <code>ssm</code>, <code>mixer</code></td>
+            <td>探索轻量、低延迟与长依赖建模之间的权衡</td>
+          </tr>
+          <tr>
+            <td>Fusion / Head</td>
+            <td><code>temporal</code>, <code>feature</code>, <code>gated_hybrid</code>, <code>linear</code>, <code>quantile</code></td>
+            <td>决定优先建模时间依赖、变量依赖或不确定性输出</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">Recipe Prior</h3>
+    <p>
+      Dataset profiler 只在 train split 上计算任务指纹，再用 rule-based prior 或 rank predictor 给候选排序。
+      例如，长 horizon 且 trend 强时优先尝试 <code>series_decomposition + patch + temporal fusion + linear/mlp</code>；
+      变量相关性高时优先尝试 <code>invert embedding + feature fusion</code>。
+    </p>
+  </div>
+</section>
+
+<section id="protocol">
+  <div class="container">
+    <h2 class="section-title">评估协议与治理</h2>
+    <p>
+      NeoCast 的第一原则是“先协议，后智能”。所有归一化、缺失填补和统计特征拟合只允许在 train fold 上完成；
+      <code>val_avg_mse</code> 是 Agent 日常 keep / discard 的唯一决策信号，reference test 和 blind test 则由 Runner / Human Gate 保护。
+    </p>
+
+    <div class="card-grid-2">
+      <div class="card card-accent-red">
+        <h4>TaskSpec</h4>
+        <p>统一声明 task_id、forecast mode、context length、prediction lengths、dataset loader、split、metric、seed 与预算。</p>
+      </div>
+      <div class="card card-accent-teal">
+        <h4>Time-Series Safety</h4>
+        <p>禁止读取未来特征、修改 split、把 test 写入 Agent 可读日志，reference test 只在晋级节点查询。</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">三层评估协议</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>层次</th>
+            <th>名称</th>
+            <th>用途</th>
+            <th>查询频率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>L1</td>
+            <td>Dev Validation</td>
+            <td>日常 keep / discard 决策</td>
+            <td>每次实验</td>
+          </tr>
+          <tr>
+            <td>L2</td>
+            <td>Reference Test / Shadow Holdout</td>
+            <td>晋级筛选与对外参考对齐</td>
+            <td>每 N 次 keep 后由 Runner 查询</td>
+          </tr>
+          <tr>
+            <td>L3</td>
+            <td>Blind Test</td>
+            <td>最终 champion 确认</td>
+            <td>仅晋级节点，后期独立服务暴露</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">人机分工</h3>
+    <p>
+      人类负责定义任务、冻结协议、批准搜索空间扩展和审核最终 champion；
+      Agent 负责高频试验、候选生成、受限 patch、结果归因和研究记忆更新。
+      这种分工让系统既能持续探索，又保留科研级审计、回滚与权限边界。
+    </p>
+  </div>
+</section>
+
+<section id="roadmap" class="alt">
+  <div class="container">
+    <h2 class="section-title">研发路线图</h2>
+    <p>
+      NeoCast 的实现路线从最小闭环开始，而不是一开始就构建全功能平台。
+      第一阶段先验证 Agent 能否在单任务、单文件、固定协议下形成有效 keep / discard 循环；
+      随后再逐步引入 DSL、registry、低保真筛选、多 seed、研究记忆与 blind test 治理。
+    </p>
+
+    <ul class="pillar-list">
+      <li>
+        <div class="pillar-num">0</div>
+        <div class="pillar-text">
+          <strong>基础底座</strong>
+          <span>实现 <code>prepare_tsf.py</code>、NLinear CI baseline、<code>program.md</code> 与 Phase 0a 闭环。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">1</div>
+        <div class="pillar-text">
+          <strong>Recipe 化受限研究闭环</strong>
+          <span>引入 action registry、CandidateRecipe DSL、Static Validator、Dataset profiler 和低保真筛选。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">2</div>
+        <div class="pillar-text">
+          <strong>模块组合搜索</strong>
+          <span>扩展 preprocessing / embedding / backbone / fusion / head / loss grammar，形成 recipe 谱系树。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">3</div>
+        <div class="pillar-text">
+          <strong>统计验证与研究记忆</strong>
+          <span>支持多 seed、Pareto front、Shadow Holdout、Memory Service 和相似任务召回。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">5</div>
+        <div class="pillar-text">
+          <strong>治理与盲测</strong>
+          <span>提供 blind test 服务、审批流、审计日志和完整研究报告生成。</span>
+        </div>
+      </li>
+    </ul>
+
+    <h3 class="sub-title">成功指标</h3>
+    <div class="card-grid">
+      <div class="card">
+        <h4>研究效果</h4>
+        <p>相对 baseline 的 val_avg_mse 改进、Pareto 改进覆盖数据集数、top-k recipe 命中率。</p>
+      </div>
+      <div class="card">
+        <h4>研究效率</h4>
+        <p>每次有效改进所需实验轮数、GPU 小时、候选到晋级的转化率。</p>
+      </div>
+      <div class="card">
+        <h4>工程可靠性</h4>
+        <p>实验复现通过率、训练失败率、patch 回滚率、blind test 泄漏事件数。</p>
+      </div>
+      <div class="card">
+        <h4>知识积累</h4>
+        <p>可复用 heuristic 数量、相似任务迁移成功率、失败模式覆盖率。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="source">
+  <div class="container">
+    <h2 class="section-title">规划来源</h2>
+    <p>
+      本页面根据 NeoCast 规划文档整理而成，聚焦对外介绍系统定位、架构分层、研究闭环、CandidateRecipe 搜索空间与研发路线。
+      当前内容是项目主页草案，后续可在代码仓库、论文、benchmark 结果明确后补充 GitHub、技术报告和 citation。
+    </p>
+    <div class="citation-box">NeoCast / neo-research for TSF
+Forecast Research Operating System for autonomous time-series forecasting model research
+Core loop: hypothesis -> CandidateRecipe -> controlled experiment -> attribution -> memory</div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>
+      &copy; 2026 NeoCast Team &middot; AGI Group · State Key Laboratory of Cognitive Intelligence, USTC
+    </p>
+    <p style="font-size: 0.78rem; color: #555; margin-top: 6px;">
+      Built for controlled autonomous research in time-series forecasting
+    </p>
+  </div>
+</footer>
+
+<script>
+  const topRefresh = document.getElementById("top-refresh");
+  if (topRefresh) {
+    topRefresh.addEventListener("click", (event) => {
+      if (event.target.closest("a, button")) return;
+
+      document.body.classList.add("page-refreshing");
+      window.setTimeout(() => window.location.reload(), 120);
+    });
+  }
+</script>
+
+</body>
+</html>
