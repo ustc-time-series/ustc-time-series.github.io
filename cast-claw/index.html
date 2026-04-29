@@ -30,6 +30,17 @@
       font-size: 0.85em; color: #d35400;
     }
     .container { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
 
     /* ── Sticky nav ─────────────────────────────── */
     .nav-bar {
@@ -58,7 +69,7 @@
       overflow: hidden;
       background: linear-gradient(160deg, #ffffff 55%, #fef3e2 100%);
       border-bottom: 1px solid #f5cba7;
-      padding: 64px 0 48px; text-align: center;
+      padding: 48px 0 40px; text-align: center;
     }
     header .container {
       position: relative;
@@ -96,7 +107,7 @@
     header.hero-refreshing .hero-refresh-sheen {
       animation: hero-sheen 0.9s ease;
     }
-    header.hero-refreshing .header-logo {
+    header.hero-refreshing .header-logo-frame {
       animation: hero-logo-refresh 0.75s ease;
     }
     header.hero-refreshing h1 {
@@ -450,9 +461,14 @@
     }
 
     /* ── Header logo ────────────────────────────── */
-    .header-logo {
-      width: 420px; max-width: 92%; margin-bottom: 24px;
+    .header-logo-frame {
+      width: 420px; max-width: 92%; aspect-ratio: 1774 / 700;
+      overflow: hidden; margin-bottom: 18px;
       border-radius: 12px;
+    }
+    .header-logo {
+      display: block; width: 100%; max-width: none;
+      border-radius: 0; transform: translateY(-10.2%);
     }
 
     /* ── Citation box ───────────────────────────── */
@@ -501,6 +517,7 @@
 
     /* ── Responsive ─────────────────────────────── */
     @media (max-width: 640px) {
+      header { padding: 40px 0 36px; }
       header h1 { font-size: 1.5rem; }
       section { padding: 48px 0; }
       .feature-grid, .agent-grid, .paper-grid { grid-template-columns: 1fr; }
@@ -508,7 +525,7 @@
       .toolbox-group { padding: 18px 18px 20px; }
       .toolbox-card { padding: 18px 18px 20px; }
       .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
-      .header-logo { width: 360px; max-width: 94%; }
+      .header-logo-frame { width: 360px; max-width: 94%; margin-bottom: 16px; }
     }
     @media (max-width: 480px) {
       .workflow-step { flex-direction: column; gap: 8px; }
@@ -523,8 +540,10 @@
 <header id="heroHeader">
   <div class="hero-refresh-sheen" aria-hidden="true"></div>
   <div class="container">
-    <img src="assets/logo2.png" alt="CastClaw" class="header-logo hero-clickable" />
-    <h1 class="hero-clickable"><span class="hl">CastClaw</span></h1>
+    <div class="header-logo-frame hero-clickable">
+      <img src="assets/logo2.png" alt="CastClaw" class="header-logo" />
+    </div>
+    <h1 class="visually-hidden">CastClaw</h1>
     <p class="subtitle hero-clickable">
       自主交互与人机协同双驱的新一代时间序列预测智能体<br>
       多智能体协同、插件化能力生态、Skill 驱动策略层、流程自主编排与持续进化
@@ -536,7 +555,7 @@
         </svg>
         GitHub
       </a>
-      <a class="btn btn-secondary" href="docs/">用户文档与使用指南</a>
+      <a class="btn btn-secondary" href="docs/">使用文档</a>
       <span class="btn btn-disabled">技术文档 Coming Soon</span>
     </div>
     <div class="hero-media">
@@ -550,19 +569,38 @@
 </header>
 
 <!-- ═══════════════════ STICKY NAV ═══════════════════ -->
-<nav class="nav-bar">
+<nav class="nav-bar" aria-label="CastClaw 页面导航">
   <div class="container">
-    <a href="../index.html" class="nav-home">Agentic AI</a>
+    <a href="../index.html" class="nav-home">首页</a>
+    <a href="#demo-video">演示视频</a>
     <a href="#overview">项目概览</a>
     <a href="#interaction-modes">交互模式</a>
-    <a href="#workflow">智能工作流</a>
     <a href="#key-highlights">关键特色</a>
     <a href="#system-design">系统架构</a>
     <a href="#plugin-toolbox">工具插件</a>
+    <a href="#workflow">智能工作流</a>
     <a href="#quickstart">使用指南</a>
+    <a href="#related">相关项目</a>
     <a href="#about">关于我们</a>
   </div>
 </nav>
+
+<!-- ═══════════════════ DEMO VIDEO ═══════════════════ -->
+<section id="demo-video">
+  <div class="container">
+    <h2 class="section-title">演示视频</h2>
+    <div class="example-showcase">
+      <div class="example-card">
+        <span class="example-badge">Product Demo</span>
+        <p>下面的视频展示了 CastClaw 在真实终端工作流中的使用方式，包括任务建立、智能体协同切换，以及预测流程中的关键交互环节。注意：演示视频为静音版，播放时没有声音。你也可以直接下载原始压缩版演示文件 <a href="assets/castclaw-demo.mp4" download><code>castclaw-demo.mp4</code></a>。</p>
+        <video class="demo-video" controls preload="metadata" playsinline muted>
+          <source src="assets/castclaw-demo.mp4" type="video/mp4" />
+          你的浏览器暂不支持视频播放，请直接下载演示文件查看。
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════ OVERVIEW ═══════════════════ -->
 <section id="overview" class="alt">
@@ -1216,18 +1254,6 @@ Reflection & Report</div>
           <span class="pill pill-out">时间列：TIMESTAMP</span>
           <span class="pill pill-out">目标列：LOAD</span>
         </div>
-      </div>
-    </div>
-
-    <h3 class="sub-title">演示视频</h3>
-    <div class="example-showcase">
-      <div class="example-card">
-        <span class="example-badge">Product Demo</span>
-        <p>下面的视频展示了 CastClaw 在真实终端工作流中的使用方式，包括任务建立、智能体协同切换，以及预测流程中的关键交互环节。注意：演示视频为静音版，播放时没有声音。你也可以直接下载原始压缩版演示文件 <a href="assets/castclaw-demo.mp4" download><code>castclaw-demo.mp4</code></a>。</p>
-        <video class="demo-video" controls preload="metadata" playsinline muted>
-          <source src="assets/castclaw-demo.mp4" type="video/mp4" />
-          你的浏览器暂不支持视频播放，请直接下载演示文件查看。
-        </video>
       </div>
     </div>
 
