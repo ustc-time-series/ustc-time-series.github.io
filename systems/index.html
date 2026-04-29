@@ -829,8 +829,8 @@
         <span>城市电力负荷、新能源发电、云服务流量，覆盖能源与云基础设施中的高频预测问题。</span>
       </div>
       <div class="hero-highlight">
-        <strong>1 套智能体系统</strong>
-        <span>CastClaw 将任务诊断、实验执行、结果反思和人工确认组织成可复用工作流。</span>
+        <strong>2 套智能体系统</strong>
+        <span>CastClaw 面向预测工作流协作，NeoCast 面向小模型自主研发闭环。</span>
       </div>
       <div class="hero-highlight">
         <strong>闭环研发方法</strong>
@@ -891,8 +891,8 @@
           </div>
           <div class="overview-item">
             <span class="label">System</span>
-            <h3>CastClaw 工作台</h3>
-            <p>用智能体框架承载实验编排、工具调用和经验沉淀，让一次性实验逐步变成可复用能力。</p>
+            <h3>CastClaw / NeoCast 系统</h3>
+            <p>用智能体框架承载实验编排、工具调用、受控模型搜索和经验沉淀，让一次性实验逐步变成可复用能力。</p>
           </div>
         </div>
       </section>
@@ -1049,6 +1049,62 @@
               <span>对比经典模型、深度模型与特征策略的有效性。</span>
               <span>围绕误差峰值、异常窗口和业务约束生成分析报告。</span>
               <span>把一次实验流程沉淀成可复用的预测 Skill。</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section-card">
+        <h3>自主研究系统 NeoCast</h3>
+        <div class="system-shell">
+          <div class="system-panel">
+            <h4>面向时间序列小模型研发的 Forecast Research Operating System</h4>
+            <p>
+              NeoCast 将研究假设、CandidateRecipe、受控实验、结果归因与研究记忆串成闭环，
+              让 Agent 在固定数据、评估、预算和代码协议内持续发现更稳、更小、更可复现的预测模型。
+            </p>
+            <p>
+              与 CastClaw 更偏向真实预测工作流协作不同，NeoCast 聚焦模型研发过程本身：
+              它把 preprocessing、embedding、backbone、fusion、head 与训练策略拆成可审计 action，
+              再通过 champion / challenger 和 blind test 治理控制探索边界。
+            </p>
+            <div class="btn-row">
+              <a class="page-btn page-btn-primary" href="../neocast/">查看主页</a>
+              <a class="page-btn page-btn-secondary" href="../neocast/#architecture">系统架构</a>
+              <a class="page-btn page-btn-secondary" href="../neocast/#recipe">配方搜索</a>
+            </div>
+            <div class="system-figure">
+              <img src="../neocast/assets/framework.svg" alt="NeoCast 自主研究系统架构图" />
+              <div class="figure-caption">NeoCast 架构图展示了从假设生成、配方搜索、受控实验到研究记忆沉淀的闭环。</div>
+            </div>
+          </div>
+
+          <aside class="system-side">
+            <h4>核心能力</h4>
+            <div class="capability-list">
+              <div class="capability-item">
+                <strong>CandidateRecipe</strong>
+                <span>把模型结构与训练策略拆成受限 DSL，支持模块级搜索和谱系追踪。</span>
+              </div>
+              <div class="capability-item">
+                <strong>协议优先</strong>
+                <span>冻结数据切分、指标、预算和测试访问权限，降低评估污染风险。</span>
+              </div>
+              <div class="capability-item">
+                <strong>受控实验</strong>
+                <span>通过静态检查、低保真筛选和 keep / discard 规则管理候选模型迭代。</span>
+              </div>
+              <div class="capability-item">
+                <strong>研究记忆</strong>
+                <span>把成功 recipe、失败模式和相似任务经验沉淀为可迁移知识。</span>
+              </div>
+            </div>
+            <h4 class="task-title">适用任务</h4>
+            <div class="task-list">
+              <span>在固定协议下探索轻量预测模型结构。</span>
+              <span>比较 preprocessing、embedding、backbone 和 head 的组合效果。</span>
+              <span>围绕 champion / challenger 做可复现模型晋级。</span>
+              <span>把实验归因沉淀为跨数据集可迁移的研究经验。</span>
             </div>
           </aside>
         </div>

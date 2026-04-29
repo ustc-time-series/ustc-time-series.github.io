@@ -250,6 +250,7 @@
     .accent-foundation { background: linear-gradient(90deg, #1a56db, #3b82f6); }
     .accent-systems    { background: linear-gradient(90deg, #1e8449, #27ae60); }
     .accent-castclaw   { background: linear-gradient(90deg, #0f766e, #14b8a6); }
+    .accent-neocast    { background: linear-gradient(90deg, #c0392b, #0f766e); }
     .accent-evaluation  { background: linear-gradient(90deg, #b9770e, #f39c12); }
     .accent-classify    { background: linear-gradient(90deg, #c0392b, #e74c3c); }
 
@@ -420,6 +421,9 @@
     .btn-enter-systems    { background: #1e8449; color: #fff; border-color: #1e8449; }
     .btn-enter-systems:hover,
     .btn-enter-systems:active    { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
+    .btn-enter-neocast    { background: #c0392b; color: #fff; border-color: #c0392b; }
+    .btn-enter-neocast:hover,
+    .btn-enter-neocast:active    { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
     .btn-enter-evaluation { background: #b9770e; color: #fff; border-color: #b9770e; }
     .btn-enter-evaluation:hover,
     .btn-enter-evaluation:active { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
@@ -736,6 +740,36 @@
           </div>
           <div class="card-links">
             <span class="card-btn btn-outline btn-disabled">内容建设中</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NeoCast -->
+      <div class="project-card project-card-wide">
+        <div class="card-accent accent-neocast"></div>
+        <div class="card-body">
+          <h3><a class="card-title-link" href="neocast/">NeoCast</a></h3>
+          <p class="card-desc">
+            面向时间序列预测小模型研发的自主研究智能体系统。NeoCast 将研究假设、CandidateRecipe、受控实验、结果归因与研究记忆串成闭环，帮助研究者在固定数据、评估、预算和代码协议下持续发现更稳、更小、更可复现的预测模型。
+          </p>
+          <div class="card-meta">
+            <div class="meta-row">
+              <span class="meta-icon">🧪</span>
+              <span>Forecast Research Operating System · 假设生成 · 受控实验 · keep / discard 闭环</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">🧩</span>
+              <span>CandidateRecipe DSL · action registry · preprocessing / embedding / backbone / fusion / head 搜索</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">🧠</span>
+              <span>TaskFingerprint · Champion / Challenger · 研究记忆 · Blind Test 治理</span>
+            </div>
+          </div>
+          <div class="card-links">
+            <a class="card-btn btn-enter-neocast" href="neocast/">查看主页 →</a>
+            <a class="card-btn btn-outline" href="neocast/#architecture">系统架构</a>
+            <a class="card-btn btn-outline" href="neocast/#recipe">配方搜索</a>
           </div>
         </div>
       </div>
