@@ -884,7 +884,7 @@
 
       <article class="doc-block" id="install-setup" data-title="Installation & Environment">
         <h3>Installation & Environment</h3>
-        <p>CastClaw is installed via <code>npm</code> and requires Bun, Python, and uv at runtime. Prepare the runtime first, then launch the CLI for a quick smoke test.</p>
+        <p>CastClaw's quick-start flow matches the homepage guide: install the CLI globally, verify the version, configure the LLM interactively, and then start forecasting from the dataset directory.</p>
         <p><strong>Prerequisites:</strong> Bun ≥ 1.3.11, Python ≥ 3.10, uv, and at least one LLM API key.</p>
         <table class="doc-table">
           <thead>
@@ -922,23 +922,28 @@
             </tr>
           </tbody>
         </table>
-        <div class="code-block"><pre><code><span class="comment"># Install the CastClaw CLI</span>
-<span class="cmd">npm install -g castclaw</span>
+        <p><strong>Install</strong></p>
+        <div class="code-block"><pre><code><span class="comment"># Global npm install (recommended)</span>
+<span class="cmd">npm install -g castclaw</span></code></pre></div>
+        <p><strong>Verify Installation</strong></p>
+        <div class="code-block"><pre><code><span class="cmd">castclaw --version</span></code></pre></div>
+        <p><strong>Configure LLM</strong></p>
+        <div class="code-block"><pre><code><span class="comment"># Type castclaw in the terminal to enter interactive API key configuration</span>
+<span class="cmd">castclaw</span>
 
-<span class="comment"># Verify the base runtime</span>
-<span class="cmd">castclaw --version</span>
-<span class="cmd">python --version</span>
-<span class="cmd">uv --version</span>
-
-<span class="comment"># Sync Python backend dependencies</span>
-<span class="cmd">cd python && uv sync</span></code></pre></div>
-        <p>You can configure your LLM through environment variables or <code>castclaw.json</code>. Either approach works:</p>
-        <div class="code-block"><pre><code><span class="cmd">export ANTHROPIC_API_KEY=</span><span class="str">your_key_here</span>
-<span class="cmd">export OPENAI_API_KEY=</span><span class="str">your_key_here</span>
-<span class="cmd">export DEEPSEEK_API_KEY=</span><span class="str">your_key_here</span></code></pre></div>
+<span class="comment"># Or run /connect inside the CastClaw terminal to switch providers</span>
+<span class="cmd">/connect</span></code></pre></div>
+        <p><strong>Start Forecasting</strong></p>
+        <div class="code-block"><pre><code><span class="comment"># Enter the dataset directory and launch the CLI</span>
+<span class="cmd">cd /path/to/your/dataset</span>
+<span class="cmd">castclaw</span></code></pre></div>
+        <p>After the CLI starts, enter the task description in the <strong>Planner</strong> tab (<code>Ctrl+1</code>):</p>
+        <div class="code-block"><pre><code><span class="comment"># Example: initialize an energy consumption forecasting task</span>
+Initialize a forecasting session for data/etth1.csv. Target column: OT, time column: date,
+forecast horizon: 96 steps, lookback length: 336. Use a 70/20/10 split and evaluate with MSE and MAE.</code></pre></div>
         <div class="callout">
           <strong>Recommendation</strong>
-          <p>For your first run, connect only one provider you already know well. Avoid debugging several API stacks at the same time.</p>
+          <p>For your first run, connect only one provider you already know well. Prefer the interactive API key setup through <code>castclaw</code>; use <code>/connect</code> when you need to switch providers.</p>
         </div>
       </article>
 
