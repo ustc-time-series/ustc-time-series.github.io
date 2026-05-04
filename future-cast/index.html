@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FutureCast — 面向情境感知时间序列预测的大模型训练语料与评估基准</title>
-  <meta name="description" content="FutureCast 是一个面向情境感知时间序列预测的 Benchmark 数据集与大模型训练语料库，将预测样本扩展为"历史序列—上下文情境—证据标注—预测目标"的联合实例，系统评估情境语义对齐、因果推理与动态自适应三类能力。" />
+  <title>FutureCast（天星台） — 面向情境感知时间序列预测的大模型训练语料与评估基准</title>
+  <meta name="description" content="FutureCast（天星台） 是一个面向情境感知时间序列预测的 Benchmark 数据集与大模型训练语料库，将预测样本扩展为"历史序列—上下文情境—证据标注—预测目标"的联合实例，系统评估情境语义对齐、因果推理与动态自适应三类能力。" />
   <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -574,11 +574,11 @@
   <div class="hero-refresh-sheen" aria-hidden="true"></div>
   <div class="container">
     <h1 class="hero-clickable">
-      <span class="hero-title-main"><span class="fc">FutureCast</span></span>
+      <span class="hero-title-main"><span class="fc">FutureCast（天星台）</span></span>
       <span class="hero-title-sub">情境感知时间序列预测评估基准</span>
     </h1>
     <p class="subtitle hero-clickable">
-      FutureCast 将预测样本从"历史序列—未来标签"扩展为
+      FutureCast（天星台） 将预测样本从"历史序列—未来标签"扩展为
       "历史序列—上下文情境—证据标注—预测目标"，
       系统评估下一代时间序列预测模型的情境理解、因果推理与动态自适应能力。
     </p>
@@ -622,7 +622,7 @@
   <div class="container">
     <div class="tldr">
       <strong>一句话定位：</strong>
-      FutureCast 是一个面向<strong>情境感知时间序列预测</strong>的
+      FutureCast（天星台） 是一个面向<strong>情境感知时间序列预测</strong>的
       <strong>Benchmark 数据集与大模型训练语料库</strong>——
       将每个预测样本构造为"历史序列—上下文情境—证据标注—预测目标"的联合实例，
       系统化训练和评估模型的<strong>情境理解、因果推理与动态自适应</strong>三类核心能力。
@@ -637,7 +637,7 @@
       多源异构情境因素对预测结果具有实质性影响，而现有 Benchmark 对这类信息的建模与评估仍然不足。
     </p>
     <p>
-      FutureCast 为弥补这一空白而构建。它借鉴 GIFT-Eval 等系统化 Benchmark 的设计思路，
+      FutureCast（天星台） 为弥补这一空白而构建。它借鉴 GIFT-Eval 等系统化 Benchmark 的设计思路，
       在多领域、多频率、多预测长度的基础上进一步引入<strong>情境维度</strong>，
       推动时间序列预测从<strong>序列模式拟合</strong>走向<strong>情境感知的未来推理</strong>。
     </p>
@@ -666,7 +666,7 @@
 <!-- ═══════════════════ MOTIVATION ═══════════════════ -->
 <section id="motivation">
   <div class="container">
-    <h2 class="section-title">为什么需要 FutureCast</h2>
+    <h2 class="section-title">为什么需要 FutureCast（天星台）</h2>
     <p>
       现有时间序列预测基准大多<strong>围绕数值序列本身构建</strong>，
       关注预测误差在不同领域、频率、预测长度下的表现。
@@ -695,14 +695,14 @@
       </div>
     </div>
     <p style="margin-top: 22px;">
-      FutureCast 将评估重点从 <strong>general forecasting capability</strong> 拓展为
+      FutureCast（天星台） 将评估重点从 <strong>general forecasting capability</strong> 拓展为
       <strong>context-aware forecasting capability</strong>，
       不仅评估模型能否预测得准，还评估模型是否能够<strong>识别关键情境、对齐情境与序列变化、
       推理情境影响，并在新证据出现后动态修正预测</strong>。
     </p>
 
     <div style="margin-top: 24px; background: #f0fdf9; border: 1px solid #b2e8d8; border-radius: 8px; padding: 20px 24px;">
-      <p style="font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px;">FutureCast 关注的核心问题不只是：</p>
+      <p style="font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px;">FutureCast（天星台） 关注的核心问题不只是：</p>
       <p style="margin: 0 0 10px; color: #555;">模型能否预测未来数值？</p>
       <p style="font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px;">而是：</p>
       <p style="margin: 0; font-weight: 600; color: var(--teal); font-size: 0.98rem;">模型能否理解未来为什么会变化，并在情境变化时动态更新预测？</p>
@@ -715,7 +715,7 @@
   <div class="container">
     <h2 class="section-title">Benchmark 设计原则</h2>
     <p>
-      FutureCast 借鉴通用时间序列 Benchmark 的系统化设计思路，
+      FutureCast（天星台） 借鉴通用时间序列 Benchmark 的系统化设计思路，
       并进一步面向情境感知预测进行扩展，遵循以下五项原则：
     </p>
     <ul class="pillar-list">
@@ -763,7 +763,7 @@
   <div class="container">
     <h2 class="section-title">三大核心能力维度</h2>
     <p>
-      FutureCast 围绕情境感知时间序列预测的三类关键能力展开，
+      FutureCast（天星台） 围绕情境感知时间序列预测的三类关键能力展开，
       每一维度都针对真实预测场景中不同层次的情境建模需求：
     </p>
     <div class="cap-grid">
@@ -773,7 +773,7 @@
         <div class="cap-focus">Context-Sequence Alignment &amp; Fusion</div>
         <p>
           关注多源异构上下文情境如何有效表示、语义对齐并融入预测模型。
-          FutureCast 的情境信息来自天气、日历、节假日、新闻事件、空间环境、业务规则和专家经验。
+          FutureCast（天星台） 的情境信息来自天气、日历、节假日、新闻事件、空间环境、业务规则和专家经验。
           模型需要判断哪些情境与当前预测任务相关，
           并将情境与目标时间序列的变化区间在<strong>语义、时间和预测目标</strong>上形成有效融合。
         </p>
@@ -794,7 +794,7 @@
         <div class="cap-focus">Dynamic Context Adaptation</div>
         <p>
           关注当情境变化或信息不完整时，模型如何主动发现情境缺口、获取新证据，并动态更新预测。
-          FutureCast 构建动态情境样本和多轮评估任务，
+          FutureCast（天星台） 构建动态情境样本和多轮评估任务，
           使模型经历"初始预测—发现缺口—获取证据—更新推理—修正预测"的完整过程。
         </p>
       </div>
@@ -809,7 +809,7 @@
 
     <h3 class="sub-title">样本结构</h3>
     <p>
-      FutureCast 中的每个样本被构造成一个 <strong>context-aware forecasting instance</strong>，
+      FutureCast（天星台） 中的每个样本被构造成一个 <strong>context-aware forecasting instance</strong>，
       包含八类组成部分：
     </p>
     <div class="table-wrap">
@@ -832,7 +832,7 @@
 
     <h3 class="sub-title">数据划分方式</h3>
     <p>
-      FutureCast 采用多种划分策略，避免简单随机划分带来的信息泄漏和过拟合问题：
+      FutureCast（天星台） 采用多种划分策略，避免简单随机划分带来的信息泄漏和过拟合问题：
     </p>
     <div class="table-wrap">
       <table>
@@ -857,13 +857,13 @@
   <div class="container">
     <h2 class="section-title">多层任务体系</h2>
     <p>
-      FutureCast 支持从基础预测到情境推理、再到动态自适应的完整多层任务体系，
+      FutureCast（天星台） 支持从基础预测到情境推理、再到动态自适应的完整多层任务体系，
       覆盖十类任务：
     </p>
     <div class="task-grid">
       <div class="task-card">
         <h5>情境感知预测</h5>
-        <p>结合历史序列与上下文情境预测未来数值，是 FutureCast 的基础任务。</p>
+        <p>结合历史序列与上下文情境预测未来数值，是 FutureCast（天星台） 的基础任务。</p>
       </div>
       <div class="task-card">
         <h5>情境选择</h5>
@@ -910,7 +910,7 @@
   <div class="container">
     <h2 class="section-title">评估协议</h2>
     <p>
-      FutureCast 的评估协议覆盖五个维度，从数值预测准确性到动态自适应能力进行全面衡量：
+      FutureCast（天星台） 的评估协议覆盖五个维度，从数值预测准确性到动态自适应能力进行全面衡量：
     </p>
     <div class="eval-grid">
       <div class="eval-card">
@@ -956,7 +956,7 @@
         Forecast Revision Gain = 初始预测误差 − 情境更新后预测误差
       </div>
       <p>
-        FutureCast 的特色评估指标，直接衡量模型在获得新增情境证据后预测效果是否真正得到改善。
+        FutureCast（天星台） 的特色评估指标，直接衡量模型在获得新增情境证据后预测效果是否真正得到改善。
         正值表明模型成功利用新情境修正了预测；这一指标可以直接体现模型是否具备<strong>情境自适应能力</strong>，
         而非只是凭借历史序列的统计规律进行预测。
       </p>
@@ -969,7 +969,7 @@
   <div class="container">
     <h2 class="section-title">项目特色</h2>
     <p>
-      FutureCast 不只是一个时间序列预测数据集，而是一个面向情境感知预测能力的系统化 Benchmark：
+      FutureCast（天星台） 不只是一个时间序列预测数据集，而是一个面向情境感知预测能力的系统化 Benchmark：
     </p>
     <ul class="feature-highlight-list">
       <li>
@@ -1004,14 +1004,14 @@
         <div class="feat-num">5</div>
         <div class="feat-text">
           <strong>从普通数据集到大模型训练语料</strong>
-          <span>提供适用于 CPT、SFT 和 RL 的情境感知时间序列语料，同时支持 LLM-driven TSF、Slow-thinking TSF 和 Agentic TSF 的训练与评估，与 CastFactory 训练框架形成闭环。</span>
+          <span>提供适用于 CPT、SFT 和 RL 的情境感知时间序列语料，同时支持 LLM-driven TSF、Slow-thinking TSF 和 Agentic TSF 的训练与评估，与 CastFactory（铸星坊） 训练框架形成闭环。</span>
         </div>
       </li>
     </ul>
 
     <div class="claim-box">
       <p>
-        FutureCast 构建了包含历史时间序列、多源上下文情境、证据标注和预测目标的统一 Benchmark，
+        FutureCast（天星台） 构建了包含历史时间序列、多源上下文情境、证据标注和预测目标的统一 Benchmark，
         用于训练和评估下一代时间序列预测模型。
         它关注的不只是模型能否预测未来数值，更关注模型能否理解情境、推理未来变化，
         并在动态环境中自适应更新预测。
@@ -1024,7 +1024,7 @@
 <footer>
   <div class="container">
     <p>
-      &copy; 2025 FutureCast Team &middot; AGI Group · State Key Laboratory of Cognitive Intelligence, USTC &middot;
+      &copy; 2025 FutureCast（天星台） Team &middot; AGI Group · State Key Laboratory of Cognitive Intelligence, USTC &middot;
       <a href="https://github.com/Mingyue-Cheng" target="_blank" rel="noopener">GitHub</a>
     </p>
     <p style="font-size: 0.78rem; color: #555; margin-top: 6px;">
