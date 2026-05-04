@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>系统研发 | USTC-AGI Time Series</title>
-  <meta name="description" content="USTC-AGI Time Series 方向系统研发页面，介绍 CastClaw（观星阁）与 NeoResearch（智多星）等面向时序研究工作流的智能体系统。" />
+  <title>StarCast（逐星方舟） | USTC-AGI Time Series</title>
+  <meta name="description" content="StarCast（逐星方舟）以“星”为共同意象，围绕情境感知时间序列预测与自主研究智能体，构建从模型训练、自主研究、交互预测到基准评测的开源生态。" />
   <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
   <style>
     :root {
@@ -354,6 +354,11 @@
     }
     .project-card.castclaw { --card-accent: linear-gradient(90deg, #0f766e, #14b8a6); }
     .project-card.neoresearch { --card-accent: linear-gradient(90deg, #2563eb, #14b8a6); }
+    .project-card.factory { --card-accent: linear-gradient(90deg, #0f766e, #14b8a6); }
+    .project-card.eval { --card-accent: linear-gradient(90deg, #1a56db, #3b82f6); }
+    .systems-shell + .systems-shell {
+      margin-top: 28px;
+    }
 
     .status-row {
       display: flex;
@@ -460,7 +465,7 @@
       </div>
       <a href="../papers/">论文列表</a>
       <a href="../applications/">应用研究</a>
-      <a href="../star-cast/">逐星方舟</a>
+      <a class="nav-active" href="../star-cast/" aria-current="page">逐星方舟</a>
       <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">
         GitHub
         <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:12px;height:12px;margin-left:4px;vertical-align:-1px">
@@ -474,16 +479,64 @@
 
 <header id="hero-header">
   <div class="container">
-    <h1><span class="highlight">Systems</span> 系统研发</h1>
+    <h1><span class="highlight">StarCast</span> 逐星方舟</h1>
     <p class="header-sub">
-      面向时间序列研究与分析工作流，建设可交互、可编排、可沉淀的智能体系统，
-      将任务规划、实验执行、结果评估与研究记忆整合为端到端平台。
+      以“星”为共同意象，围绕情境感知时间序列预测与自主研究智能体，构建从模型训练、自主研究、交互预测到基准评测的开源生态。
+      其中，铸星坊铸预测之器，智多星谋自主之研，观星阁观未来之势，天星台立评测之尺。
     </p>
   </div>
 </header>
 
 <main>
   <div class="container">
+    <section class="systems-shell" aria-labelledby="opensource-title">
+      <div class="systems-intro">
+        <div class="intro-copy">
+          <h2 id="opensource-title">面向时序研究的开源基础设施</h2>
+          <p>
+            Open Source 页面汇总课题组在时间序列方向持续建设的工程资产。CastFactory（铸星坊）关注研究与实验的组件化生产，
+            FutureCast（天星台）关注模型、数据集与应用场景的统一评测，共同支撑更高效、可复现、可扩展的时序研究与应用落地。
+          </p>
+        </div>
+        <div class="pipeline" aria-label="开源工具链">
+          <div class="pipeline-step"><span>01</span><strong>Build research pipelines with CastFactory（铸星坊）</strong></div>
+          <div class="pipeline-step"><span>02</span><strong>Evaluate models and systems with FutureCast（天星台）</strong></div>
+        </div>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card factory">
+          <span class="project-tag">Experiment Factory</span>
+          <h3>CastFactory（铸星坊）</h3>
+          <p>
+            面向时间序列研究的实验工厂，沉淀数据处理、特征构造、模型配方、训练运行与结果归档等模块，
+            让新任务能够沿着统一协议快速搭建、复用和复现实验流程。
+          </p>
+          <ul class="feature-list">
+            <li>数据接入、清洗、切分与场景配置模板</li>
+            <li>模型配方、训练脚本和实验运行规范</li>
+            <li>面向论文与应用研究的可复现结果资产</li>
+          </ul>
+          <a class="project-link" href="../cast-factory/">查看 CastFactory（铸星坊）主页</a>
+        </article>
+
+        <article class="project-card eval">
+          <span class="project-tag">Evaluation Suite</span>
+          <h3>FutureCast（天星台）</h3>
+          <p>
+            面向时序模型与智能体系统的统一评测套件，覆盖 benchmark 管理、指标计算、误差归因和报告生成，
+            帮助研究者在一致口径下比较模型能力与系统收益。
+          </p>
+          <ul class="feature-list">
+            <li>预测、分类、异常检测等任务的评测协议</li>
+            <li>跨数据集、跨场景、跨模型的指标对齐</li>
+            <li>面向 ablation、diagnosis 和 leaderboard 的报告结构</li>
+          </ul>
+          <a class="project-link" href="../future-cast/">查看 FutureCast（天星台）主页</a>
+        </article>
+      </div>
+    </section>
+
     <section class="systems-shell" aria-labelledby="systems-title">
       <div class="systems-intro">
         <div class="intro-copy">
