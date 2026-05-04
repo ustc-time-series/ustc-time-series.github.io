@@ -500,7 +500,7 @@
 <!-- ═══════════════════ TOP NAV ═══════════════════ -->
 <nav class="top-nav" aria-label="首页顶部导航">
   <div class="container">
-    <a class="nav-brand" href="#hero-header">USTC-AGI <span>Time Series</span></a>
+    <a class="nav-brand" href="#hero-header" aria-label="刷新页面">USTC-AGI <span>Time Series</span></a>
     <div class="nav-links">
       <a class="nav-active" href="#hero-header" aria-current="page">首页</a>
         <div class="nav-dropdown">
@@ -932,6 +932,7 @@
     });
 
     const heroHeader = document.querySelector('#hero-header');
+    const navBrand = document.querySelector('.nav-brand');
     const refreshPage = () => {
       if (!heroHeader || heroHeader.classList.contains('is-refreshing')) return;
       heroHeader.classList.add('is-refreshing');
@@ -944,6 +945,13 @@
       heroHeader.addEventListener('click', refreshPage);
       heroHeader.addEventListener('keydown', (event) => {
         if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        refreshPage();
+      });
+    }
+
+    if (navBrand) {
+      navBrand.addEventListener('click', (event) => {
         event.preventDefault();
         refreshPage();
       });
