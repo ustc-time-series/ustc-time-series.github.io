@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>情境感知的时间序列分析 — 从模式拟合到认知推理</title>
+  <meta name="description" content="情境感知的时间序列分析研究方向，探索多源情境表示、情境推理与动态自适应，推动时间序列建模从模式拟合走向认知推理范式。" />
+  <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --navy:       #1e3a5f;
+      --navy-dark:  #152c48;
+      --teal:       #0f766e;
+      --teal-light: #14b8a6;
+      --amber:      #b45309;
+      --accent:     #0f766e;
+      --accent-dark:#0b5f59;
+      --text:       #1a1a1a;
+      --muted:      #555;
+      --faint:      #888;
+      --line:       #e4e4e0;
+      --bg:         #f7f7f5;
+      --card:       #ffffff;
+      --card-hover: #f0f7ff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                   "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 16px;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: #f0f0ee;
+      border: 1px solid #e0e0de;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+      font-size: 0.85em;
+      color: var(--navy);
+    }
+
+    /* ── Container ─────────────────────────────────── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Sticky nav ────────────────────────────────── */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+    }
+    .nav-bar .container {
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+      gap: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .nav-bar .container::-webkit-scrollbar { display: none; }
+    .nav-bar a {
+      flex-shrink: 0;
+      padding: 13px 18px;
+      font-size: 0.87rem;
+      font-weight: 500;
+      color: #555;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .nav-bar a:hover {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+      text-decoration: none;
+    }
+    .nav-home {
+      font-weight: 700;
+      color: var(--teal) !important;
+      border-right: 1px solid #e8e8e8;
+    }
+
+    /* ── Hero ──────────────────────────────────────── */
+    header {
+      background: linear-gradient(160deg, #ffffff 52%, #eff8ff 82%, #eefbf8 100%);
+      border-bottom: 1px solid #e8e8e8;
+      padding: 60px 0 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform .16s ease, opacity .16s ease, filter .16s ease;
+    }
+    header .container {
+      position: relative;
+      z-index: 2;
+    }
+    header:hover { filter: saturate(1.02); }
+    header:active { transform: scale(0.995); }
+    .hero-refresh-sheen {
+      position: absolute;
+      top: -20%;
+      bottom: -20%;
+      left: -30%;
+      width: 26%;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.78) 48%, rgba(255,255,255,0) 100%);
+      transform: skewX(-24deg) translateX(0);
+    }
+    .hero-clickable { cursor: pointer; }
+    .hero-refresh-wave {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      border: 2px solid rgba(15, 118, 110, 0.20);
+      background: rgba(20, 184, 166, 0.16);
+      transform: translate(-50%, -50%) scale(0.2);
+      pointer-events: none;
+      z-index: 1;
+      animation: hero-wave 0.85s ease-out forwards;
+    }
+    header.hero-refreshing .hero-refresh-sheen {
+      animation: hero-sheen 0.9s ease;
+    }
+    header.hero-refreshing h1 {
+      animation: hero-title-refresh 0.75s ease;
+    }
+    header.hero-refreshing .subtitle,
+    header.hero-refreshing .btn-row {
+      animation: hero-copy-refresh 0.75s ease;
+    }
+    @keyframes hero-sheen {
+      0% { opacity: 0; transform: skewX(-24deg) translateX(0); }
+      12% { opacity: 1; }
+      100% { opacity: 0; transform: skewX(-24deg) translateX(560%); }
+    }
+    @keyframes hero-wave {
+      0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.2); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(11); }
+    }
+    @keyframes hero-title-refresh {
+      0% { transform: translateY(0); opacity: 1; }
+      25% { transform: translateY(3px); opacity: 0.84; }
+      62% { transform: translateY(-2px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes hero-copy-refresh {
+      0% { transform: translateY(0); opacity: 1; }
+      30% { transform: translateY(4px); opacity: 0.76; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    header h1 {
+      margin-top: 12px;
+      font-size: 1.95rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: #111;
+      max-width: 1180px;
+      margin-left: auto;
+      margin-right: auto;
+      text-wrap: balance;
+    }
+    header h1 .cf { color: var(--accent); }
+    .hero-title-main {
+      display: inline;
+      white-space: nowrap;
+    }
+    .subtitle {
+      margin: 14px auto 0;
+      font-size: 1.02rem;
+      color: #555;
+      max-width: 690px;
+      line-height: 1.7;
+      text-align: center;
+      text-justify: auto;
+    }
+    /* ── Sections ──────────────────────────────────── */
+    section {
+      padding: 64px 0;
+      scroll-margin-top: 50px;
+    }
+    section.alt { background: #fff; }
+    section + section { border-top: 1px solid var(--line); }
+
+    h2.section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--teal);
+      display: inline-block;
+    }
+    h3.sub-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #222;
+      margin: 32px 0 10px;
+    }
+    h3.sub-title:first-of-type { margin-top: 0; }
+    p { margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── TL;DR banner ──────────────────────────────── */
+    .tldr {
+      background: #eff8ff;
+      border-left: 4px solid var(--navy);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 22px;
+      font-size: 1.01rem;
+      color: #1a1a1a;
+      margin-bottom: 32px;
+      line-height: 1.75;
+    }
+    .tldr strong { color: var(--navy); }
+
+    /* ── Direction intro cards ─────────────────────── */
+    .direction-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 22px;
+    }
+    .direction-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform .22s, box-shadow .22s;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .direction-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+      text-decoration: none;
+    }
+    .direction-card .dir-icon { font-size: 1.6rem; margin-bottom: 10px; line-height: 1; }
+    .direction-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 7px; color: var(--navy); }
+    .direction-card p  { font-size: 0.85rem; color: #555; margin: 0; line-height: 1.65; }
+    .direction-card .dir-papers { margin-top: 10px; font-size: 0.8rem; color: var(--teal); font-weight: 600; }
+
+    /* ── Paper cards ───────────────────────────────── */
+    .paper-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+    .paper-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 22px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform .22s, box-shadow .22s;
+    }
+    .paper-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+    }
+    .paper-venue {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .badge-wsdm     { background: #dbeafe; color: #1d4ed8; }
+    .badge-tist     { background: #dcfce7; color: #15803d; }
+    .badge-ijcai    { background: #ede9fe; color: #7c3aed; }
+    .badge-icml     { background: #ffedd5; color: #c2410c; }
+    .badge-preprint { background: #f3f4f6; color: #6b7280; }
+    .badge-position { background: #fef9c3; color: #854d0e; }
+    .paper-card h4 { font-size: 0.96rem; font-weight: 700; margin-bottom: 8px; color: #111; }
+    .paper-card p  { font-size: 0.87rem; color: #555; margin: 0; line-height: 1.65; }
+
+    /* ── Pillar (numbered) list ────────────────────── */
+    .pillar-list {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pillar-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 16px 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .pillar-num {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .pillar-text { flex: 1; }
+    .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; color: var(--navy); }
+    .pillar-text span  { font-size: 0.88rem; color: #555; }
+
+    /* ── Feature list ──────────────────────────────── */
+    .feature-list {
+      list-style: none;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .feature-list li {
+      padding-left: 20px;
+      position: relative;
+      font-size: 0.95rem;
+      color: #333;
+    }
+    .feature-list li::before {
+      content: "▸";
+      color: var(--teal);
+      position: absolute;
+      left: 0;
+      top: 1px;
+    }
+
+    /* ── Module grid ───────────────────────────────── */
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .module-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--navy);
+      border-radius: 0 8px 8px 0;
+      padding: 18px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .module-card h5 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .module-card .mod-status {
+      display: inline-block;
+      font-size: 0.71rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      letter-spacing: 0.06em;
+    }
+    .status-progress { background: #fef9c3; color: #854d0e; }
+    .status-open     { background: #dcfce7; color: #15803d; }
+    .module-card p {
+      font-size: 0.84rem;
+      color: #555;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ── Claim box ─────────────────────────────────── */
+    .claim-box {
+      background: linear-gradient(135deg, #0f1f3d 0%, #1e3a5f 60%, #0c4a44 100%);
+      border-radius: 12px;
+      padding: 32px 32px;
+      color: #fff;
+      margin-top: 24px;
+    }
+    .claim-box p {
+      font-size: 0.97rem;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.8;
+      margin: 0;
+    }
+    .claim-box .claim-sub {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 18px;
+      line-height: 1.75;
+    }
+
+    /* ── Section direction banner ──────────────────── */
+    .dir-banner {
+      background: linear-gradient(90deg, #eff8ff 0%, #f7fffc 100%);
+      border: 1px solid #d0e8ff;
+      border-radius: 10px;
+      padding: 16px 22px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .dir-banner .dir-label {
+      flex-shrink: 0;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .dl-1 { background: #dbeafe; color: #1d4ed8; }
+    .dl-2 { background: #ede9fe; color: #6d28d9; }
+    .dl-3 { background: #fde8d8; color: #c2410c; }
+    .dir-banner p { font-size: 0.92rem; color: #333; margin: 0; line-height: 1.7; }
+
+    /* ── Footer ────────────────────────────────────── */
+    footer {
+      background: #1c1c1c;
+      color: #999;
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.84rem;
+    }
+    footer a { color: #5ecfc6; }
+    footer .footer-funding {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 680px) {
+      header { padding: 40px 0 46px; }
+      header h1 { font-size: 1.65rem; }
+      .direction-grid { grid-template-columns: 1fr; }
+      .paper-grid { grid-template-columns: 1fr; }
+      section { padding: 48px 0; }
+      .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
+      h2.section-title { font-size: 1.25rem; }
+      .claim-box { padding: 24px 20px; }
+      .hero-title-main { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header id="heroHeader">
+  <div class="hero-refresh-sheen" aria-hidden="true"></div>
+  <div class="container">
+    <h1 class="hero-clickable">
+      <span class="hero-title-main"><span class="cf">情境感知的时间序列分析</span>—从模式拟合到认知推理</span>
+    </h1>
+    <p class="subtitle hero-clickable">
+      探索多源情境的表示与融合、情境驱动的趋势推理，
+      以及支持主动感知与动态修正的时间序列智能体系统，
+      推动时间序列建模从历史数值拟合走向情境认知分析新范式。
+    </p>
+  </div>
+</header>
+
+<!-- ═══════════════════ STICKY NAV ═══════════════════ -->
+<nav class="nav-bar">
+  <div class="container">
+    <a href="../" class="nav-home">首页</a>
+    <a href="#overview">概述</a>
+    <a href="#alignment">语义对齐</a>
+    <a href="#reasoning">情境推理</a>
+    <a href="#adaptation">动态适应</a>
+    <a href="#resources">资源平台</a>
+    <a href="#vision">研究愿景</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════ OVERVIEW ═══════════════════ -->
+<section id="overview" class="alt">
+  <div class="container">
+    <div class="tldr">
+      <strong>一句话定位：</strong>
+      真实世界的时间序列受外部事件、领域知识、文本描述和专家经验等多源情境影响——
+      <strong>情境感知的时间序列分析</strong>系统探索如何表示与融合多源上下文、
+      如何推理情境对趋势的影响，以及如何构建主动感知与动态修正的时间序列智能体。
+    </div>
+
+    <h2 class="section-title">研究概述</h2>
+    <p>
+      传统时间序列方法主要依赖历史数值进行模式拟合与趋势外推，但真实世界中的时间序列往往受到
+      多源情境因素的深刻影响，例如外部事件、领域知识、文本描述、环境变量和专家经验。
+      单纯的数值预测无法捕捉这些情境因素，更难以解释"为什么未来会这样变化"。
+    </p>
+    <p>
+      本研究方向围绕<strong>情境感知的时间序列分析</strong>开展系统研究，
+      核心路径包括：通过多模态语义理解实现<strong>情境融入</strong>，
+      通过慢思考认知推理刻画<strong>情境影响机制</strong>，
+      并通过智能体自主交互支持<strong>动态环境下的持续感知与自适应决策</strong>。
+    </p>
+
+    <h3 class="sub-title">三大核心研究方向</h3>
+    <div class="direction-grid">
+      <a class="direction-card" href="#alignment">
+        <div class="dir-icon">🔗</div>
+        <h4>情境语义对齐与融合</h4>
+        <p>多源异构上下文如何有效表示、对齐并融入预测模型，让外部情境与目标序列在语义与时间上实现对齐。</p>
+        <div class="dir-papers">▸ InstructTime · InstructTime++ · TokenCast</div>
+      </a>
+      <a class="direction-card" href="#reasoning">
+        <div class="dir-icon">🧠</div>
+        <h4>情境上下文时序推理</h4>
+        <p>情境因素如何影响未来趋势，模型如何进行原因分析、假设探索和证据验证，不只预测"是多少"而是解释"为何如此"。</p>
+        <div class="dir-papers">▸ TimeReasoner · MemCast · Time-R1</div>
+      </a>
+      <a class="direction-card" href="#adaptation">
+        <div class="dir-icon">🤖</div>
+        <h4>动态情境自适应</h4>
+        <p>情境变化或信息不完整时，模型如何主动获取新证据并动态更新预测，推动预测模型向时间序列智能体演进。</p>
+        <div class="dir-papers">▸ AlphaCast · CastFlow · Cast-R1</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ALIGNMENT ═══════════════════ -->
+<section id="alignment">
+  <div class="container">
+    <h2 class="section-title">情境语义对齐与融合</h2>
+
+    <div class="dir-banner">
+      <span class="dir-label dl-1">Direction 1</span>
+      <p>
+        该方向关注多源异构上下文情境如何有效表示、对齐并融入预测模型。
+        我们认为，情境融合的关键不只是加入更多协变量，
+        而是让外部上下文与目标序列在<strong>语义、时间和预测目标</strong>上实现有效对齐。
+        相关工作从指令增强建模、上下文融合和时序 Token 表示等角度，
+        探索时间序列模型从数值输入驱动走向语义情境驱动的建模范式。
+      </p>
+    </div>
+
+    <div class="paper-grid">
+      <div class="paper-card">
+        <div class="paper-venue badge-wsdm">WSDM 2026</div>
+        <h4>InstructTime</h4>
+        <p>
+          通过自然语言指令增强时间序列预测建模，将文本描述的情境信息与数值序列统一编码，
+          实现指令驱动的情境感知预测，探索语义指令对时序模型预测行为的有效引导。
+        </p>
+      </div>
+      <div class="paper-card">
+        <div class="paper-venue badge-tist">ACM TIST</div>
+        <h4>InstructTime++</h4>
+        <p>
+          在 InstructTime 基础上深化上下文融合机制，进一步探索多粒度文本情境
+          与时序信号的对齐方式，提升模型在复杂情境下的预测泛化能力与指令跟随稳定性。
+        </p>
+      </div>
+      <div class="paper-card">
+        <div class="paper-venue badge-ijcai">IJCAI 2026</div>
+        <h4>TokenCast</h4>
+        <p>
+          从时序 Token 表示角度出发，探索将连续数值序列与情境语义统一嵌入到共享 Token 空间，
+          支持跨模态对齐，推动时间序列模型从数值输入驱动走向语义情境驱动的表示范式。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ REASONING ═══════════════════ -->
+<section id="reasoning" class="alt">
+  <div class="container">
+    <h2 class="section-title">情境上下文时序推理</h2>
+
+    <div class="dir-banner">
+      <span class="dir-label dl-2">Direction 2</span>
+      <p>
+        该方向关注情境因素如何影响未来趋势，以及模型如何开展
+        <strong>原因分析、假设探索与证据验证</strong>。
+        我们希望时间序列模型不仅能够预测"未来是多少"，
+        还能够解释"为什么会这样变化"。
+        相关工作从慢思考推理、记忆增强预测和强化学习训练等角度，
+        探索具备趋势理解、情境推理和证据验证能力的时间序列模型。
+      </p>
+    </div>
+
+    <div class="paper-grid">
+      <div class="paper-card">
+        <div class="paper-venue badge-wsdm">WSDM 2026</div>
+        <h4>TimeReasoner</h4>
+        <p>
+          引入慢思考推理机制，让时间序列模型在做出预测前先生成推理链条，
+          显式刻画情境因素对趋势变化的影响路径，
+          提升模型在复杂情境变化场景下的可解释性与预测精度。
+        </p>
+      </div>
+      <div class="paper-card">
+        <div class="paper-venue badge-icml">ICML 2026</div>
+        <h4>MemCast</h4>
+        <p>
+          通过记忆增强预测机制，让模型能够检索与当前情境相关的历史案例，
+          结合情境记忆和长期规律进行预测，
+          实现跨时间步的情境知识积累与动态利用。
+        </p>
+      </div>
+      <div class="paper-card">
+        <div class="paper-venue badge-preprint">Preprint</div>
+        <h4>Time-R1</h4>
+        <p>
+          将强化学习训练引入时间序列推理，以可验证预测奖励引导模型
+          学习更优的情境推理策略，使推理过程与预测指标直接对齐，
+          超越传统 token-level 交叉熵优化目标。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ ADAPTATION ═══════════════════ -->
+<section id="adaptation">
+  <div class="container">
+    <h2 class="section-title">动态情境自适应</h2>
+
+    <div class="dir-banner">
+      <span class="dir-label dl-3">Direction 3</span>
+      <p>
+        该方向关注当情境变化或信息不完整时，模型如何<strong>主动获取新证据并动态更新预测</strong>。
+        我们将时间序列预测进一步理解为一个包含感知、推理、行动和反思的闭环过程，
+        推动预测模型向时间序列智能体演进，支持人机协同、工具增强与强化学习驱动的预测策略优化。
+      </p>
+    </div>
+
+    <div class="paper-grid">
+      <div class="paper-card">
+        <div class="paper-venue badge-preprint">Preprint</div>
+        <h4>AlphaCast</h4>
+        <p>
+          探索人机协同预测框架，让智能体能够主动向领域专家寻求反馈，
+          将专家知识动态融入预测过程，实现开放环境下的持续学习与预测修正。
+        </p>
+      </div>
+      <div class="paper-card">
+        <div class="paper-venue badge-preprint">Preprint</div>
+        <h4>CastFlow</h4>
+        <p>
+          通过智能体工作流学习，让模型能够自动规划数据获取、情境推理与预测生成的完整流程，
+          构建可复用的时间序列分析智能体工作流执行框架。
+        </p>
+      </div>
+      <div class="paper-card">
+        <div class="paper-venue badge-preprint">Preprint</div>
+        <h4>Cast-R1</h4>
+        <p>
+          以强化学习优化时间序列智能体的预测策略，
+          通过与环境的持续交互学习何时主动获取信息、
+          如何权衡推理与行动代价，提升动态情境下的自适应决策能力。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ RESOURCES ═══════════════════ -->
+<section id="resources" class="alt">
+  <div class="container">
+    <h2 class="section-title">资源与平台</h2>
+    <p>
+      除方法研究外，我们也在建设该研究方向的基础资源与开源生态，
+      为社区提供系统性的文献梳理、统一的训练框架与标准的评测基准。
+    </p>
+
+    <div class="module-grid">
+      <div class="module-card">
+        <h5>Agentic Time Series Forecasting</h5>
+        <div class="mod-status status-progress">Position Paper</div>
+        <p>
+          系统阐述智能体视角下的时间序列预测研究框架，
+          提出将感知、规划、行动和反思引入时序预测闭环，
+          为该方向的理论框架与研究议题提供方向性定位。
+        </p>
+      </div>
+      <div class="module-card">
+        <h5>LLM-Driven / Context-Aware TSF Survey</h5>
+        <div class="mod-status status-progress">撰写中</div>
+        <p>
+          系统梳理多模态语义理解、慢思考时序推理和智能体自主交互三个方向的发展脉络，
+          覆盖代表性工作、方法分类、实验设置与开放挑战，
+          为研究者提供该方向的全景综述与学术地图。
+        </p>
+      </div>
+      <div class="module-card">
+        <h5>CastFactory 开源训练框架</h5>
+        <div class="mod-status status-progress">开发中</div>
+        <p>
+          面向时间序列大模型的 CPT-SFT-RL 多阶段统一训练框架，
+          标准化数据构建、时序适应、指令预测与可验证奖励优化的完整训练闭环，
+          支持情境感知模型的系统性构建与可复现实验管理。
+          <a href="../cast-factory/" target="_blank">了解更多 →</a>
+        </p>
+      </div>
+      <div class="module-card">
+        <h5>FutureCast Benchmark</h5>
+        <div class="mod-status status-progress">构建中</div>
+        <p>
+          评估情境感知时间序列模型在跨领域、开放情境和复杂趋势变化场景下泛化能力的标准评测基准，
+          涵盖情境融合质量、趋势推理能力和动态自适应性等多维度评估维度。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ VISION ═══════════════════ -->
+<section id="vision">
+  <div class="container">
+    <h2 class="section-title">研究愿景</h2>
+
+    <p>
+      我们的目标是推动时间序列分析从传统的<strong>模式拟合范式</strong>走向新一代的<strong>情境认知范式</strong>。
+      在这一范式下，模型需要理解历史序列中的统计规律，还需要感知外部情境、推理趋势变化、
+      主动获取证据，并在反馈中持续修正预测。
+    </p>
+
+    <ul class="pillar-list">
+      <li>
+        <div class="pillar-num">1</div>
+        <div class="pillar-text">
+          <strong>可解释 — 不只预测，还要推理</strong>
+          <span>超越"预测误差最小化"的单一目标，让模型能够给出情境驱动的趋势解释，帮助用户理解预测背后的因果机制与关键情境因素。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">2</div>
+        <div class="pillar-text">
+          <strong>可泛化 — 跨领域情境理解</strong>
+          <span>在能源、医疗、交通、金融等不同领域，模型能够识别领域特定的情境语义，形成跨领域复用的情境表示与推理能力。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">3</div>
+        <div class="pillar-text">
+          <strong>可交互 — 主动感知与人机协同</strong>
+          <span>模型不再是被动接受输入的预测器，而是能够主动提问、寻求反馈、与领域专家协同完成预测任务的智能体系统。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">4</div>
+        <div class="pillar-text">
+          <strong>可自适应 — 动态环境下的持续修正</strong>
+          <span>面对情境漂移、突发事件和信息缺失，模型能够动态获取新证据、更新内部状态，持续修正预测以适应真实世界的开放动态环境。</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="claim-box">
+      <p>
+        下一代时间序列分析模型需要超越对历史数值序列的模式拟合，
+        走向能够感知外部情境、推理趋势变化、主动获取证据并在反馈中持续修正预测的认知型分析系统。
+        情境感知不是附加模块，而是新一代时间序列建模的核心范式。
+      </p>
+      <p class="claim-sub">
+        The next generation of time series analysis should go beyond pattern fitting on historical values,
+        toward cognitive systems that perceive contextual signals, reason about trend causation,
+        actively acquire evidence, and continuously revise predictions through feedback.
+        Context awareness is not an add-on — it is the core paradigm of next-generation time series modeling.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="container">
+    <p>
+      &copy; 2024–2026 Time Series Analysis Group &middot;
+      <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
+      &middot; State Key Laboratory of Cognitive Intelligence, USTC
+    </p>
+    <p class="footer-funding">
+      本项目研究资助来源：国家双一流建设经费、国家自然科学基金委
+    </p>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const heroHeader = document.getElementById('heroHeader');
+    if (!heroHeader) return;
+
+    let refreshTimer = null;
+
+    function triggerHeroRefresh(event) {
+      if (event.target.closest('a, button')) return;
+
+      heroHeader.classList.remove('hero-refreshing');
+      void heroHeader.offsetWidth;
+      heroHeader.classList.add('hero-refreshing');
+
+      if (refreshTimer) clearTimeout(refreshTimer);
+      refreshTimer = window.setTimeout(function () {
+        heroHeader.classList.remove('hero-refreshing');
+        window.location.reload();
+      }, 900);
+
+      const rect = heroHeader.getBoundingClientRect();
+      const wave = document.createElement('span');
+      wave.className = 'hero-refresh-wave';
+      wave.style.left = (event.clientX - rect.left) + 'px';
+      wave.style.top = (event.clientY - rect.top) + 'px';
+      heroHeader.appendChild(wave);
+      wave.addEventListener('animationend', function () { wave.remove(); });
+    }
+
+    heroHeader.addEventListener('click', triggerHeroRefresh);
+  })();
+
+  /* smooth-highlight active nav link on scroll */
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-bar a[href^='#']");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          link.style.color = link.getAttribute("href") === `#${id}` ? "var(--teal)" : "";
+          link.style.borderBottomColor = link.getAttribute("href") === `#${id}` ? "var(--teal)" : "";
+        });
+      }
+    });
+  }, { rootMargin: "-20% 0px -70% 0px" });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
