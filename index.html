@@ -313,6 +313,9 @@
       margin-bottom: 22px;
       flex: 1;
     }
+    .subdomain-grid-balanced {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
     .subdomain-card {
       display: flex;
       flex-direction: column;
@@ -550,58 +553,40 @@
           <p class="card-desc">
             围绕时间序列预测中的多模态语义理解、慢思考认知推理与智能体自主交互，系统探索从情境上下文理解、长思维链推理到自主决策的能力演进。
           </p>
-          <div class="subdomain-grid">
-            <div class="subdomain-card era-dl">
-              <span class="subdomain-label">深度表征学习</span>
-              <div class="subdomain-header">
-                <span class="subdomain-icon">📐</span>
-                <div>
-                  <p class="subdomain-desc">围绕非平稳性建模、层次生成式预测与解耦式预测，持续加强模型对时间序列本身的建模能力。</p>
-                </div>
-              </div>
-            </div>
-            <div class="subdomain-card era-dl">
-              <span class="subdomain-label">自监督预训练</span>
-              <div class="subdomain-header">
-                <span class="subdomain-icon">🔁</span>
-                <div>
-                  <p class="subdomain-desc">聚焦 masked autoencoder 与扩散式自回归建模，通过无标注数据学习更具迁移性的时序表征。</p>
-                </div>
-              </div>
-            </div>
-            <div class="subdomain-card era-dl">
-              <span class="subdomain-label">时序基础模型</span>
-              <div class="subdomain-header">
-                <span class="subdomain-icon">🏗️</span>
-                <div>
-                  <p class="subdomain-desc">探索大规模多域预训练与零样本迁移，推动时间序列走向通用智能范式。</p>
-                </div>
-              </div>
-            </div>
-            <div class="subdomain-card era-llm">
-              <span class="subdomain-label">多模态语义理解</span>
+          <div class="subdomain-grid subdomain-grid-balanced">
+            <div class="subdomain-card">
+              <span class="subdomain-label">多模态情境感知</span>
               <div class="subdomain-header">
                 <span class="subdomain-icon">🧩</span>
                 <div>
-                  <p class="subdomain-desc">从跨模态语义对齐与细粒度 token 表征出发，增强模型对复杂时序上下文与结构模式的理解。</p>
+                  <p class="subdomain-desc">从文本、事件、知识、环境变量与人类反馈等多源信息中抽取预测相关情境，增强模型对复杂外部因素的感知能力。</p>
                 </div>
               </div>
             </div>
-            <div class="subdomain-card era-llm">
-              <span class="subdomain-label">慢思考认知推理</span>
+            <div class="subdomain-card">
+              <span class="subdomain-label">情境—趋势关联推理</span>
               <div class="subdomain-header">
                 <span class="subdomain-icon">🧠</span>
                 <div>
-                  <p class="subdomain-desc">引入长思维链认知推理，让大模型在预测前显式的思考，完成更充分的分析、反思。</p>
+                  <p class="subdomain-desc">建模外部情境与未来趋势之间的关联机制，探索情境因素如何影响趋势变化、阶段转折与未来走向。</p>
                 </div>
               </div>
             </div>
-            <div class="subdomain-card era-llm">
-              <span class="subdomain-label">智能体自主交互</span>
+            <div class="subdomain-card">
+              <span class="subdomain-label">非平稳性与漂移预测</span>
               <div class="subdomain-header">
-                <span class="subdomain-icon">🤖</span>
+                <span class="subdomain-icon">📈</span>
                 <div>
-                  <p class="subdomain-desc">构建可规划、可调用工具、可交互的智能体，提升复杂场景下的自主分析与执行能力。</p>
+                  <p class="subdomain-desc">面向趋势突变、分布漂移与阶段性变化，研究非平稳时间序列的动态建模、漂移识别与未来演化预测。</p>
+                </div>
+              </div>
+            </div>
+            <div class="subdomain-card">
+              <span class="subdomain-label">不确定性量化与可信预测</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🛡️</span>
+                <div>
+                  <p class="subdomain-desc">量化未来趋势的多种可能路径，估计预测置信度、风险边界与不确定性来源，提升预测结果的可信度与可解释性。</p>
                 </div>
               </div>
             </div>
@@ -675,8 +660,51 @@
         </div>
       </div>
 
+      <!-- Context-Aware Time Series Analysis -->
+      <div class="project-card project-card-wide">
+        <div class="card-accent accent-forecast"></div>
+        <div class="card-body">
+          <h3>情境感知的时间序列分析</h3>
+          <p class="card-desc">
+            面向复杂真实预测场景，研究多源上下文情境如何参与时间序列建模、推理与动态更新，让模型从序列模式拟合走向情境感知的未来判断。
+          </p>
+          <div class="subdomain-grid">
+            <div class="subdomain-card">
+              <span class="subdomain-label">情境语义对齐与融合</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🧩</span>
+                <div>
+                  <p class="subdomain-desc">多源异构上下文情境如何有效表示、对齐并融入预测模型。</p>
+                </div>
+              </div>
+            </div>
+            <div class="subdomain-card">
+              <span class="subdomain-label">情境上下文推理</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🧠</span>
+                <div>
+                  <p class="subdomain-desc">情境因素如何影响未来趋势，模型如何开展原因分析、假设探索与证据验证。</p>
+                </div>
+              </div>
+            </div>
+            <div class="subdomain-card">
+              <span class="subdomain-label">动态情境自适应</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🔁</span>
+                <div>
+                  <p class="subdomain-desc">当情境变化或信息不完整时，模型如何主动获取新证据并动态更新预测。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-links">
+            <a class="card-btn btn-enter-evaluation" href="future-cast/">FutureCast</a>
+          </div>
+        </div>
+      </div>
+
       <!-- Foundation Models -->
-      <div class="project-card">
+      <div class="project-card project-card-wide">
         <div class="card-accent accent-foundation"></div>
         <div class="card-body">
           <h3>时间序列基础模型</h3>
@@ -708,11 +736,11 @@
         </div>
       </div>
 
-      <!-- FutureCast -->
-      <div class="project-card">
+      <!-- 领域应用研究 -->
+      <div class="project-card project-card-wide">
         <div class="card-accent accent-evaluation"></div>
         <div class="card-body">
-          <h3>FutureCast</h3>
+          <h3>领域应用研究</h3>
           <p class="card-desc">
             围绕时间序列分析与模型开发构建系统性评测框架，同时探索面向训练数据自动化合成的数据生成流程，支撑模型能力诊断、对比实验与数据扩展。
           </p>

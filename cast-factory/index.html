@@ -582,14 +582,19 @@
 
     /* ── Footer ────────────────────────────────────── */
     footer {
-      background: #131c2e;
+      background: #1c1c1c;
       color: #999;
       text-align: center;
-      padding: 30px 24px;
+      padding: 28px 24px;
       font-size: 0.84rem;
     }
-    footer a { color: #5eead4; }
-    footer p + p { margin-top: 6px; }
+    footer a { color: #5ecfc6; }
+    footer .footer-funding {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.6;
+    }
 
     /* ── Responsive ────────────────────────────────── */
     @media (max-width: 680px) {
@@ -1107,11 +1112,12 @@ evaluation:
 <footer>
   <div class="container">
     <p>
-      &copy; 2025 CastFactory Team &middot; AGI Group · State Key Laboratory of Cognitive Intelligence, USTC &middot;
-      <a href="https://github.com/ustc-time-series/CastFactory" target="_blank" rel="noopener">GitHub</a>
+      &copy; 2024–2026 Time Series Analysis Group &middot;
+      <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
+      &middot; State Key Laboratory of Cognitive Intelligence, USTC
     </p>
-    <p style="font-size: 0.78rem; color: #555; margin-top: 6px;">
-      Building the model factory for LLM-based time series forecasting.
+    <p class="footer-funding">
+      本项目研究资助来源：国家双一流建设经费、国家自然科学基金委
     </p>
   </div>
 </footer>
