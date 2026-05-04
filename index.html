@@ -762,7 +762,7 @@
     <!-- ── Applied Research ── -->
     <div class="section-intro section-anchor" id="application-systems">
       <h2>应用研究</h2>
-      <p>围绕城市电力负荷、新能源发电、云服务流量等真实预测场景的应用研究成果，以及面向时序预测的 CastClaw 研发系统。</p>
+      <p>围绕电力能源、云服务运维、气象环境、商业零售与医疗健康等真实时序场景，沉淀可落地的预测、诊断与决策应用研究。</p>
     </div>
 
     <!-- 领域应用研究 -->
@@ -772,42 +772,60 @@
         <div class="card-body">
           <h3>领域应用研究</h3>
           <p class="card-desc">
-            面向能源、云服务、科学与工业等真实时序场景，研究领域情境因素如何影响趋势演化，支撑可落地的预测、诊断与决策应用。
+            面向电力负荷、能源发电、云服务运维、气象环境、商业零售与医疗健康等真实时序场景，刻画领域知识、外部驱动因素与业务约束对序列趋势、周期波动和异常变化的影响，支撑可落地的预测、诊断、预警与决策应用。
           </p>
           <div class="subdomain-grid subdomain-grid-balanced">
             <div class="subdomain-card">
-              <span class="subdomain-label">电力能源预测</span>
+              <span class="subdomain-label">电力负荷</span>
               <div class="subdomain-header">
                 <span class="subdomain-icon">⚡</span>
                 <div>
-                  <p class="subdomain-desc">面向电力负荷、光伏发电、风电功率、综合能源系统等任务，研究多源气象、节假日、市场行为与设备状态等情境因素对能源趋势的影响，支撑电力调度、能源管理与低碳运行。</p>
+                  <p class="subdomain-desc">面向居民、商业园区、城市级与工业用电负荷预测任务，融合温度湿度、节假日、工作日模式、重大活动、电价与需求响应等外部因素，刻画短时波动、峰谷转换和长期用能趋势，支撑电网调度、负荷预警、需求侧管理与低碳运行。</p>
                 </div>
               </div>
             </div>
             <div class="subdomain-card">
-              <span class="subdomain-label">云服务流量预测</span>
+              <span class="subdomain-label">能源发电</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">☀️</span>
+                <div>
+                  <p class="subdomain-desc">面向光伏、风电、水电与综合能源系统等发电预测任务，结合辐照度、云量、风速风向、气温、季节周期和设备状态，建模新能源出力的不确定性与快速爬坡过程，服务并网消纳、储能调度、发电计划优化和能源资产管理。</p>
+                </div>
+              </div>
+            </div>
+            <div class="subdomain-card">
+              <span class="subdomain-label">云服务运维</span>
               <div class="subdomain-header">
                 <span class="subdomain-icon">☁️</span>
                 <div>
-                  <p class="subdomain-desc">面向云平台请求量、服务流量、资源负载、任务队列和系统容量变化，研究突发流量、周期波动、异常事件与业务上下文对系统趋势的影响，支撑弹性扩缩容、资源调度和服务稳定性保障。</p>
+                  <p class="subdomain-desc">面向云平台请求量、服务流量、CPU/GPU 与存储负载、任务队列、延迟和错误率等运维时序，识别周期性业务节奏、突发流量、发布变更、故障事件和上下游依赖带来的趋势漂移，支撑容量规划、弹性扩缩容、资源调度、异常检测与 SLA 保障。</p>
                 </div>
               </div>
             </div>
             <div class="subdomain-card">
-              <span class="subdomain-label">科学时序建模</span>
+              <span class="subdomain-label">气象与环境</span>
               <div class="subdomain-header">
-                <span class="subdomain-icon">🔬</span>
+                <span class="subdomain-icon">🌦️</span>
                 <div>
-                  <p class="subdomain-desc">面向水文径流、气候变化、生物医学信号、实验过程记录等科学时序数据，研究复杂自然过程中的非平稳变化、外部驱动因素和跨尺度演化规律，服务科学发现与机理分析。</p>
+                  <p class="subdomain-desc">面向气温、降水、风场、空气质量、水文径流、极端天气和生态环境监测等时序数据，研究多源观测、空间邻近、季节周期、气候异常和人为活动对环境状态演化的影响，支撑灾害预警、环境治理、城市运行和科学机理分析。</p>
                 </div>
               </div>
             </div>
             <div class="subdomain-card">
-              <span class="subdomain-label">工业时序建模</span>
+              <span class="subdomain-label">商业零售</span>
               <div class="subdomain-header">
-                <span class="subdomain-icon">🏭</span>
+                <span class="subdomain-icon">🛒</span>
                 <div>
-                  <p class="subdomain-desc">面向工业传感器、设备运行状态、生产质量、故障预警和过程控制等任务，研究多变量耦合、设备退化、工况切换与异常传播机制，支撑预测性维护、质量控制和智能制造。</p>
+                  <p class="subdomain-desc">面向商品销量、门店客流、库存周转、价格促销、广告投放和供应链履约等商业时序，研究季节性需求、节庆活动、区域偏好、价格弹性和渠道联动对经营指标的影响，支撑需求预测、补货决策、库存优化、营销排期和精细化运营。</p>
+                </div>
+              </div>
+            </div>
+            <div class="subdomain-card">
+              <span class="subdomain-label">医疗健康</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🏥</span>
+                <div>
+                  <p class="subdomain-desc">面向电子健康记录、ICU 监护、生理信号、可穿戴设备、临床随访和药物疗效等医疗健康时序，建模患者状态转移、治疗干预、生理节律、个体差异和多模态检查结果之间的关联，支撑疾病进展预测、风险预警、疗效评估和智能辅助诊断。</p>
                 </div>
               </div>
             </div>
