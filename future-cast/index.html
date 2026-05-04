@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FutureCast — 面向情境感知时间序列预测的大模型训练语料与评估基准</title>
+  <meta name="description" content="FutureCast 是一个面向情境感知时间序列预测的 Benchmark 数据集与大模型训练语料库，将预测样本扩展为"历史序列—上下文情境—证据标注—预测目标"的联合实例，系统评估情境语义对齐、因果推理与动态自适应三类能力。" />
+  <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --navy:       #1e3a5f;
+      --navy-dark:  #152c48;
+      --teal:       #0f766e;
+      --teal-light: #14b8a6;
+      --accent:     #0f766e;
+      --accent-dark:#0b5f59;
+      --indigo:     #3730a3;
+      --text:       #1a1a1a;
+      --muted:      #555;
+      --faint:      #888;
+      --line:       #e4e4e0;
+      --bg:         #f7f7f5;
+      --card:       #ffffff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                   "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 16px;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: #f0f0ee;
+      border: 1px solid #e0e0de;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+      font-size: 0.85em;
+      color: var(--navy);
+    }
+
+    /* ── Container ─────────────────────────────────── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Sticky nav ────────────────────────────────── */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+    }
+    .nav-bar .container {
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+      gap: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .nav-bar .container::-webkit-scrollbar { display: none; }
+    .nav-bar a {
+      flex-shrink: 0;
+      padding: 13px 18px;
+      font-size: 0.87rem;
+      font-weight: 500;
+      color: #555;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .nav-bar a:hover {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+      text-decoration: none;
+    }
+    .nav-home {
+      font-weight: 700;
+      color: var(--teal) !important;
+      border-right: 1px solid #e8e8e8;
+    }
+
+    /* ── Hero ──────────────────────────────────────── */
+    header {
+      background: linear-gradient(160deg, #ffffff 50%, #f0fdf9 80%, #eef3ff 100%);
+      border-bottom: 1px solid #e8e8e8;
+      padding: 60px 0 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform .16s ease, opacity .16s ease, filter .16s ease;
+    }
+    header .container { position: relative; z-index: 2; }
+    header:hover { filter: saturate(1.02); }
+    header:active { transform: scale(0.995); }
+
+    .hero-refresh-sheen {
+      position: absolute;
+      top: -20%; bottom: -20%; left: -30%;
+      width: 26%; opacity: 0; pointer-events: none; z-index: 1;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.78) 48%, rgba(255,255,255,0) 100%);
+      transform: skewX(-24deg) translateX(0);
+    }
+    header.hero-refreshing .hero-refresh-sheen { animation: hero-sheen 0.9s ease; }
+    header.hero-refreshing h1               { animation: hero-title-refresh 0.75s ease; }
+    header.hero-refreshing .subtitle,
+    header.hero-refreshing .affiliation,
+    header.hero-refreshing .btn-row         { animation: hero-copy-refresh 0.75s ease; }
+    .hero-refresh-wave {
+      position: absolute; width: 20px; height: 20px; border-radius: 999px;
+      border: 2px solid rgba(15, 118, 110, 0.20);
+      background: rgba(20, 184, 166, 0.16);
+      transform: translate(-50%, -50%) scale(0.2);
+      pointer-events: none; z-index: 1;
+      animation: hero-wave 0.85s ease-out forwards;
+    }
+    @keyframes hero-sheen {
+      0%   { opacity: 0; transform: skewX(-24deg) translateX(0); }
+      12%  { opacity: 1; }
+      100% { opacity: 0; transform: skewX(-24deg) translateX(560%); }
+    }
+    @keyframes hero-wave {
+      0%   { opacity: 0.9; transform: translate(-50%, -50%) scale(0.2); }
+      100% { opacity: 0;   transform: translate(-50%, -50%) scale(11); }
+    }
+    @keyframes hero-title-refresh {
+      0%   { transform: translateY(0); opacity: 1; }
+      25%  { transform: translateY(3px); opacity: 0.84; }
+      62%  { transform: translateY(-2px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes hero-copy-refresh {
+      0%   { transform: translateY(0); opacity: 1; }
+      30%  { transform: translateY(4px); opacity: 0.76; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    header h1 {
+      margin-top: 12px;
+      font-size: 1.95rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: #111;
+      max-width: 1180px;
+      margin-left: auto;
+      margin-right: auto;
+      text-wrap: balance;
+    }
+    header h1 .fc { color: var(--accent); }
+    .hero-title-main { display: block; white-space: nowrap; }
+    .hero-title-sub  { display: block; }
+
+    .subtitle {
+      margin: 10px auto 0;
+      font-size: 1.01rem;
+      color: #555;
+      max-width: 680px;
+      line-height: 1.72;
+      text-align: center;
+      text-justify: auto;
+    }
+    .affiliation {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: #999;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Buttons ───────────────────────────────────── */
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 20px;
+      border-radius: 7px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s;
+      text-decoration: none;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.13);
+      text-decoration: none;
+    }
+    .btn-secondary { background: #fff; color: #222; border-color: #d0d0d0; }
+    .btn-secondary:hover { background: #f8f8f8; border-color: #aaa; }
+    .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    /* ── Sections ──────────────────────────────────── */
+    section {
+      padding: 64px 0;
+      scroll-margin-top: 50px;
+    }
+    section.alt { background: #fff; }
+    section + section { border-top: 1px solid var(--line); }
+
+    h2.section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--teal);
+      display: inline-block;
+    }
+    h3.sub-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #222;
+      margin: 32px 0 10px;
+    }
+    h3.sub-title:first-of-type { margin-top: 0; }
+    p { margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── TL;DR banner ──────────────────────────────── */
+    .tldr {
+      background: #eff8ff;
+      border-left: 4px solid var(--navy);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 22px;
+      font-size: 1.01rem;
+      color: #1a1a1a;
+      margin-bottom: 32px;
+      line-height: 1.75;
+    }
+    .tldr strong { color: var(--navy); }
+
+    /* ── Stat row ───────────────────────────────────── */
+    .stat-row {
+      display: flex;
+      gap: 16px;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+    .stat-box {
+      flex: 1;
+      min-width: 130px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px 16px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .stat-box .stat-num {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.1;
+    }
+    .stat-box .stat-label {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 6px;
+      line-height: 1.45;
+    }
+
+    /* ── Card grid ─────────────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 22px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform .22s, box-shadow .22s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.09);
+    }
+    .card .card-icon { font-size: 1.6rem; margin-bottom: 10px; line-height: 1; }
+    .card h4 { font-size: 0.93rem; font-weight: 700; margin-bottom: 7px; color: #111; }
+    .card p  { font-size: 0.87rem; color: #555; margin: 0; line-height: 1.65; }
+
+    /* ── Pillar (numbered) list ────────────────────── */
+    .pillar-list {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pillar-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 16px 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .pillar-num {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .pillar-text { flex: 1; }
+    .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; color: var(--navy); }
+    .pillar-text span  { font-size: 0.88rem; color: #555; }
+
+    /* ── Feature list ──────────────────────────────── */
+    .feature-list {
+      list-style: none;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .feature-list li {
+      padding-left: 20px;
+      position: relative;
+      font-size: 0.95rem;
+      color: #333;
+    }
+    .feature-list li::before {
+      content: "▸";
+      color: var(--teal);
+      position: absolute;
+      left: 0;
+      top: 1px;
+    }
+
+    /* ── Capability cards (three big cards) ───────── */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 24px;
+    }
+    .cap-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--navy);
+      border-radius: 0 0 12px 12px;
+      padding: 24px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform .22s, box-shadow .22s;
+    }
+    .cap-card:nth-child(2) { border-top-color: var(--teal); }
+    .cap-card:nth-child(3) { border-top-color: var(--indigo); }
+    .cap-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.09);
+    }
+    .cap-card .cap-icon { font-size: 1.8rem; margin-bottom: 12px; line-height: 1; }
+    .cap-card h4 { font-size: 0.98rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .cap-card .cap-focus {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--teal);
+      margin-bottom: 10px;
+      letter-spacing: 0.01em;
+    }
+    .cap-card p { font-size: 0.87rem; color: #555; line-height: 1.65; margin: 0; }
+
+    /* ── Sample structure table ────────────────────── */
+    .table-wrap { overflow-x: auto; margin: 20px 0; border-radius: 8px; border: 1px solid var(--line); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th { background: var(--navy); color: #fff; padding: 10px 16px; text-align: left; font-weight: 600; }
+    td { padding: 9px 16px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tr:nth-child(even) td { background: #f9fafc; }
+    tr:last-child td { border-bottom: none; }
+
+    /* ── Task grid ─────────────────────────────────── */
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 12px;
+      margin-top: 22px;
+    }
+    .task-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--navy);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .task-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+    .task-card:nth-child(3n+2) { border-left-color: var(--teal); }
+    .task-card:nth-child(3n)   { border-left-color: var(--indigo); }
+    .task-card h5 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+    .task-card p { font-size: 0.82rem; color: #555; margin: 0; line-height: 1.55; }
+
+    /* ── Eval dimension cards ──────────────────────── */
+    .eval-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .eval-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 20px 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .eval-card .eval-dim {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 6px;
+    }
+    .eval-card h5 { font-size: 0.93rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .eval-card .eval-metrics {
+      font-size: 0.83rem;
+      color: #555;
+      line-height: 1.6;
+    }
+    .eval-card .eval-metrics code { font-size: 0.8rem; }
+
+    /* ── Special metric box ────────────────────────── */
+    .metric-highlight {
+      background: linear-gradient(135deg, #f0fdf9 0%, #eff8ff 100%);
+      border: 1px solid #b2e8d8;
+      border-radius: 10px;
+      padding: 22px 24px;
+      margin-top: 24px;
+    }
+    .metric-highlight h5 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+    .metric-highlight .metric-formula {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      padding: 12px 18px;
+      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+      font-size: 0.88rem;
+      color: var(--navy);
+      margin: 12px 0;
+      text-align: center;
+      font-weight: 600;
+    }
+    .metric-highlight p { font-size: 0.88rem; color: #555; margin: 0; line-height: 1.65; }
+
+    /* ── Feature highlight list ────────────────────── */
+    .feature-highlight-list {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .feature-highlight-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 16px 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .feat-num {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 6px;
+      background: #f0fdf9;
+      border: 1px solid #b2e8d8;
+      color: var(--teal);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .feat-text { flex: 1; }
+    .feat-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; color: var(--navy); }
+    .feat-text span { font-size: 0.88rem; color: #555; }
+
+    /* ── Claim box ─────────────────────────────────── */
+    .claim-box {
+      background: linear-gradient(135deg, #0f1f3d 0%, #1e3a5f 60%, #0c4a44 100%);
+      border-radius: 12px;
+      padding: 32px 32px;
+      color: #fff;
+      margin-top: 24px;
+    }
+    .claim-box p {
+      font-size: 0.97rem;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.8;
+      margin: 0;
+      font-style: italic;
+    }
+
+    /* ── Footer ────────────────────────────────────── */
+    footer {
+      background: #131c2e;
+      color: #999;
+      text-align: center;
+      padding: 30px 24px;
+      font-size: 0.84rem;
+    }
+    footer a { color: #5eead4; }
+    footer p + p { margin-top: 6px; }
+
+    /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 680px) {
+      header { padding: 40px 0 40px; }
+      header h1 { font-size: 1.5rem; }
+      .hero-title-main { white-space: normal; }
+      .cap-grid { grid-template-columns: 1fr; }
+      section { padding: 48px 0; }
+      .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
+      h2.section-title { font-size: 1.25rem; }
+      .claim-box { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header id="heroHeader">
+  <div class="hero-refresh-sheen" aria-hidden="true"></div>
+  <div class="container">
+    <h1 class="hero-clickable">
+      <span class="hero-title-main"><span class="fc">FutureCast</span></span>
+      <span class="hero-title-sub">情境感知时间序列预测评估基准</span>
+    </h1>
+    <p class="subtitle hero-clickable">
+      FutureCast 将预测样本从"历史序列—未来标签"扩展为
+      "历史序列—上下文情境—证据标注—预测目标"，
+      系统评估下一代时间序列预测模型的情境理解、因果推理与动态自适应能力。
+    </p>
+    <p class="affiliation hero-clickable">中国科学技术大学 · 认知智能全国重点实验室 · AGI 研究组</p>
+
+    <div class="btn-row">
+      <a class="btn btn-secondary" href="https://github.com/ustc-time-series/Future-Cast" target="_blank" rel="noopener">
+        <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+            0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+            -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+            .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+            -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0
+            1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82
+            1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01
+            1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+        </svg>
+        GitHub 开源项目
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════ STICKY NAV ═══════════════════ -->
+<nav class="nav-bar">
+  <div class="container">
+    <a href="../" class="nav-home">首页</a>
+    <a href="#intro">简介</a>
+    <a href="#motivation">动机</a>
+    <a href="#principles">设计原则</a>
+    <a href="#capabilities">三大能力</a>
+    <a href="#data">数据组成</a>
+    <a href="#tasks">任务体系</a>
+    <a href="#eval">评估协议</a>
+    <a href="#features">项目特色</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════ INTRO ═══════════════════ -->
+<section id="intro" class="alt">
+  <div class="container">
+    <div class="tldr">
+      <strong>一句话定位：</strong>
+      FutureCast 是一个面向<strong>情境感知时间序列预测</strong>的
+      <strong>Benchmark 数据集与大模型训练语料库</strong>——
+      将每个预测样本构造为"历史序列—上下文情境—证据标注—预测目标"的联合实例，
+      系统化训练和评估模型的<strong>情境理解、因果推理与动态自适应</strong>三类核心能力。
+    </div>
+
+    <h2 class="section-title">项目简介</h2>
+    <p>
+      时间序列预测方法已从统计建模和深度学习逐步发展到时间序列基础模型。
+      现有通用预测基准关注模型在跨领域、跨频率、跨预测长度场景下的泛化能力，
+      但在真实预测场景中，<strong>未来变化往往不只由历史序列本身决定</strong>——
+      天气、节假日、政策变化、突发事件、空间环境、领域知识和人类经验等
+      多源异构情境因素对预测结果具有实质性影响，而现有 Benchmark 对这类信息的建模与评估仍然不足。
+    </p>
+    <p>
+      FutureCast 为弥补这一空白而构建。它借鉴 GIFT-Eval 等系统化 Benchmark 的设计思路，
+      在多领域、多频率、多预测长度的基础上进一步引入<strong>情境维度</strong>，
+      推动时间序列预测从<strong>序列模式拟合</strong>走向<strong>情境感知的未来推理</strong>。
+    </p>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-label">核心能力维度<br>对齐 · 推理 · 自适应</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5</div>
+        <div class="stat-label">设计原则<br>覆盖数据到评测</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">10</div>
+        <div class="stat-label">任务类型<br>从数值预测到动态修正</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5</div>
+        <div class="stat-label">评估维度<br>含 Forecast Revision Gain</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ MOTIVATION ═══════════════════ -->
+<section id="motivation">
+  <div class="container">
+    <h2 class="section-title">为什么需要 FutureCast</h2>
+    <p>
+      现有时间序列预测基准大多<strong>围绕数值序列本身构建</strong>，
+      关注预测误差在不同领域、频率、预测长度下的表现。
+      GIFT-Eval 展示了这种系统化评估的重要性，但真实世界的预测任务往往具有更强的情境依赖性：
+    </p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h4>能源与电力</h4>
+        <p>电力负荷受温度、节假日和工业活动影响，仅靠历史序列无法捕捉负荷突变的外部原因。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🚦</div>
+        <h4>交通与出行</h4>
+        <p>交通流量受天气、事故和大型活动影响，这些情境信号对短期预测尤为关键。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📈</div>
+        <h4>金融与市场</h4>
+        <p>政策变化、新闻事件和市场情绪直接驱动价格波动，情境理解能力是金融预测的核心。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🏥</div>
+        <h4>医疗与健康</h4>
+        <p>医疗时间序列受病人状态、治疗干预和临床知识影响，纯序列建模无法融入领域先验。</p>
+      </div>
+    </div>
+    <p style="margin-top: 22px;">
+      FutureCast 将评估重点从 <strong>general forecasting capability</strong> 拓展为
+      <strong>context-aware forecasting capability</strong>，
+      不仅评估模型能否预测得准，还评估模型是否能够<strong>识别关键情境、对齐情境与序列变化、
+      推理情境影响，并在新证据出现后动态修正预测</strong>。
+    </p>
+
+    <div style="margin-top: 24px; background: #f0fdf9; border: 1px solid #b2e8d8; border-radius: 8px; padding: 20px 24px;">
+      <p style="font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px;">FutureCast 关注的核心问题不只是：</p>
+      <p style="margin: 0 0 10px; color: #555;">模型能否预测未来数值？</p>
+      <p style="font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px;">而是：</p>
+      <p style="margin: 0; font-weight: 600; color: var(--teal); font-size: 0.98rem;">模型能否理解未来为什么会变化，并在情境变化时动态更新预测？</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ DESIGN PRINCIPLES ═══════════════════ -->
+<section id="principles" class="alt">
+  <div class="container">
+    <h2 class="section-title">Benchmark 设计原则</h2>
+    <p>
+      FutureCast 借鉴通用时间序列 Benchmark 的系统化设计思路，
+      并进一步面向情境感知预测进行扩展，遵循以下五项原则：
+    </p>
+    <ul class="pillar-list">
+      <li>
+        <div class="pillar-num">1</div>
+        <div class="pillar-text">
+          <strong>训练与测试严格分离</strong>
+          <span>构建训练集、验证集和测试集。训练集支持大模型预训练、指令微调和推理增强训练；测试集评估模型在未见时间段、未见区域、未见事件和未见情境组合下的泛化能力。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">2</div>
+        <div class="pillar-text">
+          <strong>严格避免数据泄漏</strong>
+          <span>对时间划分、数据来源、外部事件文本、未来信息和标注过程进行严格控制，避免模型在训练阶段接触测试期未来信息——参照 GIFT-Eval 的无泄漏预训练数据设计思路。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">3</div>
+        <div class="pillar-text">
+          <strong>多维度系统覆盖</strong>
+          <span>不仅覆盖不同领域、频率、预测长度和变量类型，还进一步覆盖不同情境类型、情境粒度、情境强度和情境变化模式，形成立体化的 Benchmark 覆盖体系。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">4</div>
+        <div class="pillar-text">
+          <strong>多任务联合评估</strong>
+          <span>不只提供数值预测任务，还提供情境选择、情境—序列对齐、趋势推理、事件影响分析、反事实预测、情境缺口识别、工具调用规划和预测修正等多类任务。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">5</div>
+        <div class="pillar-text">
+          <strong>细粒度分组分析</strong>
+          <span>对模型在不同领域、不同情境类型、不同预测长度、不同事件强度和不同动态变化场景下的表现进行分组分析，揭示模型真正擅长和薄弱的能力维度。</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════ THREE CAPABILITIES ═══════════════════ -->
+<section id="capabilities">
+  <div class="container">
+    <h2 class="section-title">三大核心能力维度</h2>
+    <p>
+      FutureCast 围绕情境感知时间序列预测的三类关键能力展开，
+      每一维度都针对真实预测场景中不同层次的情境建模需求：
+    </p>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-icon">🔗</div>
+        <h4>情境语义对齐与融合建模</h4>
+        <div class="cap-focus">Context-Sequence Alignment &amp; Fusion</div>
+        <p>
+          关注多源异构上下文情境如何有效表示、语义对齐并融入预测模型。
+          FutureCast 的情境信息来自天气、日历、节假日、新闻事件、空间环境、业务规则和专家经验。
+          模型需要判断哪些情境与当前预测任务相关，
+          并将情境与目标时间序列的变化区间在<strong>语义、时间和预测目标</strong>上形成有效融合。
+        </p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🧩</div>
+        <h4>情境因果关联理解与推理建模</h4>
+        <div class="cap-focus">Causal Context Reasoning</div>
+        <p>
+          关注情境因素如何影响未来趋势，模型如何从模式拟合走向原因分析、假设探索和证据验证。
+          模型不仅需要输出预测值，还需要给出与情境证据一致的趋势判断和推理解释：
+          高温是否推高电力负荷？政策变化是否影响能源需求？突发事件是否导致趋势突变？
+        </p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🔄</div>
+        <h4>动态情境自适应建模</h4>
+        <div class="cap-focus">Dynamic Context Adaptation</div>
+        <p>
+          关注当情境变化或信息不完整时，模型如何主动发现情境缺口、获取新证据，并动态更新预测。
+          FutureCast 构建动态情境样本和多轮评估任务，
+          使模型经历"初始预测—发现缺口—获取证据—更新推理—修正预测"的完整过程。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ DATA ═══════════════════ -->
+<section id="data" class="alt">
+  <div class="container">
+    <h2 class="section-title">数据组成与划分</h2>
+
+    <h3 class="sub-title">样本结构</h3>
+    <p>
+      FutureCast 中的每个样本被构造成一个 <strong>context-aware forecasting instance</strong>，
+      包含八类组成部分：
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>组成部分</th><th>内容说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>目标时间序列</strong></td><td>历史观测值、变量名称、采样频率、预测长度</td></tr>
+          <tr><td><strong>时间情境</strong></td><td>日期、季节、工作日、周末、节假日、特殊时间段</td></tr>
+          <tr><td><strong>空间情境</strong></td><td>区域、站点、地理位置、环境状态、空间邻近关系</td></tr>
+          <tr><td><strong>外部事件</strong></td><td>天气变化、政策调整、突发事件、市场波动、重大活动</td></tr>
+          <tr><td><strong>文本知识</strong></td><td>新闻描述、事件摘要、领域背景、任务说明</td></tr>
+          <tr><td><strong>领域先验</strong></td><td>业务规则、专家知识、变量含义、历史经验</td></tr>
+          <tr><td><strong>标注信息</strong></td><td>相关情境、趋势标签、事件影响、证据依据、推理摘要</td></tr>
+          <tr><td><strong>预测目标</strong></td><td>未来数值、趋势方向、变化点、预测区间或事件结果</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-title">数据划分方式</h3>
+    <p>
+      FutureCast 采用多种划分策略，避免简单随机划分带来的信息泄漏和过拟合问题：
+    </p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>划分方式</th><th>目的</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>时间划分</strong></td><td>模拟真实预测场景，避免未来信息泄漏</td></tr>
+          <tr><td><strong>领域划分</strong></td><td>评估跨领域泛化能力</td></tr>
+          <tr><td><strong>区域划分</strong></td><td>评估跨空间迁移能力</td></tr>
+          <tr><td><strong>事件划分</strong></td><td>评估未见事件下的情境推理能力</td></tr>
+          <tr><td><strong>情境组合划分</strong></td><td>评估复杂情境组合下的鲁棒性</td></tr>
+          <tr><td><strong>Hard Test Set</strong></td><td>评估极端天气、突发事件、分布漂移和长预测窗口场景</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TASKS ═══════════════════ -->
+<section id="tasks">
+  <div class="container">
+    <h2 class="section-title">多层任务体系</h2>
+    <p>
+      FutureCast 支持从基础预测到情境推理、再到动态自适应的完整多层任务体系，
+      覆盖十类任务：
+    </p>
+    <div class="task-grid">
+      <div class="task-card">
+        <h5>情境感知预测</h5>
+        <p>结合历史序列与上下文情境预测未来数值，是 FutureCast 的基础任务。</p>
+      </div>
+      <div class="task-card">
+        <h5>情境选择</h5>
+        <p>判断哪些情境因素与当前预测任务相关，评估模型的情境感知与过滤能力。</p>
+      </div>
+      <div class="task-card">
+        <h5>情境—序列对齐</h5>
+        <p>将外部事件或上下文描述与时间序列的变化区间进行时间对齐。</p>
+      </div>
+      <div class="task-card">
+        <h5>趋势推理</h5>
+        <p>基于情境证据判断未来趋势方向，要求模型给出有据可查的趋势判断。</p>
+      </div>
+      <div class="task-card">
+        <h5>事件影响分析</h5>
+        <p>分析外部事件对未来走势的潜在影响及其作用机制和量化程度。</p>
+      </div>
+      <div class="task-card">
+        <h5>反事实预测</h5>
+        <p>改变某一情境条件后预测未来变化，评估模型的假设推理与因果理解能力。</p>
+      </div>
+      <div class="task-card">
+        <h5>情境缺口识别</h5>
+        <p>判断当前预测还缺少哪些关键情境信息，驱动主动信息获取行为。</p>
+      </div>
+      <div class="task-card">
+        <h5>工具调用规划</h5>
+        <p>选择需要调用的数据源、检索工具或分析工具，支持 Agentic TSF 评估。</p>
+      </div>
+      <div class="task-card">
+        <h5>预测修正</h5>
+        <p>根据新增情境证据动态更新预测结果，衡量 Forecast Revision Gain。</p>
+      </div>
+      <div class="task-card">
+        <h5>解释生成</h5>
+        <p>生成基于证据的预测解释和不确定性说明，评估推理可解释性和忠实度。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ EVALUATION ═══════════════════ -->
+<section id="eval" class="alt">
+  <div class="container">
+    <h2 class="section-title">评估协议</h2>
+    <p>
+      FutureCast 的评估协议覆盖五个维度，从数值预测准确性到动态自适应能力进行全面衡量：
+    </p>
+    <div class="eval-grid">
+      <div class="eval-card">
+        <div class="eval-dim">Dimension 1</div>
+        <h5>数值预测准确性</h5>
+        <div class="eval-metrics">
+          <code>MAE</code> · <code>RMSE</code> · <code>MAPE</code> · <code>sMAPE</code> · <code>CRPS</code>
+        </div>
+      </div>
+      <div class="eval-card">
+        <div class="eval-dim">Dimension 2</div>
+        <h5>趋势判断能力</h5>
+        <div class="eval-metrics">
+          <code>Direction Accuracy</code> · <code>Trend Accuracy</code> · <code>Turning-point F1</code>
+        </div>
+      </div>
+      <div class="eval-card">
+        <div class="eval-dim">Dimension 3</div>
+        <h5>情境理解能力</h5>
+        <div class="eval-metrics">
+          <code>Context Relevance Accuracy</code> · <code>Evidence Selection F1</code>
+        </div>
+      </div>
+      <div class="eval-card">
+        <div class="eval-dim">Dimension 4</div>
+        <h5>推理解释质量</h5>
+        <div class="eval-metrics">
+          <code>Evidence-grounded Score</code> · <code>Reasoning Faithfulness</code> · <code>Counterfactual Consistency</code>
+        </div>
+      </div>
+      <div class="eval-card">
+        <div class="eval-dim">Dimension 5</div>
+        <h5>动态自适应能力</h5>
+        <div class="eval-metrics">
+          <code>Context Gap Detection</code> · <code>Tool-use Success Rate</code> · <code>Forecast Revision Gain</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="metric-highlight">
+      <h5>特色指标：Forecast Revision Gain</h5>
+      <div class="metric-formula">
+        Forecast Revision Gain = 初始预测误差 − 情境更新后预测误差
+      </div>
+      <p>
+        FutureCast 的特色评估指标，直接衡量模型在获得新增情境证据后预测效果是否真正得到改善。
+        正值表明模型成功利用新情境修正了预测；这一指标可以直接体现模型是否具备<strong>情境自适应能力</strong>，
+        而非只是凭借历史序列的统计规律进行预测。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FEATURES ═══════════════════ -->
+<section id="features">
+  <div class="container">
+    <h2 class="section-title">项目特色</h2>
+    <p>
+      FutureCast 不只是一个时间序列预测数据集，而是一个面向情境感知预测能力的系统化 Benchmark：
+    </p>
+    <ul class="feature-highlight-list">
+      <li>
+        <div class="feat-num">1</div>
+        <div class="feat-text">
+          <strong>从序列中心到情境中心</strong>
+          <span>不再只关注历史序列和未来标签，而是将预测任务建模为序列与情境共同作用的未来推理问题，构建更贴近真实场景的预测实例。</span>
+        </div>
+      </li>
+      <li>
+        <div class="feat-num">2</div>
+        <div class="feat-text">
+          <strong>从数值预测到证据推理</strong>
+          <span>不仅评估误差指标，还评估模型是否能够识别关键情境、解释趋势变化，并给出基于证据的预测理由——推动预测模型从"黑盒外推"走向"可解释推理"。</span>
+        </div>
+      </li>
+      <li>
+        <div class="feat-num">3</div>
+        <div class="feat-text">
+          <strong>从静态输入到动态自适应</strong>
+          <span>支持多轮情境更新任务，评估模型是否能够主动发现信息缺口、获取新证据并修正预测——以 Forecast Revision Gain 量化动态自适应能力。</span>
+        </div>
+      </li>
+      <li>
+        <div class="feat-num">4</div>
+        <div class="feat-text">
+          <strong>从单一任务到多能力评估</strong>
+          <span>同时覆盖预测、选择、对齐、推理、反事实和交互式修正等十类任务，提供多维度模型能力剖析，揭示不同模型真正擅长和薄弱的场景。</span>
+        </div>
+      </li>
+      <li>
+        <div class="feat-num">5</div>
+        <div class="feat-text">
+          <strong>从普通数据集到大模型训练语料</strong>
+          <span>提供适用于 CPT、SFT 和 RL 的情境感知时间序列语料，同时支持 LLM-driven TSF、Slow-thinking TSF 和 Agentic TSF 的训练与评估，与 CastFactory 训练框架形成闭环。</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="claim-box">
+      <p>
+        FutureCast 构建了包含历史时间序列、多源上下文情境、证据标注和预测目标的统一 Benchmark，
+        用于训练和评估下一代时间序列预测模型。
+        它关注的不只是模型能否预测未来数值，更关注模型能否理解情境、推理未来变化，
+        并在动态环境中自适应更新预测。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="container">
+    <p>
+      &copy; 2025 FutureCast Team &middot; AGI Group · State Key Laboratory of Cognitive Intelligence, USTC &middot;
+      <a href="https://github.com/Mingyue-Cheng" target="_blank" rel="noopener">GitHub</a>
+    </p>
+    <p style="font-size: 0.78rem; color: #555; margin-top: 6px;">
+      From sequence pattern fitting to context-aware future reasoning.
+    </p>
+  </div>
+</footer>
+
+<script>
+  /* hero click → sheen + wave animation */
+  const header = document.getElementById("heroHeader");
+  if (header) {
+    header.addEventListener("click", (e) => {
+      if (e.target.closest("a, button")) return;
+      header.classList.remove("hero-refreshing");
+      void header.offsetWidth;
+      header.classList.add("hero-refreshing");
+      const wave = document.createElement("div");
+      wave.className = "hero-refresh-wave";
+      wave.style.left = e.clientX - header.getBoundingClientRect().left + "px";
+      wave.style.top  = e.clientY - header.getBoundingClientRect().top  + "px";
+      header.appendChild(wave);
+      wave.addEventListener("animationend", () => wave.remove());
+      header.addEventListener("animationend", () => header.classList.remove("hero-refreshing"), { once: true });
+    });
+  }
+
+  /* scroll-highlight active nav link */
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks  = document.querySelectorAll(".nav-bar a[href^='#']");
+  const observer  = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          const active = link.getAttribute("href") === `#${id}`;
+          link.style.color            = active ? "var(--teal)" : "";
+          link.style.borderBottomColor = active ? "var(--teal)" : "";
+        });
+      }
+    });
+  }, { rootMargin: "-20% 0px -70% 0px" });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

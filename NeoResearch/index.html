@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NeoCast — Forecast Research Operating System</title>
-  <meta name="description" content="NeoCast 是面向时间序列预测小模型研发的自主研究智能体系统，将研究假设、模型配方、受控实验、评估归因与研究记忆串成可复现闭环。" />
+  <title>NeoResearch · 智多星 — Forecast Research Operating System</title>
+  <meta name="description" content="NeoResearch（智多星）是面向时间序列预测小模型研发的自主研究智能体系统，将研究假设、模型配方、受控实验、评估归因与研究记忆串成可复现闭环。" />
   <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -96,8 +96,8 @@
     header:hover { filter: saturate(1.02); }
     header:active { transform: scale(0.995); }
     .hero-logo {
-      width: min(100%, 520px);
-      margin: 0 auto 18px;
+      width: min(100%, 360px);
+      margin: 0 auto 8px;
     }
     .hero-logo img {
       display: block;
@@ -106,7 +106,7 @@
       margin: 0 auto;
     }
     header h1 {
-      margin-top: 12px;
+      margin-top: 4px;
       font-size: 1.95rem;
       font-weight: 800;
       line-height: 1.35;
@@ -396,7 +396,6 @@
     }
 
     @media (max-width: 720px) {
-      .hero-logo { width: min(100%, 340px); margin-bottom: 14px; }
       header h1 { font-size: 1.45rem; }
       section { padding: 48px 0; }
       .card-grid-2 { grid-template-columns: 1fr; }
@@ -411,9 +410,9 @@
 <header id="top-refresh">
   <div class="container">
     <div class="hero-logo">
-      <img src="assets/logo.svg" alt="NeoCast logo" />
+      <img src="assets/neoresearch_logo.PNG" alt="NeoResearch logo" />
     </div>
-    <h1>NeoCast：<span class="highlight">时间序列小模型自主研究系统</span></h1>
+    <h1>NeoResearch<span class="highlight">（智多星）</span></h1>
     <p class="subtitle">
       将“研究假设 → 模型配方 → 受控实验 → 结果归因 → 研究记忆”串成闭环，
       面向时间序列预测构建可复现、可审计、可持续积累的 Forecast Research Operating System。
@@ -450,7 +449,7 @@
 
 <nav class="nav-bar">
   <div class="container">
-    <a href="../" class="nav-home">USTC-AGI Time Series</a>
+    <a href="../" class="nav-home">首页</a>
     <a href="#intro">简介</a>
     <a href="#problem">核心问题</a>
     <a href="#architecture">系统架构</a>
@@ -466,7 +465,7 @@
   <div class="container">
     <div class="tldr">
       <strong>TL;DR：</strong>
-      NeoCast 不是“会聊天的时序助手”，也不是无边界 AutoML。
+      NeoResearch 不是“会聊天的时序助手”，也不是无边界 AutoML。
       它把时间序列预测小模型研发变成一个<strong>受控自主研究闭环</strong>：
       Agent 在固定数据、评估、预算和代码协议内提出候选结构与训练配方，自动实验、归因、保留有效增量，并把成功与失败沉淀为可迁移研究记忆。
     </div>
@@ -477,7 +476,7 @@
       但每一个“小模型”的诞生，仍然需要研究员反复设计结构、调 loss、跑 ablation、记录经验。
     </p>
     <p>
-      NeoCast 的目标是把这类重复而高频的研究动作系统化：人定义任务边界、预算和研究方向，
+      NeoResearch 的目标是把这类重复而高频的研究动作系统化：人定义任务边界、预算和研究方向，
       Agent 在可审计的实验环境中完成候选生成、代码变更、训练评估、结果归因与记忆更新。
       产物不是单次回答，而是可复现的模型、recipe、实验记录、报告和跨任务经验。
     </p>
@@ -545,13 +544,13 @@
   <div class="container">
     <h2 class="section-title">系统架构</h2>
     <p>
-      NeoCast 的完整形态由七层组成：人类控制层负责边界和审批，Agent 编排层负责研究任务分解，
+      NeoResearch 的完整形态由七层组成：人类控制层负责边界和审批，Agent 编排层负责研究任务分解，
       搜索空间层提供 CandidateRecipe DSL 与 action registry，协议层固定数据与评估规则，执行层运行隔离实验，评估层判断晋级，记忆层沉淀经验。
     </p>
 
     <figure>
-      <img src="assets/framework.svg" alt="NeoCast system architecture" />
-      <figcaption>NeoCast 将自主研究限制在固定协议和可审计闭环中，避免 Agent 自由修改全仓或反复窥探测试集。</figcaption>
+      <img src="assets/framework.svg" alt="NeoResearch system architecture" />
+      <figcaption>NeoResearch 将自主研究限制在固定协议和可审计闭环中，避免 Agent 自由修改全仓或反复窥探测试集。</figcaption>
     </figure>
 
     <h3 class="sub-title">核心服务模块</h3>
@@ -620,7 +619,7 @@
         <thead>
           <tr>
             <th>autoresearch</th>
-            <th>NeoCast MVP</th>
+            <th>NeoResearch MVP</th>
             <th>角色</th>
           </tr>
         </thead>
@@ -655,7 +654,7 @@
   <div class="container">
     <h2 class="section-title">CandidateRecipe 配方搜索</h2>
     <p>
-      NeoCast 的关键升级是从“选择完整模型族”转向 TimeRecipe 风格的模块级配方搜索。
+      NeoResearch 的关键升级是从“选择完整模型族”转向 TimeRecipe 风格的模块级配方搜索。
       Agent 不再直接问“用 PatchTST 还是 iTransformer”，而是在受限 registry 中选择 preprocessing、embedding、backbone、fusion、head 与 training strategy。
     </p>
 
@@ -718,7 +717,7 @@
   <div class="container">
     <h2 class="section-title">评估协议与治理</h2>
     <p>
-      NeoCast 的第一原则是“先协议，后智能”。所有归一化、缺失填补和统计特征拟合只允许在 train fold 上完成；
+      NeoResearch 的第一原则是“先协议，后智能”。所有归一化、缺失填补和统计特征拟合只允许在 train fold 上完成；
       <code>val_avg_mse</code> 是 Agent 日常 keep / discard 的唯一决策信号，reference test 和 blind test 则由 Runner / Human Gate 保护。
     </p>
 
@@ -780,7 +779,7 @@
   <div class="container">
     <h2 class="section-title">研发路线图</h2>
     <p>
-      NeoCast 的实现路线从最小闭环开始，而不是一开始就构建全功能平台。
+      NeoResearch 的实现路线从最小闭环开始，而不是一开始就构建全功能平台。
       第一阶段先验证 Agent 能否在单任务、单文件、固定协议下形成有效 keep / discard 循环；
       随后再逐步引入 DSL、registry、低保真筛选、多 seed、研究记忆与 blind test 治理。
     </p>
@@ -849,10 +848,10 @@
   <div class="container">
     <h2 class="section-title">规划来源</h2>
     <p>
-      本页面根据 NeoCast 规划文档整理而成，聚焦对外介绍系统定位、架构分层、研究闭环、CandidateRecipe 搜索空间与研发路线。
+      本页面根据 NeoResearch（智多星）规划文档整理而成，聚焦对外介绍系统定位、架构分层、研究闭环、CandidateRecipe 搜索空间与研发路线。
       当前内容作为项目介绍页使用，后续可在代码仓库、论文、benchmark 结果明确后补充 GitHub、技术报告和 citation。
     </p>
-    <div class="citation-box">NeoCast / neo-research for TSF
+    <div class="citation-box">NeoResearch / 智多星 for TSF
 Forecast Research Operating System for autonomous time-series forecasting model research
 Core loop: hypothesis -> CandidateRecipe -> controlled experiment -> attribution -> memory</div>
   </div>
@@ -861,7 +860,7 @@ Core loop: hypothesis -> CandidateRecipe -> controlled experiment -> attribution
 <footer>
   <div class="container">
     <p>
-      &copy; 2026 NeoCast Team &middot; AGI Group · State Key Laboratory of Cognitive Intelligence, USTC
+      &copy; 2026 NeoResearch Team &middot; AGI Group · State Key Laboratory of Cognitive Intelligence, USTC
     </p>
     <p style="font-size: 0.78rem; color: #555; margin-top: 6px;">
       Built for controlled autonomous research in time-series forecasting
