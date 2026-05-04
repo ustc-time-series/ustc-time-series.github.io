@@ -250,6 +250,9 @@
     .accent-foundation { background: linear-gradient(90deg, #d35400, #f39c12); }
     .accent-systems    { background: linear-gradient(90deg, #1e8449, #27ae60); }
     .accent-castclaw   { background: linear-gradient(90deg, #0f766e, #14b8a6); }
+    .accent-castfactory { background: linear-gradient(90deg, #0f766e, #14b8a6); }
+    .accent-futurecast { background: linear-gradient(90deg, #1a56db, #3b82f6); }
+    .accent-neoresearch { background: linear-gradient(90deg, #2563eb, #14b8a6); }
     .accent-evaluation  { background: linear-gradient(90deg, #0f766e, #14b8a6); }
     .accent-classify    { background: linear-gradient(90deg, #c0392b, #e74c3c); }
 
@@ -500,7 +503,7 @@
 <!-- ═══════════════════ TOP NAV ═══════════════════ -->
 <nav class="top-nav" aria-label="首页顶部导航">
   <div class="container">
-    <a class="nav-brand" href="#hero-header" aria-label="刷新页面">USTC-AGI <span>Time Series</span></a>
+    <a class="nav-brand" href="index.html" aria-label="刷新页面">USTC-AGI <span>Time Series</span></a>
     <div class="nav-links">
       <a class="nav-active" href="#hero-header" aria-current="page">首页</a>
         <div class="nav-dropdown">
@@ -511,8 +514,9 @@
           </div>
       </div>
       <a href="papers/">论文列表</a>
-      <a href="systems/">应用研究</a>
+      <a href="applications/">应用研究</a>
       <a href="open-source/">开源项目</a>
+      <a href="systems/">系统研发</a>
       <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">
         GitHub
         <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:12px;height:12px;margin-left:4px;vertical-align:-1px">
@@ -712,8 +716,6 @@
             <a class="card-btn btn-outline" href="https://arxiv.org/abs/2508.09191" target="_blank" rel="noopener">TokenCast</a>
             <a class="card-btn btn-outline" href="https://arxiv.org/abs/2602.03564" target="_blank" rel="noopener">CoGenCast</a>
             <a class="card-btn btn-outline" href="https://arxiv.org/abs/2601.14968" target="_blank" rel="noopener">InstructTime++</a>
-            <a class="card-btn btn-outline" href="future-cast/">FutureCast</a>
-            <a class="card-btn btn-outline" href="cast-factory/">CastFactory</a>
           </div>
         </div>
       </div>
@@ -830,12 +832,88 @@
             </div>
           </div>
           <div class="card-links">
-            <a class="card-btn btn-enter-context" href="systems/">查看主页 →</a>
+            <a class="card-btn btn-enter-context" href="applications/">查看主页 →</a>
             <a class="card-btn btn-outline" href="https://arxiv.org/abs/2604.21501" target="_blank" rel="noopener">GeoMind</a>
             <a class="card-btn btn-outline" href="https://arxiv.org/pdf/2409.11064" target="_blank" rel="noopener">HMF</a>
           </div>
         </div>
       </div>
+    </div>
+
+    <hr class="divider" />
+
+    <!-- ── Open Source Projects ── -->
+    <div class="section-intro section-anchor" id="open-source-projects">
+      <h2>开源项目</h2>
+      <p>围绕时间序列预测、Agentic 分析、人机协同研究工作流与可复现实验平台，沉淀可复用的开源工具、系统框架与研究基础设施。</p>
+    </div>
+
+    <div class="project-grid">
+
+      <!-- CastFactory -->
+      <div class="project-card">
+        <div class="card-accent accent-castfactory"></div>
+        <div class="card-body">
+          <h3><a class="card-title-link" href="cast-factory/">CastFactory</a></h3>
+          <p class="card-desc">
+            面向时间序列研究的实验工厂，沉淀数据处理、特征构造、模型配方、训练运行与结果归档等模块，让新任务能够沿着统一协议快速搭建、复用和复现实验流程。
+          </p>
+          <div class="card-meta">
+            <div class="meta-row">
+              <span class="meta-icon">🏭</span>
+              <span>数据接入 · 清洗切分 · 场景配置模板</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">🧩</span>
+              <span>模型配方 · 训练脚本 · 实验运行规范</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">📦</span>
+              <span>面向论文与应用研究的可复现结果资产</span>
+            </div>
+          </div>
+          <div class="card-links">
+            <a class="card-btn btn-enter-forecast" href="cast-factory/">查看主页 →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FutureCast -->
+      <div class="project-card">
+        <div class="card-accent accent-futurecast"></div>
+        <div class="card-body">
+          <h3><a class="card-title-link" href="future-cast/">FutureCast</a></h3>
+          <p class="card-desc">
+            面向时序模型与智能体系统的统一评测套件，覆盖 benchmark 管理、指标计算、误差归因和报告生成，帮助研究者在一致口径下比较模型能力与系统收益。
+          </p>
+          <div class="card-meta">
+            <div class="meta-row">
+              <span class="meta-icon">📊</span>
+              <span>预测 · 分类 · 异常检测等任务评测协议</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">⚖️</span>
+              <span>跨数据集 · 跨场景 · 跨模型指标对齐</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">📝</span>
+              <span>Ablation · Diagnosis · Leaderboard 报告结构</span>
+            </div>
+          </div>
+          <div class="card-links">
+            <a class="card-btn btn-enter-forecast" href="future-cast/">查看主页 →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="divider" />
+
+    <!-- ── System Development ── -->
+    <div class="section-intro section-anchor" id="system-integration">
+      <h2>系统研发</h2>
+      <p>面向时间序列研究与分析工作流，建设可交互、可编排、可沉淀的智能体系统，将任务规划、实验执行、结果评估与研究记忆整合为端到端平台。</p>
     </div>
 
     <div class="project-grid">
@@ -844,7 +922,7 @@
       <div class="project-card project-card-wide">
         <div class="card-accent accent-castclaw"></div>
         <div class="card-body">
-          <h3><a class="card-title-link" href="cast-claw/">CastClaw</a></h3>
+          <h3><a class="card-title-link" href="cast-claw/">CastClaw（观星阁）</a></h3>
           <p class="card-desc">
             面向时间序列预测研究的人机协同智能体框架。CastClaw 通过 Planner、Forecaster、Critic 三个专属智能体编排完整预测流程，并在关键节点引入人类确认，将数据分析、特征工程与经典时序模型能力封装为可扩展的运行时工具箱。
           </p>
@@ -871,6 +949,34 @@
               </svg>
               GitHub
             </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- NeoResearch -->
+      <div class="project-card project-card-wide">
+        <div class="card-accent accent-neoresearch"></div>
+        <div class="card-body">
+          <h3>NeoResearch（智多星）</h3>
+          <p class="card-desc">
+            面向时间序列预测小模型研发的自主研究智能体系统，将研究假设、模型配方、受控实验、评估归因与研究记忆串成可复现闭环，支持从问题定义到候选方案迭代的系统化研究流程。
+          </p>
+          <div class="card-meta">
+            <div class="meta-row">
+              <span class="meta-icon">🧠</span>
+              <span>研究假设生成 · CandidateRecipe 搜索 · 自主实验规划</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">🧪</span>
+              <span>受控实验协议 · 评估归因 · 可复现研究闭环</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">🗃️</span>
+              <span>研究记忆沉淀 · 模型配方迭代 · 面向 TSF 小模型研发</span>
+            </div>
+          </div>
+          <div class="card-links">
+            <span class="card-btn btn-outline btn-disabled">主页 Coming Soon</span>
           </div>
         </div>
       </div>

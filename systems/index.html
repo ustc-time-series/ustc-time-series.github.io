@@ -3,31 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>应用研究 | USTC-AGI Time Series</title>
-  <meta
-    name="description"
-    content="USTC-AGI 研究组在城市电力负荷、新能源发电、云服务流量等时间序列预测应用场景中的应用研究探索，以及 CastClaw 研发系统介绍。"
-  />
+  <title>系统研发 | USTC-AGI Time Series</title>
+  <meta name="description" content="USTC-AGI Time Series 方向系统研发页面，介绍 CastClaw（观星阁）与 NeoResearch（智多星）等面向时序研究工作流的智能体系统。" />
   <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
   <style>
+    :root {
+      --accent: #0f766e;
+      --accent-dark: #0b5f59;
+      --accent-light: #e6fbf7;
+      --text: #1a1a1a;
+      --text-muted: #5b5b5b;
+      --border: #e6e6e2;
+      --bg: #f7f7f5;
+      --card: #ffffff;
+      --card-alt: #fbfbf9;
+      --radius: 16px;
+      --shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+              "PingFang SC", "Hiragino Sans GB", sans-serif;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
-                   "PingFang SC", "Hiragino Sans GB", sans-serif;
-      background: #f7f7f5;
-      color: #1a1a1a;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.8;
       font-size: 16px;
-      text-align: justify;
-      text-justify: inter-ideograph;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      text-align: justify;
+      text-justify: inter-ideograph;
     }
-
-    a { color: #0f766e; text-decoration: none; }
+    a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     .container {
@@ -61,15 +71,15 @@
       letter-spacing: 0.01em;
       white-space: nowrap;
     }
-    .nav-brand span { color: #0f766e; }
+    .nav-brand span { color: var(--accent); }
     .nav-links {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       gap: 8px;
       overflow: visible;
-      padding: 10px 0;
       width: 100%;
+      padding: 10px 0;
     }
     .nav-links::-webkit-scrollbar { display: none; }
     .nav-links a,
@@ -140,7 +150,7 @@
     .nav-dropdown.open .nav-dropdown-toggle,
     .nav-dropdown-menu a:hover,
     .nav-dropdown-menu a:active {
-      color: #0f766e;
+      color: var(--accent);
       background: #f0fdf9;
       border-color: #99e6d8;
       font-weight: 700;
@@ -148,555 +158,227 @@
       transform: translateY(-1px);
     }
     .nav-active {
-      color: #0f766e !important;
+      color: var(--accent) !important;
       background: #f0fdf9 !important;
       border-color: #99e6d8 !important;
       font-weight: 700 !important;
     }
 
     header {
-      background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
+      background: linear-gradient(160deg, #ffffff 45%, #effdf9 100%);
       border-bottom: 1px solid #e8e8e8;
-      padding: 72px 0 56px;
+      padding: 74px 0 58px;
       text-align: center;
-      transition: background 0.2s ease, transform 0.2s ease;
     }
-    header:hover {
-      background: linear-gradient(160deg, #fdffff 50%, #e6fbf8 100%);
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      padding: 6px 12px;
+      border: 1px solid #b9e8df;
+      border-radius: 999px;
+      background: rgba(240, 253, 249, 0.82);
+      color: var(--accent-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
     }
     header h1 {
-      font-size: 2.3rem;
-      font-weight: 800;
-      line-height: 1.25;
-      color: #111;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 900;
+      line-height: 1.15;
+      color: #101010;
+      text-align: center;
     }
-    header h1 .highlight { color: #0f766e; }
+    header h1 .highlight { color: var(--accent); }
     header .header-sub {
-      margin-top: 14px;
-      font-size: 0.97rem;
+      max-width: 820px;
+      margin: 18px auto 0;
+      font-size: 1rem;
       color: #666;
-      line-height: 1.75;
-    }
-
-    .hero-highlights {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      max-width: 840px;
-      margin: 24px auto 0;
-      text-align: left;
-    }
-    .hero-highlight {
-      min-height: 92px;
-      padding: 16px 18px;
-      border-radius: 16px;
-      border: 1px solid #d9eee9;
-      background: rgba(255, 255, 255, 0.78);
-      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.06);
-    }
-    .hero-highlight strong {
-      display: block;
-      margin-bottom: 6px;
-      color: #0f766e;
-      font-size: 1.04rem;
-      font-weight: 800;
-      line-height: 1.3;
-    }
-    .hero-highlight span {
-      display: block;
-      color: #555;
-      font-size: 0.84rem;
-      line-height: 1.65;
+      line-height: 1.85;
+      text-align: center;
     }
 
     main {
       flex: 1;
-      padding: 40px 0 80px;
+      padding: 46px 0 82px;
     }
-
-    .section-intro {
-      text-align: center;
-      margin-bottom: 32px;
+    .systems-shell {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
-    .section-intro h2 {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #111;
-      margin-bottom: 10px;
-    }
-    .section-intro p {
-      font-size: 0.97rem;
-      color: #555;
-    }
-
-    .content-stack {
+    .systems-intro {
       display: grid;
-      gap: 20px;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 26px;
+      padding: 34px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdfc 100%);
     }
-
-    .overview-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 18px;
-    }
-    .overview-item {
-      border: 1px solid #e8e8e8;
-      border-radius: 14px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
-      padding: 18px;
-    }
-    .overview-item .label {
-      display: inline-flex;
-      align-items: center;
-      min-height: 26px;
-      padding: 0 10px;
-      border-radius: 999px;
-      border: 1px solid #99e6d8;
-      background: #e6fbf7;
-      color: #0f766e;
-      font-size: 0.74rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-    .overview-item h3 {
-      margin-bottom: 8px;
-      font-size: 1rem;
-    }
-    .overview-item p {
-      font-size: 0.9rem;
-      line-height: 1.75;
-    }
-
-    .hero-workflow {
-      margin-top: 28px;
-      padding: 24px;
-      border-radius: 24px;
-      border: 1px solid #d9eee9;
-      background:
-        linear-gradient(rgba(15, 118, 110, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 118, 110, 0.04) 1px, transparent 1px),
-        linear-gradient(135deg, #ffffff 0%, #f2fcfa 100%);
-      background-size: 36px 36px, 36px 36px, auto;
-      box-shadow: 0 18px 48px rgba(15, 118, 110, 0.08);
-      text-align: left;
-    }
-
-    .hero-workflow-head {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 18px;
-      padding: 0 4px;
-    }
-
-    .hero-workflow-head h2 {
-      font-size: 1.18rem;
-      line-height: 1.35;
-      color: #111;
-    }
-
-    .hero-workflow-head p {
-      max-width: 460px;
-      color: #5c706c;
-      font-size: 0.86rem;
-      line-height: 1.7;
-      text-align: left;
-    }
-
-    .hero-workflow-steps {
-      display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-      gap: 12px;
-      counter-reset: hero-workflow;
-    }
-
-    .hero-workflow-step {
-      position: relative;
-      min-height: 168px;
-      padding: 16px 14px;
-      border-radius: 18px;
-      border: 1px solid #d9eee9;
-      background: rgba(255, 255, 255, 0.88);
-      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.06);
-    }
-
-    .hero-workflow-step::before {
-      counter-increment: hero-workflow;
-      content: "0" counter(hero-workflow);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 34px;
-      height: 26px;
-      margin-bottom: 14px;
-      border-radius: 999px;
-      background: #e6fbf7;
-      color: #0f766e;
-      font-size: 0.72rem;
+    .intro-copy h2 {
+      font-size: 1.58rem;
       font-weight: 900;
-      letter-spacing: 0.04em;
+      color: #111;
+      margin-bottom: 12px;
+      text-align: left;
     }
-
-    .hero-workflow-step::after {
+    .intro-copy p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      line-height: 1.9;
+    }
+    .pipeline {
+      display: grid;
+      gap: 10px;
+      align-content: center;
+    }
+    .pipeline-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid #d8eee9;
+      border-radius: 14px;
+      background: #f8fffd;
+      color: #24524d;
+      font-weight: 800;
+    }
+    .pipeline-step span:first-child {
+      display: inline-grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.85rem;
+      flex: 0 0 auto;
+    }
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      padding: 30px 34px 34px;
+    }
+    .project-card {
+      position: relative;
+      min-height: 340px;
+      padding: 26px;
+      border: 1px solid #e7e7e2;
+      border-radius: 18px;
+      background: var(--card);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.035);
+      overflow: hidden;
+    }
+    .project-card::before {
       content: "";
       position: absolute;
-      top: 29px;
-      right: -11px;
-      width: 10px;
-      height: 10px;
-      border-top: 2px solid #42c6b7;
-      border-right: 2px solid #42c6b7;
-      transform: rotate(45deg);
-      background: transparent;
-      z-index: 1;
+      inset: 0 0 auto 0;
+      height: 5px;
+      background: var(--card-accent, linear-gradient(90deg, #0f766e, #14b8a6));
     }
-
-    .hero-workflow-step:last-child::after {
-      display: none;
-    }
-
-    .hero-workflow-step h3 {
-      margin-bottom: 8px;
-      font-size: 0.98rem;
-      line-height: 1.35;
+    .project-card h3 {
+      margin-top: 8px;
+      font-size: 1.45rem;
+      font-weight: 900;
       color: #111;
-    }
-
-    .hero-workflow-step p {
-      color: #52615e;
-      font-size: 0.82rem;
-      line-height: 1.65;
       text-align: left;
     }
-
-    .section-card {
-      background: #fff;
-      border: 1px solid #e8e8e8;
-      border-radius: 16px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-      padding: 26px 26px 24px;
-    }
-
-    .section-card h3 {
-      font-size: 1.2rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-      color: #111;
-    }
-
-    .section-card p {
-      color: #555;
-      font-size: 0.97rem;
-    }
-
-    .section-card p + p {
+    .project-card p {
       margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.85;
     }
-
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
+    .project-tag {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 18px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid #d8eee9;
+      background: #f0fdf9;
+      color: var(--accent-dark);
+      font-size: 0.78rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+    .feature-list {
+      display: grid;
       gap: 10px;
-      margin-top: 18px;
-    }
-
-    .page-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 42px;
-      padding: 0 16px;
-      border-radius: 999px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      border: 1px solid transparent;
-      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s, color .18s;
-    }
-
-    .page-btn:hover,
-    .page-btn:active {
-      transform: translateY(-1px);
-      text-decoration: none;
-      box-shadow: 0 6px 14px rgba(15, 118, 110, 0.10);
-      background: #f0fdf9;
-      border-color: #99e6d8;
-      color: #0f766e;
-    }
-
-    .page-btn-primary {
-      background: #0f766e;
-      color: #fff;
-      border-color: #0f766e;
-    }
-    .page-btn-primary:hover,
-    .page-btn-primary:active {
-      background: #f0fdf9;
-      border-color: #99e6d8;
-      color: #0f766e;
-    }
-    .page-btn-secondary {
-      background: #fff;
-      color: #444;
-      border-color: #d8d8d8;
-    }
-    .page-btn-secondary:hover,
-    .page-btn-secondary:active {
-      background: #f0fdf9;
-      border-color: #99e6d8;
-      color: #0f766e;
-    }
-
-    .scenario-grid,
-    .focus-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 18px;
-    }
-
-    .focus-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .scenario-card,
-    .focus-card {
-      border: 1px solid #e8e8e8;
-      border-radius: 14px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
-      padding: 18px;
-    }
-
-    .scenario-media,
-    .system-figure,
-    .focus-figure {
-      position: relative;
-      overflow: hidden;
-      border-radius: 14px;
-      border: 1px solid #dfeee9;
-      background: linear-gradient(180deg, #f5fffc 0%, #eefaf7 100%);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    }
-
-    .scenario-media {
-      margin: -2px -2px 16px;
-    }
-
-    .scenario-media img,
-    .system-figure img,
-    .focus-figure img {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    .figure-caption {
-      padding: 10px 14px 12px;
-      font-size: 0.8rem;
-      color: #55706b;
-      line-height: 1.6;
-    }
-
-    .scenario-tag,
-    .focus-tag {
-      display: inline-flex;
-      align-items: center;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 0.74rem;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      margin-bottom: 12px;
-      border: 1px solid #99e6d8;
-      background: #e6fbf7;
-      color: #0f766e;
-    }
-
-    .scenario-card h4,
-    .focus-card h4 {
-      font-size: 1rem;
-      font-weight: 800;
-      color: #111;
-      margin-bottom: 10px;
-    }
-
-    .scenario-card p,
-    .focus-card p {
-      font-size: 0.92rem;
-      color: #555;
-      line-height: 1.75;
-    }
-
-    .chip-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
-    .chip-list span {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 0 10px;
-      border-radius: 999px;
-      background: #f6f6f4;
-      border: 1px solid #ecece8;
-      color: #555;
-      font-size: 0.8rem;
-      font-weight: 600;
-    }
-
-    .scenario-detail {
-      display: grid;
-      gap: 8px;
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px solid #ecece8;
-    }
-    .scenario-detail div {
-      display: grid;
-      grid-template-columns: 48px 1fr;
-      gap: 10px;
-      align-items: start;
-      font-size: 0.84rem;
-      line-height: 1.65;
-      color: #555;
-    }
-    .scenario-detail strong {
-      color: #111;
-      font-weight: 800;
-    }
-
-    .system-shell {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 18px;
-      margin-top: 18px;
-    }
-
-    .system-figure {
-      margin-top: 18px;
-    }
-
-    .system-panel,
-    .system-side {
-      border: 1px solid #e8e8e8;
-      border-radius: 14px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
-      padding: 20px;
-    }
-
-    .system-panel h4,
-    .system-side h4 {
-      font-size: 1rem;
-      font-weight: 800;
-      color: #111;
-      margin-bottom: 10px;
-    }
-
-    .system-side .task-title {
       margin-top: 20px;
+      list-style: none;
     }
-
-    .system-panel p,
-    .system-side p {
-      font-size: 0.93rem;
-      color: #555;
-      line-height: 1.8;
-    }
-
-    .capability-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .capability-item {
+    .feature-list li {
+      padding: 11px 12px;
+      border: 1px solid #eeeeea;
       border-radius: 12px;
-      border: 1px solid #ecece8;
-      background: #fafaf8;
-      padding: 14px 14px 13px;
-    }
-
-    .capability-item strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 0.94rem;
-      color: #111;
-    }
-
-    .capability-item span {
+      background: var(--card-alt);
+      color: #4e4e4e;
       font-size: 0.88rem;
-      color: #555;
-      line-height: 1.7;
+      font-weight: 700;
+      line-height: 1.55;
+      text-align: left;
     }
-
-    .workflow-steps {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
-    .workflow-step {
-      position: relative;
-      min-height: 178px;
-      padding: 18px;
-      border: 1px solid #e8e8e8;
-      border-radius: 14px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
-    }
-    .workflow-step::before {
-      content: attr(data-step);
+    .project-link {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      width: 34px;
-      height: 34px;
-      margin-bottom: 14px;
-      border-radius: 50%;
-      background: #0f766e;
-      color: #fff;
-      font-size: 0.82rem;
-      font-weight: 800;
-    }
-    .workflow-step h4 {
-      margin-bottom: 8px;
-      font-size: 0.98rem;
-      font-weight: 800;
-      color: #111;
-    }
-    .workflow-step p {
-      font-size: 0.88rem;
-      line-height: 1.75;
-      color: #555;
-    }
-
-    .task-list {
-      display: grid;
       gap: 8px;
-      margin-top: 14px;
-    }
-    .task-list span {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
+      margin-top: 20px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid #b9e8df;
+      background: #f0fdf9;
+      color: var(--accent-dark);
       font-size: 0.86rem;
-      color: #555;
-      line-height: 1.6;
+      font-weight: 800;
+      line-height: 1.2;
+      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s;
     }
-    .task-list span::before {
-      content: "";
-      flex: 0 0 auto;
-      width: 7px;
-      height: 7px;
-      margin-top: 10px;
-      border-radius: 50%;
-      background: #0f766e;
+    .project-link:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(15, 118, 110, 0.10);
+      background: #ecfdf7;
+      border-color: #99e6d8;
     }
+    .project-link.disabled {
+      pointer-events: none;
+      color: #777;
+      background: #f6f6f4;
+      border-color: #ddddda;
+    }
+    .project-card.castclaw { --card-accent: linear-gradient(90deg, #0f766e, #14b8a6); }
+    .project-card.neoresearch { --card-accent: linear-gradient(90deg, #2563eb, #14b8a6); }
 
-    .focus-figure {
-      margin-bottom: 14px;
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0 34px 34px;
+    }
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid #e5e5df;
+      border-radius: 999px;
+      background: #fff;
+      color: #606060;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.10);
     }
 
     footer {
@@ -714,35 +396,15 @@
       line-height: 1.6;
     }
 
-    @media (max-width: 960px) {
-      .scenario-grid,
-      .focus-grid,
-      .system-shell,
-      .overview-grid,
-      .workflow-steps,
-      .hero-workflow-steps,
-      .hero-highlights {
+    @media (max-width: 900px) {
+      .systems-intro,
+      .project-grid {
         grid-template-columns: 1fr;
       }
-      .hero-workflow-head {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-      .hero-workflow-step {
+      .project-card {
         min-height: auto;
       }
-      .hero-workflow-step::after {
-        top: auto;
-        right: auto;
-        left: 28px;
-        bottom: -10px;
-        transform: rotate(135deg);
-      }
-      .focus-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
     }
-
     @media (max-width: 640px) {
       .top-nav .container {
         align-items: flex-start;
@@ -758,7 +420,8 @@
         flex-wrap: wrap;
         padding-top: 2px;
       }
-      .nav-links a {
+      .nav-links a,
+      .nav-dropdown-toggle {
         padding: 7px 12px;
         font-size: 0.81rem;
       }
@@ -766,24 +429,17 @@
         left: 0;
         min-width: 200px;
       }
-      header h1 { font-size: 1.7rem; }
-      .scenario-grid,
-      .focus-grid {
-        grid-template-columns: 1fr;
+      header {
+        padding: 54px 0 46px;
       }
-      main { padding: 40px 0 60px; }
-      .container { padding: 0 16px; }
-      .section-card,
-      .system-panel,
-      .system-side,
-      .scenario-card,
-      .focus-card {
+      .systems-intro,
+      .project-grid,
+      .status-row {
         padding-left: 18px;
         padding-right: 18px;
       }
-      .hero-workflow {
-        padding: 18px;
-        border-radius: 18px;
+      .container {
+        padding: 0 16px;
       }
     }
   </style>
@@ -792,7 +448,7 @@
 
 <nav class="top-nav" aria-label="首页顶部导航">
   <div class="container">
-    <a class="nav-brand" href="../index.html#hero-header">USTC-AGI <span>Time Series</span></a>
+    <a class="nav-brand" href="../index.html">USTC-AGI <span>Time Series</span></a>
     <div class="nav-links">
       <a href="../index.html#hero-header">首页</a>
       <div class="nav-dropdown">
@@ -803,8 +459,9 @@
         </div>
       </div>
       <a href="../papers/">论文列表</a>
-      <a class="nav-active" href="../systems/" aria-current="page">应用研究</a>
+      <a href="../applications/">应用研究</a>
       <a href="../open-source/">开源项目</a>
+      <a class="nav-active" href="../systems/" aria-current="page">系统研发</a>
       <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">
         GitHub
         <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:12px;height:12px;margin-left:4px;vertical-align:-1px">
@@ -818,277 +475,77 @@
 
 <header id="hero-header">
   <div class="container">
-    <h1><span class="highlight">Applied Research</span> 应用研究</h1>
+    <h1><span class="highlight">Systems</span> 系统研发</h1>
     <p class="header-sub">
-      中国科学技术大学 · 认知智能全国重点实验室 AGI 研究组<br>
-      面向城市电力负荷、新能源发电、云服务流量等真实预测场景，持续推进时间序列预测的应用研究与系统建设
+      面向时间序列研究与分析工作流，建设可交互、可编排、可沉淀的智能体系统，
+      将任务规划、实验执行、结果评估与研究记忆整合为端到端平台。
     </p>
-    <div class="hero-workflow" aria-label="应用研究闭环">
-      <div class="hero-workflow-head">
-        <h2>从真实场景到可复用系统能力</h2>
-        <p>应用研究不止比较模型指标，而是把问题定义、数据质量、建模策略和系统沉淀放进同一个迭代闭环。</p>
-      </div>
-      <div class="hero-workflow-steps">
-        <article class="hero-workflow-step">
-          <h3>场景理解</h3>
-          <p>将调度、运维和容量规划目标转成预测窗口、时间粒度、评价指标与业务约束。</p>
-        </article>
-        <article class="hero-workflow-step">
-          <h3>数据诊断</h3>
-          <p>检查缺失、漂移、周期、异常和外部变量可用性，先判断数据是否支撑任务目标。</p>
-        </article>
-        <article class="hero-workflow-step">
-          <h3>多源建模</h3>
-          <p>组合历史序列、气象日历、业务事件和多模型基线，形成可解释的预测实验方案。</p>
-        </article>
-        <article class="hero-workflow-step">
-          <h3>智能体协同</h3>
-          <p>通过 Planner、Forecaster、Critic 编排实验、解释误差，并在关键节点引入人工确认。</p>
-        </article>
-        <article class="hero-workflow-step">
-          <h3>经验沉淀</h3>
-          <p>把有效模板、特征处理、模型组合和复盘结论沉淀为后续场景可复用的研究资产。</p>
-        </article>
-      </div>
-    </div>
   </div>
 </header>
 
 <main>
   <div class="container">
-
-    <div class="content-stack">
-      <section class="section-card">
-        <h3>研究地图</h3>
-        <p>
-          应用研究的目标不是把公开数据集上的模型指标直接搬到真实场景，而是把业务机制、外部变量、工程约束和模型能力放在同一个研发闭环中评估。
-          因此，页面按“场景问题、方法路径、系统支撑”组织，展示课题组如何将时间序列预测方法落到可复用的应用研究流程中。
-        </p>
-        <div class="overview-grid">
-          <div class="overview-item">
-            <span class="label">Problem</span>
-            <h3>真实预测问题</h3>
-            <p>面对周期变化、突发波动、外生因素和容量约束，先明确预测任务服务的调度、规划或运维目标。</p>
-          </div>
-          <div class="overview-item">
-            <span class="label">Method</span>
-            <h3>场景化建模路径</h3>
-            <p>围绕数据诊断、多源变量接入、模型组合和误差分析，形成可以随场景调整的研究流程。</p>
-          </div>
-          <div class="overview-item">
-            <span class="label">System</span>
-            <h3>CastClaw 系统</h3>
-            <p>用智能体框架承载实验编排、工具调用、预测复盘和经验沉淀，让一次性实验逐步变成可复用能力。</p>
-          </div>
+    <section class="systems-shell" aria-labelledby="systems-title">
+      <div class="systems-intro">
+        <div class="intro-copy">
+          <h2 id="systems-title">面向时间序列分析研究的自主智能体系统</h2>
+          <p>
+            Systems 页面汇总课题组正在研发的系统工作。CastClaw（观星阁）关注人在回路的预测研究工作台，
+            NeoResearch（智多星）关注受控自主研究闭环，两者共同支撑从数据理解、实验编排到知识沉淀的系统化时序研究流程。
+          </p>
         </div>
-      </section>
-
-      <section class="section-card">
-        <h3>应用研究场景</h3>
-        <div class="scenario-grid">
-          <article class="scenario-card">
-            <div class="scenario-media">
-              <img src="./assets/power-load-scene.svg" alt="城市电力负荷预测场景示意图" />
-              <div class="figure-caption">将城市、气象与负荷曲线放进同一张分析视图，突出周期结构与调度需求。</div>
-            </div>
-            <span class="scenario-tag">城市电力负荷</span>
-            <h4>面向城市级与区域级用电需求预测</h4>
-            <p>
-              聚焦负荷曲线中的强周期性、节假日扰动、天气影响与突发变化，
-              支撑调度规划、峰谷平衡与需求侧响应等关键任务。
-            </p>
-            <div class="chip-list">
-              <span>天气感知</span>
-              <span>节假日效应</span>
-              <span>多尺度周期</span>
-              <span>负荷调度</span>
-            </div>
-            <div class="scenario-detail">
-              <div><strong>问题</strong><span>峰谷变化和异常天气会破坏稳定周期，单纯历史外推难以支撑高峰调度。</span></div>
-              <div><strong>方法</strong><span>结合日历、气象和多粒度负荷特征，分析短期波动与长期季节结构。</span></div>
-              <div><strong>价值</strong><span>服务负荷预案、资源调度和需求响应策略，降低高峰运行风险。</span></div>
-            </div>
-          </article>
-
-          <article class="scenario-card">
-            <div class="scenario-media">
-              <img src="./assets/renewable-energy-scene.svg" alt="新能源发电预测场景示意图" />
-              <div class="figure-caption">围绕风电与光伏出力波动，连接天气场、功率区间和爬坡事件。</div>
-            </div>
-            <span class="scenario-tag">新能源发电</span>
-            <h4>面向光伏与风电出力的波动预测</h4>
-            <p>
-              针对新能源出力的间歇性、爬坡事件与气象耦合问题，
-              关注多源观测融合、短临波动刻画与不确定性建模。
-            </p>
-            <div class="chip-list">
-              <span>光伏预测</span>
-              <span>风电预测</span>
-              <span>气象耦合</span>
-              <span>不确定性</span>
-            </div>
-            <div class="scenario-detail">
-              <div><strong>问题</strong><span>风速、云量和辐照变化带来强随机性，输出功率存在明显爬坡和短临突变。</span></div>
-              <div><strong>方法</strong><span>融合气象观测、出力曲线和不确定性估计，刻画波动区间和异常事件。</span></div>
-              <div><strong>价值</strong><span>支撑新能源并网、备用容量配置和短临调度，提升电力系统韧性。</span></div>
-            </div>
-          </article>
-
-          <article class="scenario-card">
-            <div class="scenario-media">
-              <img src="./assets/cloud-traffic-scene.svg" alt="云服务流量预测场景示意图" />
-              <div class="figure-caption">把服务流量、资源池和告警波动关联起来，强调容量规划与弹性伸缩。</div>
-            </div>
-            <span class="scenario-tag">云服务流量</span>
-            <h4>面向云资源调度与容量规划的流量预测</h4>
-            <p>
-              围绕流量突发、业务周期变化与资源成本约束，
-              探索支持弹性伸缩、容量预算和服务稳定性的预测策略。
-            </p>
-            <div class="chip-list">
-              <span>弹性伸缩</span>
-              <span>流量突发</span>
-              <span>容量规划</span>
-              <span>成本约束</span>
-            </div>
-            <div class="scenario-detail">
-              <div><strong>问题</strong><span>业务活动和用户行为会造成非平稳流量，资源过配与欠配都会带来成本或稳定性问题。</span></div>
-              <div><strong>方法</strong><span>识别业务周期、突发窗口和资源使用关系，建立面向容量决策的预测视图。</span></div>
-              <div><strong>价值</strong><span>辅助弹性伸缩、容量预算和告警前置，减少服务抖动与资源浪费。</span></div>
-            </div>
-          </article>
+        <div class="pipeline" aria-label="系统研发链路">
+          <div class="pipeline-step"><span>01</span><strong>Human-in-the-loop forecasting with CastClaw</strong></div>
+          <div class="pipeline-step"><span>02</span><strong>Autonomous research loop with NeoResearch</strong></div>
         </div>
-      </section>
+      </div>
 
-      <section class="section-card">
-        <h3>研究流程</h3>
-        <p>
-          面向真实场景的预测研究通常需要多轮迭代。我们将流程拆成四个可复用阶段，让每一次应用研究都能留下数据诊断、模型实验和业务解释资产。
-        </p>
-        <div class="workflow-steps">
-          <article class="workflow-step" data-step="01">
-            <h4>任务界定</h4>
-            <p>明确预测对象、时间粒度、预测窗口、评估指标和业务决策场景，避免模型目标与应用目标脱节。</p>
-          </article>
-          <article class="workflow-step" data-step="02">
-            <h4>数据诊断</h4>
-            <p>检查缺失、异常、周期、漂移和外生变量，先理解序列结构，再决定特征与模型路线。</p>
-          </article>
-          <article class="workflow-step" data-step="03">
-            <h4>实验编排</h4>
-            <p>组合统计模型、深度模型和场景特征，形成可比较的实验矩阵，并保留关键人工确认节点。</p>
-          </article>
-          <article class="workflow-step" data-step="04">
-            <h4>结果沉淀</h4>
-            <p>将误差模式、可解释结论和可迁移策略整理成文档与 Skill，支持后续场景快速复用。</p>
-          </article>
-        </div>
-      </section>
+      <div class="project-grid">
+        <article class="project-card castclaw">
+          <span class="project-tag">Human-Agent Forecasting Workbench</span>
+          <h3>CastClaw（观星阁）</h3>
+          <p>
+            面向时间序列预测研究的人机协同智能体框架。CastClaw 通过 Planner、Forecaster、Critic 三个专属智能体编排完整预测流程，
+            并在关键节点引入人类确认，将数据分析、特征工程与经典时序模型能力封装为可扩展的运行时工具箱。
+          </p>
+          <ul class="feature-list">
+            <li>多智能体协同：Planner / Forecaster / Critic 分工编排预测流程</li>
+            <li>人在回路机制：关键计划、实验与结果节点支持确认、暂停和修正</li>
+            <li>研究工作台：实验沙盒、数据分析工具、特征分析与时序模型工具箱</li>
+          </ul>
+          <a class="project-link" href="../cast-claw/">查看 CastClaw 主页</a>
+        </article>
 
-      <section class="section-card">
-        <h3>时序预测智能体 CastClaw</h3>
-        <div class="system-shell">
-          <div class="system-panel">
-            <h4>面向真实预测工作流的人机协同智能体框架</h4>
-            <p>
-              CastClaw 是课题组围绕时间序列预测研发构建的工作台系统。它不把预测任务简化为单次模型训练，
-              而是把数据理解、特征构建、模型选择、实验执行、结果分析和人类确认统一组织到一个可交互的工作流中。
-            </p>
-            <p>
-              在应用研究中，CastClaw 更像是一个可以反复复用的研发载体：它帮助研究者快速进入新场景、组合已有能力、
-              保留关键判断节点，并把场景经验逐步沉淀为长期可复用的策略资产。
-            </p>
-            <div class="btn-row">
-              <a class="page-btn page-btn-primary" href="../cast-claw/">查看主页</a>
-              <a class="page-btn page-btn-secondary" href="../cast-claw/docs/">用户文档</a>
-              <a class="page-btn page-btn-secondary" href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener">GitHub</a>
-            </div>
-            <div class="system-figure">
-              <img src="../cast-claw/assets/architecture.svg" alt="CastClaw 多智能体与运行时架构图" />
-              <div class="figure-caption">CastClaw 架构图展示了人类专家、三智能体协作、工具层、核心引擎与 Python 时序运行时的闭环关系。</div>
-            </div>
-          </div>
+        <article class="project-card neoresearch">
+          <span class="project-tag">Forecast Research Operating System</span>
+          <h3>NeoResearch（智多星）</h3>
+          <p>
+            面向时间序列预测小模型研发的自主研究智能体系统，将研究假设、模型配方、受控实验、评估归因与研究记忆串成可复现闭环，
+            支持从问题定义到候选方案迭代的系统化研究流程。
+          </p>
+          <ul class="feature-list">
+            <li>研究假设生成：基于任务指纹和历史记忆提出候选研究方向</li>
+            <li>CandidateRecipe 搜索：在受限协议内组合模型结构、训练策略与评估方案</li>
+            <li>受控研究闭环：实验执行、结果归因、keep / discard 与研究记忆沉淀</li>
+          </ul>
+          <span class="project-link disabled">主页 Coming Soon</span>
+        </article>
+      </div>
 
-          <aside class="system-side">
-            <h4>核心能力</h4>
-            <div class="capability-list">
-              <div class="capability-item">
-                <strong>多智能体协同</strong>
-                <span>通过 Planner、Forecaster、Critic 组织问题分析、模型执行与结果反思。</span>
-              </div>
-              <div class="capability-item">
-                <strong>插件化工具链</strong>
-                <span>把数据分析、特征工程与经典时序模型封装为可调用、可组合的运行时能力。</span>
-              </div>
-              <div class="capability-item">
-                <strong>人在回路</strong>
-                <span>在关键节点保留人工确认与策略修正，兼顾自动化效率与研究可控性。</span>
-              </div>
-              <div class="capability-item">
-                <strong>经验沉淀</strong>
-                <span>将场景经验和可复用策略持续积累，形成跨任务、跨会话的研发资产。</span>
-              </div>
-            </div>
-            <h4 class="task-title">适用任务</h4>
-            <div class="task-list">
-              <span>给定新场景数据，快速完成任务澄清和数据诊断。</span>
-              <span>对比经典模型、深度模型与特征策略的有效性。</span>
-              <span>围绕误差峰值、异常窗口和业务约束生成分析报告。</span>
-              <span>把一次实验流程沉淀成可复用的预测 Skill。</span>
-            </div>
-          </aside>
-        </div>
-      </section>
-
-      <section class="section-card">
-        <h3>从场景问题到系统闭环</h3>
-        <div class="focus-grid">
-          <article class="focus-card">
-            <div class="focus-figure">
-              <img src="./assets/diagnosis-loop.svg" alt="从场景诊断到持续迭代的闭环示意图" />
-            </div>
-            <span class="focus-tag">场景诊断</span>
-            <h4>先理解问题，再建模</h4>
-            <p>围绕数据粒度、周期结构、外生变量和业务约束，先做任务诊断，再决定建模路线。</p>
-          </article>
-
-          <article class="focus-card">
-            <div class="focus-figure">
-              <img src="./assets/diagnosis-loop.svg" alt="多源建模闭环示意图" />
-            </div>
-            <span class="focus-tag">多源建模</span>
-            <h4>把结构与语义同时接入</h4>
-            <p>结合数值序列、气象信息、业务上下文和场景先验，提高模型对真实环境的感知能力。</p>
-          </article>
-
-          <article class="focus-card">
-            <div class="focus-figure">
-              <img src="./assets/diagnosis-loop.svg" alt="人机协同闭环示意图" />
-            </div>
-            <span class="focus-tag">人机协同</span>
-            <h4>保留关键判断节点</h4>
-            <p>在模型选择、实验切换和结果审阅等关键环节引入研究者判断，避免盲目自动化。</p>
-          </article>
-
-          <article class="focus-card">
-            <div class="focus-figure">
-              <img src="./assets/diagnosis-loop.svg" alt="持续迭代闭环示意图" />
-            </div>
-            <span class="focus-tag">持续迭代</span>
-            <h4>让研发过程能够复用</h4>
-            <p>把场景经验、策略模板和执行流程固化为长期资产，支持后续任务快速迁移与扩展。</p>
-          </article>
-        </div>
-      </section>
-    </div>
-
+      <div class="status-row" aria-label="系统能力标签">
+        <span class="status-chip"><span class="status-dot"></span>Agentic Workflow</span>
+        <span class="status-chip"><span class="status-dot"></span>Human-in-the-loop</span>
+        <span class="status-chip"><span class="status-dot"></span>Controlled Experiment</span>
+        <span class="status-chip"><span class="status-dot"></span>Research Memory</span>
+      </div>
+    </section>
   </div>
 </main>
 
 <footer>
   <div class="container">
     <p>
-      &copy; 2024–2026 Time Series Analysis Group &middot;
+      &copy; 2024-2026 Time Series Analysis Group &middot;
       <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
       &middot; State Key Laboratory of Cognitive Intelligence, USTC
     </p>
