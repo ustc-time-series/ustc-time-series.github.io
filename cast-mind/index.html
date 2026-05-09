@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CastMind（星思） — 记忆交互式慢思考时间序列基础模型</title>
-  <meta name="description" content="CastMind（星思）是一个记忆交互式慢思考时间序列基础模型，以语言大模型为认知 Backbone，融合多模态情境理解、长思维链慢思考推理与 Memory 环境交互，在推理过程中主动检索历史模式、补充证据并修正预测判断。" />
+  <title>CastMind（星思） — 时间序列认知大模型</title>
+  <meta name="description" content="CastMind（星思）是一个时间序列认知大模型。它不仅学习时间序列中的数值模式，还进一步理解序列所处的情境上下文，分析趋势变化背后的原因，并通过慢思考推理与记忆交互不断获取证据、修正预测判断，从而实现更可靠、更可解释和更具适应性的时序预测。" />
   <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -364,7 +364,7 @@
     /* ── Three-feature cap cards ───────────────────── */
     .cap-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 18px;
       margin-top: 24px;
     }
@@ -379,6 +379,8 @@
     }
     .cap-card:nth-child(2) { border-top-color: var(--violet-mid); }
     .cap-card:nth-child(3) { border-top-color: var(--teal); }
+    .cap-card:nth-child(4) { border-top-color: #0369a1; }
+    .cap-card:nth-child(5) { border-top-color: #15803d; }
     .cap-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.09); }
     .cap-card .cap-icon { font-size: 1.8rem; margin-bottom: 12px; line-height: 1; }
     .cap-card h4 { font-size: 0.98rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
@@ -387,6 +389,8 @@
       color: var(--violet-mid); margin-bottom: 10px; letter-spacing: 0.01em;
     }
     .cap-card:nth-child(3) .cap-focus { color: var(--teal); }
+    .cap-card:nth-child(4) .cap-focus { color: #0369a1; }
+    .cap-card:nth-child(5) .cap-focus { color: #15803d; }
     .cap-card p { font-size: 0.87rem; color: #555; line-height: 1.65; margin: 0; }
 
     /* ── Tech layer grid ───────────────────────────── */
@@ -658,12 +662,12 @@
   <div class="container">
     <h1 class="hero-clickable">
       <span class="hero-title-main"><span class="cm">CastMind（星思）</span></span>
-      <span class="hero-title-sub">记忆交互式慢思考时间序列基础模型</span>
+      <span class="hero-title-sub">时间序列认知大模型</span>
     </h1>
     <p class="subtitle hero-clickable">
-      以语言大模型为时序认知 Backbone，将多模态情境、历史模式与 Memory 检索纳入同一推理过程——
-      让模型在慢思考中发现证据缺口、主动访问记忆、修正预测判断，
-      形成<strong>边思考边检索</strong>的记忆交互式时序基础模型。
+      面向复杂时序场景的新型基础模型——不仅学习时间序列中的数值模式，
+      还理解序列所处的情境上下文，分析趋势变化背后的原因，
+      并通过<strong>慢思考推理与记忆交互</strong>不断获取证据、修正预测判断。
     </p>
   </div>
 </header>
@@ -673,7 +677,7 @@
   <div class="container">
     <a href="../" class="nav-home">首页</a>
     <a href="#intro">简介</a>
-    <a href="#features">三大特色</a>
+    <a href="#features">五大能力</a>
     <a href="#tech">核心技术</a>
     <a href="#training">训练范式</a>
     <a href="#versions">能力路线</a>
@@ -686,31 +690,32 @@
   <div class="container">
     <div class="tldr">
       <strong>一句话定位：</strong>
-      CastMind（星思）是一个<strong>记忆交互式慢思考时间序列基础模型</strong>。
-      它以语言大模型为统一认知 Backbone，沿着 CastMind-Base → CastMind-SFT →
-      CastMind-CoT → CastMind-Agentic Reasoning 的四阶段能力路线，
-      逐步建立时间序列接入、任务适配、慢思考推理与 Memory 交互式自主修正能力，
-      构建具备"<strong>感知—理解—推理—检索—修正</strong>"能力的通用时序认知模型。
-      模型不是一次性接收所有上下文后直接预测，而是在慢思考过程中
-      <strong>动态发现证据缺口、访问 Memory、检索历史模式和领域知识，并逐步修正预测判断</strong>。
+      CastMind（星思）是一个<strong>时间序列认知大模型</strong>。
+      它不仅学习时间序列中的数值模式，还进一步理解序列所处的情境上下文，
+      分析趋势变化背后的原因，并通过<strong>慢思考推理与记忆交互</strong>不断获取证据、修正预测判断，
+      从而实现更可靠、更可解释和更具适应性的时序预测。
+      模型沿着 CastMind-Base → CastMind-SFT → CastMind-CoT → CastMind-Agentic Reasoning
+      的四阶段路线，逐步建立
+      "<strong>感知与理解—情境推理—慢思考推理—记忆交互—持续进化</strong>"五项核心能力。
     </div>
 
     <h2 class="section-title">项目简介</h2>
     <p>
-      <strong>CastMind（星思）</strong>聚焦于一个根本性的研究问题：
-      <strong>时间序列基础模型能否具备可交互、可检索、可修正的慢思考能力？</strong>
-      不同于将 LLM 视为外部辅助工具的方法，CastMind（星思）试图让语言大模型本身
-      承担时间序列的感知、理解与推理职责——原始时序经由 Time Series Feature Encoder 编码为
-      Temporal Embedding，再送入 LLM Backbone，配合多模态情境上下文进行联合建模，
-      形成真正意义上的时序认知基础模型。
+      <strong>CastMind（星思）</strong>是一类面向复杂时序场景的新型基础模型。
+      传统时序模型局限于从历史数值中提取模式，而 CastMind（星思）的目标更进一步：
+      让模型能够<strong>理解序列所处的情境上下文</strong>——包括 Meta Data、外生变量、
+      协变量、领域描述与事件信息——并在此基础上<strong>分析趋势变化背后的原因</strong>，
+      理解天气变化如何影响电力负荷，手术中的生理指标如何预示术后风险，
+      节假日与政策事件如何驱动交通和消费行为。
     </p>
     <p>
-      CastMind（星思）的关键范式类似于将 <strong>Search-o1 式的"边思考边检索"</strong>
-      扩展到时间序列预测中：模型不是一次性接收所有上下文后再一步推理，
-      而是在<strong>慢思考过程中动态发现证据缺口</strong>——
-      主动访问 Memory、检索历史相似模式和领域知识、识别情境因素与趋势的关联，
-      并根据中间证据<strong>逐步修正预测判断</strong>，
-      实现从数值拟合到情境认知的范式跨越。
+      CastMind（星思）的关键范式是将 <strong>Search-o1 式的"边思考边检索"</strong>
+      扩展到时间序列预测：模型不是一次性输出预测，而是在<strong>慢思考过程中</strong>
+      围绕趋势变化、异常原因、未来演化路径与不确定性展开分步分析，
+      动态发现证据缺口，主动与 Memory 环境交互——
+      检索历史相似模式、领域规律、失败经验与过往数据分析结论——
+      并据此<strong>持续补充证据、修正预测判断</strong>，
+      实现从数值拟合到情境认知推理的范式跨越。
     </p>
 
     <div class="position-strip">
@@ -732,8 +737,8 @@
 
     <div class="stat-row">
       <div class="stat-box">
-        <div class="stat-num">3</div>
-        <div class="stat-label">核心能力<br>感知 · 推理 · 交互</div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">核心能力<br>感知 · 推理 · 慢思考 · 记忆 · 进化</div>
       </div>
       <div class="stat-box">
         <div class="stat-num">4</div>
@@ -744,53 +749,69 @@
         <div class="stat-label">阶段模型<br>CastMind-Base · SFT<br>CoT · Agentic Reasoning</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">5</div>
-        <div class="stat-label">能力范式<br>感知—理解—推理—交互—进化</div>
+        <div class="stat-num">∞</div>
+        <div class="stat-label">持续进化<br>CPT · SFT · CoT · Agentic</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ THREE FEATURES ═══════════════════ -->
+<!-- ═══════════════════ FIVE CAPABILITIES ═══════════════════ -->
 <section id="features">
   <div class="container">
-    <h2 class="section-title">三大核心特色</h2>
+    <h2 class="section-title">五大核心能力</h2>
     <p>
-      CastMind（星思）从传统数值预测模型的能力边界出发，围绕真实预测场景中的三类核心需求展开：
+      时间序列认知大模型围绕复杂真实时序场景，构建从感知、推理到自主进化的五大核心能力：
     </p>
     <div class="cap-grid">
       <div class="cap-card">
-        <div class="cap-icon">🌐</div>
-        <h4>多模态情境感知</h4>
-        <div class="cap-focus">Multimodal Context Awareness</div>
+        <div class="cap-icon">👁️</div>
+        <h4>感知与理解</h4>
+        <div class="cap-focus">Perception &amp; Understanding</div>
         <p>
-          现实时间序列并不孤立存在——能源负荷受天气与政策影响，交通流量受事件与天气影响，
-          医疗信号受干预与用药影响。CastMind（星思）将预测 instance 定义为历史序列、
-          上下文情境、领域知识、任务目标与预测约束的整体，
-          让模型真正理解"<strong>情境如何影响趋势</strong>"，而不只是拼接更多协变量。
+          模型能够理解原始时间序列的趋势、周期、波动、异常、突变等结构特征，
+          同时理解 Meta Data、外生变量、协变量、领域描述与事件信息等多源情境上下文，
+          形成对序列本身与其所处环境的整体认知。
+        </p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🔗</div>
+        <h4>情境推理</h4>
+        <div class="cap-focus">Contextual Reasoning</div>
+        <p>
+          模型能够分析情境因素如何影响未来趋势：天气变化如何驱动电力负荷，
+          手术中的生理指标变化如何预示术后风险，节假日与政策事件如何塑造
+          交通流量和消费行为——从情境原因出发，推断趋势走向。
         </p>
       </div>
       <div class="cap-card">
         <div class="cap-icon">🧠</div>
-        <h4>慢思考推理中的动态证据发现</h4>
-        <div class="cap-focus">Dynamic Evidence Discovery via Slow Thinking</div>
+        <h4>慢思考推理</h4>
+        <div class="cap-focus">Slow Thinking Reasoning</div>
         <p>
-          CastMind（星思）的慢思考不是一次性展开推理链再输出预测，
-          而是在推理过程中<strong>动态感知证据缺口</strong>：
-          当分析发现当前上下文不足以支撑预测判断时，模型主动暂停推理、
-          转向 Memory 检索或情境查询，获取补充证据后再继续推理——
-          实现真正意义上的<strong>交互式慢思考</strong>。
+          模型不是一次性输出预测，而是围绕趋势变化、异常原因、未来演化路径与
+          不确定性展开分步分析，在长思维链中逐步构建预测判断，
+          类比 Search-o1 的"边思考边推理"范式。
         </p>
       </div>
       <div class="cap-card">
         <div class="cap-icon">🗄️</div>
-        <h4>边思考边检索的 Memory 交互</h4>
-        <div class="cap-focus">Interleaved Reasoning &amp; Memory Retrieval</div>
+        <h4>记忆交互</h4>
+        <div class="cap-focus">Memory Interaction</div>
         <p>
-          类比 Search-o1，CastMind（星思）在推理链中<strong>交错插入 Memory 访问动作</strong>——
-          检索历史相似时序模式、调用领域知识、对比异常案例，
-          将检索结果融入当前推理上下文，并据此<strong>修正预测判断</strong>，
-          形成"推理驱动检索、检索增强推理"的闭环认知机制。
+          模型可以与 Memory 环境交互，在慢思考过程中主动检索历史相似模式、
+          领域规律、失败经验与过往数据分析结论，将检索证据融入推理上下文，
+          并据此持续补充证据、修正预测判断。
+        </p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🚀</div>
+        <h4>持续进化</h4>
+        <div class="cap-focus">Continuous Evolution</div>
+        <p>
+          模型通过 CPT、SFT、CoT、Agentic Reasoning 等阶段逐步提升时序理解、
+          预测推理和自主交互能力——从基础接入到任务适配，从慢思考推理到
+          Memory 驱动的自主修正，形成可持续演进的认知能力路线。
         </p>
       </div>
     </div>

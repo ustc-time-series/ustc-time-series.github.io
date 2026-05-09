@@ -264,6 +264,7 @@
     .accent-neoresearch { background: linear-gradient(90deg, #2563eb, #14b8a6); }
     .accent-evaluation  { background: linear-gradient(90deg, #0f766e, #14b8a6); }
     .accent-classify    { background: linear-gradient(90deg, #c0392b, #e74c3c); }
+    .accent-castmind    { background: linear-gradient(90deg, #5b21b6, #7c3aed); }
 
     .project-card-wide {
       grid-column: span 2;
@@ -441,6 +442,9 @@
     .btn-enter-context { background: #0f766e; color: #fff; border-color: #0f766e; }
     .btn-enter-context:hover,
     .btn-enter-context:active { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
+    .btn-enter-castmind { background: #5b21b6; color: #fff; border-color: #5b21b6; }
+    .btn-enter-castmind:hover,
+    .btn-enter-castmind:active { background: #f5f3ff; border-color: #c4b5fd; color: #5b21b6; }
     .btn-outline { background: #fff; color: #444; border-color: #d8d8d8; }
     .btn-outline:hover,
     .btn-outline:active { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
@@ -545,7 +549,7 @@
       聚焦时间序列预测、异常检测、基础模型与 Agentic 分析，推动时序智能的前沿探索
     </p>
     <p class="header-motto">
-      铸星坊铸预测之器，智多星谋自主之研，观星阁观未来之势，天星台立评测之尺。
+      星思启时序认知之智，铸星坊铸预测之器，智多星谋自主之研，观星阁观未来之势，天星台立评测之尺。
     </p>
   </div>
 </header>
@@ -685,52 +689,6 @@
         </div>
       </div>
 
-      <!-- Context-Aware Time Series Analysis -->
-      <div class="project-card project-card-wide">
-        <div class="card-accent accent-forecast"></div>
-        <div class="card-body">
-          <h3>情境感知的时间序列分析</h3>
-          <p class="card-desc">
-            面向复杂真实预测场景，研究多源上下文情境如何参与时间序列建模、推理与动态更新，让模型从序列模式拟合走向情境感知的未来判断。
-          </p>
-          <div class="subdomain-grid">
-            <div class="subdomain-card">
-              <span class="subdomain-label">情境语义对齐与融合</span>
-              <div class="subdomain-header">
-                <span class="subdomain-icon">🧩</span>
-                <div>
-                  <p class="subdomain-desc">多源异构上下文情境如何有效表示、对齐并融入预测模型。</p>
-                </div>
-              </div>
-            </div>
-            <div class="subdomain-card">
-              <span class="subdomain-label">情境上下文推理</span>
-              <div class="subdomain-header">
-                <span class="subdomain-icon">🧠</span>
-                <div>
-                  <p class="subdomain-desc">情境因素如何影响未来趋势，模型如何开展原因分析、假设探索与证据验证。</p>
-                </div>
-              </div>
-            </div>
-            <div class="subdomain-card">
-              <span class="subdomain-label">动态情境自适应</span>
-              <div class="subdomain-header">
-                <span class="subdomain-icon">🔁</span>
-                <div>
-                  <p class="subdomain-desc">当情境变化或信息不完整时，模型如何主动获取新证据并动态更新预测。</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-links">
-            <a class="card-btn btn-enter-forecast" href="https://arxiv.org/abs/2508.09191" target="_blank" rel="noopener">查看主页 →</a>
-            <a class="card-btn btn-outline" href="https://arxiv.org/abs/2508.09191" target="_blank" rel="noopener">TokenCast</a>
-            <a class="card-btn btn-outline" href="https://arxiv.org/abs/2602.03564" target="_blank" rel="noopener">CoGenCast</a>
-            <a class="card-btn btn-outline" href="https://arxiv.org/abs/2601.14968" target="_blank" rel="noopener">InstructTime++</a>
-          </div>
-        </div>
-      </div>
-
       <!-- Foundation Models -->
       <div class="project-card project-card-wide">
         <div class="card-accent accent-foundation"></div>
@@ -853,70 +811,112 @@
 
     <hr class="divider" />
 
-    <!-- ── Open Source Projects ── -->
-    <div class="section-intro section-anchor" id="open-source-projects">
-      <h2>开源项目</h2>
-      <p>围绕时间序列预测、Agentic 分析、人机协同研究工作流与可复现实验平台，沉淀可复用的开源工具、系统框架与研究基础设施。</p>
+    <!-- ── Context-Aware Time Series Analysis ── -->
+    <div class="section-intro section-anchor" id="context-aware">
+      <h2>情境感知的时间序列分析</h2>
+      <p>面向复杂真实预测场景，研究多源多模情境上下文如何融入时间序列建模，让模型从序列模式拟合走向情境感知的未来趋势预测。</p>
     </div>
 
     <div class="project-grid">
-
-      <!-- CastFactory（铸星坊） -->
-      <div class="project-card">
-        <div class="card-accent accent-castfactory"></div>
+      <div class="project-card project-card-wide">
+        <div class="card-accent accent-forecast"></div>
         <div class="card-body">
-          <h3><a class="card-title-link" href="cast-factory/">CastFactory（铸星坊）</a></h3>
+          <h3>情境感知的时间序列分析</h3>
           <p class="card-desc">
-            面向时间序列研究的实验工厂，沉淀数据处理、特征构造、模型配方、训练运行与结果归档等模块，让新任务能够沿着统一协议快速搭建、复用和复现实验流程。
+            面向复杂真实预测场景，研究多源上下文情境如何参与时间序列建模、推理与动态更新，让模型从序列模式拟合走向情境感知的未来判断。
           </p>
-          <div class="card-meta">
-            <div class="meta-row">
-              <span class="meta-icon">🏭</span>
-              <span>数据接入 · 清洗切分 · 场景配置模板</span>
+          <div class="subdomain-grid">
+            <div class="subdomain-card">
+              <span class="subdomain-label">情境语义对齐与融合</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🧩</span>
+                <div>
+                  <p class="subdomain-desc">多源异构上下文情境如何有效表示、对齐并融入预测模型。</p>
+                </div>
+              </div>
             </div>
-            <div class="meta-row">
-              <span class="meta-icon">🧩</span>
-              <span>模型配方 · 训练脚本 · 实验运行规范</span>
+            <div class="subdomain-card">
+              <span class="subdomain-label">情境上下文推理</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🧠</span>
+                <div>
+                  <p class="subdomain-desc">情境因素如何影响未来趋势，模型如何开展原因分析、假设探索与证据验证。</p>
+                </div>
+              </div>
             </div>
-            <div class="meta-row">
-              <span class="meta-icon">📦</span>
-              <span>面向论文与应用研究的可复现结果资产</span>
+            <div class="subdomain-card">
+              <span class="subdomain-label">动态情境自适应</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🔁</span>
+                <div>
+                  <p class="subdomain-desc">当情境变化或信息不完整时，模型如何主动获取新证据并动态更新预测。</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="card-links">
-            <a class="card-btn btn-enter-forecast" href="cast-factory/">查看主页 →</a>
+            <a class="card-btn btn-enter-forecast" href="https://arxiv.org/abs/2508.09191" target="_blank" rel="noopener">查看主页 →</a>
+            <a class="card-btn btn-outline" href="https://arxiv.org/abs/2508.09191" target="_blank" rel="noopener">TokenCast</a>
+            <a class="card-btn btn-outline" href="https://arxiv.org/abs/2602.03564" target="_blank" rel="noopener">CoGenCast</a>
+            <a class="card-btn btn-outline" href="https://arxiv.org/abs/2601.14968" target="_blank" rel="noopener">InstructTime++</a>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- FutureCast（天星台） -->
-      <div class="project-card">
-        <div class="card-accent accent-futurecast"></div>
+    <hr class="divider" />
+
+    <!-- ── Cognitive LLM for Time Series ── -->
+    <div class="section-intro section-anchor" id="cognitive-llm">
+      <h2>时间序列认知大模型</h2>
+      <p>时间序列认知大模型是一类面向复杂时序场景的新型基础模型。它不仅学习时间序列中的数值模式，还进一步理解序列所处的情境上下文，分析趋势变化背后的原因，并通过慢思考推理与记忆交互不断获取证据、修正预测判断，从而实现更可靠、更可解释和更具适应性的时序预测。</p>
+    </div>
+
+    <div class="project-grid">
+      <div class="project-card project-card-wide">
+        <div class="card-accent accent-castmind"></div>
         <div class="card-body">
-          <h3><a class="card-title-link" href="future-cast/">FutureCast（天星台）</a></h3>
+          <h3>CastMind（星思）</h3>
           <p class="card-desc">
-            面向时序模型与智能体系统的统一评测套件，覆盖 benchmark 管理、指标计算、误差归因和报告生成，帮助研究者在一致口径下比较模型能力与系统收益。
+            以语言大模型为统一认知 Backbone 的时间序列基础模型。原始时序经 Time Series Feature Encoder 编码为 Temporal Embedding 后送入 LLM，
+            在长思维链慢思考过程中动态发现证据缺口、访问 Memory、检索历史相似模式并逐步修正预测判断——
+            类比 Search-o1 的"边思考边检索"，实现交互式时序认知推理。
           </p>
-          <div class="card-meta">
-            <div class="meta-row">
-              <span class="meta-icon">📊</span>
-              <span>预测 · 分类 · 异常检测等任务评测协议</span>
+          <div class="subdomain-grid">
+            <div class="subdomain-card era-llm">
+              <span class="subdomain-label">Feature Encoder + LLM Backbone</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🔩</span>
+                <div>
+                  <p class="subdomain-desc">原始时序经多尺度 patch 投影与量化语义通路编码为 Temporal Embedding，送入预训练 LLM Backbone 进行联合推理。</p>
+                </div>
+              </div>
             </div>
-            <div class="meta-row">
-              <span class="meta-icon">⚖️</span>
-              <span>跨数据集 · 跨场景 · 跨模型指标对齐</span>
+            <div class="subdomain-card era-llm">
+              <span class="subdomain-label">慢思考中动态证据发现</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🧠</span>
+                <div>
+                  <p class="subdomain-desc">推理过程中主动感知证据缺口，暂停推理转向 Memory 检索，获取补充证据后继续推理，实现真正意义上的交互式慢思考。</p>
+                </div>
+              </div>
             </div>
-            <div class="meta-row">
-              <span class="meta-icon">📝</span>
-              <span>Ablation · Diagnosis · Leaderboard 报告结构</span>
+            <div class="subdomain-card era-llm">
+              <span class="subdomain-label">CPT-SFT-RL 三阶段训练</span>
+              <div class="subdomain-header">
+                <span class="subdomain-icon">🚀</span>
+                <div>
+                  <p class="subdomain-desc">跨域持续预训练形成时序感知能力，SFT 学习慢思考指令推理，RL 通过可验证奖励优化预测判断与推理路径。</p>
+                </div>
+              </div>
             </div>
           </div>
           <div class="card-links">
-            <a class="card-btn btn-enter-forecast" href="future-cast/">查看主页 →</a>
+            <span class="card-btn btn-enter-castmind btn-disabled">主页 Coming Soon</span>
+            <a class="card-btn btn-outline" href="star-cast/">逐星方舟</a>
           </div>
         </div>
       </div>
-
     </div>
 
     <hr class="divider" />
@@ -988,6 +988,74 @@
           </div>
           <div class="card-links">
             <span class="card-btn btn-outline btn-disabled">主页 Coming Soon</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="divider" />
+
+    <!-- ── Open Source Projects ── -->
+    <div class="section-intro section-anchor" id="open-source-projects">
+      <h2>开源项目</h2>
+      <p>围绕时间序列预测、Agentic 分析、人机协同研究工作流与可复现实验平台，沉淀可复用的开源工具、系统框架与研究基础设施。</p>
+    </div>
+
+    <div class="project-grid">
+
+      <!-- CastFactory（铸星坊） -->
+      <div class="project-card">
+        <div class="card-accent accent-castfactory"></div>
+        <div class="card-body">
+          <h3><a class="card-title-link" href="cast-factory/">CastFactory（铸星坊）</a></h3>
+          <p class="card-desc">
+            面向时间序列研究的实验工厂，沉淀数据处理、特征构造、模型配方、训练运行与结果归档等模块，让新任务能够沿着统一协议快速搭建、复用和复现实验流程。
+          </p>
+          <div class="card-meta">
+            <div class="meta-row">
+              <span class="meta-icon">🏭</span>
+              <span>数据接入 · 清洗切分 · 场景配置模板</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">🧩</span>
+              <span>模型配方 · 训练脚本 · 实验运行规范</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">📦</span>
+              <span>面向论文与应用研究的可复现结果资产</span>
+            </div>
+          </div>
+          <div class="card-links">
+            <a class="card-btn btn-enter-forecast" href="cast-factory/">查看主页 →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FutureCast（天星台） -->
+      <div class="project-card">
+        <div class="card-accent accent-futurecast"></div>
+        <div class="card-body">
+          <h3><a class="card-title-link" href="future-cast/">FutureCast（天星台）</a></h3>
+          <p class="card-desc">
+            面向时序模型与智能体系统的统一评测套件，覆盖 benchmark 管理、指标计算、误差归因和报告生成，帮助研究者在一致口径下比较模型能力与系统收益。
+          </p>
+          <div class="card-meta">
+            <div class="meta-row">
+              <span class="meta-icon">📊</span>
+              <span>预测 · 分类 · 异常检测等任务评测协议</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">⚖️</span>
+              <span>跨数据集 · 跨场景 · 跨模型指标对齐</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">📝</span>
+              <span>Ablation · Diagnosis · Leaderboard 报告结构</span>
+            </div>
+          </div>
+          <div class="card-links">
+            <a class="card-btn btn-enter-forecast" href="future-cast/">查看主页 →</a>
           </div>
         </div>
       </div>
