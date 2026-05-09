@@ -50,7 +50,7 @@
 
     /* ── Container ─────────────────────────────────── */
     .container {
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 0 24px;
     }
@@ -101,7 +101,7 @@
     header {
       background: linear-gradient(160deg, #ffffff 48%, #f5f3ff 78%, #f0fdf9 100%);
       border-bottom: 1px solid #e8e8e8;
-      padding: 60px 0 48px;
+      padding: 66px 0 52px;
       text-align: center;
       position: relative;
       overflow: hidden;
@@ -153,8 +153,8 @@
     }
 
     header h1 {
-      margin-top: 12px;
-      font-size: 1.95rem;
+      margin-top: 10px;
+      font-size: 2.18rem;
       font-weight: 800;
       line-height: 1.35;
       color: #111;
@@ -164,14 +164,28 @@
       text-wrap: balance;
     }
     header h1 .cm { color: var(--violet-mid); }
-    .hero-title-main { display: block; white-space: nowrap; }
-    .hero-title-sub  { display: block; }
+    .hero-title-main,
+    .hero-title-sub { display: inline; white-space: nowrap; }
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px 11px;
+      border-radius: 999px;
+      border: 1px solid #ddd6fe;
+      background: rgba(245, 243, 255, 0.88);
+      color: var(--violet);
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
 
     .subtitle {
       margin: 10px auto 0;
       font-size: 1.01rem;
       color: #555;
-      max-width: 680px;
+      max-width: 760px;
       line-height: 1.72;
       text-align: center;
       text-justify: auto;
@@ -181,6 +195,28 @@
       font-size: 0.88rem;
       color: #999;
       letter-spacing: 0.02em;
+    }
+    .hero-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 18px auto 0;
+      max-width: 780px;
+    }
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(124, 58, 237, 0.18);
+      background: rgba(255, 255, 255, 0.78);
+      color: #4c1d95;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.35;
+      white-space: nowrap;
     }
 
     /* ── Buttons ───────────────────────────────────── */
@@ -215,7 +251,7 @@
 
     /* ── Sections ──────────────────────────────────── */
     section {
-      padding: 64px 0;
+      padding: 68px 0;
       scroll-margin-top: 50px;
     }
     section.alt { background: #fff; }
@@ -239,29 +275,101 @@
     h3.sub-title:first-of-type { margin-top: 0; }
     p { margin-bottom: 14px; }
     p:last-child { margin-bottom: 0; }
+    .section-lead {
+      max-width: 820px;
+      color: #444;
+      line-height: 1.82;
+      margin-bottom: 20px;
+    }
 
     /* ── TL;DR banner ──────────────────────────────── */
     .tldr {
-      background: #f5f3ff;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f7ff 62%, #f0fdfa 100%);
+      border: 1px solid #ddd6fe;
       border-left: 4px solid var(--violet);
-      border-radius: 0 8px 8px 0;
-      padding: 16px 22px;
-      font-size: 1.01rem;
+      border-radius: 12px;
+      padding: 20px 22px;
+      font-size: 0.98rem;
       color: #1a1a1a;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
       line-height: 1.75;
+      box-shadow: 0 8px 24px rgba(91, 33, 182, 0.06);
+      text-align: left;
+      text-justify: auto;
     }
     .tldr strong { color: var(--violet); }
+    .brief-main {
+      max-width: 820px;
+    }
+    .brief-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .brief-tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 118, 110, 0.18);
+      background: rgba(240, 253, 250, 0.82);
+      color: #0f766e;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .intro-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.28fr) minmax(260px, 0.72fr);
+      gap: 30px;
+      align-items: start;
+      margin-top: 2px;
+    }
+    .intro-copy {
+      min-width: 0;
+      text-align: left;
+      text-justify: auto;
+    }
+    .intro-copy .section-title {
+      margin-bottom: 20px;
+    }
+    .intro-copy p {
+      color: #333;
+      line-height: 1.9;
+    }
+    .intro-copy p + p {
+      margin-top: 18px;
+    }
+    .intro-insight {
+      min-width: 0;
+      padding-top: 3px;
+    }
+    .insight-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #f5f3ff;
+      border: 1px solid #ddd6fe;
+      color: var(--violet);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
 
     /* ── Stat row ───────────────────────────────────── */
     .stat-row {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 16px;
       margin: 24px 0;
-      flex-wrap: wrap;
     }
     .stat-box {
-      flex: 1;
       min-width: 130px;
       background: var(--card);
       border: 1px solid var(--line);
@@ -281,6 +389,23 @@
       color: #666;
       margin-top: 6px;
       line-height: 1.45;
+    }
+    .intro-insight .stat-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0 0;
+    }
+    .intro-insight .stat-box {
+      min-width: 0;
+      padding: 14px 10px;
+      border-radius: 9px;
+    }
+    .intro-insight .stat-box .stat-num {
+      font-size: 1.55rem;
+    }
+    .intro-insight .stat-box .stat-label {
+      font-size: 0.76rem;
+      line-height: 1.38;
     }
 
     /* ── Card grid ─────────────────────────────────── */
@@ -307,18 +432,17 @@
     .pillar-list {
       list-style: none;
       margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
     }
     .pillar-list li {
-      display: flex;
+      display: block;
       align-items: flex-start;
-      gap: 14px;
       background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 9px;
-      padding: 16px 20px;
+      border-radius: 12px;
+      padding: 18px 18px;
       box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     }
     .pillar-num {
@@ -332,12 +456,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 2px;
+      margin: 0 0 12px;
     }
     .pillar-num.violet { background: var(--violet); }
     .pillar-text { flex: 1; }
-    .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; color: var(--navy); }
-    .pillar-text span  { font-size: 0.88rem; color: #555; }
+    .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 7px; color: var(--navy); line-height: 1.45; }
+    .pillar-text span  { font-size: 0.86rem; color: #555; line-height: 1.68; }
 
     /* ── Feature list ──────────────────────────────── */
     .feature-list {
@@ -364,7 +488,7 @@
     /* ── Three-feature cap cards ───────────────────── */
     .cap-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 18px;
       margin-top: 24px;
     }
@@ -376,6 +500,7 @@
       padding: 24px 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       transition: transform .22s, box-shadow .22s;
+      min-height: 255px;
     }
     .cap-card:nth-child(2) { border-top-color: var(--violet-mid); }
     .cap-card:nth-child(3) { border-top-color: var(--teal); }
@@ -396,7 +521,7 @@
     /* ── Tech layer grid ───────────────────────────── */
     .tech-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 16px;
       margin-top: 22px;
     }
@@ -407,6 +532,8 @@
       padding: 22px 18px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       transition: transform .22s, box-shadow .22s;
+      display: flex;
+      flex-direction: column;
     }
     .tech-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.09); }
     .tech-card .tech-layer {
@@ -420,7 +547,7 @@
     .tech-card h4 { font-size: 0.96rem; font-weight: 800; color: var(--navy); margin-bottom: 10px; }
     .tech-card p  { font-size: 0.86rem; color: #555; line-height: 1.62; margin: 0; }
     .tech-card .tech-highlight {
-      margin-top: 12px;
+      margin-top: auto;
       background: #f5f3ff;
       border: 1px solid #ddd6fe;
       border-radius: 6px;
@@ -444,6 +571,8 @@
       padding: 24px 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       transition: transform .22s, box-shadow .22s;
+      display: flex;
+      flex-direction: column;
     }
     .stage-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.09); }
     .stage-badge {
@@ -460,7 +589,7 @@
     .stage-card .stage-input { font-size: 0.83rem; color: #666; margin-bottom: 8px; }
     .stage-card p { font-size: 0.87rem; color: #555; line-height: 1.6; margin: 0; }
     .stage-card .stage-output {
-      margin-top: 14px;
+      margin-top: auto;
       background: #f0fdf4;
       border: 1px solid #bbf7d0;
       border-radius: 6px;
@@ -478,6 +607,47 @@
       border-color: #99f6e4;
       color: var(--teal);
     }
+    .route-line {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 22px 0 24px;
+    }
+    .route-step {
+      position: relative;
+      min-height: 72px;
+      padding: 12px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.04);
+    }
+    .route-step::after {
+      content: "→";
+      position: absolute;
+      right: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #b8b8b8;
+      font-weight: 800;
+      z-index: 1;
+    }
+    .route-step:last-child::after { display: none; }
+    .route-step span {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--violet);
+      margin-bottom: 4px;
+    }
+    .route-step strong {
+      display: block;
+      font-size: 0.86rem;
+      line-height: 1.45;
+      color: var(--navy);
+    }
 
     /* ── Model version cards ───────────────────────── */
     .version-grid {
@@ -493,7 +663,7 @@
       padding: 24px 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       transition: transform .22s, box-shadow .22s;
-      text-align: center;
+      text-align: left;
     }
     .version-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.09); }
     .version-card .ver-badge {
@@ -512,6 +682,16 @@
       margin-bottom: 10px; line-height: 1.4;
     }
     .version-card p { font-size: 0.86rem; color: #555; line-height: 1.6; margin: 0; text-align: left; }
+    .route-summary {
+      margin-top: 20px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--teal);
+      background: #f0fdfa;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
 
     /* ── Eval split ────────────────────────────────── */
     .eval-split {
@@ -538,6 +718,12 @@
     .eval-half h4 { font-size: 0.98rem; font-weight: 800; color: var(--navy); margin-bottom: 10px; }
     .eval-half p  { font-size: 0.87rem; color: #555; line-height: 1.65; margin: 0 0 10px; }
     .eval-half p:last-child { margin: 0; }
+    .eval-note {
+      margin-top: 10px !important;
+      font-size: 0.87rem;
+      color: #555;
+      line-height: 1.65;
+    }
 
     /* ── Instance box (code-like) ──────────────────── */
     .instance-box {
@@ -550,6 +736,8 @@
       color: #2c3e50;
       line-height: 1.7;
       margin: 16px 0;
+      overflow-x: auto;
+      white-space: nowrap;
     }
     .instance-box .ib-key   { color: var(--navy); font-weight: 700; }
     .instance-box .ib-val   { color: #555; }
@@ -588,6 +776,7 @@
       border: 1px solid var(--line);
       border-radius: 10px;
       overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
     }
     .ps-item {
       flex: 1;
@@ -603,6 +792,7 @@
     }
     .ps-item .ps-val {
       font-size: 0.88rem; font-weight: 700; color: var(--navy);
+      line-height: 1.45;
     }
     .ps-item.highlighted { background: #f5f3ff; }
     .ps-item.highlighted .ps-val { color: var(--violet-mid); }
@@ -611,6 +801,25 @@
       font-size: 1.1rem;
       color: #bbb;
       padding: 0 2px;
+    }
+    .intro-insight .position-strip {
+      flex-direction: column;
+      align-items: stretch;
+      margin: 0;
+      border-radius: 12px;
+    }
+    .intro-insight .ps-item {
+      padding: 15px 14px;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+    }
+    .intro-insight .ps-item:last-child { border-bottom: none; }
+    .intro-insight .ps-connector {
+      align-self: center;
+      transform: rotate(90deg);
+      padding: 0;
+      margin: -3px 0;
+      line-height: 1;
     }
 
     /* ── Table ─────────────────────────────────────── */
@@ -641,16 +850,24 @@
     @media (max-width: 680px) {
       header { padding: 40px 0 40px; }
       header h1 { font-size: 1.5rem; }
-      .hero-title-main { white-space: normal; }
-      .cap-grid, .tech-grid, .stage-row, .version-grid { grid-template-columns: 1fr; }
+      .hero-title-main,
+      .hero-title-sub { white-space: normal; }
+      .hero-chip { white-space: normal; justify-content: center; text-align: center; }
+      .intro-layout,
+      .cap-grid, .tech-grid, .stage-row, .version-grid, .stat-row, .pillar-list, .route-line { grid-template-columns: 1fr; }
       .eval-split  { grid-template-columns: 1fr; }
       .position-strip { flex-direction: column; }
       .ps-item { border-right: none; border-bottom: 1px solid var(--line); }
       .ps-item:last-child { border-bottom: none; }
+      .ps-connector { transform: rotate(90deg); padding: 2px 0; }
+      .intro-insight { padding-top: 0; }
+      .intro-insight .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .route-step::after { display: none; }
       section { padding: 48px 0; }
       .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
       h2.section-title { font-size: 1.25rem; }
       .claim-box { padding: 24px 20px; }
+      .cap-card { min-height: auto; }
     }
   </style>
 </head>
@@ -660,6 +877,7 @@
 <header id="heroHeader">
   <div class="hero-refresh-sheen" aria-hidden="true"></div>
   <div class="container">
+    <div class="hero-kicker">Memory-interactive slow thinking</div>
     <h1 class="hero-clickable">
       <span class="hero-title-main"><span class="cm">CastMind（星思）</span></span>
       <span class="hero-title-sub">时间序列认知大模型</span>
@@ -669,6 +887,12 @@
       还理解序列所处的情境上下文，分析趋势变化背后的原因，
       并通过<strong>慢思考推理与记忆交互</strong>不断获取证据、修正预测判断。
     </p>
+    <div class="hero-chip-row" aria-label="CastMind 核心能力标签">
+      <span class="hero-chip">Time Series Feature Encoder</span>
+      <span class="hero-chip">LLM Backbone</span>
+      <span class="hero-chip">Chain-of-Thought Forecasting</span>
+      <span class="hero-chip">Memory-interactive Reasoning</span>
+    </div>
   </div>
 </header>
 
@@ -689,69 +913,81 @@
 <section id="intro" class="alt">
   <div class="container">
     <div class="tldr">
-      <strong>一句话定位：</strong>
-      CastMind（星思）是一个<strong>时间序列认知大模型</strong>。
-      它不仅学习时间序列中的数值模式，还进一步理解序列所处的情境上下文，
-      分析趋势变化背后的原因，并通过<strong>慢思考推理与记忆交互</strong>不断获取证据、修正预测判断，
-      从而实现更可靠、更可解释和更具适应性的时序预测。
-      模型沿着 CastMind-Base → CastMind-SFT → CastMind-CoT → CastMind-Agentic Reasoning
-      的四阶段路线，逐步建立
-      "<strong>感知与理解—情境推理—慢思考推理—记忆交互—持续进化</strong>"五项核心能力。
-    </div>
-
-    <h2 class="section-title">项目简介</h2>
-    <p>
-      <strong>CastMind（星思）</strong>是一类面向复杂时序场景的新型基础模型。
-      传统时序模型局限于从历史数值中提取模式，而 CastMind（星思）的目标更进一步：
-      让模型能够<strong>理解序列所处的情境上下文</strong>——包括 Meta Data、外生变量、
-      协变量、领域描述与事件信息——并在此基础上<strong>分析趋势变化背后的原因</strong>，
-      理解天气变化如何影响电力负荷，手术中的生理指标如何预示术后风险，
-      节假日与政策事件如何驱动交通和消费行为。
-    </p>
-    <p>
-      CastMind（星思）的关键范式是将 <strong>Search-o1 式的"边思考边检索"</strong>
-      扩展到时间序列预测：模型不是一次性输出预测，而是在<strong>慢思考过程中</strong>
-      围绕趋势变化、异常原因、未来演化路径与不确定性展开分步分析，
-      动态发现证据缺口，主动与 Memory 环境交互——
-      检索历史相似模式、领域规律、失败经验与过往数据分析结论——
-      并据此<strong>持续补充证据、修正预测判断</strong>，
-      实现从数值拟合到情境认知推理的范式跨越。
-    </p>
-
-    <div class="position-strip">
-      <div class="ps-item">
-        <div class="ps-label">编码层</div>
-        <div class="ps-val">Time Series Feature Encoder</div>
+      <div class="brief-main">
+        <strong>一句话定位：</strong>
+        CastMind（星思）是一个<strong>时间序列认知大模型</strong>：
+        既学习时间序列中的数值模式，也理解序列所处的情境上下文，
+        并通过<strong>慢思考推理与记忆交互</strong>不断获取证据、修正预测判断。
       </div>
-      <div class="ps-connector">→</div>
-      <div class="ps-item">
-        <div class="ps-label">表示层</div>
-        <div class="ps-val">Temporal Embedding</div>
-      </div>
-      <div class="ps-connector">→</div>
-      <div class="ps-item highlighted">
-        <div class="ps-label">推理层</div>
-        <div class="ps-val">LLM Backbone + Memory 交互</div>
+      <div class="brief-tags" aria-label="CastMind 五项核心能力">
+        <span class="brief-tag">感知与理解</span>
+        <span class="brief-tag">情境推理</span>
+        <span class="brief-tag">慢思考推理</span>
+        <span class="brief-tag">记忆交互</span>
+        <span class="brief-tag">持续进化</span>
       </div>
     </div>
 
-    <div class="stat-row">
-      <div class="stat-box">
-        <div class="stat-num">5</div>
-        <div class="stat-label">核心能力<br>感知 · 推理 · 慢思考 · 记忆 · 进化</div>
+    <div class="intro-layout">
+      <div class="intro-copy">
+        <h2 class="section-title">项目简介</h2>
+        <p class="section-lead">
+          <strong>CastMind（星思）</strong>是一类面向复杂时序场景的新型基础模型。
+          传统时序模型局限于从历史数值中提取模式，而 CastMind（星思）的目标更进一步：
+          让模型能够<strong>理解序列所处的情境上下文</strong>——包括 Meta Data、外生变量、
+          协变量、领域描述与事件信息——并在此基础上<strong>分析趋势变化背后的原因</strong>，
+          理解天气变化如何影响电力负荷，手术中的生理指标如何预示术后风险，
+          节假日与政策事件如何驱动交通和消费行为。
+        </p>
+        <p>
+          CastMind（星思）的关键范式是将 <strong>Search-o1 式的"边思考边检索"</strong>
+          扩展到时间序列预测：模型不是一次性输出预测，而是在<strong>慢思考过程中</strong>
+          围绕趋势变化、异常原因、未来演化路径与不确定性展开分步分析，
+          动态发现证据缺口，主动与 Memory 环境交互——
+          检索历史相似模式、领域规律、失败经验与过往数据分析结论——
+          并据此<strong>持续补充证据、修正预测判断</strong>，
+          实现从数值拟合到情境认知推理的范式跨越。
+        </p>
       </div>
-      <div class="stat-box">
-        <div class="stat-num">4</div>
-        <div class="stat-label">能力阶段<br>Base · SFT<br>CoT · Agentic Reasoning</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">4</div>
-        <div class="stat-label">阶段模型<br>CastMind-Base · SFT<br>CoT · Agentic Reasoning</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">∞</div>
-        <div class="stat-label">持续进化<br>CPT · SFT · CoT · Agentic</div>
-      </div>
+
+      <aside class="intro-insight" aria-label="CastMind 模型链路与能力指标">
+        <div class="insight-label">Model Path</div>
+        <div class="position-strip">
+          <div class="ps-item">
+            <div class="ps-label">编码层</div>
+            <div class="ps-val">Time Series Feature Encoder</div>
+          </div>
+          <div class="ps-connector">→</div>
+          <div class="ps-item">
+            <div class="ps-label">表示层</div>
+            <div class="ps-val">Temporal Embedding</div>
+          </div>
+          <div class="ps-connector">→</div>
+          <div class="ps-item highlighted">
+            <div class="ps-label">推理层</div>
+            <div class="ps-val">LLM Backbone + Memory 交互</div>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-box">
+            <div class="stat-num">5</div>
+            <div class="stat-label">核心能力<br>感知 · 推理 · 记忆</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">4</div>
+            <div class="stat-label">能力阶段<br>Base · SFT · CoT</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Agentic 策略<br>Seeking · Revision</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">持续进化<br>CPT · SFT · RL</div>
+          </div>
+        </div>
+      </aside>
     </div>
   </div>
 </section>
@@ -760,7 +996,7 @@
 <section id="features">
   <div class="container">
     <h2 class="section-title">五大核心能力</h2>
-    <p>
+    <p class="section-lead">
       时间序列认知大模型围绕复杂真实时序场景，构建从感知、推理到自主进化的五大核心能力：
     </p>
     <div class="cap-grid">
@@ -822,7 +1058,7 @@
 <section id="tech" class="alt">
   <div class="container">
     <h2 class="section-title">核心技术体系</h2>
-    <p>
+    <p class="section-lead">
       CastMind（星思）的技术体系从<strong>模型、数据、算法</strong>三个层面构建，
       三者相互支撑，共同实现慢思考时间序列推理：
     </p>
@@ -887,14 +1123,20 @@
 <!-- ═══════════════════ TRAINING ═══════════════════ -->
 <section id="training">
   <div class="container">
-    <h2 class="section-title">CastMind-Base → CastMind-SFT → CastMind-CoT → CastMind-Agentic Reasoning</h2>
-    <p>
+    <h2 class="section-title">四阶段训练范式</h2>
+    <p class="section-lead">
       CastMind（星思）采用四个能力递进阶段：
       <strong>CastMind-Base → CastMind-SFT → CastMind-CoT → CastMind-Agentic Reasoning</strong>。
       Base 阶段解决"如何接入时间序列"；SFT 阶段解决"如何完成时序任务"；
       CoT 阶段解决"如何进行慢思考预测"；Agentic Reasoning 阶段解决
       "如何在推理过程中自主获取证据并修正判断"。
     </p>
+    <div class="route-line" aria-label="CastMind 四阶段训练路线">
+      <div class="route-step"><span>Stage 1</span><strong>CastMind-Base<br>接入时间序列</strong></div>
+      <div class="route-step"><span>Stage 2</span><strong>CastMind-SFT<br>完成时序任务</strong></div>
+      <div class="route-step"><span>Stage 3</span><strong>CastMind-CoT<br>慢思考预测</strong></div>
+      <div class="route-step"><span>Stage 4</span><strong>Agentic Reasoning<br>自主获取证据</strong></div>
+    </div>
     <div class="stage-row">
       <div class="stage-card">
         <div class="stage-badge badge-cpt">Stage 1 · CastMind-Base</div>
@@ -978,7 +1220,7 @@
 <section id="versions" class="alt">
   <div class="container">
     <h2 class="section-title">四阶段能力路线</h2>
-    <p>
+    <p class="section-lead">
       CastMind（星思）的四个阶段不是简单的 Base / SFT / RL 分段，
       而是明确对应四类能力跃迁：
     </p>
@@ -1024,7 +1266,7 @@
       </div>
     </div>
 
-    <p style="margin-top: 20px; font-size: 0.9rem; color: var(--muted);">
+    <p class="route-summary">
       这一路线可以概括为：
       Base 阶段解决"如何接入时间序列"；SFT 阶段解决"如何完成时序任务"；
       CoT 阶段解决"如何进行慢思考预测"；Agentic Reasoning 阶段解决
@@ -1037,7 +1279,7 @@
 <section id="eval">
   <div class="container">
     <h2 class="section-title">评估体系</h2>
-    <p>
+    <p class="section-lead">
       CastMind（星思）的评估同时覆盖 <strong>in-domain 能力</strong>和 <strong>out-of-domain 泛化能力</strong>，
       全面验证慢思考时序推理模型的综合性能：
     </p>
@@ -1051,7 +1293,7 @@
           <li><strong>概率预测指标：</strong>CRPS · Pinball Loss · Prediction Interval Coverage</li>
           <li><strong>推理质量指标：</strong>趋势解释合理性 · 情境归因一致性 · 预测—推理一致性</li>
         </ul>
-        <p style="margin-top: 10px;">
+        <p class="eval-note">
           在四个阶段（Base / SFT / CoT / Agentic Reasoning）间进行对比，展示各阶段对预测、推理与记忆交互能力的增益。
         </p>
       </div>
