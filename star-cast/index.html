@@ -356,6 +356,13 @@
     .project-card.neoresearch { --card-accent: linear-gradient(90deg, #2563eb, #14b8a6); }
     .project-card.factory { --card-accent: linear-gradient(90deg, #0f766e, #14b8a6); }
     .project-card.eval { --card-accent: linear-gradient(90deg, #1a56db, #3b82f6); }
+    .project-card.castmind { --card-accent: linear-gradient(90deg, #5b21b6, #7c3aed); }
+    .project-card.full-width { grid-column: 1 / -1; min-height: auto; }
+    .project-tag.violet {
+      border-color: #ddd6fe;
+      background: #f5f3ff;
+      color: #6d28d9;
+    }
     .systems-shell + .systems-shell {
       margin-top: 28px;
     }
@@ -489,51 +496,46 @@
 
 <main>
   <div class="container">
-    <section class="systems-shell" aria-labelledby="opensource-title">
+    <section class="systems-shell" aria-labelledby="models-title">
       <div class="systems-intro">
         <div class="intro-copy">
-          <h2 id="opensource-title">面向时序研究的开源基础设施</h2>
+          <h2 id="models-title">时间序列认知大模型</h2>
           <p>
-            Open Source 页面汇总课题组在时间序列方向持续建设的工程资产。CastFactory（铸星坊）关注研究与实验的组件化生产，
-            FutureCast（天星台）关注模型、数据集与应用场景的统一评测，共同支撑更高效、可复现、可扩展的时序研究与应用落地。
+            CastMind（星思）关注语言大模型能否成为时间序列的统一认知 Backbone，
+            探索通过 Feature Encoder、跨域预训练、慢思考推理与 Memory 交互，构建具备感知—理解—推理—检索—修正能力的时序认知基础模型。
           </p>
         </div>
-        <div class="pipeline" aria-label="开源工具链">
-          <div class="pipeline-step"><span>01</span><strong>Build research pipelines with CastFactory（铸星坊）</strong></div>
-          <div class="pipeline-step"><span>02</span><strong>Evaluate models and systems with FutureCast（天星台）</strong></div>
+        <div class="pipeline" aria-label="时序大模型研发路径">
+          <div class="pipeline-step"><span>01</span><strong>Encode temporal patterns with Time Series Feature Encoder</strong></div>
+          <div class="pipeline-step"><span>02</span><strong>Reason &amp; retrieve with interactive slow thinking + Memory</strong></div>
         </div>
       </div>
 
       <div class="project-grid">
-        <article class="project-card factory">
-          <span class="project-tag">Experiment Factory</span>
-          <h3>CastFactory（铸星坊）</h3>
+        <article class="project-card castmind full-width">
+          <span class="project-tag violet">Time Series Foundation Model</span>
+          <h3>CastMind（星思）</h3>
           <p>
-            面向时间序列研究的实验工厂，沉淀数据处理、特征构造、模型配方、训练运行与结果归档等模块，
-            让新任务能够沿着统一协议快速搭建、复用和复现实验流程。
+            以语言大模型为统一认知 Backbone，探索时间序列基础模型的新范式：
+            原始时序经由 Time Series Feature Encoder 编码为 Temporal Embedding 后送入 LLM，
+            配合多模态情境上下文，在<strong>长思维链慢思考过程中动态发现证据缺口</strong>、
+            访问 Memory、检索历史相似模式，并逐步修正预测判断——
+            类比 Search-o1 的"边思考边检索"，实现<strong>交互式时序认知推理</strong>。
           </p>
           <ul class="feature-list">
-            <li>数据接入、清洗、切分与场景配置模板</li>
-            <li>模型配方、训练脚本和实验运行规范</li>
-            <li>面向论文与应用研究的可复现结果资产</li>
+            <li>多模态情境感知：时序 + Meta Data + 外生变量 + 领域知识统一建模</li>
+            <li>慢思考中动态证据发现：推理过程中主动感知缺口、访问 Memory、修正判断</li>
+            <li>CPT-SFT-RL 三阶段训练：跨域时序感知 → 指令推理 → 可验证奖励优化</li>
           </ul>
-          <a class="project-link" href="../cast-factory/">查看 CastFactory（铸星坊）主页</a>
+          <span class="project-link disabled">主页 Coming Soon</span>
         </article>
+      </div>
 
-        <article class="project-card eval">
-          <span class="project-tag">Evaluation Suite</span>
-          <h3>FutureCast（天星台）</h3>
-          <p>
-            面向时序模型与智能体系统的统一评测套件，覆盖 benchmark 管理、指标计算、误差归因和报告生成，
-            帮助研究者在一致口径下比较模型能力与系统收益。
-          </p>
-          <ul class="feature-list">
-            <li>预测、分类、异常检测等任务的评测协议</li>
-            <li>跨数据集、跨场景、跨模型的指标对齐</li>
-            <li>面向 ablation、diagnosis 和 leaderboard 的报告结构</li>
-          </ul>
-          <a class="project-link" href="../future-cast/">查看 FutureCast（天星台）主页</a>
-        </article>
+      <div class="status-row" aria-label="模型能力标签">
+        <span class="status-chip"><span class="status-dot"></span>Interactive Slow Thinking</span>
+        <span class="status-chip"><span class="status-dot"></span>Memory Retrieval</span>
+        <span class="status-chip"><span class="status-dot"></span>Feature Encoder + LLM Backbone</span>
+        <span class="status-chip"><span class="status-dot"></span>CPT · SFT · RL</span>
       </div>
     </section>
 
@@ -542,7 +544,7 @@
         <div class="intro-copy">
           <h2 id="systems-title">面向时间序列分析研究的自主智能体系统</h2>
           <p>
-            Systems 页面汇总课题组正在研发的系统工作。CastClaw（观星阁）关注人在回路的预测研究工作台，
+            CastClaw（观星阁）关注人在回路的预测研究工作台，
             NeoResearch（智多星）关注受控自主研究闭环，两者共同支撑从数据理解、实验编排到知识沉淀的系统化时序研究流程。
           </p>
         </div>
@@ -589,6 +591,54 @@
         <span class="status-chip"><span class="status-dot"></span>Human-in-the-loop</span>
         <span class="status-chip"><span class="status-dot"></span>Controlled Experiment</span>
         <span class="status-chip"><span class="status-dot"></span>Research Memory</span>
+      </div>
+    </section>
+
+    <section class="systems-shell" aria-labelledby="opensource-title">
+      <div class="systems-intro">
+        <div class="intro-copy">
+          <h2 id="opensource-title">面向时序研究的开源基础设施</h2>
+          <p>
+            CastFactory（铸星坊）关注研究与实验的组件化生产，
+            FutureCast（天星台）关注模型、数据集与应用场景的统一评测，共同支撑更高效、可复现、可扩展的时序研究与应用落地。
+          </p>
+        </div>
+        <div class="pipeline" aria-label="开源工具链">
+          <div class="pipeline-step"><span>01</span><strong>Build research pipelines with CastFactory（铸星坊）</strong></div>
+          <div class="pipeline-step"><span>02</span><strong>Evaluate models and systems with FutureCast（天星台）</strong></div>
+        </div>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card factory">
+          <span class="project-tag">Experiment Factory</span>
+          <h3>CastFactory（铸星坊）</h3>
+          <p>
+            面向时间序列研究的实验工厂，沉淀数据处理、特征构造、模型配方、训练运行与结果归档等模块，
+            让新任务能够沿着统一协议快速搭建、复用和复现实验流程。
+          </p>
+          <ul class="feature-list">
+            <li>数据接入、清洗、切分与场景配置模板</li>
+            <li>模型配方、训练脚本和实验运行规范</li>
+            <li>面向论文与应用研究的可复现结果资产</li>
+          </ul>
+          <a class="project-link" href="../cast-factory/">查看 CastFactory（铸星坊）主页</a>
+        </article>
+
+        <article class="project-card eval">
+          <span class="project-tag">Evaluation Suite</span>
+          <h3>FutureCast（天星台）</h3>
+          <p>
+            面向时序模型与智能体系统的统一评测套件，覆盖 benchmark 管理、指标计算、误差归因和报告生成，
+            帮助研究者在一致口径下比较模型能力与系统收益。
+          </p>
+          <ul class="feature-list">
+            <li>预测、分类、异常检测等任务的评测协议</li>
+            <li>跨数据集、跨场景、跨模型的指标对齐</li>
+            <li>面向 ablation、diagnosis 和 leaderboard 的报告结构</li>
+          </ul>
+          <a class="project-link" href="../future-cast/">查看 FutureCast（天星台）主页</a>
+        </article>
       </div>
     </section>
   </div>
