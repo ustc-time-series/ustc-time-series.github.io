@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cast-R1 — 工具增强型自主交互时间序列预测智能体</title>
+  <meta name="description" content="Cast-R1 是一个面向已有语言模型的工具增强型自主交互时间序列预测智能体，直接将原始时间序列与情境上下文作为 Token 输入，并通过 Cast-R1-SFT、Cast-R1-Reasoning、Cast-R1-Agentic RL 多阶段训练，学习在 Harness 工具环境中进行自主工具调用、上下文推理和多轮预测决策。" />
+  <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --navy:        #1e3a5f;
+      --navy-dark:   #152c48;
+      --teal:        #0f766e;
+      --teal-light:  #14b8a6;
+      --accent:      #0f766e;
+      --violet:      #5b21b6;
+      --violet-mid:  #7c3aed;
+      --violet-soft: #ede9fe;
+      --amber:       #b45309;
+      --amber-mid:   #d97706;
+      --amber-soft:  #fef3c7;
+      --text:        #1a1a1a;
+      --muted:       #555;
+      --line:        #e4e4e0;
+      --bg:          #f7f7f5;
+      --card:        #ffffff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                   "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 16px;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: #f0f0ee;
+      border: 1px solid #e0e0de;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+      font-size: 0.85em;
+      color: var(--navy);
+    }
+
+    /* ── Container ─────────────────────────────────── */
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Sticky nav ────────────────────────────────── */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+    }
+    .nav-bar .container {
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+      gap: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .nav-bar .container::-webkit-scrollbar { display: none; }
+    .nav-bar a {
+      flex-shrink: 0;
+      padding: 13px 18px;
+      font-size: 0.87rem;
+      font-weight: 500;
+      color: #555;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .nav-bar a:hover {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+      text-decoration: none;
+    }
+    .nav-home {
+      font-weight: 700;
+      color: var(--teal) !important;
+      border-right: 1px solid #e8e8e8;
+    }
+
+    /* ── Hero ──────────────────────────────────────── */
+    header {
+      background: linear-gradient(160deg, #ffffff 48%, #fffbeb 76%, #f0fdf9 100%);
+      border-bottom: 1px solid #e8e8e8;
+      padding: 60px 0 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform .16s ease, opacity .16s ease, filter .16s ease;
+    }
+    header .container { position: relative; z-index: 2; }
+    header:hover { filter: saturate(1.02); }
+    header:active { transform: scale(0.995); }
+
+    .hero-refresh-sheen {
+      position: absolute;
+      top: -20%; bottom: -20%; left: -30%;
+      width: 26%; opacity: 0; pointer-events: none; z-index: 1;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.78) 48%, rgba(255,255,255,0) 100%);
+      transform: skewX(-24deg) translateX(0);
+    }
+    header.hero-refreshing .hero-refresh-sheen { animation: hero-sheen 0.9s ease; }
+    header.hero-refreshing h1                  { animation: hero-title-refresh 0.75s ease; }
+    header.hero-refreshing .subtitle,
+    header.hero-refreshing .affiliation,
+    header.hero-refreshing .btn-row            { animation: hero-copy-refresh 0.75s ease; }
+    .hero-refresh-wave {
+      position: absolute; width: 20px; height: 20px; border-radius: 999px;
+      border: 2px solid rgba(180, 83, 9, 0.18);
+      background: rgba(217, 119, 6, 0.12);
+      transform: translate(-50%, -50%) scale(0.2);
+      pointer-events: none; z-index: 1;
+      animation: hero-wave 0.85s ease-out forwards;
+    }
+    @keyframes hero-sheen {
+      0%   { opacity: 0; transform: skewX(-24deg) translateX(0); }
+      12%  { opacity: 1; }
+      100% { opacity: 0; transform: skewX(-24deg) translateX(560%); }
+    }
+    @keyframes hero-wave {
+      0%   { opacity: 0.9; transform: translate(-50%, -50%) scale(0.2); }
+      100% { opacity: 0;   transform: translate(-50%, -50%) scale(11); }
+    }
+    @keyframes hero-title-refresh {
+      0%   { transform: translateY(0); opacity: 1; }
+      25%  { transform: translateY(3px); opacity: 0.84; }
+      62%  { transform: translateY(-2px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes hero-copy-refresh {
+      0%   { transform: translateY(0); opacity: 1; }
+      30%  { transform: translateY(4px); opacity: 0.76; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    header h1 {
+      margin-top: 12px;
+      font-size: 1.95rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: #111;
+      max-width: 1180px;
+      margin-left: auto;
+      margin-right: auto;
+      text-wrap: balance;
+    }
+    header h1 .cr { color: var(--amber-mid); }
+    .hero-title-main { display: block; white-space: nowrap; }
+    .hero-title-sub  { display: block; }
+
+    .subtitle {
+      margin: 10px auto 0;
+      font-size: 1.01rem;
+      color: #555;
+      max-width: 700px;
+      line-height: 1.72;
+      text-align: center;
+      text-justify: auto;
+    }
+    .affiliation {
+      margin-top: 10px;
+      font-size: 0.88rem;
+      color: #999;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Buttons ───────────────────────────────────── */
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 20px;
+      border-radius: 7px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s;
+      text-decoration: none;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.13);
+      text-decoration: none;
+    }
+    .btn-secondary { background: #fff; color: #222; border-color: #d0d0d0; }
+    .btn-secondary:hover { background: #f8f8f8; border-color: #aaa; }
+    .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    /* ── Sections ──────────────────────────────────── */
+    section {
+      padding: 64px 0;
+      scroll-margin-top: 50px;
+    }
+    section.alt { background: #fff; }
+    section + section { border-top: 1px solid var(--line); }
+
+    h2.section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--teal);
+      display: inline-block;
+    }
+    h3.sub-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #222;
+      margin: 32px 0 10px;
+    }
+    h3.sub-title:first-of-type { margin-top: 0; }
+    p { margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── TL;DR banner ──────────────────────────────── */
+    .tldr {
+      background: var(--amber-soft);
+      border-left: 4px solid var(--amber);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 22px;
+      font-size: 1.01rem;
+      color: #1a1a1a;
+      margin-bottom: 32px;
+      line-height: 1.75;
+    }
+    .tldr strong { color: var(--amber); }
+
+    /* ── Stat row ───────────────────────────────────── */
+    .stat-row {
+      display: flex;
+      gap: 16px;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+    .stat-box {
+      flex: 1;
+      min-width: 130px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px 16px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .stat-box .stat-num {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.1;
+    }
+    .stat-box .stat-label {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 6px;
+      line-height: 1.45;
+    }
+
+    /* ── Cap cards (三大能力) ───────────────────────── */
+    .cap-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 24px;
+    }
+    .cap-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--navy);
+      border-radius: 0 0 12px 12px;
+      padding: 24px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform .22s, box-shadow .22s;
+    }
+    .cap-card:nth-child(2) { border-top-color: var(--violet-mid); }
+    .cap-card:nth-child(3) { border-top-color: var(--amber-mid); }
+    .cap-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.09); }
+    .cap-card .cap-icon { font-size: 1.8rem; margin-bottom: 12px; line-height: 1; }
+    .cap-card h4 { font-size: 0.98rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .cap-card .cap-focus {
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--violet-mid); margin-bottom: 10px; letter-spacing: 0.01em;
+    }
+    .cap-card:nth-child(3) .cap-focus { color: var(--amber-mid); }
+    .cap-card p { font-size: 0.87rem; color: #555; line-height: 1.65; margin: 0; }
+
+    /* ── Module grid (Harness 工具) ─────────────────── */
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .module-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--navy);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .module-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
+    .module-card:nth-child(4n+2) { border-left-color: var(--teal); }
+    .module-card:nth-child(4n+3) { border-left-color: var(--violet-mid); }
+    .module-card:nth-child(4n+4) { border-left-color: var(--amber-mid); }
+    .module-card h5 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 5px;
+    }
+    .module-card p {
+      font-size: 0.83rem;
+      color: #555;
+      margin: 0;
+      line-height: 1.55;
+    }
+
+    /* ── Training stage cards ──────────────────────── */
+    .stage-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 22px;
+    }
+    .stage-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 24px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform .22s, box-shadow .22s;
+    }
+    .stage-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.09); }
+    .stage-badge {
+      display: inline-block;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 20px; margin-bottom: 12px;
+    }
+    .badge-sft  { background: #f0fdf4; color: #15803d; }
+    .badge-rrl  { background: #f5f3ff; color: var(--violet); }
+    .badge-arl  { background: var(--amber-soft); color: var(--amber); }
+    .stage-card h4 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .stage-card .stage-input { font-size: 0.83rem; color: #666; margin-bottom: 8px; }
+    .stage-card p { font-size: 0.87rem; color: #555; line-height: 1.6; margin: 0; }
+    .stage-card .stage-output {
+      margin-top: 14px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.83rem; font-weight: 600;
+      color: #15803d;
+    }
+    .stage-card:nth-child(2) .stage-output {
+      background: #f5f3ff;
+      border-color: #ddd6fe;
+      color: var(--violet);
+    }
+    .stage-card:nth-child(3) .stage-output {
+      background: var(--amber-soft);
+      border-color: #fde68a;
+      color: var(--amber);
+    }
+
+    /* ── Flow arrow pipeline ───────────────────────── */
+    .flow-pipeline {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .flow-step {
+      flex: 1;
+      min-width: 90px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px 10px;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--navy);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      line-height: 1.45;
+    }
+    .flow-step .fs-sub {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .flow-sep {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      color: #bbb;
+      font-size: 1rem;
+    }
+
+    /* ── Pillar list ───────────────────────────────── */
+    .pillar-list {
+      list-style: none;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .pillar-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 16px 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .pillar-num {
+      flex-shrink: 0;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+    .pillar-num.amber  { background: var(--amber); }
+    .pillar-num.violet { background: var(--violet); }
+    .pillar-text { flex: 1; }
+    .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; color: var(--navy); }
+    .pillar-text span  { font-size: 0.88rem; color: #555; }
+
+    /* ── Feature list ──────────────────────────────── */
+    .feature-list {
+      list-style: none;
+      margin-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .feature-list li {
+      padding-left: 20px;
+      position: relative;
+      font-size: 0.95rem;
+      color: #333;
+    }
+    .feature-list li::before {
+      content: "▸";
+      color: var(--teal);
+      position: absolute;
+      left: 0;
+      top: 1px;
+    }
+
+    /* ── Positioning strip ─────────────────────────── */
+    .position-strip {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 22px 0;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .ps-item {
+      flex: 1;
+      padding: 16px 14px;
+      text-align: center;
+      border-right: 1px solid var(--line);
+    }
+    .ps-item:last-child { border-right: none; }
+    .ps-item .ps-label {
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 4px;
+    }
+    .ps-item .ps-val {
+      font-size: 0.88rem; font-weight: 700; color: var(--navy);
+    }
+    .ps-item.highlighted { background: var(--amber-soft); }
+    .ps-item.highlighted .ps-val { color: var(--amber); }
+    .ps-connector {
+      flex-shrink: 0;
+      font-size: 1.1rem;
+      color: #bbb;
+      padding: 0 2px;
+    }
+
+    /* ── Instance box ──────────────────────────────── */
+    .instance-box {
+      background: #f8f9fa;
+      border: 1px solid #dde1e8;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+      font-size: 0.83rem;
+      color: #2c3e50;
+      line-height: 1.7;
+      margin: 16px 0;
+    }
+    .instance-box .ib-key   { color: var(--navy); font-weight: 700; }
+    .instance-box .ib-val   { color: #555; }
+    .instance-box .ib-arrow { color: var(--teal); }
+
+    /* ── Claim box ─────────────────────────────────── */
+    .claim-box {
+      background: linear-gradient(135deg, #1c0f00 0%, #7c2d00 45%, #1e3a5f 100%);
+      border-radius: 12px;
+      padding: 32px 32px;
+      color: #fff;
+      margin-top: 24px;
+    }
+    .claim-box p {
+      font-size: 0.97rem;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.8;
+      margin: 0;
+    }
+    .claim-box .claim-en {
+      font-size: 0.87rem;
+      color: rgba(255,255,255,0.5);
+      margin-top: 14px;
+      line-height: 1.7;
+    }
+
+    /* ── Footer ────────────────────────────────────── */
+    footer {
+      background: #1c1c1c;
+      color: #999;
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.84rem;
+    }
+    footer a { color: #5ecfc6; }
+    footer .footer-funding {
+      margin-top: 12px;
+      font-size: 0.82rem;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 680px) {
+      header { padding: 40px 0 40px; }
+      header h1 { font-size: 1.5rem; }
+      .hero-title-main { white-space: normal; }
+      .cap-grid, .stage-row { grid-template-columns: 1fr; }
+      .flow-pipeline { flex-direction: column; }
+      .flow-sep { transform: rotate(90deg); align-self: center; }
+      .position-strip { flex-direction: column; }
+      .ps-item { border-right: none; border-bottom: 1px solid var(--line); }
+      .ps-item:last-child { border-bottom: none; }
+      section { padding: 48px 0; }
+      .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
+      h2.section-title { font-size: 1.25rem; }
+      .claim-box { padding: 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header id="heroHeader">
+  <div class="hero-refresh-sheen" aria-hidden="true"></div>
+  <div class="container">
+    <h1 class="hero-clickable">
+      <span class="hero-title-main"><span class="cr">Cast-R1</span></span>
+      <span class="hero-title-sub">工具增强型自主交互时间序列预测智能体</span>
+    </h1>
+    <p class="subtitle hero-clickable">
+      面向已有语言模型，直接将原始时间序列与情境上下文作为 Token 输入——
+      通过 Cast-R1-SFT、Cast-R1-Reasoning 与 Cast-R1-Agentic RL，
+      让模型先<strong>会做</strong>、再<strong>会想</strong>、最终<strong>会行动</strong>。
+    </p>
+    <p class="affiliation hero-clickable">中国科学技术大学 · 认知智能全国重点实验室 · AGI 研究组</p>
+
+  </div>
+</header>
+
+<!-- ═══════════════════ STICKY NAV ═══════════════════ -->
+<nav class="nav-bar">
+  <div class="container">
+    <a href="../" class="nav-home">首页</a>
+    <a href="#intro">简介</a>
+    <a href="#capabilities">三大能力</a>
+    <a href="#harness">工具环境</a>
+    <a href="#training">训练范式</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════ INTRO ═══════════════════ -->
+<section id="intro" class="alt">
+  <div class="container">
+    <div class="tldr">
+      <strong>一句话定位：</strong>
+      Cast-R1 是一个<strong>工具增强型自主交互时间序列预测智能体</strong>。
+      它不以构建新的时序基础模型底座为核心目标，而是面向已有语言模型，
+      直接将原始时间序列与情境上下文作为 Token 输入，并通过
+      <strong>Cast-R1-SFT、Cast-R1-Reasoning 和 Cast-R1-Agentic RL</strong>
+      多阶段训练，使模型学会在 Harness 工具环境中进行
+      <strong>自主工具调用、上下文推理和多轮预测决策</strong>。
+    </div>
+
+    <h2 class="section-title">项目简介</h2>
+    <p>
+      <strong>Cast-R1</strong> 是一个工具增强型自主交互时间序列预测智能体，
+      旨在推动时间序列预测从传统的单次模型推断，
+      走向基于工具调用、情境推理和多轮交互的<strong>智能体式预测范式</strong>。
+      与 CastMind（星思）通过独立 Feature Encoder 将时序编码为 Embedding 再送入 LLM 的
+      基础模型路线不同，<strong>Cast-R1 直接将原始时间序列作为 Token 输入语言模型</strong>，
+      不依赖独立编码器，而是将数值序列、统计特征、Meta Data、外生变量、
+      领域描述和任务情境等信息统一 Token 化，使模型能够端到端地感知任务背景、
+      数据语义和预测目标。
+    </p>
+    <p>
+      Cast-R1 的训练路线不是为了重新训练一个时序基础模型底座，
+      而是围绕已有 LLM 的智能体能力逐级增强：
+      <strong>Cast-R1-SFT</strong> 让模型会做，掌握预测任务格式、Token 输入理解、工具调用协议和标准工作流；
+      <strong>Cast-R1-Reasoning</strong> 让模型会想，理解上下文、工具反馈和预测不确定性；
+      <strong>Cast-R1-Agentic RL</strong> 让模型会行动，在 Harness 工具环境中学习何时调用工具、
+      调用哪个工具、如何组合工具链、如何更新上下文，以及何时停止交互并输出预测。
+    </p>
+
+    <div class="position-strip">
+      <div class="ps-item">
+        <div class="ps-label">输入层</div>
+        <div class="ps-val">原始时序直接 Token 化（无独立编码器）</div>
+      </div>
+      <div class="ps-connector">+</div>
+      <div class="ps-item">
+        <div class="ps-label">行动空间</div>
+        <div class="ps-val">Harness 工具环境</div>
+      </div>
+      <div class="ps-connector">→</div>
+      <div class="ps-item highlighted">
+        <div class="ps-label">目标</div>
+        <div class="ps-val">Agentic Forecasting System</div>
+      </div>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-label">核心能力<br>工具调用 · 推理 · 多轮交互</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Harness 工具<br>覆盖预测全链路</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-label">训练阶段<br>SFT · Reasoning · Agentic RL</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3</div>
+        <div class="stat-label">能力递进<br>会做 · 会想 · 会行动</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CAPABILITIES ═══════════════════ -->
+<section id="capabilities">
+  <div class="container">
+    <h2 class="section-title">三大核心能力</h2>
+    <p>Cast-R1 的三阶段训练对应三类能力递进：SFT 让模型会做，Reasoning 让模型会想，Agentic RL 让模型会行动。</p>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-icon">🛠️</div>
+        <h4>Cast-R1-SFT：会做</h4>
+        <div class="cap-focus">Task Format · Tool Protocol · Standard Workflow</div>
+        <p>
+          通过高质量专家轨迹监督学习，让模型掌握基本预测任务格式、
+          时间序列 Token 输入理解、工具调用协议和标准工作流。
+          模型学习如何读取原始时序 Token、理解情境上下文、调用数据预处理 / 特征抽取 /
+          小模型工具，并整合结果输出预测。
+        </p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🧩</div>
+        <h4>Cast-R1-Reasoning：会想</h4>
+        <div class="cap-focus">Context Reasoning · Tool-feedback Reasoning</div>
+        <p>
+          通过推理数据蒸馏、CoT 数据构造、过程监督或偏好优化，
+          强化模型的上下文推理和工具反馈推理能力。
+          目标不是让模型只会调用工具，而是理解工具返回结果的含义，
+          能分析趋势、周期、异常、外部事件影响和预测不确定性。
+        </p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">🔄</div>
+        <h4>Cast-R1-Agentic RL：会行动</h4>
+        <div class="cap-focus">Tool Action Policy · Context Update · Stop Decision</div>
+        <p>
+          在 Harness 工具环境中进行多轮交互，重点优化<strong>行动策略</strong>：
+          何时调用工具、调用哪个工具、如何组合工具链、如何利用工具结果更新上下文、
+          何时停止交互并输出预测。奖励来自最终预测误差、过程质量、工具调用成本、
+          工具结果有效性和上下文更新质量。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ HARNESS ═══════════════════ -->
+<section id="harness" class="alt">
+  <div class="container">
+    <h2 class="section-title">Harness 工具环境</h2>
+    <p>
+      Cast-R1 借助 <strong>Harness Engineering</strong> 思想构建了面向时间序列预测的工具环境，
+      为智能体提供可操作、可反馈、可验证的外部行动空间，
+      使模型能够在预测过程中主动感知数据、分析模式、调用模型、修正判断：
+    </p>
+
+    <div class="module-grid">
+      <div class="module-card">
+        <h5>数据预处理工具</h5>
+        <p>归一化、去噪、重采样、异常点标记，为后续分析和模型调用提供干净规范的时序输入。</p>
+      </div>
+      <div class="module-card">
+        <h5>缺失值处理工具</h5>
+        <p>插值补全、缺失片段标记与不确定性估计，支持非完整时序数据下的鲁棒预测。</p>
+      </div>
+      <div class="module-card">
+        <h5>统计诊断工具</h5>
+        <p>平稳性检验、自相关与偏自相关分析、趋势检验，帮助模型理解序列的基本统计属性。</p>
+      </div>
+      <div class="module-card">
+        <h5>特征抽取工具</h5>
+        <p>趋势分解（STL / EMD）、周期强度提取、统计特征计算，将数值序列转化为可推理的语义特征。</p>
+      </div>
+      <div class="module-card">
+        <h5>频域分析工具</h5>
+        <p>傅里叶变换、频谱分析、主频提取，识别隐藏的周期结构和频率域模式，辅助趋势归因。</p>
+      </div>
+      <div class="module-card">
+        <h5>外生变量处理工具</h5>
+        <p>协变量时间对齐、外部信号融合与相关性分析，将多源异构情境信号引入预测推理过程。</p>
+      </div>
+      <div class="module-card">
+        <h5>预训练小模型调用</h5>
+        <p>DLinear、PatchTST 等轻量化专家模型按需调用，提供快速数值参考，辅助智能体形成预测判断。</p>
+      </div>
+      <div class="module-card">
+        <h5>预测结果评估工具</h5>
+        <p>误差评估、置信区间验证与多模型结果对比，为智能体的反思修正提供可验证的外部反馈信号。</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">智能体预测决策流程</h3>
+    <div class="flow-pipeline">
+      <div class="flow-step">Token 输入<div class="fs-sub">时序 + 情境</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">任务感知<div class="fs-sub">状态分析</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">工具选择<div class="fs-sub">按需调用</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">证据获取<div class="fs-sub">工具反馈</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">上下文推理<div class="fs-sub">多证据融合</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">预测生成<div class="fs-sub">初步结果</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">反思修正<div class="fs-sub">多轮迭代</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">最终预测<div class="fs-sub">精准输出</div></div>
+    </div>
+
+    <h3 class="sub-title">Agentic 预测实例结构</h3>
+    <div class="instance-box">
+      Agentic Prediction = {<br>
+      &nbsp;&nbsp;<span class="ib-key">input_tokens</span>      <span class="ib-arrow">←</span> <span class="ib-val">原始时间序列 + 情境上下文 Token</span><br>
+      &nbsp;&nbsp;<span class="ib-key">tool_environment</span>  <span class="ib-arrow">←</span> <span class="ib-val">Harness 工具集（8 类可调用工具）</span><br>
+      &nbsp;&nbsp;<span class="ib-key">standard_workflow</span> <span class="ib-arrow">←</span> <span class="ib-val">SFT 学习的基础预测流程与工具协议</span><br>
+      &nbsp;&nbsp;<span class="ib-key">reasoning_chain</span>   <span class="ib-arrow">←</span> <span class="ib-val">上下文推理、工具反馈解释与不确定性分析</span><br>
+      &nbsp;&nbsp;<span class="ib-key">interaction_rounds</span><span class="ib-arrow">←</span> <span class="ib-val">多轮工具选择、证据获取、上下文更新与停止决策</span><br>
+      &nbsp;&nbsp;<span class="ib-key">reward_signals</span>    <span class="ib-arrow">←</span> <span class="ib-val">预测误差 + 过程奖励 + 工具成本 + 结果有效性 + 上下文更新质量</span><br>
+      &nbsp;&nbsp;<span class="ib-key">final_prediction</span>  <span class="ib-arrow">←</span> <span class="ib-val">精准预测输出</span><br>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TRAINING ═══════════════════ -->
+<section id="training">
+  <div class="container">
+    <h2 class="section-title">Cast-R1-SFT → Cast-R1-Reasoning → Cast-R1-Agentic RL</h2>
+    <p>
+      Cast-R1 采用三阶段递进训练路径：<strong>SFT 让模型会做，Reasoning 让模型会想，
+      Agentic RL 让模型会行动</strong>。这一路线面向已有语言模型，
+      不以构建新的时序基础模型底座为核心目标，而是训练模型在 Harness 工具环境中进行
+      自主工具调用、上下文推理和多轮预测决策。
+    </p>
+
+    <div class="stage-row">
+      <div class="stage-card">
+        <div class="stage-badge badge-sft">Stage 1 · Cast-R1-SFT</div>
+        <h4>监督微调<br>任务格式与标准工作流</h4>
+        <p class="stage-input">输入：高质量专家轨迹 + 工具调用协议 + 标准预测流程</p>
+        <p>
+          负责让模型学会基本预测任务格式、时间序列 Token 输入理解、工具调用协议和标准工作流。
+          专家轨迹覆盖如何读取原始时序 Token、理解情境上下文、调用数据预处理 / 特征抽取 /
+          小模型工具，以及如何整合结果输出预测。
+        </p>
+        <div class="stage-output">能力：会做 · 任务格式 · 工具协议 · 标准流程</div>
+      </div>
+      <div class="stage-card">
+        <div class="stage-badge badge-rrl">Stage 2 · Cast-R1-Reasoning</div>
+        <h4>推理增强<br>上下文与工具反馈理解</h4>
+        <p class="stage-input">输入：推理数据蒸馏 + CoT 构造 + 过程监督 / 偏好优化</p>
+        <p>
+          负责强化模型的上下文推理和工具反馈推理能力。这个阶段不一定需要 RL，
+          可以先通过推理数据蒸馏、CoT 数据构造、过程监督或偏好优化，
+          让模型学会分析趋势、周期、异常、外部事件影响，并解释工具结果和预测不确定性。
+        </p>
+        <div class="stage-output">能力：会想 · 上下文推理 · 工具反馈推理 · 不确定性解释</div>
+      </div>
+      <div class="stage-card">
+        <div class="stage-badge badge-arl">Stage 3 · Cast-R1-Agentic RL</div>
+        <h4>智能体强化学习<br>行动策略优化</h4>
+        <p class="stage-input">输入：Harness 工具环境交互 + 多源奖励信号</p>
+        <p>
+          最核心阶段。模型在 Harness 构建的工具环境中进行多轮交互，学习何时调用工具、
+          调用哪个工具、如何组合工具链、如何利用工具结果更新上下文、
+          何时停止交互并输出预测。重点优化行动策略，而不是基础表征能力。
+          奖励可来自最终预测误差、过程奖励、工具调用成本、工具结果有效性和上下文更新质量。
+        </p>
+        <div class="stage-output">能力：会行动 · 工具选择 · 工具链组合 · 上下文更新 · 停止决策</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <div class="container">
+    <p>
+      &copy; 2024–2026 Time Series Analysis Group &middot;
+      <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
+      &middot; State Key Laboratory of Cognitive Intelligence, USTC
+    </p>
+    <p class="footer-funding">
+      本项目研究资助来源：国家双一流建设经费、国家自然科学基金委
+    </p>
+  </div>
+</footer>
+
+<script>
+  /* hero click → sheen + wave */
+  const header = document.getElementById("heroHeader");
+  if (header) {
+    header.addEventListener("click", (e) => {
+      if (e.target.closest("a, button")) return;
+      header.classList.remove("hero-refreshing");
+      void header.offsetWidth;
+      header.classList.add("hero-refreshing");
+      const wave = document.createElement("div");
+      wave.className = "hero-refresh-wave";
+      wave.style.left = e.clientX - header.getBoundingClientRect().left + "px";
+      wave.style.top  = e.clientY - header.getBoundingClientRect().top  + "px";
+      header.appendChild(wave);
+      wave.addEventListener("animationend", () => wave.remove());
+      header.addEventListener("animationend", () => header.classList.remove("hero-refreshing"), { once: true });
+    });
+  }
+
+  /* scroll-highlight active nav link */
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks  = document.querySelectorAll(".nav-bar a[href^='#']");
+  const observer  = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          const active = link.getAttribute("href") === `#${id}`;
+          link.style.color             = active ? "var(--teal)" : "";
+          link.style.borderBottomColor = active ? "var(--teal)" : "";
+        });
+      }
+    });
+  }, { rootMargin: "-20% 0px -70% 0px" });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>

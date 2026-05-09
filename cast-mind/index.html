@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CastMind — 面向情境感知时间序列预测的慢思考基础模型</title>
-  <meta name="description" content="CastMind 是一个面向情境感知时间序列预测的多模态慢思考基础模型，以预训练语言模型为基座，通过 CPT-SFT-RLVR 三阶段训练，具备多模态情境感知、慢思考思维链推理和跨领域通用泛化三大核心能力。" />
+  <title>CastMind（星思） — 记忆交互式慢思考时间序列基础模型</title>
+  <meta name="description" content="CastMind（星思）是一个记忆交互式慢思考时间序列基础模型，以语言大模型为认知 Backbone，融合多模态情境理解、长思维链慢思考推理与 Memory 环境交互，在推理过程中主动检索历史模式、补充证据并修正预测判断。" />
   <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -429,7 +429,7 @@
     /* ── Training stage cards ──────────────────────── */
     .stage-row {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
       margin-top: 22px;
     }
@@ -450,7 +450,8 @@
     }
     .badge-cpt  { background: #e0f2fe; color: #0369a1; }
     .badge-sft  { background: #f0fdf4; color: #15803d; }
-    .badge-rlvr { background: #f5f3ff; color: var(--violet); }
+    .badge-cot  { background: #f5f3ff; color: var(--violet); }
+    .badge-agentic { background: #ccfbf1; color: var(--teal); }
     .stage-card h4 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
     .stage-card .stage-input { font-size: 0.83rem; color: #666; margin-bottom: 8px; }
     .stage-card p { font-size: 0.87rem; color: #555; line-height: 1.6; margin: 0; }
@@ -468,11 +469,16 @@
       border-color: #ddd6fe;
       color: var(--violet);
     }
+    .stage-card:nth-child(4) .stage-output {
+      background: #f0fdfa;
+      border-color: #99f6e4;
+      color: var(--teal);
+    }
 
     /* ── Model version cards ───────────────────────── */
     .version-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
       margin-top: 22px;
     }
@@ -493,8 +499,9 @@
       letter-spacing: 0.03em;
     }
     .ver-base    { background: #e0f2fe; color: #0369a1; }
-    .ver-instruct{ background: #f0fdf4; color: #15803d; }
-    .ver-r1      { background: #f5f3ff; color: var(--violet); }
+    .ver-sft{ background: #f0fdf4; color: #15803d; }
+    .ver-cot{ background: #f5f3ff; color: var(--violet); }
+    .ver-agentic { background: #f0fdfa; color: var(--teal); }
     .version-card h4 { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
     .version-card .ver-stage {
       font-size: 0.77rem; color: var(--muted);
@@ -650,35 +657,14 @@
   <div class="hero-refresh-sheen" aria-hidden="true"></div>
   <div class="container">
     <h1 class="hero-clickable">
-      <span class="hero-title-main"><span class="cm">CastMind</span></span>
-      <span class="hero-title-sub">面向情境感知时间序列预测的慢思考基础模型</span>
+      <span class="hero-title-main"><span class="cm">CastMind（星思）</span></span>
+      <span class="hero-title-sub">记忆交互式慢思考时间序列基础模型</span>
     </h1>
     <p class="subtitle hero-clickable">
-      以预训练语言模型为基座，将连续时间序列、多模态情境上下文与推理任务指令统一建模——
-      让模型不仅能预测未来数值，更能理解趋势变化的情境原因，并进行可验证的慢思考推理。
+      以语言大模型为时序认知 Backbone，将多模态情境、历史模式与 Memory 检索纳入同一推理过程——
+      让模型在慢思考中发现证据缺口、主动访问记忆、修正预测判断，
+      形成<strong>边思考边检索</strong>的记忆交互式时序基础模型。
     </p>
-
-    <div class="btn-row">
-      <a class="btn btn-secondary" href="https://github.com/Mingyue-Cheng" target="_blank" rel="noopener">
-        <svg viewBox="0 0 16 16" fill="currentColor">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
-            0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
-            -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
-            .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
-            -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0
-            1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82
-            1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01
-            1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-        </svg>
-        GitHub（即将开源）
-      </a>
-      <a class="btn btn-secondary" href="../future-cast/" rel="noopener">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
-        </svg>
-        FutureCast（天星台） 评测基准
-      </a>
-    </div>
   </div>
 </header>
 
@@ -689,10 +675,9 @@
     <a href="#intro">简介</a>
     <a href="#features">三大特色</a>
     <a href="#tech">核心技术</a>
-    <a href="#training">三阶段训练</a>
-    <a href="#versions">模型版本</a>
+    <a href="#training">训练范式</a>
+    <a href="#versions">能力路线</a>
     <a href="#eval">评估体系</a>
-    <a href="#position">定位</a>
   </div>
 </nav>
 
@@ -701,59 +686,66 @@
   <div class="container">
     <div class="tldr">
       <strong>一句话定位：</strong>
-      CastMind 是一个面向<strong>情境感知时间序列预测</strong>的
-      <strong>多模态慢思考基础模型</strong>——
-      以预训练语言模型为基座，通过 CPT-SFT-RLVR 三阶段训练，
-      构建能够进行<strong>多模态情境感知、长思维链推理与可验证预测</strong>的时间序列推理模型。
+      CastMind（星思）是一个<strong>记忆交互式慢思考时间序列基础模型</strong>。
+      它以语言大模型为统一认知 Backbone，沿着 CastMind-Base → CastMind-SFT →
+      CastMind-CoT → CastMind-Agentic Reasoning 的四阶段能力路线，
+      逐步建立时间序列接入、任务适配、慢思考推理与 Memory 交互式自主修正能力，
+      构建具备"<strong>感知—理解—推理—检索—修正</strong>"能力的通用时序认知模型。
+      模型不是一次性接收所有上下文后直接预测，而是在慢思考过程中
+      <strong>动态发现证据缺口、访问 Memory、检索历史模式和领域知识，并逐步修正预测判断</strong>。
     </div>
 
     <h2 class="section-title">项目简介</h2>
     <p>
-      传统时间序列预测模型大多属于"快思考"范式，通过历史窗口直接拟合未来窗口，
-      本质上依赖模式识别和函数逼近。然而真实预测场景要求的不只是数值外推——
-      模型还需要回答"<strong>当前序列处于什么状态</strong>""<strong>哪些情境因素正在影响未来趋势</strong>"
-      "<strong>未来变化为什么会发生</strong>""<strong>预测结果是否可靠</strong>"。
+      <strong>CastMind（星思）</strong>聚焦于一个根本性的研究问题：
+      <strong>时间序列基础模型能否具备可交互、可检索、可修正的慢思考能力？</strong>
+      不同于将 LLM 视为外部辅助工具的方法，CastMind（星思）试图让语言大模型本身
+      承担时间序列的感知、理解与推理职责——原始时序经由 Time Series Feature Encoder 编码为
+      Temporal Embedding，再送入 LLM Backbone，配合多模态情境上下文进行联合建模，
+      形成真正意义上的时序认知基础模型。
     </p>
     <p>
-      CastMind 正是为回应这些更高层次的预测认知需求而构建。它连接
-      <strong>Time Series Foundation Model</strong> 与 <strong>LLM-based Reasoning Model</strong>，
-      将时间序列预测从传统的模式发现与数值拟合，推进到基于情境证据的
-      <strong>认知推理与慢思考预测</strong>。
+      CastMind（星思）的关键范式类似于将 <strong>Search-o1 式的"边思考边检索"</strong>
+      扩展到时间序列预测中：模型不是一次性接收所有上下文后再一步推理，
+      而是在<strong>慢思考过程中动态发现证据缺口</strong>——
+      主动访问 Memory、检索历史相似模式和领域知识、识别情境因素与趋势的关联，
+      并根据中间证据<strong>逐步修正预测判断</strong>，
+      实现从数值拟合到情境认知的范式跨越。
     </p>
 
     <div class="position-strip">
       <div class="ps-item">
-        <div class="ps-label">起点</div>
-        <div class="ps-val">Time Series Foundation Model</div>
+        <div class="ps-label">编码层</div>
+        <div class="ps-val">Time Series Feature Encoder</div>
       </div>
-      <div class="ps-connector">+</div>
+      <div class="ps-connector">→</div>
       <div class="ps-item">
-        <div class="ps-label">基座</div>
-        <div class="ps-val">Pretrained Language Model</div>
+        <div class="ps-label">表示层</div>
+        <div class="ps-val">Temporal Embedding</div>
       </div>
       <div class="ps-connector">→</div>
       <div class="ps-item highlighted">
-        <div class="ps-label">目标</div>
-        <div class="ps-val">Slow-thinking Reasoning Model</div>
+        <div class="ps-label">推理层</div>
+        <div class="ps-val">LLM Backbone + Memory 交互</div>
       </div>
     </div>
 
     <div class="stat-row">
       <div class="stat-box">
         <div class="stat-num">3</div>
-        <div class="stat-label">核心特色<br>感知 · 推理 · 泛化</div>
+        <div class="stat-label">核心能力<br>感知 · 推理 · 交互</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">3</div>
-        <div class="stat-label">训练阶段<br>CPT · SFT · RLVR</div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">能力阶段<br>Base · SFT<br>CoT · Agentic Reasoning</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">3</div>
-        <div class="stat-label">模型版本<br>Base · Instruct · R1</div>
+        <div class="stat-num">4</div>
+        <div class="stat-label">阶段模型<br>CastMind-Base · SFT<br>CoT · Agentic Reasoning</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">2</div>
-        <div class="stat-label">评估体系<br>In-domain · Out-of-domain</div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">能力范式<br>感知—理解—推理—交互—进化</div>
       </div>
     </div>
   </div>
@@ -764,7 +756,7 @@
   <div class="container">
     <h2 class="section-title">三大核心特色</h2>
     <p>
-      CastMind 从传统数值预测模型的能力边界出发，围绕真实预测场景中的三类核心需求展开：
+      CastMind（星思）从传统数值预测模型的能力边界出发，围绕真实预测场景中的三类核心需求展开：
     </p>
     <div class="cap-grid">
       <div class="cap-card">
@@ -773,31 +765,32 @@
         <div class="cap-focus">Multimodal Context Awareness</div>
         <p>
           现实时间序列并不孤立存在——能源负荷受天气与政策影响，交通流量受事件与天气影响，
-          医疗信号受干预与用药影响。CastMind 将预测 instance 定义为历史序列、
+          医疗信号受干预与用药影响。CastMind（星思）将预测 instance 定义为历史序列、
           上下文情境、领域知识、任务目标与预测约束的整体，
           让模型真正理解"<strong>情境如何影响趋势</strong>"，而不只是拼接更多协变量。
         </p>
       </div>
       <div class="cap-card">
         <div class="cap-icon">🧠</div>
-        <h4>慢思考思维链推理</h4>
-        <div class="cap-focus">Slow-thinking Chain-of-Thought Reasoning</div>
+        <h4>慢思考推理中的动态证据发现</h4>
+        <div class="cap-focus">Dynamic Evidence Discovery via Slow Thinking</div>
         <p>
-          CastMind 引入类似大模型推理的 slow-thinking 能力，使模型围绕预测任务进行多步分析：
-          <strong>观察历史模式 → 分解趋势结构 → 识别关键情境 → 分析变化原因
-          → 推断未来方向 → 估计不确定性 → 自我验证</strong>。
-          对于非平稳序列、事件驱动型趋势变化和复杂预测任务，慢思考能力具有不可替代的意义。
+          CastMind（星思）的慢思考不是一次性展开推理链再输出预测，
+          而是在推理过程中<strong>动态感知证据缺口</strong>：
+          当分析发现当前上下文不足以支撑预测判断时，模型主动暂停推理、
+          转向 Memory 检索或情境查询，获取补充证据后再继续推理——
+          实现真正意义上的<strong>交互式慢思考</strong>。
         </p>
       </div>
       <div class="cap-card">
-        <div class="cap-icon">🌍</div>
-        <h4>跨领域通用泛化</h4>
-        <div class="cap-focus">Cross-domain Generalization</div>
+        <div class="cap-icon">🗄️</div>
+        <h4>边思考边检索的 Memory 交互</h4>
+        <div class="cap-focus">Interleaved Reasoning &amp; Memory Retrieval</div>
         <p>
-          时间序列广泛存在于能源、交通、金融、气象、医疗、工业、零售和水文等多个领域。
-          CastMind 通过多领域混合训练，学习跨领域共享的时间模式、情境表征和预测推理能力，
-          目标是在未见的新领域、新数据集和新预测任务上展现强大的
-          <strong>zero-shot 或 few-shot 泛化能力</strong>。
+          类比 Search-o1，CastMind（星思）在推理链中<strong>交错插入 Memory 访问动作</strong>——
+          检索历史相似时序模式、调用领域知识、对比异常案例，
+          将检索结果融入当前推理上下文，并据此<strong>修正预测判断</strong>，
+          形成"推理驱动检索、检索增强推理"的闭环认知机制。
         </p>
       </div>
     </div>
@@ -809,50 +802,52 @@
   <div class="container">
     <h2 class="section-title">核心技术体系</h2>
     <p>
-      CastMind 的技术体系从<strong>模型、数据、算法</strong>三个层面构建，
+      CastMind（星思）的技术体系从<strong>模型、数据、算法</strong>三个层面构建，
       三者相互支撑，共同实现慢思考时间序列推理：
     </p>
     <div class="tech-grid">
       <div class="tech-card">
         <div class="tech-layer">Model Layer</div>
-        <h4>以语言模型为核心的模型架构</h4>
+        <h4>Feature Encoder + LLM Backbone 架构</h4>
         <p>
-          以预训练语言模型为基础 Backbone，利用其指令理解、语义建模和长思维链推理能力。
-          通过 <strong>Temporal Token Bridge</strong> 将时间序列灌入 LLM：
-          连续表示通路将序列切分为多尺度 patch 并投影为 soft temporal tokens，
-          离散语义通路通过量化方法将片段转化为具有趋势、周期、异常语义含义的 temporal tokens。
-          输出端结合专门的 forecasting head 输出点预测、区间预测或概率分布。
+          原始时间序列首先经过独立的 <strong>Time Series Feature Encoder</strong> 编码为
+          Temporal Embedding，再送入预训练语言模型 Backbone 进行推理。
+          Feature Encoder 包含多尺度 patch 投影（soft temporal tokens）与
+          量化语义通路（趋势 / 周期 / 异常 temporal tokens）两条支路，
+          将连续数值序列转化为 LLM 可直接理解的结构化时序表示。
+          输出端结合 forecasting head 输出点预测、区间预测或概率分布。
         </p>
-        <div class="tech-highlight">Temporal Token Bridge · Forecasting Head · Verifier</div>
+        <div class="tech-highlight">Feature Encoder · Temporal Embedding · LLM Backbone · Forecasting Head</div>
       </div>
       <div class="tech-card">
         <div class="tech-layer">Data Layer</div>
         <h4>情境感知时间序列训练 Instance</h4>
         <p>
           训练数据不是普通时间序列窗口，而是<strong>情境感知的预测 instance</strong>，
-          包含历史序列、多模态情境、领域 metadata、预测指令、未来目标、推理轨迹和验证信号。
+          包含历史序列、多模态情境、领域 metadata、预测指令、未来目标、
+          推理轨迹、Memory 交互轨迹和奖励信号。
           训练语料来自能源、交通、气象、医疗、金融、工业等多个领域，
           通过多领域、多频率、多变量混合训练获得跨域泛化能力。
           <strong>FutureCast（天星台）</strong> 作为情境感知训练语料与 out-of-domain 评测底座。
         </p>
-        <div class="tech-highlight">多领域混合 · FutureCast（天星台） 底座 · Reasoning Trace</div>
+        <div class="tech-highlight">多领域混合 · FutureCast（天星台） 底座 · Reasoning Trace · Memory Trace</div>
       </div>
       <div class="tech-card">
         <div class="tech-layer">Algorithm Layer</div>
-        <h4>CPT · SFT · RLVR 三阶段训练</h4>
+        <h4>CastMind-Base · CastMind-SFT · CastMind-CoT · CastMind-Agentic Reasoning</h4>
         <p>
-          三阶段训练使 CastMind 从语言模型出发，
-          依次获得时序感知能力、指令推理能力和可验证预测能力。
-          CPT 完成时序空间迁移，SFT 实现慢思考指令跟随，
-          RLVR 通过预测误差、趋势方向、区间覆盖率等 verifier 构建奖励，
-          将慢思考推理与可验证预测结果真正连接。
+          CastMind（星思）不被简单拆成 Base / SFT / RL，而是按能力递进组织为四个阶段：
+          Base 解决"如何接入时间序列"，SFT 解决"如何完成时序任务"，
+          CoT 解决"如何进行慢思考预测"，Agentic Reasoning 解决
+          "如何在推理过程中自主获取证据并修正判断"。
+          最后阶段强调 Memory-interactive reasoning，而不是简单工具调用。
         </p>
-        <div class="tech-highlight">CPT → SFT → RLVR · Verifiable Rewards</div>
+        <div class="tech-highlight">CastMind-Base → CastMind-SFT → CastMind-CoT → CastMind-Agentic Reasoning</div>
       </div>
     </div>
 
     <h3 class="sub-title">训练 Instance 结构</h3>
-    <p>一个典型的 CastMind 训练样本包含以下七类信息：</p>
+    <p>一个典型的 CastMind（星思）训练样本包含以下八类信息：</p>
     <div class="instance-box">
       Instance = {<br>
       &nbsp;&nbsp;<span class="ib-key">historical_time_series</span> <span class="ib-arrow">←</span> <span class="ib-val">历史数值模式</span><br>
@@ -860,8 +855,9 @@
       &nbsp;&nbsp;<span class="ib-key">domain_metadata</span>         <span class="ib-arrow">←</span> <span class="ib-val">领域、频率、变量、单位信息</span><br>
       &nbsp;&nbsp;<span class="ib-key">forecasting_instruction</span> <span class="ib-arrow">←</span> <span class="ib-val">预测任务定义</span><br>
       &nbsp;&nbsp;<span class="ib-key">future_target</span>           <span class="ib-arrow">←</span> <span class="ib-val">未来真实值（监督信号）</span><br>
-      &nbsp;&nbsp;<span class="ib-key">reasoning_trace</span>         <span class="ib-arrow">←</span> <span class="ib-val">慢思考推理过程（SFT 学习）</span><br>
-      &nbsp;&nbsp;<span class="ib-key">verification_signal</span>     <span class="ib-arrow">←</span> <span class="ib-val">可验证奖励信号（RLVR 阶段）</span><br>
+      &nbsp;&nbsp;<span class="ib-key">reasoning_trace</span>         <span class="ib-arrow">←</span> <span class="ib-val">慢思考推理过程（SFT / CoT 阶段学习）</span><br>
+      &nbsp;&nbsp;<span class="ib-key">memory_interaction_trace</span><span class="ib-arrow">←</span> <span class="ib-val">Memory 检索、证据利用与预测修正轨迹</span><br>
+      &nbsp;&nbsp;<span class="ib-key">reward_signals</span>          <span class="ib-arrow">←</span> <span class="ib-val">结果奖励 + 过程奖励 + Memory 交互反馈</span><br>
       }
     </div>
   </div>
@@ -870,96 +866,148 @@
 <!-- ═══════════════════ TRAINING ═══════════════════ -->
 <section id="training">
   <div class="container">
-    <h2 class="section-title">CPT-SFT-RLVR 三阶段训练</h2>
+    <h2 class="section-title">CastMind-Base → CastMind-SFT → CastMind-CoT → CastMind-Agentic Reasoning</h2>
     <p>
-      CastMind 的三阶段训练依次赋予模型时序感知、指令推理与可验证优化三类能力，
-      每个阶段都有清晰的目标和产出：
+      CastMind（星思）采用四个能力递进阶段：
+      <strong>CastMind-Base → CastMind-SFT → CastMind-CoT → CastMind-Agentic Reasoning</strong>。
+      Base 阶段解决"如何接入时间序列"；SFT 阶段解决"如何完成时序任务"；
+      CoT 阶段解决"如何进行慢思考预测"；Agentic Reasoning 阶段解决
+      "如何在推理过程中自主获取证据并修正判断"。
     </p>
     <div class="stage-row">
       <div class="stage-card">
-        <div class="stage-badge badge-cpt">Stage 1 · CPT</div>
-        <h4>持续预训练<br>时序空间迁移</h4>
-        <p class="stage-input">输入：大规模多领域时间序列语料</p>
+        <div class="stage-badge badge-cpt">Stage 1 · CastMind-Base</div>
+        <h4>基础模型阶段<br>接入时间序列信号</h4>
+        <p class="stage-input">输入：原始时间序列 + 多模态情境 + 跨域语料</p>
         <p>
-          目标是让预训练语言模型获得<strong>时间序列感知能力</strong>。
-          训练目标包括未来 patch 预测、masked temporal modeling、
-          temporal token prediction 和 context-series alignment，
-          使模型完成从语言空间到时间序列空间的初步迁移，
-          学习趋势、周期、异常、波动、漂移和跨变量依赖。
+          核心目标是建立"<strong>时间序列特征编码 + LLM Backbone</strong>"的模型底座。
+          原始时间序列首先经过 Time Series Feature Encoder 转换为 Embedding，
+          再输入语言模型，使模型具备跨域时间序列表征、基础预测、上下文融合和
+          多模态情境对齐能力。这个阶段重点不是复杂推理，而是让语言模型真正接入时间序列信号。
         </p>
         <div class="stage-output">输出：CastMind-Base</div>
       </div>
       <div class="stage-card">
-        <div class="stage-badge badge-sft">Stage 2 · SFT</div>
-        <h4>监督微调<br>慢思考指令推理</h4>
-        <p class="stage-input">输入：情境感知时间序列指令样本 + 推理轨迹</p>
+        <div class="stage-badge badge-sft">Stage 2 · CastMind-SFT</div>
+        <h4>任务适配阶段<br>按任务分析和预测</h4>
+        <p class="stage-input">输入：监督微调任务样本 + 预测与解释示范</p>
         <p>
-          目标是让模型学会按指令完成时间序列预测、解释与推理。
-          SFT 数据涵盖趋势分析、周期判断、异常识别、情境归因、
-          不确定性分析、反事实预测和预测自验证等高质量指令样本。
-          CastMind 由此从时序感知模型转化为
-          <strong>能进行慢思考推理的时序指令模型</strong>。
+          核心目标是让模型从"能表示时间序列"进一步变成
+          "<strong>能按照任务要求分析和预测时间序列</strong>"。
+          通过监督微调，模型学习趋势分析、预测生成、异常解释、外生变量理解、
+          Meta Data 融合、领域描述理解等能力，解决指令跟随、任务格式、预测输出和基础解释问题。
         </p>
-        <div class="stage-output">输出：CastMind-Instruct</div>
+        <div class="stage-output">输出：CastMind-SFT</div>
       </div>
       <div class="stage-card">
-        <div class="stage-badge badge-rlvr">Stage 3 · RLVR</div>
-        <h4>可验证奖励强化学习<br>预测质量优化</h4>
-        <p class="stage-input">输入：预测结果 + 真实未来值 + 可验证奖励信号</p>
+        <div class="stage-badge badge-cot">Stage 3 · CastMind-CoT</div>
+        <h4>慢思考推理阶段<br>推理式预测</h4>
+        <p class="stage-input">输入：长思维链时序推理样本 + 推理质量反馈</p>
         <p>
-          时间序列预测天然具有可验证信号：预测误差、趋势方向正确性、
-          区间覆盖率、分布校准程度、情境一致性和鲁棒性。
-          RLVR 阶段基于这些 verifier 构建奖励函数，
-          是 CastMind <strong>区别于普通 LLM-based TSF</strong> 的关键环节——
-          将慢思考推理与可验证预测结果真正连接。
+          核心目标是强化模型的<strong>长思维链时序推理能力</strong>。
+          模型不只是直接输出预测结果，而是能够围绕趋势变化、周期波动、异常扰动、
+          事件影响、情境变化和未来演化路径展开分步分析。
+          这个阶段把时间序列预测从"模式外推"推进到"推理式预测"。
         </p>
-        <div class="stage-output">输出：CastMind-R1</div>
+        <div class="stage-output">输出：CastMind-CoT</div>
+      </div>
+      <div class="stage-card">
+        <div class="stage-badge badge-agentic">Stage 4 · CastMind-Agentic Reasoning</div>
+        <h4>自主交互推理阶段<br>Memory-interactive reasoning</h4>
+        <p class="stage-input">输入：Memory 环境交互 + 证据检索与修正轨迹</p>
+        <p>
+          核心目标是让 CastMind（星思）具备类似 Search-o1 的<strong>边思考边检索</strong>能力。
+          模型在慢思考过程中可以主动发现证据缺口，与 Memory 环境交互，
+          检索历史相似模式、领域知识、失败经验、数据分析结论和过往预测轨迹，
+          并基于新证据持续修正中间判断和最终预测。这个阶段强调 Memory-interactive reasoning，
+          不是简单工具调用。
+        </p>
+        <div class="stage-output">输出：CastMind-Agentic Reasoning</div>
       </div>
     </div>
+
+    <h3 class="sub-title">CastMind-Agentic Reasoning 的三类策略优化</h3>
+    <ul class="pillar-list">
+      <li>
+        <div class="pillar-num violet">1</div>
+        <div class="pillar-text">
+          <strong>Memory Seeking Policy · 记忆检索策略</strong>
+          <span>模型学习何时主动检索 Memory，以及应该检索哪类 Memory：相似历史片段、历史预测经验、领域规律、异常模式、失败案例、数据分析报告等。关键不是"有没有 Memory"，而是模型能否在推理中动态识别证据缺口。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num violet">2</div>
+        <div class="pillar-text">
+          <strong>Evidence Grounding Policy · 证据利用策略</strong>
+          <span>模型检索到 Memory 后，需要判断哪些证据有用、哪些证据会误导预测，并将证据合理融入慢思考推理链，而不是简单拼接到上下文中。这能减少 Memory-RAG 式幻觉，也让推理过程更可解释。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num violet">3</div>
+        <div class="pillar-text">
+          <strong>Forecast Revision Policy · 预测修正策略</strong>
+          <span>模型在获得新证据后学习更新中间判断和最终预测。例如初始判断未来负荷会上升，但 Memory 显示相似天气条件下历史负荷反而下降时，模型需要重新评估原始假设并形成新的预测路径。</span>
+        </div>
+      </li>
+    </ul>
   </div>
 </section>
 
 <!-- ═══════════════════ VERSIONS ═══════════════════ -->
 <section id="versions" class="alt">
   <div class="container">
-    <h2 class="section-title">模型版本体系</h2>
+    <h2 class="section-title">四阶段能力路线</h2>
     <p>
-      三个训练阶段对应三个递进版本，每个版本可独立评估，也可作为下一阶段的起点：
+      CastMind（星思）的四个阶段不是简单的 Base / SFT / RL 分段，
+      而是明确对应四类能力跃迁：
     </p>
     <div class="version-grid">
       <div class="version-card">
         <div class="ver-badge ver-base">CastMind-Base</div>
-        <h4>基础时序感知版本</h4>
-        <div class="ver-stage">CPT 阶段产出</div>
+        <h4>接入时间序列</h4>
+        <div class="ver-stage">基础模型阶段</div>
         <p>
-          完成时序空间迁移，具备对数值序列、趋势、周期和跨变量依赖的基础感知能力。
-          是 SFT 和 RLVR 的起点，也可用于评估持续预训练对时序建模的底层增益。
+          建立 Time Series Feature Encoder + LLM Backbone 的模型底座。
+          原始时间序列被转换为 Embedding 后输入语言模型，
+          让模型具备跨域时序表征、基础预测、上下文融合和多模态情境对齐能力。
         </p>
       </div>
       <div class="version-card">
-        <div class="ver-badge ver-instruct">CastMind-Instruct</div>
-        <h4>指令推理版本</h4>
-        <div class="ver-stage">CPT + SFT 阶段产出</div>
+        <div class="ver-badge ver-sft">CastMind-SFT</div>
+        <h4>完成时序任务</h4>
+        <div class="ver-stage">任务适配阶段</div>
         <p>
-          能够按照指令完成情境感知预测、趋势推理、异常识别和不确定性分析，
-          具备慢思考推理能力和预测解释能力。
-          可直接用于复杂预测任务和人机协同推理场景。
+          通过监督微调学习趋势分析、预测生成、异常解释、外生变量理解、
+          Meta Data 融合和领域描述理解，解决指令跟随、任务格式、预测输出和基础解释能力。
         </p>
       </div>
       <div class="version-card">
-        <div class="ver-badge ver-r1">CastMind-R1</div>
-        <h4>可验证推理版本</h4>
-        <div class="ver-stage">CPT + SFT + RLVR 阶段产出</div>
+        <div class="ver-badge ver-cot">CastMind-CoT</div>
+        <h4>慢思考预测</h4>
+        <div class="ver-stage">慢思考推理阶段</div>
         <p>
-          在指令推理能力基础上，通过可验证奖励进一步优化预测精度、推理一致性和鲁棒性。
-          预测结果更准确、更稳健、更可信，慢思考推理链与预测输出真正对齐。
+          强化长思维链时序推理能力，围绕趋势变化、周期波动、异常扰动、
+          事件影响、情境变化和未来演化路径展开分步分析，
+          将预测从模式外推推进到推理式预测。
+        </p>
+      </div>
+      <div class="version-card">
+        <div class="ver-badge ver-agentic">CastMind-Agentic Reasoning</div>
+        <h4>自主获取证据并修正判断</h4>
+        <div class="ver-stage">自主交互推理阶段</div>
+        <p>
+          在慢思考过程中主动发现证据缺口，与 Memory 环境交互，
+          检索历史相似模式、领域知识、失败经验、数据分析结论和过往预测轨迹，
+          并基于新证据持续修正中间判断和最终预测。
         </p>
       </div>
     </div>
 
     <p style="margin-top: 20px; font-size: 0.9rem; color: var(--muted);">
-      三个版本可分别对应 in-domain 和 out-of-domain 评估，
-      系统展示 CPT、SFT、RLVR 各阶段对预测能力、推理能力和可验证性带来的逐步增益。
+      这一路线可以概括为：
+      Base 阶段解决"如何接入时间序列"；SFT 阶段解决"如何完成时序任务"；
+      CoT 阶段解决"如何进行慢思考预测"；Agentic Reasoning 阶段解决
+      "如何在推理过程中自主获取证据并修正判断"。
     </p>
   </div>
 </section>
@@ -969,21 +1017,21 @@
   <div class="container">
     <h2 class="section-title">评估体系</h2>
     <p>
-      CastMind 的评估同时覆盖 <strong>in-domain 能力</strong>和 <strong>out-of-domain 泛化能力</strong>，
+      CastMind（星思）的评估同时覆盖 <strong>in-domain 能力</strong>和 <strong>out-of-domain 泛化能力</strong>，
       全面验证慢思考时序推理模型的综合性能：
     </p>
     <div class="eval-split">
       <div class="eval-half">
         <div class="eval-badge badge-in">In-domain 评估</div>
         <h4>已见领域基础预测能力</h4>
-        <p>使用现有数据集测试集，检验 CastMind 在已见领域和数据分布下的性能。</p>
+        <p>使用现有数据集测试集，检验 CastMind（星思）在已见领域和数据分布下的性能。</p>
         <ul class="feature-list">
           <li><strong>点预测指标：</strong>MAE · MSE · RMSE · sMAPE · MASE</li>
           <li><strong>概率预测指标：</strong>CRPS · Pinball Loss · Prediction Interval Coverage</li>
           <li><strong>推理质量指标：</strong>趋势解释合理性 · 情境归因一致性 · 预测—推理一致性</li>
         </ul>
         <p style="margin-top: 10px;">
-          在三个版本（Base / Instruct / R1）间进行对比，展示各训练阶段对预测与推理能力的增益。
+          在四个阶段（Base / SFT / CoT / Agentic Reasoning）间进行对比，展示各阶段对预测、推理与记忆交互能力的增益。
         </p>
       </div>
       <div class="eval-half">
@@ -1004,71 +1052,18 @@
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>评估维度</th><th>指标</th><th>适用版本</th></tr>
+          <tr><th>评估维度</th><th>指标</th><th>适用阶段</th></tr>
         </thead>
         <tbody>
-          <tr><td>数值预测准确性</td><td>MAE · MSE · RMSE · sMAPE · MASE</td><td>全部版本</td></tr>
-          <tr><td>概率预测质量</td><td>CRPS · Pinball Loss · PI Coverage</td><td>Instruct / R1</td></tr>
-          <tr><td>趋势判断能力</td><td>Direction Accuracy · Turning-point F1</td><td>全部版本</td></tr>
-          <tr><td>情境理解与推理</td><td>Context Attribution · Reasoning Faithfulness</td><td>Instruct / R1</td></tr>
-          <tr><td>预测—推理一致性</td><td>Prediction-Reasoning Consistency Score</td><td>R1</td></tr>
-          <tr><td>跨域泛化能力</td><td>Zero-shot / Few-shot 指标（FutureCast（天星台））</td><td>全部版本</td></tr>
+          <tr><td>数值预测准确性</td><td>MAE · MSE · RMSE · sMAPE · MASE</td><td>全部阶段</td></tr>
+          <tr><td>概率预测质量</td><td>CRPS · Pinball Loss · PI Coverage</td><td>SFT / CoT / Agentic Reasoning</td></tr>
+          <tr><td>趋势判断能力</td><td>Direction Accuracy · Turning-point F1</td><td>全部阶段</td></tr>
+          <tr><td>情境理解与推理</td><td>Context Attribution · Reasoning Faithfulness</td><td>SFT / CoT / Agentic Reasoning</td></tr>
+          <tr><td>预测—推理一致性</td><td>Prediction-Reasoning Consistency Score</td><td>CoT / Agentic Reasoning</td></tr>
+          <tr><td>记忆交互质量</td><td>Memory Seeking · Evidence Grounding · Forecast Revision</td><td>Agentic Reasoning</td></tr>
+          <tr><td>跨域泛化能力</td><td>Zero-shot / Few-shot 指标（FutureCast（天星台））</td><td>全部阶段</td></tr>
         </tbody>
       </table>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════ POSITION ═══════════════════ -->
-<section id="position" class="alt">
-  <div class="container">
-    <h2 class="section-title">项目定位</h2>
-    <p>
-      CastMind 在整个时间序列 AI 研究体系中扮演的角色：
-    </p>
-    <ul class="pillar-list">
-      <li>
-        <div class="pillar-num violet">1</div>
-        <div class="pillar-text">
-          <strong>连接基础模型与推理模型的新型模型形态</strong>
-          <span>CastMind 既不是传统 TSF 模型（只做数值外推），也不是通用语言模型（不懂时序），而是两者的交汇——以 LLM 为基座，以时间序列预测为核心任务，以情境感知推理为核心能力。</span>
-        </div>
-      </li>
-      <li>
-        <div class="pillar-num violet">2</div>
-        <div class="pillar-text">
-          <strong>CastFactory（铸星坊） 训练框架的旗舰模型</strong>
-          <span>CastMind 通过 CastFactory（铸星坊） 的 CPT-SFT-RLVR 三阶段训练流程构建，是 CastFactory（铸星坊） 框架能力的具体体现和实验载体，两者在技术上形成完整闭环。</span>
-        </div>
-      </li>
-      <li>
-        <div class="pillar-num violet">3</div>
-        <div class="pillar-text">
-          <strong>FutureCast（天星台） 基准的核心评测对象</strong>
-          <span>FutureCast（天星台） 的情境感知评测任务专为测试 CastMind 这类模型而设计。CastMind 的 out-of-domain 能力通过 FutureCast（天星台） 进行系统验证，两者在数据与评测上形成配套关系。</span>
-        </div>
-      </li>
-      <li>
-        <div class="pillar-num violet">4</div>
-        <div class="pillar-text">
-          <strong>推动时序预测从"快思考"到"慢思考"的范式探索</strong>
-          <span>CastMind 的 slow-thinking reasoning 能力是对当前时间序列基础模型的重要扩展，旨在让预测模型真正具备情境理解、因果归因和不确定性感知能力，而不只是更大的数值外推器。</span>
-        </div>
-      </li>
-    </ul>
-
-    <div class="claim-box">
-      <p>
-        CastMind 是一个面向情境感知时间序列预测的多模态慢思考基础模型。
-        它以预训练语言模型为基座，将连续时间序列、多模态上下文、领域知识和预测任务指令统一建模，
-        旨在让模型不仅能够预测未来数值，还能够理解历史模式、识别关键情境、推理趋势变化、
-        估计预测不确定性，并对预测结果进行自我验证。
-      </p>
-      <p class="claim-en">
-        CastMind is a multimodal slow-thinking foundation model for context-aware time series forecasting,
-        built upon pretrained language models and trained through CPT, SFT, and RLVR
-        to reason over temporal patterns, contextual evidence, and future uncertainties across domains.
-      </p>
     </div>
   </div>
 </section>
