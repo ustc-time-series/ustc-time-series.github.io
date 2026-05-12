@@ -889,7 +889,7 @@
     <p>
       CastClaw 的系统架构可以概括为四层：<strong>CastRuntime</strong> 负责执行循环与上下文管理，<strong>CastSkill</strong> 负责技能检索与策略决策，<strong>Plugin Ecosystem</strong> 承担 CastSense / CastFeat / CastZoo 的具体能力调用，而 <strong>TimeEmbed</strong> 则提供统一表征、检索与经验对齐的基础能力支撑。
     </p>
-    <img src="assets/architecture.svg" alt="CastClaw 系统架构" class="arch-img" onerror="this.style.display='none'" />
+    <img src="assets/architecture.jpeg" alt="CastClaw 系统架构" class="arch-img" onerror="this.style.display='none'" />
     <p style="margin-top: 20px;">
       <strong>关键设计决策：</strong>阶段转换由 <code>forecast_state</code> 工具在文件系统层强制执行，而非依赖智能体自律性。即使 LLM 产生幻觉也无法跳过阶段，确保流程可靠性。<code>CAST.md</code> 约束文件在每次 Agent 初始化时自动注入上下文，实现项目级行为约束的持久化。
     </p>
