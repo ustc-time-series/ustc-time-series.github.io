@@ -8,7 +8,7 @@
     name="description"
     content="USTC-AGI 研究组在时间序列分类与异常检测方向的代表性工作，涵盖判别表征学习、多模态分类理解、工业异常检测与 Agent 式异常分析。"
   />
-  <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
+  <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -155,14 +155,26 @@
     }
 
     header {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
       background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
       border-bottom: 1px solid #e8e8e8;
       padding: 72px 0 56px;
       text-align: center;
+      cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
     }
     header:hover {
       background: linear-gradient(160deg, #fdffff 50%, #e6fbf8 100%);
+    }
+    header.is-refreshing {
+      transform: scale(0.995);
+      opacity: 0.82;
+    }
+    header:focus-visible {
+      outline: 3px solid #99e6d8;
+      outline-offset: -6px;
     }
     header h1 {
       font-size: 2.3rem;
@@ -429,7 +441,7 @@
   </div>
 </nav>
 
-<header id="hero-header">
+<header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
   <div class="container">
     <h1><span class="highlight">Classification & Anomaly</span> 时间序列分类与异常检测</h1>
     <p class="header-sub">
@@ -616,6 +628,27 @@
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') closeAll();
     });
+
+    const heroHeader = document.querySelector('#hero-header');
+    const refreshPage = () => {
+      if (!heroHeader || heroHeader.classList.contains('is-refreshing')) return;
+      heroHeader.classList.add('is-refreshing');
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 160);
+    };
+
+    if (heroHeader) {
+      heroHeader.addEventListener('click', (event) => {
+        if (event.target.closest('a, button')) return;
+        refreshPage();
+      });
+      heroHeader.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        refreshPage();
+      });
+    }
   })();
 </script>
 

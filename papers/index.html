@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>论文列表 | Time Series Analysis</title>
   <meta name="description" content="USTC-AGI Time Series 方向论文列表，仅保留时间序列相关工作。" />
-  <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
+  <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     :root {
       --accent: #0f766e;
@@ -165,14 +165,26 @@
     }
 
     header {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
       background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
       border-bottom: 1px solid #e8e8e8;
       padding: 72px 0 56px;
       text-align: center;
+      cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
     }
     header:hover {
       background: linear-gradient(160deg, #fdffff 50%, #e6fbf8 100%);
+    }
+    header.is-refreshing {
+      transform: scale(0.995);
+      opacity: 0.82;
+    }
+    header:focus-visible {
+      outline: 3px solid #99e6d8;
+      outline-offset: -6px;
     }
     header h1 {
       font-size: 2.3rem;
@@ -356,7 +368,7 @@
   </div>
 </nav>
 
-<header id="hero-header">
+<header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
   <div class="container">
     <h1><span class="highlight">Time Series Publications</span> 论文列表</h1>
     <p class="header-sub">
@@ -478,6 +490,27 @@
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') closeAll();
     });
+
+    const heroHeader = document.querySelector('#hero-header');
+    const refreshPage = () => {
+      if (!heroHeader || heroHeader.classList.contains('is-refreshing')) return;
+      heroHeader.classList.add('is-refreshing');
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 160);
+    };
+
+    if (heroHeader) {
+      heroHeader.addEventListener('click', (event) => {
+        if (event.target.closest('a, button')) return;
+        refreshPage();
+      });
+      heroHeader.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        refreshPage();
+      });
+    }
   })();
 </script>
 

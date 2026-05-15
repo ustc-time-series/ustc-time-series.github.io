@@ -3,9 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Time Series Analysis 研究方向工作介绍 — 中国科学技术大学认知智能全国重点实验室 AGI 研究组</title>
+  <title>Time Series Analysis 研究方向 | USTC-AGI</title>
   <meta name="description" content="中国科学技术大学认知智能全国重点实验室 AGI 研究组：时间序列预测、异常检测、基础模型与 Agentic 分析等方向工作介绍。" />
-  <link rel="icon" href="asset/ts_logo.svg" type="image/svg+xml" />
+  <meta name="theme-color" content="#f4fbff" />
+  <meta name="application-name" content="USTC Time Series" />
+  <meta name="apple-mobile-web-app-title" content="Time Series" />
+  <meta property="og:title" content="Time Series Analysis 研究方向 | USTC-AGI" />
+  <meta property="og:description" content="聚焦时间序列预测、异常检测、基础模型与 Agentic 分析，推动时序智能的前沿探索。" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -153,48 +159,111 @@
 
     /* ── Header ────────────────────────────────────── */
     header {
-      background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        linear-gradient(90deg, rgba(15, 118, 110, 0.06) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(180deg, rgba(36, 113, 163, 0.04) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(160deg, #ffffff 42%, #f4fffc 74%, #eef7ff 100%);
       border-bottom: 1px solid #e8e8e8;
-      padding: 72px 0 56px;
+      padding: 68px 0 58px;
       text-align: center;
       cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
     }
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(110deg, transparent 0 18%, rgba(214, 0, 0, 0.08) 18% 18.4%, transparent 18.4% 32%),
+        linear-gradient(110deg, transparent 0 52%, rgba(15, 118, 110, 0.10) 52% 52.4%, transparent 52.4% 100%);
+      opacity: 0.72;
+      pointer-events: none;
+    }
     header:hover {
-      background: linear-gradient(160deg, #fdffff 50%, #e6fbf8 100%);
+      background:
+        linear-gradient(90deg, rgba(15, 118, 110, 0.07) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(180deg, rgba(36, 113, 163, 0.05) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(160deg, #fdffff 42%, #ecfbf8 74%, #e9f5ff 100%);
     }
     header.is-refreshing {
       transform: scale(0.995);
       opacity: 0.82;
     }
     header h1 {
-      font-size: 2.3rem;
+      max-width: 880px;
+      margin: 0 auto;
+      font-size: 2.26rem;
       font-weight: 800;
       line-height: 1.25;
       color: #111;
+      letter-spacing: 0;
+      text-align: center;
+      text-wrap: balance;
+      overflow-wrap: anywhere;
+    }
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: #0f766e;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      line-height: 1.4;
+      text-transform: uppercase;
     }
     .hero-logo {
       display: block;
-      width: min(420px, 72vw);
+      width: min(360px, 72vw);
       height: auto;
-      margin: 0 auto 18px;
+      margin: 0 auto 22px;
       filter: drop-shadow(0 10px 24px rgba(15, 118, 110, 0.12));
     }
     header h1 .highlight { color: #0f766e; }
     header .header-sub {
-      margin-top: 14px;
+      max-width: 740px;
+      margin: 14px auto 0;
       font-size: 0.97rem;
       color: #666;
       line-height: 1.75;
+      text-align: center;
+      text-justify: auto;
     }
     header .header-motto {
-      margin-top: 12px;
+      max-width: 920px;
+      margin: 14px auto 0;
       font-size: 1.08rem;
       font-weight: 700;
       color: #0f766e;
       line-height: 1.8;
       text-align: center;
       text-justify: auto;
+    }
+    .hero-track-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 22px;
+    }
+    .hero-track-row span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 11px;
+      border: 1px solid #c9ebe6;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #315a55;
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.35;
+      box-shadow: 0 4px 14px rgba(15, 118, 110, 0.05);
     }
 
     /* ── Main ──────────────────────────────────────── */
@@ -483,26 +552,60 @@
         align-items: flex-start;
         flex-direction: column;
         justify-content: center;
-        gap: 2px;
-        padding-top: 8px;
+        gap: 8px;
+        padding-top: 10px;
         padding-bottom: 8px;
       }
       .nav-brand { white-space: normal; }
       .nav-links {
+        width: calc(100% + 32px);
+        margin: 0 -16px;
         justify-content: flex-start;
-        flex-wrap: wrap;
-        padding-top: 2px;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 0 16px 6px;
       }
-      .nav-links a {
+      .nav-links a,
+      .nav-dropdown-toggle {
         padding: 7px 12px;
         font-size: 0.81rem;
       }
       .nav-dropdown-menu {
         left: 0;
-        min-width: 200px;
+        min-width: 220px;
       }
-      .hero-logo { width: min(320px, 82vw); margin-bottom: 14px; }
-      header h1 { font-size: 1.7rem; }
+      header { padding: 44px 0 42px; }
+      .hero-kicker {
+        margin-bottom: 12px;
+        font-size: 0.7rem;
+        letter-spacing: 0.05em;
+      }
+      .hero-logo { width: min(300px, 82vw); margin-bottom: 18px; }
+      header h1 {
+        max-width: 13em;
+        font-size: 1.68rem;
+        line-height: 1.22;
+      }
+      header h1 .highlight,
+      .hero-title-cn {
+        display: block;
+      }
+      header .header-sub {
+        font-size: 0.94rem;
+        line-height: 1.72;
+      }
+      header .header-motto {
+        font-size: 0.98rem;
+        line-height: 1.75;
+      }
+      .hero-track-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        overflow-x: visible;
+        margin-left: 0;
+        margin-right: 0;
+        padding: 0;
+      }
       .project-grid { grid-template-columns: 1fr; }
       .project-card-wide { grid-column: auto; }
       .subdomain-grid { grid-template-columns: 1fr; }
@@ -543,14 +646,21 @@
 <!-- ═══════════════════ HEADER ═══════════════════ -->
 <header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
   <div class="container">
-    <img class="hero-logo" src="asset/ts_logo_white.svg" alt="USTC Time Series Logo" />
-    <h1><span class="highlight">Time Series Analysis</span> 研究方向工作介绍</h1>
+    <p class="hero-kicker">USTC-AGI Research Group</p>
+    <img class="hero-logo" src="asset/ts_logo.svg" alt="USTC Time Series Logo" />
+    <h1><span class="highlight">Time Series Analysis</span> <span class="hero-title-cn">研究方向</span></h1>
     <p class="header-sub">
       聚焦时间序列预测、异常检测、基础模型与 Agentic 分析，推动时序智能的前沿探索
     </p>
     <p class="header-motto">
       星思启时序认知之智，铸星坊铸预测之器，智多星谋自主之研，观星阁观未来之势，天星台立评测之尺。
     </p>
+    <div class="hero-track-row" aria-label="研究方向覆盖范围">
+      <span>Forecasting</span>
+      <span>Anomaly Detection</span>
+      <span>Foundation Models</span>
+      <span>Agentic Analysis</span>
+    </div>
   </div>
 </header>
 

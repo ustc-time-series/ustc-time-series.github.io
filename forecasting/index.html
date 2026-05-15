@@ -8,7 +8,7 @@
     name="description"
     content="USTC-AGI 研究组在时间序列预测方向的工作探索，涵盖深度表征学习、多模态语义理解、慢思考认知推理与智能体自主交互。"
   />
-  <link rel="icon" href="../asset/ts_logo.svg" type="image/svg+xml" />
+  <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -155,14 +155,26 @@
     }
 
     header {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
       background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
       border-bottom: 1px solid #e8e8e8;
       padding: 72px 0 56px;
       text-align: center;
+      cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
     }
     header:hover {
       background: linear-gradient(160deg, #fdffff 50%, #e6fbf8 100%);
+    }
+    header.is-refreshing {
+      transform: scale(0.995);
+      opacity: 0.82;
+    }
+    header:focus-visible {
+      outline: 3px solid #99e6d8;
+      outline-offset: -6px;
     }
     header h1 {
       font-size: 2.3rem;
@@ -460,7 +472,7 @@
 </nav>
 
 <!-- ═══════════════════ HEADER ═══════════════════ -->
-<header id="hero-header">
+<header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
   <div class="container">
     <h1><span class="highlight">Time Series Forecasting</span> 方向工作介绍</h1>
     <p class="header-sub">
@@ -646,6 +658,27 @@
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') closeAll();
     });
+
+    const heroHeader = document.querySelector('#hero-header');
+    const refreshPage = () => {
+      if (!heroHeader || heroHeader.classList.contains('is-refreshing')) return;
+      heroHeader.classList.add('is-refreshing');
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 160);
+    };
+
+    if (heroHeader) {
+      heroHeader.addEventListener('click', (event) => {
+        if (event.target.closest('a, button')) return;
+        refreshPage();
+      });
+      heroHeader.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        refreshPage();
+      });
+    }
   })();
 </script>
 
