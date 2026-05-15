@@ -165,10 +165,23 @@
     }
 
     header {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
       background: linear-gradient(160deg, #ffffff 45%, #effdf9 100%);
       border-bottom: 1px solid #e8e8e8;
       padding: 74px 0 58px;
       text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    header.is-refreshing {
+      transform: scale(0.995);
+      opacity: 0.82;
+    }
+    header:focus-visible {
+      outline: 3px solid #99e6d8;
+      outline-offset: -6px;
     }
     .eyebrow {
       display: inline-flex;
@@ -484,7 +497,7 @@
   </div>
 </nav>
 
-<header id="hero-header">
+<header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
   <div class="container">
     <h1><span class="highlight">StarCast</span> 逐星方舟</h1>
     <p class="header-sub">
@@ -692,6 +705,27 @@
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') closeAll();
     });
+
+    const heroHeader = document.querySelector('#hero-header');
+    const refreshPage = () => {
+      if (!heroHeader || heroHeader.classList.contains('is-refreshing')) return;
+      heroHeader.classList.add('is-refreshing');
+      window.setTimeout(() => {
+        window.location.reload();
+      }, 160);
+    };
+
+    if (heroHeader) {
+      heroHeader.addEventListener('click', (event) => {
+        if (event.target.closest('a, button')) return;
+        refreshPage();
+      });
+      heroHeader.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        refreshPage();
+      });
+    }
   })();
 </script>
 
