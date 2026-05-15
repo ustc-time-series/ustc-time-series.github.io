@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Time Series Analysis 研究方向 | USTC-AGI</title>
   <meta name="description" content="中国科学技术大学认知智能全国重点实验室 AGI 研究组：时间序列预测、异常检测、基础模型与 Agentic 分析等方向工作介绍。" />
-  <meta name="theme-color" content="#f4fbff" />
+  <meta name="theme-color" content="#f4fbf8" />
   <meta name="application-name" content="USTC Time Series" />
   <meta name="apple-mobile-web-app-title" content="Time Series" />
   <meta property="og:title" content="Time Series Analysis 研究方向 | USTC-AGI" />
@@ -163,9 +163,9 @@
       overflow: hidden;
       isolation: isolate;
       background:
-        linear-gradient(90deg, rgba(15, 118, 110, 0.06) 1px, transparent 1px) 0 0 / 42px 42px,
-        linear-gradient(180deg, rgba(36, 113, 163, 0.04) 1px, transparent 1px) 0 0 / 42px 42px,
-        linear-gradient(160deg, #ffffff 42%, #f4fffc 74%, #eef7ff 100%);
+        linear-gradient(90deg, rgba(15, 118, 110, 0.055) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(180deg, rgba(15, 118, 110, 0.035) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(160deg, #ffffff 42%, #f4fffc 74%, #f1faf7 100%);
       border-bottom: 1px solid #e8e8e8;
       padding: 68px 0 58px;
       text-align: center;
@@ -178,16 +178,16 @@
       inset: 0;
       z-index: -1;
       background:
-        linear-gradient(110deg, transparent 0 18%, rgba(214, 0, 0, 0.08) 18% 18.4%, transparent 18.4% 32%),
+        linear-gradient(110deg, transparent 0 18%, rgba(16, 16, 16, 0.035) 18% 18.4%, transparent 18.4% 32%),
         linear-gradient(110deg, transparent 0 52%, rgba(15, 118, 110, 0.10) 52% 52.4%, transparent 52.4% 100%);
       opacity: 0.72;
       pointer-events: none;
     }
     header:hover {
       background:
-        linear-gradient(90deg, rgba(15, 118, 110, 0.07) 1px, transparent 1px) 0 0 / 42px 42px,
-        linear-gradient(180deg, rgba(36, 113, 163, 0.05) 1px, transparent 1px) 0 0 / 42px 42px,
-        linear-gradient(160deg, #fdffff 42%, #ecfbf8 74%, #e9f5ff 100%);
+        linear-gradient(90deg, rgba(15, 118, 110, 0.065) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(180deg, rgba(15, 118, 110, 0.045) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(160deg, #fdffff 42%, #ecfbf8 74%, #edf8f5 100%);
     }
     header.is-refreshing {
       transform: scale(0.995);
@@ -323,17 +323,19 @@
       width: 100%;
       flex-shrink: 0;
     }
-    .accent-forecast   { background: linear-gradient(90deg, #0f766e, #14b8a6); }
-    .accent-anomaly    { background: linear-gradient(90deg, #d35400, #f97316); }
-    .accent-foundation { background: linear-gradient(90deg, #d35400, #f39c12); }
-    .accent-systems    { background: linear-gradient(90deg, #1e8449, #27ae60); }
-    .accent-castclaw   { background: linear-gradient(90deg, #0f766e, #14b8a6); }
-    .accent-castfactory { background: linear-gradient(90deg, #0f766e, #14b8a6); }
-    .accent-futurecast { background: linear-gradient(90deg, #1a56db, #3b82f6); }
-    .accent-neoresearch { background: linear-gradient(90deg, #2563eb, #14b8a6); }
-    .accent-evaluation  { background: linear-gradient(90deg, #0f766e, #14b8a6); }
-    .accent-classify    { background: linear-gradient(90deg, #c0392b, #e74c3c); }
-    .accent-castmind    { background: linear-gradient(90deg, #5b21b6, #7c3aed); }
+    .accent-forecast,
+    .accent-anomaly,
+    .accent-foundation,
+    .accent-systems,
+    .accent-castclaw,
+    .accent-castfactory,
+    .accent-futurecast,
+    .accent-neoresearch,
+    .accent-evaluation,
+    .accent-classify,
+    .accent-castmind {
+      background: linear-gradient(90deg, #101010, #0f766e);
+    }
 
     .project-card-wide {
       grid-column: span 2;
@@ -408,12 +410,12 @@
       background: linear-gradient(180deg, #fbfefe 0%, #f0fdfb 100%);
     }
     .subdomain-card.era-dl {
-      border-color: #c5d8f5;
-      background: linear-gradient(180deg, #fafbff 0%, #eef4ff 100%);
+      border-color: #c2e8e3;
+      background: linear-gradient(180deg, #fbfefe 0%, #f0fdfb 100%);
     }
     .subdomain-card.era-llm {
-      border-color: #ddd0f8;
-      background: linear-gradient(180deg, #fdfaff 0%, #f5efff 100%);
+      border-color: #c2e8e3;
+      background: linear-gradient(180deg, #fbfefe 0%, #f0fdfb 100%);
     }
     .subdomain-label {
       display: inline-flex;
@@ -428,14 +430,14 @@
       letter-spacing: 0.04em;
     }
     .era-dl .subdomain-label {
-      border-color: #a8c4f0;
-      background: #ddeaff;
-      color: #1d4ed8;
+      border-color: #99e6d8;
+      background: #e6fbf7;
+      color: #0f766e;
     }
     .era-llm .subdomain-label {
-      border-color: #c4aaf5;
-      background: #ede5ff;
-      color: #6d28d9;
+      border-color: #99e6d8;
+      background: #e6fbf7;
+      color: #0f766e;
     }
     .subdomain-header {
       display: flex;
@@ -490,30 +492,38 @@
       color: #0f766e;
       text-decoration: none;
     }
-    .btn-enter-forecast   { background: #0f766e; color: #fff; border-color: #0f766e; }
+    .btn-enter-forecast,
+    .btn-enter-classify,
+    .btn-enter-anomaly,
+    .btn-enter-foundation,
+    .btn-enter-systems,
+    .btn-enter-evaluation,
+    .btn-enter-context,
+    .btn-enter-castmind {
+      background: #0f766e;
+      color: #fff;
+      border-color: #0f766e;
+    }
     .btn-enter-forecast:hover,
-    .btn-enter-forecast:active   { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
-    .btn-enter-classify   { background: #c0392b; color: #fff; border-color: #c0392b; }
+    .btn-enter-forecast:active,
     .btn-enter-classify:hover,
-    .btn-enter-classify:active   { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
-    .btn-enter-anomaly    { background: #d35400; color: #fff; border-color: #d35400; }
+    .btn-enter-classify:active,
     .btn-enter-anomaly:hover,
-    .btn-enter-anomaly:active    { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
-    .btn-enter-foundation { background: #d35400; color: #fff; border-color: #d35400; }
+    .btn-enter-anomaly:active,
     .btn-enter-foundation:hover,
-    .btn-enter-foundation:active { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
-    .btn-enter-systems    { background: #1e8449; color: #fff; border-color: #1e8449; }
+    .btn-enter-foundation:active,
     .btn-enter-systems:hover,
-    .btn-enter-systems:active    { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
-    .btn-enter-evaluation { background: #b9770e; color: #fff; border-color: #b9770e; }
+    .btn-enter-systems:active,
     .btn-enter-evaluation:hover,
-    .btn-enter-evaluation:active { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
-    .btn-enter-context { background: #0f766e; color: #fff; border-color: #0f766e; }
+    .btn-enter-evaluation:active,
     .btn-enter-context:hover,
-    .btn-enter-context:active { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }
-    .btn-enter-castmind { background: #5b21b6; color: #fff; border-color: #5b21b6; }
+    .btn-enter-context:active,
     .btn-enter-castmind:hover,
-    .btn-enter-castmind:active { background: #f5f3ff; border-color: #c4b5fd; color: #5b21b6; }
+    .btn-enter-castmind:active {
+      background: #f0fdf9;
+      border-color: #99e6d8;
+      color: #0f766e;
+    }
     .btn-outline { background: #fff; color: #444; border-color: #d8d8d8; }
     .btn-outline:hover,
     .btn-outline:active { background: #f0fdf9; border-color: #99e6d8; color: #0f766e; }

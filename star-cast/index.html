@@ -11,6 +11,10 @@
       --accent: #0f766e;
       --accent-dark: #0b5f59;
       --accent-light: #e6fbf7;
+      --ink: #101010;
+      --green-soft: #f0fdf9;
+      --green-line: #b9e8df;
+      --green-tint: rgba(15, 118, 110, 0.10);
       --text: #1a1a1a;
       --text-muted: #5b5b5b;
       --border: #e6e6e2;
@@ -168,7 +172,10 @@
       position: relative;
       overflow: hidden;
       isolation: isolate;
-      background: linear-gradient(160deg, #ffffff 45%, #effdf9 100%);
+      background:
+        linear-gradient(90deg, rgba(15, 118, 110, 0.045) 1px, transparent 1px) 0 0 / 44px 44px,
+        linear-gradient(180deg, rgba(15, 118, 110, 0.035) 1px, transparent 1px) 0 0 / 44px 44px,
+        linear-gradient(160deg, #ffffff 44%, #f6fffc 76%, #f1faf7 100%);
       border-bottom: 1px solid #e8e8e8;
       padding: 74px 0 58px;
       text-align: center;
@@ -189,7 +196,7 @@
       gap: 8px;
       margin-bottom: 14px;
       padding: 6px 12px;
-      border: 1px solid #b9e8df;
+      border: 1px solid var(--green-line);
       border-radius: 999px;
       background: rgba(240, 253, 249, 0.82);
       color: var(--accent-dark);
@@ -200,7 +207,7 @@
       font-size: clamp(2rem, 5vw, 3.25rem);
       font-weight: 900;
       line-height: 1.15;
-      color: #101010;
+      color: var(--ink);
       text-align: center;
     }
     header h1 .highlight { color: var(--accent); }
@@ -219,9 +226,9 @@
     }
     .systems-shell {
       background: rgba(255, 255, 255, 0.92);
-      border: 1px solid var(--border);
+      border: 1px solid #dcebe6;
       border-radius: 20px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 10px 28px rgba(15, 118, 110, 0.055);
       overflow: hidden;
     }
     .systems-intro {
@@ -235,7 +242,7 @@
     .intro-copy h2 {
       font-size: 1.58rem;
       font-weight: 900;
-      color: #111;
+      color: var(--ink);
       margin-bottom: 12px;
       text-align: left;
     }
@@ -281,10 +288,10 @@
       position: relative;
       min-height: 340px;
       padding: 26px;
-      border: 1px solid #e7e7e2;
+      border: 1px solid #e0ebe7;
       border-radius: 18px;
       background: var(--card);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.035);
+      box-shadow: 0 8px 18px rgba(15, 118, 110, 0.04);
       overflow: hidden;
     }
     .project-card::before {
@@ -292,13 +299,13 @@
       position: absolute;
       inset: 0 0 auto 0;
       height: 5px;
-      background: var(--card-accent, linear-gradient(90deg, #0f766e, #14b8a6));
+      background: var(--card-accent, linear-gradient(90deg, #101010, #0f766e));
     }
     .project-card h3 {
       margin-top: 8px;
       font-size: 1.45rem;
       font-weight: 900;
-      color: #111;
+      color: var(--ink);
       text-align: left;
     }
     .project-card p {
@@ -314,7 +321,7 @@
       padding: 6px 11px;
       border-radius: 999px;
       border: 1px solid #d8eee9;
-      background: #f0fdf9;
+      background: var(--green-soft);
       color: var(--accent-dark);
       font-size: 0.78rem;
       font-weight: 800;
@@ -328,14 +335,18 @@
     }
     .feature-list li {
       padding: 11px 12px;
-      border: 1px solid #eeeeea;
+      border: 1px solid #e3ebe7;
       border-radius: 12px;
-      background: var(--card-alt);
+      background: #fbfdfb;
       color: #4e4e4e;
       font-size: 0.88rem;
       font-weight: 700;
       line-height: 1.55;
       text-align: left;
+    }
+    .feature-list strong {
+      color: var(--accent-dark);
+      font-weight: 900;
     }
     .project-link {
       display: inline-flex;
@@ -345,7 +356,7 @@
       padding: 10px 14px;
       border-radius: 999px;
       border: 1px solid #b9e8df;
-      background: #f0fdf9;
+      background: var(--green-soft);
       color: var(--accent-dark);
       font-size: 0.86rem;
       font-weight: 800;
@@ -365,16 +376,18 @@
       background: #f6f6f4;
       border-color: #ddddda;
     }
-    .project-card.castclaw { --card-accent: linear-gradient(90deg, #0f766e, #14b8a6); }
-    .project-card.neoresearch { --card-accent: linear-gradient(90deg, #2563eb, #14b8a6); }
-    .project-card.factory { --card-accent: linear-gradient(90deg, #0f766e, #14b8a6); }
-    .project-card.eval { --card-accent: linear-gradient(90deg, #1a56db, #3b82f6); }
-    .project-card.castmind { --card-accent: linear-gradient(90deg, #5b21b6, #7c3aed); }
+    .project-card.castclaw,
+    .project-card.neoresearch,
+    .project-card.factory,
+    .project-card.eval,
+    .project-card.castmind {
+      --card-accent: linear-gradient(90deg, #101010, #0f766e);
+    }
     .project-card.full-width { grid-column: 1 / -1; min-height: auto; }
     .project-tag.violet {
-      border-color: #ddd6fe;
-      background: #f5f3ff;
-      color: #6d28d9;
+      border-color: #d8eee9;
+      background: var(--green-soft);
+      color: var(--accent-dark);
     }
     .systems-shell + .systems-shell {
       margin-top: 28px;
@@ -391,10 +404,10 @@
       align-items: center;
       gap: 8px;
       padding: 10px 14px;
-      border: 1px solid #e5e5df;
+      border: 1px solid #dcebe6;
       border-radius: 999px;
-      background: #fff;
-      color: #606060;
+      background: #fbfdfb;
+      color: #465b57;
       font-size: 0.86rem;
       font-weight: 700;
     }
@@ -403,7 +416,7 @@
       height: 8px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.10);
+      box-shadow: 0 0 0 4px var(--green-tint);
     }
 
     footer {
@@ -529,26 +542,24 @@
           <span class="project-tag violet">Time Series Foundation Model</span>
           <h3>CastMind（星思）</h3>
           <p>
-            以语言大模型为统一认知 Backbone，探索时间序列基础模型的新范式：
-            原始时序经由 Time Series Feature Encoder 编码为 Temporal Embedding 后送入 LLM，
-            配合多模态情境上下文，在<strong>长思维链慢思考过程中动态发现证据缺口</strong>、
-            访问 Memory、检索历史相似模式，并逐步修正预测判断——
-            类比 Search-o1 的"边思考边检索"，实现<strong>交互式时序认知推理</strong>。
+            CastMind（星思）希望把时间序列预测从一次性的数值外推，推进到可诊断、可解释、可修正的认知推理过程。
+            模型需要同时具备时序结构感知、外部情境理解、Long CoT 式慢思考分析，以及与 Memory 环境交互的经验条件推理能力。
           </p>
           <ul class="feature-list">
-            <li>多模态情境感知：时序 + Meta Data + 外生变量 + 领域知识统一建模</li>
-            <li>慢思考中动态证据发现：推理过程中主动感知缺口、访问 Memory、修正判断</li>
-            <li>CPT-SFT-RL 三阶段训练：跨域时序感知 → 指令推理 → 可验证奖励优化</li>
+            <li><strong>时序感知能力：</strong>理解趋势、周期、波动、异常、突变和季节性等基础结构，对历史序列进行诊断，而不只是直接输出预测值。</li>
+            <li><strong>情境理解能力：</strong>理解天气、节假日、区域活动、突发新闻和产业状态等外部因素与预测目标之间的语义关系和影响机制。</li>
+            <li><strong>慢思考推理能力：</strong>围绕当前趋势、潜在扰动、未来可能路径和不确定性来源进行分步分析，区别于 fast-thinking 式一次性预测。</li>
+            <li><strong>记忆交互能力：</strong>检索历史相似模式、失败预测经验、领域规律、推理轨迹和过往分析结论，形成 experience-conditioned reasoning。</li>
           </ul>
           <span class="project-link disabled">主页 Coming Soon</span>
         </article>
       </div>
 
       <div class="status-row" aria-label="模型能力标签">
-        <span class="status-chip"><span class="status-dot"></span>Interactive Slow Thinking</span>
-        <span class="status-chip"><span class="status-dot"></span>Memory Retrieval</span>
-        <span class="status-chip"><span class="status-dot"></span>Feature Encoder + LLM Backbone</span>
-        <span class="status-chip"><span class="status-dot"></span>CPT · SFT · RL</span>
+        <span class="status-chip"><span class="status-dot"></span>时序感知</span>
+        <span class="status-chip"><span class="status-dot"></span>情境理解</span>
+        <span class="status-chip"><span class="status-dot"></span>慢思考推理</span>
+        <span class="status-chip"><span class="status-dot"></span>记忆交互</span>
       </div>
     </section>
 
