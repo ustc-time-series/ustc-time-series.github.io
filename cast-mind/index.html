@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CastMind（星思） — 时间序列认知大模型</title>
-  <meta name="description" content="CastMind（星思）是一个时间序列认知大模型。它不仅学习时间序列中的数值模式，还进一步理解序列所处的情境上下文，分析趋势变化背后的原因，并通过慢思考推理与记忆交互不断获取证据、修正预测判断，从而实现更可靠、更可解释和更具适应性的时序预测。" />
+  <title>CastMind（星思） — Agentic 时间序列认知大模型</title>
+  <meta name="description" content="CastMind（星思）是面向复杂时序场景的 Agentic 时间序列认知大模型：以 Feature Encoder 原生建模动态数值序列信息，融入 Context-aware Feature，并通过 Agentic Reasoning 与环境自主多轮交互、上下文推理和预测修正。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -877,21 +877,21 @@
 <header id="heroHeader">
   <div class="hero-refresh-sheen" aria-hidden="true"></div>
   <div class="container">
-    <div class="hero-kicker">Memory-interactive slow thinking</div>
+    <div class="hero-kicker">Feature-native · Context-aware · Agentic</div>
     <h1 class="hero-clickable">
       <span class="hero-title-main"><span class="cm">CastMind（星思）</span></span>
-      <span class="hero-title-sub">时间序列认知大模型</span>
+      <span class="hero-title-sub">Agentic 时间序列认知大模型</span>
     </h1>
     <p class="subtitle hero-clickable">
-      面向复杂时序场景的新型基础模型——不仅学习时间序列中的数值模式，
-      还理解序列所处的情境上下文，分析趋势变化背后的原因，
-      并通过<strong>慢思考推理与记忆交互</strong>不断获取证据、修正预测判断。
+      面向复杂时序场景的新型基础模型——以 <strong>Feature Encoder 原生建模动态数值序列信息</strong>，
+      融入 <strong>Context-aware Feature</strong>，并通过 <strong>Agentic Reasoning</strong>
+      与环境自主多轮交互、上下文推理和预测修正。
     </p>
     <div class="hero-chip-row" aria-label="CastMind 核心能力标签">
-      <span class="hero-chip">Time Series Feature Encoder</span>
-      <span class="hero-chip">LLM Backbone</span>
-      <span class="hero-chip">Chain-of-Thought Forecasting</span>
-      <span class="hero-chip">Memory-interactive Reasoning</span>
+      <span class="hero-chip">Feature Encoder 原生时序建模</span>
+      <span class="hero-chip">Context-aware Feature</span>
+      <span class="hero-chip">Agentic Reasoning</span>
+      <span class="hero-chip">Autonomous Multi-turn Interaction</span>
     </div>
   </div>
 </header>
@@ -901,7 +901,7 @@
   <div class="container">
     <a href="../" class="nav-home">首页</a>
     <a href="#intro">简介</a>
-    <a href="#features">五大能力</a>
+    <a href="#features">三大亮点</a>
     <a href="#tech">核心技术</a>
     <a href="#training">训练范式</a>
     <a href="#versions">能力路线</a>
@@ -915,16 +915,14 @@
     <div class="tldr">
       <div class="brief-main">
         <strong>一句话定位：</strong>
-        CastMind（星思）是一个<strong>时间序列认知大模型</strong>：
-        既学习时间序列中的数值模式，也理解序列所处的情境上下文，
-        并通过<strong>慢思考推理与记忆交互</strong>不断获取证据、修正预测判断。
+        CastMind（星思）是一个<strong>Agentic 时间序列认知大模型</strong>：
+        用 Feature Encoder 原生建模动态数值序列，融入 Context-aware Feature，
+        并通过 Agentic Reasoning 与环境自主多轮交互、上下文推理和预测修正。
       </div>
-      <div class="brief-tags" aria-label="CastMind 五项核心能力">
-        <span class="brief-tag">感知与理解</span>
-        <span class="brief-tag">情境推理</span>
-        <span class="brief-tag">慢思考推理</span>
-        <span class="brief-tag">记忆交互</span>
-        <span class="brief-tag">持续进化</span>
+      <div class="brief-tags" aria-label="CastMind 三项核心亮点">
+        <span class="brief-tag">Feature Encoder</span>
+        <span class="brief-tag">Context-aware Feature</span>
+        <span class="brief-tag">Agentic Reasoning</span>
       </div>
     </div>
 
@@ -933,20 +931,19 @@
         <h2 class="section-title">项目简介</h2>
         <p class="section-lead">
           <strong>CastMind（星思）</strong>是一类面向复杂时序场景的新型基础模型。
-          传统时序模型局限于从历史数值中提取模式，而 CastMind（星思）的目标更进一步：
-          让模型能够<strong>理解序列所处的情境上下文</strong>——包括 Meta Data、外生变量、
-          协变量、领域描述与事件信息——并在此基础上<strong>分析趋势变化背后的原因</strong>，
-          理解天气变化如何影响电力负荷，手术中的生理指标如何预示术后风险，
-          节假日与政策事件如何驱动交通和消费行为。
+          它不把数值序列简单文本化，而是以 <strong>Feature Encoder 原生建模动态数值序列</strong>，
+          将连续变化、局部波动、周期结构、突变和异常转化为可被 LLM 使用的时序表示。
+          在此基础上，CastMind（星思）进一步融入 <strong>Context-aware Feature</strong>——包括
+          Meta Data、外生变量、协变量、领域描述、事件信息和环境状态——让预测建立在序列本身
+          与其所处情境的联合理解上。
         </p>
         <p>
-          CastMind（星思）的关键范式是将 <strong>Search-o1 式的"边思考边检索"</strong>
-          扩展到时间序列预测：模型不是一次性输出预测，而是在<strong>慢思考过程中</strong>
-          围绕趋势变化、异常原因、未来演化路径与不确定性展开分步分析，
-          动态发现证据缺口，主动与 Memory 环境交互——
-          检索历史相似模式、领域规律、失败经验与过往数据分析结论——
-          并据此<strong>持续补充证据、修正预测判断</strong>，
-          实现从数值拟合到情境认知推理的范式跨越。
+          CastMind（星思）的关键范式是 <strong>Agentic Reasoning</strong>：
+          模型不是一次性输出预测，而是在推理过程中动态识别证据缺口，
+          与 Memory、检索器、外部变量服务和任务环境进行自主多轮交互。
+          它可以检索历史相似模式、领域规律、失败经验和过往数据分析结论，
+          再把新证据纳入上下文推理，持续修正中间判断和最终预测，
+          实现从数值拟合到情境认知与自主决策的范式升级。
         </p>
       </div>
 
@@ -954,37 +951,37 @@
         <div class="insight-label">Model Path</div>
         <div class="position-strip">
           <div class="ps-item">
-            <div class="ps-label">编码层</div>
-            <div class="ps-val">Time Series Feature Encoder</div>
+            <div class="ps-label">序列层</div>
+            <div class="ps-val">Feature Encoder</div>
           </div>
           <div class="ps-connector">→</div>
           <div class="ps-item">
-            <div class="ps-label">表示层</div>
-            <div class="ps-val">Temporal Embedding</div>
+            <div class="ps-label">情境层</div>
+            <div class="ps-val">Context-aware Feature</div>
           </div>
           <div class="ps-connector">→</div>
           <div class="ps-item highlighted">
-            <div class="ps-label">推理层</div>
-            <div class="ps-val">LLM Backbone + Memory 交互</div>
+            <div class="ps-label">行动层</div>
+            <div class="ps-val">Agentic Reasoning</div>
           </div>
         </div>
 
         <div class="stat-row">
           <div class="stat-box">
-            <div class="stat-num">5</div>
-            <div class="stat-label">核心能力<br>感知 · 推理 · 记忆</div>
+            <div class="stat-num">3</div>
+            <div class="stat-label">核心亮点<br>Encoder · Context · Agent</div>
           </div>
           <div class="stat-box">
             <div class="stat-num">4</div>
-            <div class="stat-label">能力阶段<br>Base · SFT · CoT</div>
+            <div class="stat-label">能力阶段<br>Base · SFT · Reasoning</div>
           </div>
           <div class="stat-box">
-            <div class="stat-num">3</div>
-            <div class="stat-label">Agentic 策略<br>Seeking · Revision</div>
+            <div class="stat-num">多轮</div>
+            <div class="stat-label">环境交互<br>Memory · Tools · Context</div>
           </div>
           <div class="stat-box">
             <div class="stat-num">∞</div>
-            <div class="stat-label">持续进化<br>CPT · SFT · RL</div>
+            <div class="stat-label">上下文推理<br>Evidence · Revision</div>
           </div>
         </div>
       </aside>
@@ -992,62 +989,42 @@
   </div>
 </section>
 
-<!-- ═══════════════════ FIVE CAPABILITIES ═══════════════════ -->
+<!-- ═══════════════════ CORE HIGHLIGHTS ═══════════════════ -->
 <section id="features">
   <div class="container">
-    <h2 class="section-title">五大核心能力</h2>
+    <h2 class="section-title">三大核心亮点</h2>
     <p class="section-lead">
-      时间序列认知大模型围绕复杂真实时序场景，构建从感知、推理到自主进化的五大核心能力：
+      CastMind（星思）的页面表达聚焦三项差异化能力：原生时序特征编码、情境感知特征融合和可与环境交互的 Agentic Reasoning。
     </p>
     <div class="cap-grid">
       <div class="cap-card">
-        <div class="cap-icon">👁️</div>
-        <h4>感知与理解</h4>
-        <div class="cap-focus">Perception &amp; Understanding</div>
+        <div class="cap-icon">⌁</div>
+        <h4>Feature Encoder 原生建模动态数值序列</h4>
+        <div class="cap-focus">Feature-native Temporal Modeling</div>
         <p>
-          模型能够理解原始时间序列的趋势、周期、波动、异常、突变等结构特征，
-          同时理解 Meta Data、外生变量、协变量、领域描述与事件信息等多源情境上下文，
-          形成对序列本身与其所处环境的整体认知。
+          动态数值序列不再被直接压平成文本 token。CastMind（星思）通过 Feature Encoder
+          原生建模连续值、局部波动、周期结构、突变点和异常模式，形成
+          <code>dynamic_numeric_sequence</code> 表示，再交给 LLM Backbone 进行预测和推理。
         </p>
       </div>
       <div class="cap-card">
-        <div class="cap-icon">🔗</div>
-        <h4>情境推理</h4>
-        <div class="cap-focus">Contextual Reasoning</div>
+        <div class="cap-icon">◇</div>
+        <h4>融入 Context-aware Feature</h4>
+        <div class="cap-focus">Context-aware Feature Fusion</div>
         <p>
-          模型能够分析情境因素如何影响未来趋势：天气变化如何驱动电力负荷，
-          手术中的生理指标变化如何预示术后风险，节假日与政策事件如何塑造
-          交通流量和消费行为——从情境原因出发，推断趋势走向。
+          每个预测 instance 同时包含可见的上下文特征：metadata、外生变量、协变量、事件、日历、
+          领域描述和环境状态。模型学习如何把 <code>context_aware_features</code>
+          与时序表示对齐，从情境原因解释趋势变化。
         </p>
       </div>
       <div class="cap-card">
-        <div class="cap-icon">🧠</div>
-        <h4>慢思考推理</h4>
-        <div class="cap-focus">Slow Thinking Reasoning</div>
+        <div class="cap-icon">↻</div>
+        <h4>Agentic Reasoning：自主多轮交互与上下文推理</h4>
+        <div class="cap-focus">Agentic Reasoning</div>
         <p>
-          模型不是一次性输出预测，而是围绕趋势变化、异常原因、未来演化路径与
-          不确定性展开分步分析，在长思维链中逐步构建预测判断，
-          类比 Search-o1 的"边思考边推理"范式。
-        </p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-icon">🗄️</div>
-        <h4>记忆交互</h4>
-        <div class="cap-focus">Memory Interaction</div>
-        <p>
-          模型可以与 Memory 环境交互，在慢思考过程中主动检索历史相似模式、
-          领域规律、失败经验与过往数据分析结论，将检索证据融入推理上下文，
-          并据此持续补充证据、修正预测判断。
-        </p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-icon">🚀</div>
-        <h4>持续进化</h4>
-        <div class="cap-focus">Continuous Evolution</div>
-        <p>
-          模型通过 CPT、SFT、CoT、Agentic Reasoning 等阶段逐步提升时序理解、
-          预测推理和自主交互能力——从基础接入到任务适配，从慢思考推理到
-          Memory 驱动的自主修正，形成可持续演进的认知能力路线。
+          模型可以在预测过程中主动判断缺失证据，调用 Memory、检索器、上下文工具或外部变量服务，
+          形成 <code>agentic_interaction_trace</code>。重点不是一次工具调用，而是可评估的自主多轮交互、
+          上下文推理和预测修正能力。
         </p>
       </div>
     </div>
@@ -1060,46 +1037,43 @@
     <h2 class="section-title">核心技术体系</h2>
     <p class="section-lead">
       CastMind（星思）的技术体系从<strong>模型、数据、算法</strong>三个层面构建，
-      三者相互支撑，共同实现慢思考时间序列推理：
+      分别对应 Feature Encoder、Context-aware Feature 与 Agentic Reasoning 三项亮点：
     </p>
     <div class="tech-grid">
       <div class="tech-card">
         <div class="tech-layer">Model Layer</div>
-        <h4>Feature Encoder + LLM Backbone 架构</h4>
+        <h4>Feature Encoder 原生动态序列建模</h4>
         <p>
-          原始时间序列首先经过独立的 <strong>Time Series Feature Encoder</strong> 编码为
-          Temporal Embedding，再送入预训练语言模型 Backbone 进行推理。
-          Feature Encoder 包含多尺度 patch 投影（soft temporal tokens）与
-          量化语义通路（趋势 / 周期 / 异常 temporal tokens）两条支路，
-          将连续数值序列转化为 LLM 可直接理解的结构化时序表示。
-          输出端结合 forecasting head 输出点预测、区间预测或概率分布。
+          原始时间序列首先经过独立的 <strong>Feature Encoder</strong>，
+          在数值空间内建模连续变化、局部波动、周期结构、突变点和异常。
+          Encoder 输出 soft temporal tokens 与结构化 temporal embeddings，
+          再送入预训练语言模型 Backbone。这样模型接收的是原生时序表示，
+          而不是把数值强行转写成自然语言片段。
         </p>
-        <div class="tech-highlight">Feature Encoder · Temporal Embedding · LLM Backbone · Forecasting Head</div>
+        <div class="tech-highlight">Feature Encoder · dynamic_numeric_sequence · Temporal Embedding · Forecasting Head</div>
       </div>
       <div class="tech-card">
         <div class="tech-layer">Data Layer</div>
-        <h4>情境感知时间序列训练 Instance</h4>
+        <h4>Context-aware Feature 训练 Instance</h4>
         <p>
-          训练数据不是普通时间序列窗口，而是<strong>情境感知的预测 instance</strong>，
-          包含历史序列、多模态情境、领域 metadata、预测指令、未来目标、
-          推理轨迹、Memory 交互轨迹和奖励信号。
-          训练语料来自能源、交通、气象、医疗、金融、工业等多个领域，
-          通过多领域、多频率、多变量混合训练获得跨域泛化能力。
-          <strong>FutureCast（天星台）</strong> 作为情境感知训练语料与 out-of-domain 评测底座。
+          训练数据不是普通时间序列窗口，而是<strong>情境感知预测 instance</strong>：
+          历史序列之外，还包含 metadata、协变量、外生变量、事件、领域描述、
+          可见性边界和环境状态。Context-aware Feature 明确回答
+          “当前预测发生在什么情境中、哪些上下文可以被模型合法使用”。
+          <strong>FutureCast（天星台）</strong> 可作为情境感知训练语料与 out-of-domain 评测底座。
         </p>
-        <div class="tech-highlight">多领域混合 · FutureCast（天星台） 底座 · Reasoning Trace · Memory Trace</div>
+        <div class="tech-highlight">context_aware_features · Metadata · Events · Exogenous Signals · Visibility</div>
       </div>
       <div class="tech-card">
         <div class="tech-layer">Algorithm Layer</div>
-        <h4>CastMind-Base · CastMind-SFT · CastMind-CoT · CastMind-Agentic Reasoning</h4>
+        <h4>Agentic Reasoning 与环境多轮交互</h4>
         <p>
-          CastMind（星思）不被简单拆成 Base / SFT / RL，而是按能力递进组织为四个阶段：
-          Base 解决"如何接入时间序列"，SFT 解决"如何完成时序任务"，
-          CoT 解决"如何进行慢思考预测"，Agentic Reasoning 解决
-          "如何在推理过程中自主获取证据并修正判断"。
-          最后阶段强调 Memory-interactive reasoning，而不是简单工具调用。
+          CastMind（星思）按能力递进组织为 Base、SFT、Structured Reasoning 与
+          Agentic Reasoning 四个阶段。最后阶段训练模型在预测过程中识别证据缺口、
+          与 Memory、检索器、上下文工具和外部变量服务进行自主多轮交互，
+          再基于环境反馈更新上下文推理和预测判断。
         </p>
-        <div class="tech-highlight">CastMind-Base → CastMind-SFT → CastMind-CoT → CastMind-Agentic Reasoning</div>
+        <div class="tech-highlight">Agentic Reasoning · Environment State · Multi-turn Interaction · Forecast Revision</div>
       </div>
     </div>
 
@@ -1107,14 +1081,14 @@
     <p>一个典型的 CastMind（星思）训练样本包含以下八类信息：</p>
     <div class="instance-box">
       Instance = {<br>
-      &nbsp;&nbsp;<span class="ib-key">historical_time_series</span> <span class="ib-arrow">←</span> <span class="ib-val">历史数值模式</span><br>
-      &nbsp;&nbsp;<span class="ib-key">multimodal_context</span>     <span class="ib-arrow">←</span> <span class="ib-val">外部情境证据（天气、事件、日历、空间…）</span><br>
+      &nbsp;&nbsp;<span class="ib-key">dynamic_numeric_sequence</span> <span class="ib-arrow">←</span> <span class="ib-val">Feature Encoder 原生建模的动态数值序列</span><br>
+      &nbsp;&nbsp;<span class="ib-key">context_aware_features</span>   <span class="ib-arrow">←</span> <span class="ib-val">外部情境证据（天气、事件、日历、空间、环境状态…）</span><br>
       &nbsp;&nbsp;<span class="ib-key">domain_metadata</span>         <span class="ib-arrow">←</span> <span class="ib-val">领域、频率、变量、单位信息</span><br>
       &nbsp;&nbsp;<span class="ib-key">forecasting_instruction</span> <span class="ib-arrow">←</span> <span class="ib-val">预测任务定义</span><br>
       &nbsp;&nbsp;<span class="ib-key">future_target</span>           <span class="ib-arrow">←</span> <span class="ib-val">未来真实值（监督信号）</span><br>
-      &nbsp;&nbsp;<span class="ib-key">reasoning_trace</span>         <span class="ib-arrow">←</span> <span class="ib-val">慢思考推理过程（SFT / CoT 阶段学习）</span><br>
-      &nbsp;&nbsp;<span class="ib-key">memory_interaction_trace</span><span class="ib-arrow">←</span> <span class="ib-val">Memory 检索、证据利用与预测修正轨迹</span><br>
-      &nbsp;&nbsp;<span class="ib-key">reward_signals</span>          <span class="ib-arrow">←</span> <span class="ib-val">结果奖励 + 过程奖励 + Memory 交互反馈</span><br>
+      &nbsp;&nbsp;<span class="ib-key">reasoning_trace</span>         <span class="ib-arrow">←</span> <span class="ib-val">结构化上下文推理过程（SFT / Reasoning 阶段学习）</span><br>
+      &nbsp;&nbsp;<span class="ib-key">agentic_interaction_trace</span><span class="ib-arrow">←</span> <span class="ib-val">环境交互、证据获取与预测修正轨迹</span><br>
+      &nbsp;&nbsp;<span class="ib-key">reward_signals</span>          <span class="ib-arrow">←</span> <span class="ib-val">结果奖励 + 推理过程奖励 + Agentic 交互反馈</span><br>
       }
     </div>
   </div>
@@ -1126,16 +1100,16 @@
     <h2 class="section-title">四阶段训练范式</h2>
     <p class="section-lead">
       CastMind（星思）采用四个能力递进阶段：
-      <strong>CastMind-Base → CastMind-SFT → CastMind-CoT → CastMind-Agentic Reasoning</strong>。
-      Base 阶段解决"如何接入时间序列"；SFT 阶段解决"如何完成时序任务"；
-      CoT 阶段解决"如何进行慢思考预测"；Agentic Reasoning 阶段解决
-      "如何在推理过程中自主获取证据并修正判断"。
+      <strong>CastMind-Base → CastMind-SFT → CastMind-Structured Reasoning → CastMind-Agentic Reasoning</strong>。
+      Base 阶段解决"如何以 Feature Encoder 接入动态数值序列"；SFT 阶段解决"如何融合 Context-aware Feature 完成时序任务"；
+      Structured Reasoning 阶段解决"如何进行上下文推理预测"；Agentic Reasoning 阶段解决
+      "如何与环境自主多轮交互、获取证据并修正判断"。
     </p>
     <div class="route-line" aria-label="CastMind 四阶段训练路线">
       <div class="route-step"><span>Stage 1</span><strong>CastMind-Base<br>接入时间序列</strong></div>
       <div class="route-step"><span>Stage 2</span><strong>CastMind-SFT<br>完成时序任务</strong></div>
-      <div class="route-step"><span>Stage 3</span><strong>CastMind-CoT<br>慢思考预测</strong></div>
-      <div class="route-step"><span>Stage 4</span><strong>Agentic Reasoning<br>自主获取证据</strong></div>
+      <div class="route-step"><span>Stage 3</span><strong>Structured Reasoning<br>上下文推理预测</strong></div>
+      <div class="route-step"><span>Stage 4</span><strong>Agentic Reasoning<br>自主多轮交互</strong></div>
     </div>
     <div class="stage-row">
       <div class="stage-card">
@@ -1143,10 +1117,10 @@
         <h4>基础模型阶段<br>接入时间序列信号</h4>
         <p class="stage-input">输入：原始时间序列 + 多模态情境 + 跨域语料</p>
         <p>
-          核心目标是建立"<strong>时间序列特征编码 + LLM Backbone</strong>"的模型底座。
-          原始时间序列首先经过 Time Series Feature Encoder 转换为 Embedding，
+          核心目标是建立"<strong>Feature Encoder + LLM Backbone</strong>"的模型底座。
+          原始时间序列首先经过 Feature Encoder 在数值空间中建模动态变化，
           再输入语言模型，使模型具备跨域时间序列表征、基础预测、上下文融合和
-          多模态情境对齐能力。这个阶段重点不是复杂推理，而是让语言模型真正接入时间序列信号。
+          多模态情境对齐能力。这个阶段重点不是复杂推理，而是让语言模型真正接入动态数值序列信号。
         </p>
         <div class="stage-output">输出：CastMind-Base</div>
       </div>
@@ -1158,32 +1132,33 @@
           核心目标是让模型从"能表示时间序列"进一步变成
           "<strong>能按照任务要求分析和预测时间序列</strong>"。
           通过监督微调，模型学习趋势分析、预测生成、异常解释、外生变量理解、
-          Meta Data 融合、领域描述理解等能力，解决指令跟随、任务格式、预测输出和基础解释问题。
+          Meta Data 融合、领域描述理解和 Context-aware Feature 对齐，
+          解决指令跟随、任务格式、预测输出和基础解释问题。
         </p>
         <div class="stage-output">输出：CastMind-SFT</div>
       </div>
       <div class="stage-card">
-        <div class="stage-badge badge-cot">Stage 3 · CastMind-CoT</div>
-        <h4>慢思考推理阶段<br>推理式预测</h4>
-        <p class="stage-input">输入：长思维链时序推理样本 + 推理质量反馈</p>
+        <div class="stage-badge badge-cot">Stage 3 · CastMind-Structured Reasoning</div>
+        <h4>上下文推理阶段<br>推理式预测</h4>
+        <p class="stage-input">输入：结构化时序推理样本 + 推理质量反馈</p>
         <p>
-          核心目标是强化模型的<strong>长思维链时序推理能力</strong>。
+          核心目标是强化模型的<strong>结构化上下文推理能力</strong>。
           模型不只是直接输出预测结果，而是能够围绕趋势变化、周期波动、异常扰动、
           事件影响、情境变化和未来演化路径展开分步分析。
           这个阶段把时间序列预测从"模式外推"推进到"推理式预测"。
         </p>
-        <div class="stage-output">输出：CastMind-CoT</div>
+        <div class="stage-output">输出：CastMind-Structured Reasoning</div>
       </div>
       <div class="stage-card">
         <div class="stage-badge badge-agentic">Stage 4 · CastMind-Agentic Reasoning</div>
-        <h4>自主交互推理阶段<br>Memory-interactive reasoning</h4>
-        <p class="stage-input">输入：Memory 环境交互 + 证据检索与修正轨迹</p>
+        <h4>Agentic Reasoning 阶段<br>环境自主多轮交互</h4>
+        <p class="stage-input">输入：环境状态 + Memory/工具交互 + 证据检索与修正轨迹</p>
         <p>
-          核心目标是让 CastMind（星思）具备类似 Search-o1 的<strong>边思考边检索</strong>能力。
-          模型在慢思考过程中可以主动发现证据缺口，与 Memory 环境交互，
-          检索历史相似模式、领域知识、失败经验、数据分析结论和过往预测轨迹，
-          并基于新证据持续修正中间判断和最终预测。这个阶段强调 Memory-interactive reasoning，
-          不是简单工具调用。
+          核心目标是让 CastMind（星思）具备可评估的 <strong>Agentic Reasoning</strong> 能力。
+          模型在预测过程中可以主动发现证据缺口，与 Memory、检索器、外部变量服务和任务环境
+          自主多轮交互，检索历史相似模式、领域知识、失败经验、数据分析结论和过往预测轨迹，
+          并基于新证据持续修正上下文判断和最终预测。这个阶段强调环境交互闭环，
+          不是一次性的工具调用展示。
         </p>
         <div class="stage-output">输出：CastMind-Agentic Reasoning</div>
       </div>
@@ -1194,22 +1169,22 @@
       <li>
         <div class="pillar-num violet">1</div>
         <div class="pillar-text">
-          <strong>Memory Seeking Policy · 记忆检索策略</strong>
-          <span>模型学习何时主动检索 Memory，以及应该检索哪类 Memory：相似历史片段、历史预测经验、领域规律、异常模式、失败案例、数据分析报告等。关键不是"有没有 Memory"，而是模型能否在推理中动态识别证据缺口。</span>
+          <strong>Interaction Seeking Policy · 交互触发策略</strong>
+          <span>模型学习何时需要与环境交互，以及应该访问哪类环境：Memory、检索器、上下文工具、外部变量服务或任务状态。关键不是"有没有工具"，而是模型能否在推理中动态识别证据缺口。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num violet">2</div>
         <div class="pillar-text">
-          <strong>Evidence Grounding Policy · 证据利用策略</strong>
-          <span>模型检索到 Memory 后，需要判断哪些证据有用、哪些证据会误导预测，并将证据合理融入慢思考推理链，而不是简单拼接到上下文中。这能减少 Memory-RAG 式幻觉，也让推理过程更可解释。</span>
+          <strong>Context Grounding Policy · 上下文证据利用策略</strong>
+          <span>模型获得环境反馈后，需要判断哪些证据有用、哪些证据会误导预测，并将证据合理融入上下文推理，而不是简单拼接到输入中。这能减少检索噪声，也让预测依据更可解释。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num violet">3</div>
         <div class="pillar-text">
           <strong>Forecast Revision Policy · 预测修正策略</strong>
-          <span>模型在获得新证据后学习更新中间判断和最终预测。例如初始判断未来负荷会上升，但 Memory 显示相似天气条件下历史负荷反而下降时，模型需要重新评估原始假设并形成新的预测路径。</span>
+          <span>模型在获得新证据后学习更新中间判断和最终预测。例如初始判断未来负荷会上升，但环境反馈显示相似天气条件下历史负荷反而下降时，模型需要重新评估原始假设并形成新的预测路径。</span>
         </div>
       </li>
     </ul>
@@ -1230,8 +1205,8 @@
         <h4>接入时间序列</h4>
         <div class="ver-stage">基础模型阶段</div>
         <p>
-          建立 Time Series Feature Encoder + LLM Backbone 的模型底座。
-          原始时间序列被转换为 Embedding 后输入语言模型，
+          建立 Feature Encoder + LLM Backbone 的模型底座。
+          原始动态数值序列被编码为 temporal embeddings 后输入语言模型，
           让模型具备跨域时序表征、基础预测、上下文融合和多模态情境对齐能力。
         </p>
       </div>
@@ -1241,15 +1216,16 @@
         <div class="ver-stage">任务适配阶段</div>
         <p>
           通过监督微调学习趋势分析、预测生成、异常解释、外生变量理解、
-          Meta Data 融合和领域描述理解，解决指令跟随、任务格式、预测输出和基础解释能力。
+          Meta Data 融合、领域描述理解和 Context-aware Feature 对齐，
+          解决指令跟随、任务格式、预测输出和基础解释能力。
         </p>
       </div>
       <div class="version-card">
-        <div class="ver-badge ver-cot">CastMind-CoT</div>
-        <h4>慢思考预测</h4>
-        <div class="ver-stage">慢思考推理阶段</div>
+        <div class="ver-badge ver-cot">CastMind-Structured Reasoning</div>
+        <h4>上下文推理预测</h4>
+        <div class="ver-stage">结构化推理阶段</div>
         <p>
-          强化长思维链时序推理能力，围绕趋势变化、周期波动、异常扰动、
+          强化结构化上下文推理能力，围绕趋势变化、周期波动、异常扰动、
           事件影响、情境变化和未来演化路径展开分步分析，
           将预测从模式外推推进到推理式预测。
         </p>
@@ -1259,18 +1235,18 @@
         <h4>自主获取证据并修正判断</h4>
         <div class="ver-stage">自主交互推理阶段</div>
         <p>
-          在慢思考过程中主动发现证据缺口，与 Memory 环境交互，
-          检索历史相似模式、领域知识、失败经验、数据分析结论和过往预测轨迹，
-          并基于新证据持续修正中间判断和最终预测。
+          在预测过程中主动发现证据缺口，与 Memory、检索器、上下文工具、
+          外部变量服务和任务环境自主多轮交互，检索历史相似模式、领域知识、
+          失败经验、数据分析结论和过往预测轨迹，并基于新证据持续修正中间判断和最终预测。
         </p>
       </div>
     </div>
 
     <p class="route-summary">
       这一路线可以概括为：
-      Base 阶段解决"如何接入时间序列"；SFT 阶段解决"如何完成时序任务"；
-      CoT 阶段解决"如何进行慢思考预测"；Agentic Reasoning 阶段解决
-      "如何在推理过程中自主获取证据并修正判断"。
+      Base 阶段解决"如何以 Feature Encoder 接入动态数值序列"；SFT 阶段解决"如何融合 Context-aware Feature 完成时序任务"；
+      Structured Reasoning 阶段解决"如何进行上下文推理预测"；Agentic Reasoning 阶段解决
+      "如何与环境自主多轮交互、获取证据并修正判断"。
     </p>
   </div>
 </section>
@@ -1281,7 +1257,7 @@
     <h2 class="section-title">评估体系</h2>
     <p class="section-lead">
       CastMind（星思）的评估同时覆盖 <strong>in-domain 能力</strong>和 <strong>out-of-domain 泛化能力</strong>，
-      全面验证慢思考时序推理模型的综合性能：
+      全面验证 Feature Encoder、Context-aware Feature 与 Agentic Reasoning 的综合增益：
     </p>
     <div class="eval-split">
       <div class="eval-half">
@@ -1291,10 +1267,12 @@
         <ul class="feature-list">
           <li><strong>点预测指标：</strong>MAE · MSE · RMSE · sMAPE · MASE</li>
           <li><strong>概率预测指标：</strong>CRPS · Pinball Loss · Prediction Interval Coverage</li>
-          <li><strong>推理质量指标：</strong>趋势解释合理性 · 情境归因一致性 · 预测—推理一致性</li>
+          <li><strong>Encoder 指标：</strong>动态数值序列表示质量 · 关键变化点捕获 · 趋势方向一致性</li>
+          <li><strong>Context 指标：</strong>Context Attribution · 情境归因一致性 · 可见上下文利用率</li>
+          <li><strong>Agentic 指标：</strong>交互触发准确性 · 环境证据利用率 · 预测修正有效性</li>
         </ul>
         <p class="eval-note">
-          在四个阶段（Base / SFT / CoT / Agentic Reasoning）间进行对比，展示各阶段对预测、推理与记忆交互能力的增益。
+          在四个阶段（Base / SFT / Structured Reasoning / Agentic Reasoning）间进行对比，展示各阶段对预测、上下文推理与环境交互能力的增益。
         </p>
       </div>
       <div class="eval-half">
@@ -1303,9 +1281,10 @@
         <p>以 <strong>FutureCast（天星台）</strong> 为核心评测集，构造未见领域、未见上下文类型和复杂情境变化下的预测任务。</p>
         <ul class="feature-list">
           <li>能否适应新的领域和采样频率</li>
-          <li>能否理解未见的上下文情境类型</li>
+          <li>能否理解未见的 Context-aware Feature 类型</li>
           <li>能否在外部事件、分布漂移、非平稳变化和信息不完整下给出稳健预测</li>
-          <li>能否通过慢思考推理解释未来趋势变化</li>
+          <li>能否通过上下文推理解释未来趋势变化</li>
+          <li>能否在信息不完整时与环境自主多轮交互并修正预测</li>
           <li>能否输出合理的不确定性估计</li>
         </ul>
       </div>
@@ -1319,11 +1298,12 @@
         </thead>
         <tbody>
           <tr><td>数值预测准确性</td><td>MAE · MSE · RMSE · sMAPE · MASE</td><td>全部阶段</td></tr>
-          <tr><td>概率预测质量</td><td>CRPS · Pinball Loss · PI Coverage</td><td>SFT / CoT / Agentic Reasoning</td></tr>
+          <tr><td>概率预测质量</td><td>CRPS · Pinball Loss · PI Coverage</td><td>SFT / Structured Reasoning / Agentic Reasoning</td></tr>
           <tr><td>趋势判断能力</td><td>Direction Accuracy · Turning-point F1</td><td>全部阶段</td></tr>
-          <tr><td>情境理解与推理</td><td>Context Attribution · Reasoning Faithfulness</td><td>SFT / CoT / Agentic Reasoning</td></tr>
-          <tr><td>预测—推理一致性</td><td>Prediction-Reasoning Consistency Score</td><td>CoT / Agentic Reasoning</td></tr>
-          <tr><td>记忆交互质量</td><td>Memory Seeking · Evidence Grounding · Forecast Revision</td><td>Agentic Reasoning</td></tr>
+          <tr><td>Feature Encoder 表示质量</td><td>Dynamic Pattern Coverage · Turning-point Capture · Temporal Embedding Separability</td><td>全部阶段</td></tr>
+          <tr><td>情境理解与推理</td><td>Context Attribution · Context Utilization · Reasoning Faithfulness</td><td>SFT / Structured Reasoning / Agentic Reasoning</td></tr>
+          <tr><td>预测—推理一致性</td><td>Prediction-Reasoning Consistency Score</td><td>Structured Reasoning / Agentic Reasoning</td></tr>
+          <tr><td>环境交互质量</td><td>Interaction Seeking · Evidence Grounding · Forecast Revision · Environment Feedback Use</td><td>Agentic Reasoning</td></tr>
           <tr><td>跨域泛化能力</td><td>Zero-shot / Few-shot 指标（FutureCast（天星台））</td><td>全部阶段</td></tr>
         </tbody>
       </table>
