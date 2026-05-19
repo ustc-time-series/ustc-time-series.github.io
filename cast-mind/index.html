@@ -16,9 +16,9 @@
       --teal:       #0f766e;
       --teal-light: #14b8a6;
       --accent:     #0f766e;
-      --violet:     #5b21b6;
-      --violet-mid: #7c3aed;
-      --violet-soft:#ede9fe;
+      --green:      #047857;
+      --green-mid:  #10b981;
+      --green-soft: #dcfce7;
       --text:       #1a1a1a;
       --muted:      #555;
       --line:       #e4e4e0;
@@ -99,7 +99,7 @@
 
     /* ── Hero ──────────────────────────────────────── */
     header {
-      background: linear-gradient(160deg, #ffffff 48%, #f5f3ff 78%, #f0fdf9 100%);
+      background: linear-gradient(160deg, #ffffff 48%, #ecfdf5 78%, #f0fdf9 100%);
       border-bottom: 1px solid #e8e8e8;
       padding: 66px 0 52px;
       text-align: center;
@@ -125,8 +125,8 @@
     header.hero-refreshing .btn-row            { animation: hero-copy-refresh 0.75s ease; }
     .hero-refresh-wave {
       position: absolute; width: 20px; height: 20px; border-radius: 999px;
-      border: 2px solid rgba(91, 33, 182, 0.18);
-      background: rgba(124, 58, 237, 0.12);
+      border: 2px solid rgba(4, 120, 87, 0.18);
+      background: rgba(16, 185, 129, 0.12);
       transform: translate(-50%, -50%) scale(0.2);
       pointer-events: none; z-index: 1;
       animation: hero-wave 0.85s ease-out forwards;
@@ -163,7 +163,7 @@
       margin-right: auto;
       text-wrap: balance;
     }
-    header h1 .cm { color: var(--violet-mid); }
+    header h1 .cm { color: var(--green-mid); }
     .hero-title-main,
     .hero-title-sub { display: inline; white-space: nowrap; }
     .hero-kicker {
@@ -172,9 +172,9 @@
       justify-content: center;
       padding: 4px 11px;
       border-radius: 999px;
-      border: 1px solid #ddd6fe;
-      background: rgba(245, 243, 255, 0.88);
-      color: var(--violet);
+      border: 1px solid #bbf7d0;
+      background: rgba(236, 253, 245, 0.88);
+      color: var(--green);
       font-size: 0.74rem;
       font-weight: 800;
       letter-spacing: 0.08em;
@@ -210,9 +210,9 @@
       min-height: 30px;
       padding: 5px 11px;
       border-radius: 999px;
-      border: 1px solid rgba(124, 58, 237, 0.18);
+      border: 1px solid rgba(16, 185, 129, 0.18);
       background: rgba(255, 255, 255, 0.78);
-      color: #4c1d95;
+      color: #065f46;
       font-size: 0.78rem;
       font-weight: 700;
       line-height: 1.35;
@@ -284,41 +284,22 @@
 
     /* ── TL;DR banner ──────────────────────────────── */
     .tldr {
-      background: linear-gradient(135deg, #ffffff 0%, #f8f7ff 62%, #f0fdfa 100%);
-      border: 1px solid #ddd6fe;
-      border-left: 4px solid var(--violet);
+      background: linear-gradient(135deg, #ffffff 0%, #ecfdf5 62%, #f0fdfa 100%);
+      border: 1px solid #bbf7d0;
+      border-left: 4px solid var(--green);
       border-radius: 12px;
       padding: 20px 22px;
       font-size: 0.98rem;
       color: #1a1a1a;
       margin-bottom: 36px;
       line-height: 1.75;
-      box-shadow: 0 8px 24px rgba(91, 33, 182, 0.06);
+      box-shadow: 0 8px 24px rgba(4, 120, 87, 0.06);
       text-align: left;
       text-justify: auto;
     }
-    .tldr strong { color: var(--violet); }
+    .tldr strong { color: var(--green); }
     .brief-main {
       max-width: 820px;
-    }
-    .brief-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 14px;
-    }
-    .brief-tag {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(15, 118, 110, 0.18);
-      background: rgba(240, 253, 250, 0.82);
-      color: #0f766e;
-      font-size: 0.78rem;
-      font-weight: 700;
-      white-space: nowrap;
     }
     .intro-layout {
       display: grid;
@@ -352,60 +333,14 @@
       min-height: 28px;
       padding: 4px 10px;
       border-radius: 999px;
-      background: #f5f3ff;
-      border: 1px solid #ddd6fe;
-      color: var(--violet);
+      background: #dcfce7;
+      border: 1px solid #bbf7d0;
+      color: var(--green);
       font-size: 0.72rem;
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-bottom: 12px;
-    }
-
-    /* ── Stat row ───────────────────────────────────── */
-    .stat-row {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16px;
-      margin: 24px 0;
-    }
-    .stat-box {
-      min-width: 130px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 18px 16px;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-    .stat-box .stat-num {
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: var(--navy);
-      line-height: 1.1;
-    }
-    .stat-box .stat-label {
-      font-size: 0.8rem;
-      color: #666;
-      margin-top: 6px;
-      line-height: 1.45;
-    }
-    .intro-insight .stat-row {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin: 14px 0 0;
-    }
-    .intro-insight .stat-box {
-      min-width: 0;
-      padding: 14px 10px;
-      border-radius: 9px;
-    }
-    .intro-insight .stat-box .stat-num {
-      font-size: 1.55rem;
-    }
-    .intro-insight .stat-box .stat-label {
-      font-size: 0.76rem;
-      line-height: 1.38;
     }
 
     /* ── Card grid ─────────────────────────────────── */
@@ -458,7 +393,7 @@
       justify-content: center;
       margin: 0 0 12px;
     }
-    .pillar-num.violet { background: var(--violet); }
+    .pillar-num.green { background: var(--green); }
     .pillar-text { flex: 1; }
     .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 7px; color: var(--navy); line-height: 1.45; }
     .pillar-text span  { font-size: 0.86rem; color: #555; line-height: 1.68; }
@@ -502,7 +437,7 @@
       transition: transform .22s, box-shadow .22s;
       min-height: 255px;
     }
-    .cap-card:nth-child(2) { border-top-color: var(--violet-mid); }
+    .cap-card:nth-child(2) { border-top-color: var(--green-mid); }
     .cap-card:nth-child(3) { border-top-color: var(--teal); }
     .cap-card:nth-child(4) { border-top-color: #0369a1; }
     .cap-card:nth-child(5) { border-top-color: #15803d; }
@@ -511,7 +446,7 @@
     .cap-card h4 { font-size: 0.98rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
     .cap-card .cap-focus {
       font-size: 0.78rem; font-weight: 600;
-      color: var(--violet-mid); margin-bottom: 10px; letter-spacing: 0.01em;
+      color: var(--green-mid); margin-bottom: 10px; letter-spacing: 0.01em;
     }
     .cap-card:nth-child(3) .cap-focus { color: var(--teal); }
     .cap-card:nth-child(4) .cap-focus { color: #0369a1; }
@@ -548,12 +483,12 @@
     .tech-card p  { font-size: 0.86rem; color: #555; line-height: 1.62; margin: 0; }
     .tech-card .tech-highlight {
       margin-top: auto;
-      background: #f5f3ff;
-      border: 1px solid #ddd6fe;
+      background: #dcfce7;
+      border: 1px solid #bbf7d0;
       border-radius: 6px;
       padding: 8px 12px;
       font-size: 0.82rem;
-      color: var(--violet);
+      color: var(--green);
       font-weight: 600;
     }
 
@@ -583,7 +518,7 @@
     }
     .badge-cpt  { background: #e0f2fe; color: #0369a1; }
     .badge-sft  { background: #f0fdf4; color: #15803d; }
-    .badge-cot  { background: #f5f3ff; color: var(--violet); }
+    .badge-cot  { background: #dcfce7; color: var(--green); }
     .badge-agentic { background: #ccfbf1; color: var(--teal); }
     .stage-card h4 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
     .stage-card .stage-input { font-size: 0.83rem; color: #666; margin-bottom: 8px; }
@@ -598,9 +533,9 @@
       color: #15803d;
     }
     .stage-card:nth-child(3) .stage-output {
-      background: #f5f3ff;
-      border-color: #ddd6fe;
-      color: var(--violet);
+      background: #dcfce7;
+      border-color: #bbf7d0;
+      color: var(--green);
     }
     .stage-card:nth-child(4) .stage-output {
       background: #f0fdfa;
@@ -639,7 +574,7 @@
       font-weight: 800;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--violet);
+      color: var(--green);
       margin-bottom: 4px;
     }
     .route-step strong {
@@ -674,7 +609,7 @@
     }
     .ver-base    { background: #e0f2fe; color: #0369a1; }
     .ver-sft{ background: #f0fdf4; color: #15803d; }
-    .ver-cot{ background: #f5f3ff; color: var(--violet); }
+    .ver-cot{ background: #dcfce7; color: var(--green); }
     .ver-agentic { background: #f0fdfa; color: var(--teal); }
     .version-card h4 { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
     .version-card .ver-stage {
@@ -714,7 +649,7 @@
       padding: 3px 10px; border-radius: 20px; margin-bottom: 12px;
     }
     .badge-in  { background: #e0f2fe; color: #0369a1; }
-    .badge-out { background: #f5f3ff; color: var(--violet); }
+    .badge-out { background: #dcfce7; color: var(--green); }
     .eval-half h4 { font-size: 0.98rem; font-weight: 800; color: var(--navy); margin-bottom: 10px; }
     .eval-half p  { font-size: 0.87rem; color: #555; line-height: 1.65; margin: 0 0 10px; }
     .eval-half p:last-child { margin: 0; }
@@ -745,7 +680,7 @@
 
     /* ── Claim box ─────────────────────────────────── */
     .claim-box {
-      background: linear-gradient(135deg, #1e0844 0%, #3b1278 50%, #1e3a5f 100%);
+      background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #0f766e 100%);
       border-radius: 12px;
       padding: 32px 32px;
       color: #fff;
@@ -794,8 +729,8 @@
       font-size: 0.88rem; font-weight: 700; color: var(--navy);
       line-height: 1.45;
     }
-    .ps-item.highlighted { background: #f5f3ff; }
-    .ps-item.highlighted .ps-val { color: var(--violet-mid); }
+    .ps-item.highlighted { background: #dcfce7; }
+    .ps-item.highlighted .ps-val { color: var(--green-mid); }
     .ps-connector {
       flex-shrink: 0;
       font-size: 1.1rem;
@@ -854,14 +789,13 @@
       .hero-title-sub { white-space: normal; }
       .hero-chip { white-space: normal; justify-content: center; text-align: center; }
       .intro-layout,
-      .cap-grid, .tech-grid, .stage-row, .version-grid, .stat-row, .pillar-list, .route-line { grid-template-columns: 1fr; }
+      .cap-grid, .tech-grid, .stage-row, .version-grid, .pillar-list, .route-line { grid-template-columns: 1fr; }
       .eval-split  { grid-template-columns: 1fr; }
       .position-strip { flex-direction: column; }
       .ps-item { border-right: none; border-bottom: 1px solid var(--line); }
       .ps-item:last-child { border-bottom: none; }
       .ps-connector { transform: rotate(90deg); padding: 2px 0; }
       .intro-insight { padding-top: 0; }
-      .intro-insight .stat-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .route-step::after { display: none; }
       section { padding: 48px 0; }
       .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
@@ -877,7 +811,6 @@
 <header id="heroHeader">
   <div class="hero-refresh-sheen" aria-hidden="true"></div>
   <div class="container">
-    <div class="hero-kicker">Feature-native · Context-aware · Agentic</div>
     <h1 class="hero-clickable">
       <span class="hero-title-main"><span class="cm">CastMind（星思）</span></span>
       <span class="hero-title-sub">Agentic 时间序列认知大模型</span>
@@ -888,9 +821,9 @@
       与环境自主多轮交互、上下文推理和预测修正。
     </p>
     <div class="hero-chip-row" aria-label="CastMind 核心能力标签">
-      <span class="hero-chip">Feature Encoder 原生时序建模</span>
-      <span class="hero-chip">Context-aware Feature</span>
-      <span class="hero-chip">Agentic Reasoning</span>
+      <span class="hero-chip">Native Time Series Modeling</span>
+      <span class="hero-chip">Contextual Feature Fusion</span>
+      <span class="hero-chip">Slow-thinking Reasoning</span>
       <span class="hero-chip">Autonomous Multi-turn Interaction</span>
     </div>
   </div>
@@ -916,13 +849,8 @@
       <div class="brief-main">
         <strong>一句话定位：</strong>
         CastMind（星思）是一个<strong>Agentic 时间序列认知大模型</strong>：
-        用 Feature Encoder 原生建模动态数值序列，融入 Context-aware Feature，
+        用 Feature Encoder 原生建模动态数值序列，完成情境融入与 Context-aware Feature 对齐，
         并通过 Agentic Reasoning 与环境自主多轮交互、上下文推理和预测修正。
-      </div>
-      <div class="brief-tags" aria-label="CastMind 三项核心亮点">
-        <span class="brief-tag">Feature Encoder</span>
-        <span class="brief-tag">Context-aware Feature</span>
-        <span class="brief-tag">Agentic Reasoning</span>
       </div>
     </div>
 
@@ -956,32 +884,13 @@
           </div>
           <div class="ps-connector">→</div>
           <div class="ps-item">
-            <div class="ps-label">情境层</div>
+            <div class="ps-label">情境融入层</div>
             <div class="ps-val">Context-aware Feature</div>
           </div>
           <div class="ps-connector">→</div>
           <div class="ps-item highlighted">
             <div class="ps-label">行动层</div>
             <div class="ps-val">Agentic Reasoning</div>
-          </div>
-        </div>
-
-        <div class="stat-row">
-          <div class="stat-box">
-            <div class="stat-num">3</div>
-            <div class="stat-label">核心亮点<br>Encoder · Context · Agent</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num">4</div>
-            <div class="stat-label">能力阶段<br>Base · SFT · Reasoning</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num">多轮</div>
-            <div class="stat-label">环境交互<br>Memory · Tools · Context</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-num">∞</div>
-            <div class="stat-label">上下文推理<br>Evidence · Revision</div>
           </div>
         </div>
       </aside>
@@ -1009,8 +918,8 @@
       </div>
       <div class="cap-card">
         <div class="cap-icon">◇</div>
-        <h4>融入 Context-aware Feature</h4>
-        <div class="cap-focus">Context-aware Feature Fusion</div>
+        <h4>情境融入：Context-aware Feature</h4>
+        <div class="cap-focus">Contextual Integration</div>
         <p>
           每个预测 instance 同时包含可见的上下文特征：metadata、外生变量、协变量、事件、日历、
           领域描述和环境状态。模型学习如何把 <code>context_aware_features</code>
@@ -1167,21 +1076,21 @@
     <h3 class="sub-title">CastMind-Agentic Reasoning 的三类策略优化</h3>
     <ul class="pillar-list">
       <li>
-        <div class="pillar-num violet">1</div>
+        <div class="pillar-num green">1</div>
         <div class="pillar-text">
           <strong>Interaction Seeking Policy · 交互触发策略</strong>
           <span>模型学习何时需要与环境交互，以及应该访问哪类环境：Memory、检索器、上下文工具、外部变量服务或任务状态。关键不是"有没有工具"，而是模型能否在推理中动态识别证据缺口。</span>
         </div>
       </li>
       <li>
-        <div class="pillar-num violet">2</div>
+        <div class="pillar-num green">2</div>
         <div class="pillar-text">
           <strong>Context Grounding Policy · 上下文证据利用策略</strong>
           <span>模型获得环境反馈后，需要判断哪些证据有用、哪些证据会误导预测，并将证据合理融入上下文推理，而不是简单拼接到输入中。这能减少检索噪声，也让预测依据更可解释。</span>
         </div>
       </li>
       <li>
-        <div class="pillar-num violet">3</div>
+        <div class="pillar-num green">3</div>
         <div class="pillar-text">
           <strong>Forecast Revision Policy · 预测修正策略</strong>
           <span>模型在获得新证据后学习更新中间判断和最终预测。例如初始判断未来负荷会上升，但环境反馈显示相似天气条件下历史负荷反而下降时，模型需要重新评估原始假设并形成新的预测路径。</span>
@@ -1301,7 +1210,7 @@
           <tr><td>概率预测质量</td><td>CRPS · Pinball Loss · PI Coverage</td><td>SFT / Structured Reasoning / Agentic Reasoning</td></tr>
           <tr><td>趋势判断能力</td><td>Direction Accuracy · Turning-point F1</td><td>全部阶段</td></tr>
           <tr><td>Feature Encoder 表示质量</td><td>Dynamic Pattern Coverage · Turning-point Capture · Temporal Embedding Separability</td><td>全部阶段</td></tr>
-          <tr><td>情境理解与推理</td><td>Context Attribution · Context Utilization · Reasoning Faithfulness</td><td>SFT / Structured Reasoning / Agentic Reasoning</td></tr>
+          <tr><td>情境融入能力</td><td>Contextual Integration · Context Attribution · Context Utilization</td><td>SFT / Structured Reasoning / Agentic Reasoning</td></tr>
           <tr><td>预测—推理一致性</td><td>Prediction-Reasoning Consistency Score</td><td>Structured Reasoning / Agentic Reasoning</td></tr>
           <tr><td>环境交互质量</td><td>Interaction Seeking · Evidence Grounding · Forecast Revision · Environment Feedback Use</td><td>Agentic Reasoning</td></tr>
           <tr><td>跨域泛化能力</td><td>Zero-shot / Few-shot 指标（FutureCast（天星台））</td><td>全部阶段</td></tr>
