@@ -633,7 +633,7 @@
       时间序列预测方法已从统计建模和深度学习逐步发展到时间序列基础模型。
       现有通用预测基准关注模型在跨领域、跨频率、跨预测长度场景下的泛化能力，
       但在真实预测场景中，<strong>未来变化往往不只由历史序列本身决定</strong>——
-      天气、节假日、政策变化、突发事件、空间环境、领域知识和人类经验等
+      天气、空气污染、节假日、政策变化、突发事件、空间环境、领域知识和人类经验等
       多源异构情境因素对预测结果具有实质性影响，而现有 Benchmark 对这类信息的建模与评估仍然不足。
     </p>
     <p>
@@ -644,20 +644,20 @@
 
     <div class="stat-row">
       <div class="stat-box">
-        <div class="stat-num">3</div>
-        <div class="stat-label">核心能力维度<br>对齐 · 推理 · 自适应</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">5</div>
-        <div class="stat-label">设计原则<br>覆盖数据到评测</div>
+        <div class="stat-num">15</div>
+        <div class="stat-label">已整理数据集<br>覆盖真实业务场景</div>
       </div>
       <div class="stat-box">
         <div class="stat-num">10</div>
-        <div class="stat-label">任务类型<br>从数值预测到动态修正</div>
+        <div class="stat-label">领域方向<br>能源到空气质量</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">5</div>
-        <div class="stat-label">评估维度<br>含 Forecast Revision Gain</div>
+        <div class="stat-num">149K</div>
+        <div class="stat-label">预测序列<br>多实体细粒度拆分</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">277M</div>
+        <div class="stat-label">时间戳记录<br>统一 CSV 组织</div>
       </div>
     </div>
   </div>
@@ -678,6 +678,7 @@
       例如，一条销售曲线突然下降，可能是需求自然衰退，也可能是门店关闭、断货、促销结束或节假日结构变化；
       一条交通流量曲线突然上升，可能是正常通勤高峰，也可能是大型活动、事故绕行或天气变化；
       一条电价或负荷曲线出现尖峰，可能与温度、供需紧张、区域互联、市场规则和异常事件有关。
+      一条 PM2.5 曲线突然升高，可能来自局地排放、区域污染传输、气象扩散条件变化或相邻污染物共同作用。
       如果 Benchmark 只评估数值预测误差，就很难判断模型到底是在学习统计模式，
       还是能够理解<strong>为什么未来会变化</strong>。
     </p>
@@ -708,7 +709,7 @@
     <h3 class="sub-title">真实场景中的预测高度依赖情境</h3>
     <p>
       这种情境依赖并不局限在少数行业，而是普遍存在于能源、电力市场、交通、销售、医疗、
-      宏观经济、气候、水文、AIOps 云资源、工业设备和城市运行等多类时间序列预测任务中。
+      宏观经济、气候、水文、空气质量、AIOps 云资源、工业设备和城市运行等多类时间序列预测任务中。
       不同领域的目标变量不同，但共同特点是：
       未来变化往往由<strong>历史模式与外部情境共同决定</strong>。
     </p>
@@ -757,6 +758,11 @@
         <div class="card-icon">🌦️</div>
         <h4>气候与环境</h4>
         <p>温度、湿度、气压、风速和降水受季节、地形、环流、极端天气和人类活动影响，需要结合物理背景与局地情境进行预测。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🌫️</div>
+        <h4>空气质量与环境健康</h4>
+        <p>PM2.5 浓度受站点位置、区域污染传输、共同污染物、季节变化和气象扩散条件影响，适合评估模型对环境情境的综合理解。</p>
       </div>
       <div class="card">
         <div class="card-icon">🌊</div>
@@ -864,7 +870,7 @@
         <div class="cap-focus">Context-Sequence Alignment &amp; Fusion</div>
         <p>
           关注多源异构上下文情境如何有效表示、语义对齐并融入预测模型。
-          FutureCast（天星台） 的情境信息来自天气、日历、节假日、新闻事件、空间环境、业务规则和专家经验。
+          FutureCast（天星台） 的情境信息来自天气、空气质量、日历、节假日、新闻事件、空间环境、业务规则和专家经验。
           模型需要判断哪些情境与当前预测任务相关，
           并将情境与目标时间序列的变化区间在<strong>语义、时间和预测目标</strong>上形成有效融合。
         </p>
@@ -911,8 +917,8 @@
         <tbody>
           <tr><td><strong>目标时间序列</strong></td><td>历史观测值、变量名称、采样频率、预测长度</td></tr>
           <tr><td><strong>时间情境</strong></td><td>日期、季节、工作日、周末、节假日、特殊时间段</td></tr>
-          <tr><td><strong>空间情境</strong></td><td>区域、站点、地理位置、环境状态、空间邻近关系</td></tr>
-          <tr><td><strong>外部事件</strong></td><td>天气变化、政策调整、突发事件、市场波动、重大活动</td></tr>
+          <tr><td><strong>空间情境</strong></td><td>区域、站点、地理位置、环境状态、空气质量监测站、空间邻近关系</td></tr>
+          <tr><td><strong>外部事件</strong></td><td>天气变化、污染过程、政策调整、突发事件、市场波动、重大活动</td></tr>
           <tr><td><strong>文本知识</strong></td><td>新闻描述、事件摘要、领域背景、任务说明</td></tr>
           <tr><td><strong>领域先验</strong></td><td>业务规则、专家知识、变量含义、历史经验</td></tr>
           <tr><td><strong>标注信息</strong></td><td>相关情境、趋势标签、事件影响、证据依据、推理摘要</td></tr>
@@ -1116,7 +1122,7 @@
   <div class="container">
     <p>
       &copy; 2025 FutureCast（天星台） Team &middot; AGI Group · State Key Laboratory of Cognitive Intelligence, USTC &middot;
-      <a href="https://github.com/Mingyue-Cheng" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/ustc-time-series/Future-Cast" target="_blank" rel="noopener">GitHub</a>
     </p>
     <p style="font-size: 0.78rem; color: #555; margin-top: 6px;">
       From sequence pattern fitting to context-aware future reasoning.
