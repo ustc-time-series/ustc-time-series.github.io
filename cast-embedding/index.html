@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CastEmbedding — 情境感知时间序列嵌入表示基础设施</title>
+  <meta name="description" content="CastEmbedding 是面向检索、推理与预测的情境感知时间序列嵌入表示基础设施，学习 context-conditioned temporal semantics，使近邻样本在曲线形态、情境含义、未来演化和任务决策价值上保持一致。" />
+  <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --navy:       #1e3a5f;
+      --navy-soft:  #152c48;
+      --teal:       #1e3a5f;
+      --green:      #1e3a5f;
+      --green-mid:  #2f5d8a;
+      --green-soft: #e8f0f8;
+      --mint:       #f3f7fb;
+      --text:       #1a1a1a;
+      --muted:      #555;
+      --line:       #d8e2ec;
+      --bg:         #f7f9fb;
+      --card:       #ffffff;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                   "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      font-size: 16px;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code {
+      background: #f0f0ee;
+      border: 1px solid #e0e0de;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+      font-size: 0.85em;
+      color: var(--navy);
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+    }
+    .nav-bar .container {
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      scrollbar-width: none;
+      gap: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+    .nav-bar .container::-webkit-scrollbar { display: none; }
+    .nav-bar a {
+      flex-shrink: 0;
+      padding: 13px 18px;
+      font-size: 0.87rem;
+      font-weight: 500;
+      color: #555;
+      border-bottom: 2px solid transparent;
+      transition: color .2s, border-color .2s;
+      white-space: nowrap;
+    }
+    .nav-bar a:hover {
+      color: var(--teal);
+      border-bottom-color: var(--teal);
+      text-decoration: none;
+    }
+    .nav-home {
+      font-weight: 700;
+      color: var(--teal) !important;
+      border-right: 1px solid #e8e8e8;
+    }
+
+    header {
+      background: linear-gradient(160deg, #ffffff 48%, #eef4fa 78%, #f6f9fc 100%);
+      border-bottom: 1px solid #e8e8e8;
+      padding: 66px 0 52px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform .16s ease, opacity .16s ease, filter .16s ease;
+    }
+    header .container { position: relative; z-index: 2; }
+    header:hover { filter: saturate(1.02); }
+    header:active { transform: scale(0.995); }
+    .hero-refresh-sheen {
+      position: absolute;
+      top: -20%; bottom: -20%; left: -30%;
+      width: 26%; opacity: 0; pointer-events: none; z-index: 1;
+      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.78) 48%, rgba(255,255,255,0) 100%);
+      transform: skewX(-24deg) translateX(0);
+    }
+    header.hero-refreshing .hero-refresh-sheen { animation: hero-sheen 0.9s ease; }
+    header.hero-refreshing h1                  { animation: hero-title-refresh 0.75s ease; }
+    header.hero-refreshing .subtitle,
+    header.hero-refreshing .hero-chip-row      { animation: hero-copy-refresh 0.75s ease; }
+    .hero-refresh-wave {
+      position: absolute; width: 20px; height: 20px; border-radius: 999px;
+      border: 2px solid rgba(30, 58, 95, 0.20);
+      background: rgba(30, 58, 95, 0.12);
+      transform: translate(-50%, -50%) scale(0.2);
+      pointer-events: none; z-index: 1;
+      animation: hero-wave 0.85s ease-out forwards;
+    }
+    @keyframes hero-sheen {
+      0%   { opacity: 0; transform: skewX(-24deg) translateX(0); }
+      12%  { opacity: 1; }
+      100% { opacity: 0; transform: skewX(-24deg) translateX(560%); }
+    }
+    @keyframes hero-wave {
+      0%   { opacity: 0.9; transform: translate(-50%, -50%) scale(0.2); }
+      100% { opacity: 0;   transform: translate(-50%, -50%) scale(11); }
+    }
+    @keyframes hero-title-refresh {
+      0%   { transform: translateY(0); opacity: 1; }
+      25%  { transform: translateY(3px); opacity: 0.84; }
+      62%  { transform: translateY(-2px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes hero-copy-refresh {
+      0%   { transform: translateY(0); opacity: 1; }
+      30%  { transform: translateY(4px); opacity: 0.76; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    header h1 {
+      margin-top: 10px;
+      font-size: 2.18rem;
+      font-weight: 800;
+      line-height: 1.35;
+      color: #111;
+      max-width: 1180px;
+      margin-left: auto;
+      margin-right: auto;
+      text-wrap: balance;
+    }
+    header h1 .ce { color: var(--green-mid); }
+    .hero-title-main,
+    .hero-title-sub { display: inline; white-space: nowrap; }
+    .subtitle {
+      margin: 10px auto 0;
+      font-size: 1.01rem;
+      color: #555;
+      max-width: 820px;
+      line-height: 1.72;
+      text-align: center;
+      text-justify: auto;
+    }
+    .hero-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 18px auto 0;
+      max-width: 820px;
+    }
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 95, 0.18);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--navy);
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+
+    section {
+      padding: 68px 0;
+      scroll-margin-top: 50px;
+    }
+    section.alt { background: #fff; }
+    section + section { border-top: 1px solid var(--line); }
+    h2.section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid var(--teal);
+      display: inline-block;
+    }
+    h3.sub-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #222;
+      margin: 32px 0 10px;
+    }
+    p { margin-bottom: 14px; }
+    p:last-child { margin-bottom: 0; }
+    .section-lead {
+      max-width: 840px;
+      color: #444;
+      line-height: 1.82;
+      margin-bottom: 20px;
+    }
+
+    .tldr {
+      background: linear-gradient(135deg, #ffffff 0%, #eef4fa 62%, #f6f9fc 100%);
+      border: 1px solid #bfd0df;
+      border-left: 4px solid var(--green);
+      border-radius: 12px;
+      padding: 20px 22px;
+      font-size: 0.98rem;
+      color: #1a1a1a;
+      margin-bottom: 36px;
+      line-height: 1.75;
+      box-shadow: 0 8px 24px rgba(30, 58, 95, 0.08);
+      text-align: left;
+      text-justify: auto;
+    }
+    .tldr strong { color: var(--green); }
+    .intro-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+      gap: 30px;
+      align-items: start;
+    }
+    .intro-copy {
+      min-width: 0;
+      text-align: left;
+      text-justify: auto;
+    }
+    .intro-copy p {
+      color: #333;
+      line-height: 1.9;
+    }
+    .insight-label {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      border: 1px solid #bfd0df;
+      color: var(--green);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .position-strip {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      margin: 0;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+    .ps-item {
+      padding: 16px 14px;
+      text-align: center;
+      border-bottom: 1px solid var(--line);
+    }
+    .ps-item:last-child { border-bottom: none; }
+    .ps-item .ps-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .ps-item .ps-val {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.45;
+    }
+    .ps-item.highlighted { background: var(--green-soft); }
+    .ps-item.highlighted .ps-val { color: var(--green); }
+    .ps-connector {
+      align-self: center;
+      transform: rotate(90deg);
+      font-size: 1.1rem;
+      color: #bbb;
+      padding: 0;
+      margin: -3px 0;
+      line-height: 1;
+    }
+
+    .card-grid,
+    .cap-grid,
+    .tech-grid,
+    .app-grid,
+    .eval-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 22px;
+    }
+    .card-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .cap-grid  { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+    .tech-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .app-grid  { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .eval-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .card,
+    .cap-card,
+    .tech-card,
+    .app-card,
+    .eval-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transition: transform .22s, box-shadow .22s;
+    }
+    .card:hover,
+    .cap-card:hover,
+    .tech-card:hover,
+    .app-card:hover,
+    .eval-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.09);
+    }
+    .card {
+      border-radius: 10px;
+      padding: 22px 20px;
+    }
+    .card .card-icon,
+    .cap-card .cap-icon { font-size: 1.55rem; margin-bottom: 10px; line-height: 1; color: var(--green); }
+    .card h4,
+    .app-card h4,
+    .eval-card h4 {
+      font-size: 0.94rem;
+      font-weight: 800;
+      margin-bottom: 7px;
+      color: #111;
+      line-height: 1.45;
+    }
+    .card p,
+    .app-card p,
+    .eval-card p {
+      font-size: 0.87rem;
+      color: #555;
+      margin: 0;
+      line-height: 1.65;
+    }
+
+    .cap-card {
+      border-top: 4px solid var(--navy);
+      border-radius: 0 0 12px 12px;
+      padding: 24px 20px;
+      min-height: 250px;
+    }
+    .cap-card:nth-child(2) { border-top-color: var(--green-mid); }
+    .cap-card:nth-child(3) { border-top-color: var(--teal); }
+    .cap-card:nth-child(4) { border-top-color: #4b7aa3; }
+    .cap-card:nth-child(5) { border-top-color: #5a89b0; }
+    .cap-card h4 { font-size: 0.98rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; line-height: 1.45; }
+    .cap-focus {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 10px;
+      letter-spacing: 0.01em;
+    }
+    .cap-card p { font-size: 0.87rem; color: #555; line-height: 1.65; margin: 0; }
+
+    .architecture-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      align-items: stretch;
+      gap: 10px;
+      margin: 24px 0;
+    }
+    .flow-node {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px 14px;
+      min-height: 130px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.035);
+    }
+    .flow-node .node-label {
+      color: var(--green);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+    .flow-node strong {
+      color: var(--navy);
+      font-size: 0.92rem;
+      line-height: 1.45;
+      margin-bottom: 6px;
+    }
+    .flow-node span {
+      color: #5c6763;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      text-align: left;
+      text-justify: auto;
+    }
+    .flow-arrow {
+      color: var(--teal);
+      font-size: 1.25rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tech-card,
+    .app-card,
+    .eval-card {
+      border-radius: 12px;
+      padding: 22px 18px;
+      display: flex;
+      flex-direction: column;
+    }
+    .tech-layer,
+    .eval-dim {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 8px;
+    }
+    .tech-card h4 { font-size: 0.96rem; font-weight: 800; color: var(--navy); margin-bottom: 10px; line-height: 1.45; }
+    .tech-card p  { font-size: 0.86rem; color: #555; line-height: 1.62; margin: 0; }
+    .tech-highlight {
+      margin-top: auto;
+      background: var(--green-soft);
+      border: 1px solid #bfd0df;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    th { background: var(--navy); color: #fff; padding: 10px 16px; text-align: left; font-weight: 600; }
+    td { padding: 10px 16px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    tr:nth-child(even) td { background: #f7f9fb; }
+    tr:last-child td { border-bottom: none; }
+
+    .instance-box {
+      background: #f8f9fa;
+      border: 1px solid #dde1e8;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+      font-size: 0.83rem;
+      color: #2c3e50;
+      line-height: 1.7;
+      margin: 16px 0 0;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    .instance-box .ib-key   { color: var(--navy); font-weight: 700; }
+    .instance-box .ib-val   { color: #555; }
+    .instance-box .ib-arrow { color: var(--teal); }
+
+    .claim-box {
+      background: linear-gradient(135deg, #0f1f35 0%, #1e3a5f 58%, #2f5d8a 100%);
+      border-radius: 12px;
+      padding: 32px 32px;
+      color: #fff;
+      margin-top: 24px;
+    }
+    .claim-box p {
+      font-size: 0.97rem;
+      color: rgba(255,255,255,0.88);
+      line-height: 1.8;
+      margin: 0;
+      font-style: italic;
+    }
+    .claim-box .claim-en {
+      font-size: 0.86rem;
+      color: rgba(255,255,255,0.56);
+      margin-top: 14px;
+      font-style: normal;
+      line-height: 1.7;
+    }
+
+    footer {
+      background: #0f1f35;
+      color: #999;
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 0.84rem;
+    }
+    footer a { color: #a9c5df; }
+
+    @media (max-width: 900px) {
+      .tech-grid,
+      .app-grid { grid-template-columns: 1fr 1fr; }
+      .architecture-flow { grid-template-columns: 1fr; }
+      .flow-arrow { transform: rotate(90deg); min-height: 18px; }
+    }
+    @media (max-width: 680px) {
+      header { padding: 40px 0 40px; }
+      header h1 { font-size: 1.5rem; }
+      .hero-title-main,
+      .hero-title-sub { white-space: normal; }
+      .hero-chip-row { gap: 6px; margin-top: 14px; }
+      .hero-chip { min-height: 26px; padding: 4px 9px; font-size: 0.7rem; white-space: normal; justify-content: center; text-align: center; }
+      .intro-layout,
+      .cap-grid,
+      .tech-grid,
+      .app-grid,
+      .eval-grid { grid-template-columns: 1fr; }
+      section { padding: 48px 0; }
+      .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
+      h2.section-title { font-size: 1.25rem; }
+      .claim-box { padding: 24px 20px; }
+      .cap-card { min-height: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<header id="heroHeader">
+  <div class="hero-refresh-sheen" aria-hidden="true"></div>
+  <div class="container">
+    <h1 class="hero-clickable">
+      <span class="hero-title-main"><span class="ce">CastEmbedding</span></span>
+      <span class="hero-title-sub">情境感知时间序列嵌入表示基础设施</span>
+    </h1>
+    <p class="subtitle hero-clickable">
+      面向检索、推理与预测的通用时序 embedding 框架，学习
+      <strong>context-conditioned temporal semantics</strong>，
+      让近邻样本不仅曲线形态相似，也在情境含义、未来演化和任务决策价值上保持一致。
+    </p>
+    <div class="hero-chip-row" aria-label="CastEmbedding 核心能力标签">
+      <span class="hero-chip">Context-conditioned Temporal Semantics</span>
+      <span class="hero-chip">Future Evolution Similarity</span>
+      <span class="hero-chip">Task-oriented Similarity</span>
+      <span class="hero-chip">Temporal Self-Knowledge Distillation</span>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-bar">
+  <div class="container">
+    <a href="../" class="nav-home">首页</a>
+    <a href="#intro">简介</a>
+    <a href="#motivation">核心问题</a>
+    <a href="#features">核心亮点</a>
+    <a href="#architecture">技术体系</a>
+    <a href="#training">训练目标</a>
+    <a href="#applications">应用场景</a>
+    <a href="#eval">评估体系</a>
+  </div>
+</nav>
+
+<section id="intro" class="alt">
+  <div class="container">
+    <div class="tldr">
+      <strong>一句话定位：</strong>
+      CastEmbedding 是一个面向情境感知时间序列分析的通用嵌入表示基础设施：
+      它不只学习历史曲线的 pattern similarity，而是学习给定情境、任务目标和未来演化语义约束下的
+      <strong>context-conditioned temporal semantics</strong>。
+    </div>
+
+    <div class="intro-layout">
+      <div class="intro-copy">
+        <h2 class="section-title">项目简介</h2>
+        <p class="section-lead">
+          时间序列嵌入表示是支撑时序检索、分类、聚类、预测迁移、近邻样本增强和智能体推理的重要基础能力。
+          传统时间序列表征学习通常以数值序列本身为核心，关注趋势、周期、波动、异常和局部形态，
+          主要回答“哪些时间序列在曲线形态上相似”。
+        </p>
+        <p>
+          但真实复杂系统中的时间序列并不是孤立存在的。相似的历史曲线可能因为天气、节假日、政策、
+          区域状态、临床阶段或设备工况等情境差异而走向不同未来；形态并不完全一致的序列，
+          也可能在相同情境和任务目标下具有接近的演化机制与决策意义。
+          CastEmbedding 的目标是让 embedding 空间中的近邻样本在数值模式、情境语义、未来趋势和任务价值上同时相近。
+        </p>
+      </div>
+
+      <aside class="intro-insight" aria-label="CastEmbedding positioning">
+        <div class="insight-label">Representation Shift</div>
+        <div class="position-strip">
+          <div class="ps-item">
+            <div class="ps-label">传统表示</div>
+            <div class="ps-val">Pattern Similarity</div>
+          </div>
+          <div class="ps-connector">→</div>
+          <div class="ps-item highlighted">
+            <div class="ps-label">CastEmbedding</div>
+            <div class="ps-val">Context-conditioned Temporal Semantics</div>
+          </div>
+          <div class="ps-connector">→</div>
+          <div class="ps-item">
+            <div class="ps-label">服务目标</div>
+            <div class="ps-val">Retrieval · Reasoning · Prediction</div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="motivation">
+  <div class="container">
+    <h2 class="section-title">核心问题</h2>
+    <p class="section-lead">
+      CastEmbedding 关注的不是“如何把时间序列压缩成向量”这一单点问题，而是如何构建一个面向时序检索、推理和预测的统一语义空间。
+    </p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">01</div>
+        <h4>仅靠曲线形态相似会产生错误近邻</h4>
+        <p>两个负荷曲线可能形态相似，但一个处于极端高温，另一个处于普通工作日，其未来走势和决策价值可能完全不同。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">02</div>
+        <h4>情境会改变未来演化路径</h4>
+        <p>天气、节假日、政策、突发事件、区域状态和设备工况会改变未来趋势，embedding 需要显式建模这些条件。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">03</div>
+        <h4>相似性必须服务下游任务</h4>
+        <p>用于预测迁移、样本级 RAG、记忆增强预测或智能体决策时，近邻应在任务目标和决策意义上可复用。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="alt">
+  <div class="container">
+    <h2 class="section-title">核心亮点</h2>
+    <p class="section-lead">
+      CastEmbedding 借鉴 M3-Embedding 的统一嵌入基础设施思想，但面向时间序列建立多情境、多功能、多粒度的表示学习框架。
+    </p>
+    <div class="cap-grid">
+      <div class="cap-card">
+        <div class="cap-icon">C1</div>
+        <h4>Context-conditioned Temporal Semantics</h4>
+        <div class="cap-focus">情境条件化时序语义</div>
+        <p>
+          embedding 空间不只表达曲线形态，而是把历史观测、领域背景、事件信息、任务目标和预测 horizon 共同纳入表示。
+          近邻样本应在“给定情境下的未来意义”上相似。
+        </p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">C2</div>
+        <h4>Future Evolution Similarity</h4>
+        <div class="cap-focus">未来演化相似性</div>
+        <p>
+          模型显式学习未来趋势、变化方向、变化点和演化机制上的一致性。
+          当两个历史窗口形态相似但未来路径不同，future-aware head 应降低它们的近邻可信度。
+        </p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">C3</div>
+        <h4>Task-oriented Similarity</h4>
+        <div class="cap-focus">任务导向相似性</div>
+        <p>
+          不同任务需要不同近邻：预测迁移关注未来误差改善，异常检测关注异常机制，智能体推理关注可复用证据。
+          CastEmbedding 将任务目标纳入相似性学习。
+        </p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">C4</div>
+        <h4>Multi-granularity Temporal Retrieval</h4>
+        <div class="cap-focus">多粒度时序检索</div>
+        <p>
+          表示空间同时支持全局序列检索、局部 patch 动态检索、样本级检索和任务级检索，
+          让同一套 embedding 能服务分类、聚类、RAG 和预测智能体。
+        </p>
+      </div>
+      <div class="cap-card">
+        <div class="cap-icon">C5</div>
+        <h4>Temporal Self-Knowledge Distillation</h4>
+        <div class="cap-focus">时序自知识蒸馏</div>
+        <p>
+          多个相似性 head 互相校正：pattern head、context head、future head 和 task head 形成更强 teacher signal，
+          避免模型退化为单纯曲线匹配或浅层文本对齐。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="container">
+    <h2 class="section-title">技术体系</h2>
+    <p class="section-lead">
+      CastEmbedding 由 temporal encoder、context encoder、context-conditioned fusion module、多视角相似性 heads 和自知识蒸馏机制组成。
+    </p>
+
+    <div class="architecture-flow" aria-label="CastEmbedding architecture flow">
+      <div class="flow-node">
+        <div class="node-label">Input</div>
+        <strong>Time Series + Context</strong>
+        <span>历史序列、元数据、外生变量、事件信息、任务指令和预测 horizon。</span>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="node-label">Encoding</div>
+        <strong>Temporal / Context Encoder</strong>
+        <span>分别建模数值模式与情境语义，获得可融合的多源表示。</span>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="node-label">Fusion</div>
+        <strong>Context-conditioned Fusion</strong>
+        <span>在任务目标和情境条件约束下形成统一时序语义 embedding。</span>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="node-label">Retrieval</div>
+        <strong>Multi-view Similarity Heads</strong>
+        <span>同时学习 pattern、local dynamics、context、future 和 task 相似性。</span>
+      </div>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-layer">Representation</div>
+        <h4>Temporal Encoder</h4>
+        <p>
+          编码原始时间序列，捕获趋势、周期、波动、异常、局部动态和 patch-level pattern，
+          为后续检索提供基础的数值结构表征。
+        </p>
+        <div class="tech-highlight">Trend · Seasonality · Anomaly · Local Dynamics</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-layer">Conditioning</div>
+        <h4>Context Encoder</h4>
+        <p>
+          编码领域描述、外生变量、事件信息、元数据、任务指令和预测目标，
+          让表示空间理解时间序列所处的外部情境。
+        </p>
+        <div class="tech-highlight">Metadata · Events · Exogenous Signals · Task Instruction</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-layer">Learning</div>
+        <h4>Multi-view Similarity Learning</h4>
+        <p>
+          通过多相似性 head 同时学习全局形态、局部动态、情境语义、未来演化和任务价值，
+          再通过自知识蒸馏进行统一校正。
+        </p>
+        <div class="tech-highlight">Pattern · Context · Future · Task · Distillation</div>
+      </div>
+    </div>
+
+    <h3 class="sub-title">多视角相似性矩阵</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>相似性视角</th><th>回答的问题</th><th>主要服务场景</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Global Pattern Similarity</strong></td>
+            <td>哪些序列在整体趋势、周期和曲线形态上相似？</td>
+            <td>分类、聚类、基础近邻检索</td>
+          </tr>
+          <tr>
+            <td><strong>Local Dynamics Similarity</strong></td>
+            <td>哪些局部片段具有相似波动、异常或突变结构？</td>
+            <td>异常检索、patch-level RAG、案例定位</td>
+          </tr>
+          <tr>
+            <td><strong>Contextual Semantic Similarity</strong></td>
+            <td>哪些样本处于相似领域、事件和外部条件中？</td>
+            <td>情境检索、跨域迁移、证据召回</td>
+          </tr>
+          <tr>
+            <td><strong>Future Evolution Similarity</strong></td>
+            <td>哪些样本在未来趋势、变化点和演化路径上相似？</td>
+            <td>预测增强、未来路径检索、风险预警</td>
+          </tr>
+          <tr>
+            <td><strong>Task-oriented Similarity</strong></td>
+            <td>哪些样本对当前任务具有相似决策价值？</td>
+            <td>Agentic TSF、记忆增强预测、任务级检索</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="training" class="alt">
+  <div class="container">
+    <h2 class="section-title">训练目标</h2>
+    <p class="section-lead">
+      CastEmbedding 的训练目标不是单一 contrastive objective，而是将多种监督信号组织为一个统一的时序语义学习过程。
+    </p>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-layer">Objective 1</div>
+        <h4>Context-aware Contrastive Learning</h4>
+        <p>
+          正负样本不只根据曲线形态构造，还要考虑领域、事件、预测 horizon 和任务目标。
+          形态相似但情境冲突的样本应被区分。
+        </p>
+        <div class="tech-highlight">Context-conditioned Positive / Negative Pairs</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-layer">Objective 2</div>
+        <h4>Future-aware Supervision</h4>
+        <p>
+          引入未来趋势、变化方向、变化点和预测误差改善作为监督信号，
+          让 embedding 直接服务预测和未来演化检索。
+        </p>
+        <div class="tech-highlight">Future Trajectory · Direction · Turning Point</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-layer">Objective 3</div>
+        <h4>Temporal Self-Knowledge Distillation</h4>
+        <p>
+          融合多个 similarity head 的判断形成 teacher signal，再蒸馏回各个分支，
+          使 pattern、context、future 和 task 视角相互增强。
+        </p>
+        <div class="tech-highlight">Teacher Signal · Multi-head Correction · Unified Space</div>
+      </div>
+    </div>
+
+    <h3 class="sub-title">训练 Instance 结构</h3>
+    <div class="instance-box">
+      CastEmbeddingInstance = {<br>
+      &nbsp;&nbsp;<span class="ib-key">time_series_window</span>      <span class="ib-arrow">←</span> <span class="ib-val">历史观测窗口与变量信息</span><br>
+      &nbsp;&nbsp;<span class="ib-key">context_features</span>        <span class="ib-arrow">←</span> <span class="ib-val">领域、事件、外生变量、元数据、任务指令</span><br>
+      &nbsp;&nbsp;<span class="ib-key">forecast_horizon</span>        <span class="ib-arrow">←</span> <span class="ib-val">预测窗口与未来演化约束</span><br>
+      &nbsp;&nbsp;<span class="ib-key">similarity_labels</span>       <span class="ib-arrow">←</span> <span class="ib-val">pattern / context / future / task 多视角相似性标签</span><br>
+      &nbsp;&nbsp;<span class="ib-key">retrieval_feedback</span>      <span class="ib-arrow">←</span> <span class="ib-val">近邻有效性、预测增益、推理证据可用性</span><br>
+      &nbsp;&nbsp;<span class="ib-key">distillation_targets</span>    <span class="ib-arrow">←</span> <span class="ib-val">多 head 融合后的 teacher signal</span><br>
+      }
+    </div>
+  </div>
+</section>
+
+<section id="applications">
+  <div class="container">
+    <h2 class="section-title">应用场景</h2>
+    <p class="section-lead">
+      CastEmbedding 的目标是成为时间序列检索、记忆、预测和智能体推理的基础组件。
+    </p>
+    <div class="app-grid">
+      <div class="app-card">
+        <h4>样本级时序检索</h4>
+        <p>检索历史相似样本、相似局部片段、相似事件背景和相似未来演化路径。</p>
+      </div>
+      <div class="app-card">
+        <h4>Time Series RAG</h4>
+        <p>为预测模型或 LLM 提供近邻案例、上下文证据、失败经验和历史分析结论。</p>
+      </div>
+      <div class="app-card">
+        <h4>记忆增强预测</h4>
+        <p>在 Memory 环境中召回高价值历史轨迹，辅助预测修正和不确定性分析。</p>
+      </div>
+      <div class="app-card">
+        <h4>预测迁移与 Few-shot 适配</h4>
+        <p>根据情境和未来演化语义寻找可迁移样本，降低新领域标注和训练成本。</p>
+      </div>
+      <div class="app-card">
+        <h4>异常与风险案例检索</h4>
+        <p>检索相似异常机制和历史风险案例，用于诊断、预警和解释生成。</p>
+      </div>
+      <div class="app-card">
+        <h4>Agentic Time Series Forecasting</h4>
+        <p>作为智能体的检索和记忆基础，让工具调用与推理过程获得更可靠证据。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="eval" class="alt">
+  <div class="container">
+    <h2 class="section-title">评估体系</h2>
+    <p class="section-lead">
+      CastEmbedding 的评估应同时覆盖 embedding 空间质量、近邻语义有效性和下游任务增益。
+    </p>
+    <div class="eval-grid">
+      <div class="eval-card">
+        <div class="eval-dim">Retrieval Quality</div>
+        <h4>检索质量</h4>
+        <p>评估 Recall@K、nDCG、MRR、样本级检索命中率和局部片段检索质量。</p>
+      </div>
+      <div class="eval-card">
+        <div class="eval-dim">Context Consistency</div>
+        <h4>情境一致性</h4>
+        <p>验证近邻样本是否具有一致领域背景、事件条件、外生变量影响和任务目标。</p>
+      </div>
+      <div class="eval-card">
+        <div class="eval-dim">Future Validity</div>
+        <h4>未来演化有效性</h4>
+        <p>衡量近邻样本在未来趋势方向、变化点、预测误差和风险演化上的一致性。</p>
+      </div>
+      <div class="eval-card">
+        <div class="eval-dim">Downstream Gain</div>
+        <h4>下游任务增益</h4>
+        <p>评估 embedding 对预测、异常检测、RAG、记忆增强预测和智能体推理的实际提升。</p>
+      </div>
+    </div>
+
+    <div class="claim-box">
+      <p>
+        时间序列 embedding 不应只回答“哪些历史曲线相似”，而应回答
+        “哪些样本在给定情境下具有相似的未来演化意义”。
+      </p>
+      <p class="claim-en">
+        Existing time series embeddings mainly learn pattern similarity, while CastEmbedding aims to learn context-conditioned temporal semantics,
+        where nearby samples are similar not only in curve shape, but also in contextual meaning, future evolution, and task-oriented decision value.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>
+      &copy; 2026 CastEmbedding Team · AGI Group · State Key Laboratory of Cognitive Intelligence, USTC ·
+      <a href="https://github.com/Mingyue-Cheng" target="_blank" rel="noopener">GitHub</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById("heroHeader");
+  if (header) {
+    header.addEventListener("click", (e) => {
+      if (e.target.closest("a, button")) return;
+      header.classList.remove("hero-refreshing");
+      void header.offsetWidth;
+      header.classList.add("hero-refreshing");
+      const wave = document.createElement("div");
+      wave.className = "hero-refresh-wave";
+      wave.style.left = e.clientX - header.getBoundingClientRect().left + "px";
+      wave.style.top  = e.clientY - header.getBoundingClientRect().top  + "px";
+      header.appendChild(wave);
+      wave.addEventListener("animationend", () => wave.remove());
+      header.addEventListener("animationend", () => header.classList.remove("hero-refreshing"), { once: true });
+    });
+  }
+
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-bar a[href^='#']");
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navLinks.forEach(link => {
+          const active = link.getAttribute("href") === `#${id}`;
+          link.style.color = active ? "var(--teal)" : "";
+          link.style.borderBottomColor = active ? "var(--teal)" : "";
+        });
+      }
+    });
+  }, { rootMargin: "-20% 0px -70% 0px" });
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
