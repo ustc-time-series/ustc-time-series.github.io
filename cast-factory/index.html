@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CastFactory（铸星坊）— CPT-SFT-RLVR 统一微调训练框架</title>
-  <meta name="description" content="CastFactory（铸星坊）是一个 recipe-centric 的 LLM-based 时间序列预测模型微调训练框架，统一封装 CPT、SFT 与 RLVR 三阶段训练，覆盖数据构建、时序表示、指令预测、可验证奖励优化、Agentic 工具调用与评测复现的完整流程。" />
+  <title>CastFactory（铸星坊）— LLM-based Multimodal Time Series 训练框架</title>
+  <meta name="description" content="CastFactory（铸星坊）是面向科研人员的 LLM-based Multimodal Time Series 模型训练工厂，以统一数据契约串联多模态样本构建、CPT-SFT-ReasoningRL/AgenticRL 训练、评测、消融与 recipe 复现。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,8 +34,8 @@
       color: var(--text);
       line-height: 1.8;
       font-size: 16px;
-      text-align: left;
-      text-justify: auto;
+      text-align: justify;
+      text-justify: inter-ideograph;
     }
     a { color: var(--teal); text-decoration: none; }
     a:hover { text-decoration: underline; }
@@ -275,33 +275,6 @@
     p { margin-bottom: 14px; }
     p:last-child { margin-bottom: 0; }
 
-    /* ── Text alignment tuning ───────────────────────
-       不再把两端对齐挂在 body 上，避免卡片文字被强行拉开。
-       只在较长正文段落中保留 inter-ideograph 对齐。 */
-    .container > p,
-    .tldr,
-    .claim-box p,
-    .pillar-text span,
-    .roadmap-text span {
-      text-align: justify;
-      text-justify: inter-ideograph;
-    }
-    .card,
-    .card p,
-    .stage-card,
-    .stage-card p,
-    .module-card,
-    .module-card p,
-    .stat-box,
-    .flow-step,
-    .feature-list li,
-    .table-wrap,
-    pre,
-    code {
-      text-align: left;
-      text-justify: auto;
-    }
-
     /* ── TL;DR banner ──────────────────────────────── */
     .tldr {
       background: #eff8ff;
@@ -373,6 +346,46 @@
     .card .card-icon { font-size: 1.6rem; margin-bottom: 10px; line-height: 1; }
     .card h4 { font-size: 0.93rem; font-weight: 700; margin-bottom: 7px; color: #111; }
     .card p  { font-size: 0.87rem; color: #555; margin: 0; line-height: 1.65; }
+
+    .contract-grid,
+    .workflow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+    .contract-card,
+    .workflow-card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px 18px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.04);
+    }
+    .contract-card h4,
+    .workflow-card h4 {
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .contract-card p,
+    .workflow-card p {
+      font-size: 0.84rem;
+      color: #555;
+      line-height: 1.62;
+      margin: 0;
+    }
+    .schema-line {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 8px;
+      border: 1px solid #cde8e4;
+      background: #f6fffd;
+      color: #25413e;
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
 
     /* ── Pillar (numbered) list ────────────────────── */
     .pillar-list {
@@ -479,75 +492,78 @@
     }
     .stage-card p { font-size: 0.87rem; color: #555; line-height: 1.6; margin: 0; }
 
+    .rl-mode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0 24px;
+    }
+    .rl-mode-card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--amber);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 18px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.04);
+    }
+    .rl-mode-card h4 {
+      margin-bottom: 8px;
+      color: var(--navy);
+      font-size: 0.98rem;
+      font-weight: 800;
+    }
+    .rl-mode-card p {
+      margin: 0;
+      color: #555;
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+
     /* ── Flow arrow pipeline ───────────────────────── */
     .flow-pipeline {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      display: flex;
       align-items: stretch;
-      gap: 12px 18px;
+      gap: 0;
       margin: 24px 0;
-      overflow: visible;
-      counter-reset: flow-step;
+      overflow-x: auto;
     }
     .flow-step {
-      position: relative;
-      min-width: 0;
+      flex: 1;
+      min-width: 100px;
       background: var(--card);
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 14px 12px 14px 34px;
-      text-align: left;
+      padding: 14px 12px;
+      text-align: center;
       font-size: 0.82rem;
       font-weight: 600;
       color: var(--navy);
       box-shadow: 0 1px 4px rgba(0,0,0,0.04);
       line-height: 1.45;
     }
-    .flow-step::before {
-      counter-increment: flow-step;
-      content: counter(flow-step);
-      position: absolute;
-      top: 13px;
-      left: 12px;
-      width: 17px;
-      height: 17px;
-      border-radius: 999px;
-      background: #e6f4f1;
-      color: var(--teal);
-      font-size: 0.68rem;
-      font-weight: 800;
-      line-height: 17px;
-      text-align: center;
-    }
-    .flow-step::after {
-      content: "→";
-      position: absolute;
-      right: -14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #b8c0c8;
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
-    .flow-step:nth-of-type(7)::after,
-    .flow-step:last-child::after { display: none; }
     .flow-step .fs-sub {
       font-size: 0.73rem;
       font-weight: 400;
       color: var(--muted);
       margin-top: 3px;
     }
-    .flow-sep { display: none; }
+    .flow-sep {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      color: #bbb;
+      font-size: 1rem;
+    }
 
     /* ── Module table ──────────────────────────────── */
     .module-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 14px;
       margin-top: 22px;
     }
     .module-card {
-      min-width: 0;
       background: var(--card);
       border: 1px solid var(--line);
       border-left: 4px solid var(--navy);
@@ -560,9 +576,6 @@
       font-weight: 700;
       color: var(--navy);
       margin-bottom: 5px;
-      line-height: 1.35;
-      overflow-wrap: anywhere;
-      word-break: break-word;
     }
     .module-card p {
       font-size: 0.83rem;
@@ -651,35 +664,18 @@
     }
 
     /* ── Responsive ────────────────────────────────── */
-    
     @media (max-width: 680px) {
       header { padding: 40px 0 46px; }
       header h1 { font-size: 1.9rem; }
       .stage-row  { grid-template-columns: 1fr; }
+      .rl-mode-grid { grid-template-columns: 1fr; }
       .card-grid-3 { grid-template-columns: 1fr; }
-      .flow-pipeline { grid-template-columns: 1fr; gap: 18px; }
-      .flow-step::after {
-        content: "↓";
-        right: 50%;
-        top: auto;
-        bottom: -17px;
-        transform: translateX(50%);
-      }
-      .flow-step:nth-of-type(7)::after { display: block; }
-      .flow-step:last-child::after { display: none; }
-      .flow-sep { display: none; }
+      .flow-pipeline { flex-direction: column; }
+      .flow-sep { transform: rotate(90deg); align-self: center; }
       section { padding: 48px 0; }
       .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
       h2.section-title { font-size: 1.25rem; }
       .claim-box { padding: 24px 20px; }
-    }
-
-    header .subtitle {
-      display: block;
-      max-width: 690px;
-      margin: 14px auto 0;
-      text-align: center;
-      text-justify: auto;
     }
   </style>
 </head>
@@ -689,14 +685,13 @@
 <header id="heroHeader">
   <div class="hero-refresh-sheen" aria-hidden="true"></div>
   <div class="container">
-    <h1 class="hero-clickable"><span class="hero-title-main"><span class="cf">CastFactory（铸星坊）</span></span><span class="hero-title-sub">面向时间序列预测的大模型统一微调训练框架</span></h1>
+    <h1 class="hero-clickable"><span class="hero-title-main"><span class="cf">CastFactory（铸星坊）</span></span><span class="hero-title-sub">面向科研人员的 LLM-based Multimodal Time Series 模型训练工厂</span></h1>
     <p class="subtitle hero-clickable">
-      将通用大语言模型转化为可复现、可扩展的时间序列预测模型，
-      以统一协议串联数据构建、时序适应、指令预测与可验证奖励优化的完整训练闭环。
+      将时序数值、文本事件、外部变量、图像化证据与领域知识组织为可训练样本，
+      用统一协议串联数据契约、CPT-SFT-RL、消融评测与 recipe 复现。
     </p>
-    <p class="affiliation hero-clickable" style="text-align: center; text-justify: auto;">
-      中国科学技术大学 · 认知智能全国重点实验室 · AGI 研究组
-    </p>
+    <p class="affiliation hero-clickable">中国科学技术大学 · 认知智能全国重点实验室 · AGI 研究组</p>
+
     <div class="btn-row">
       <a class="btn btn-secondary" href="https://github.com/ustc-time-series/CastFactory" target="_blank" rel="noopener">
         <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -721,11 +716,12 @@
     <a href="../" class="nav-home">Time Series</a>
     <a href="#intro">简介</a>
     <a href="#problem">痛点</a>
+    <a href="#contract">数据契约</a>
     <a href="#idea">核心思想</a>
     <a href="#stages">三阶段</a>
     <a href="#modules">模块</a>
-    <a href="#agentic">Agentic RLVR</a>
-    <a href="#workflow">工作流</a>
+    <a href="#research-workflow">科研流</a>
+    <a href="#workflow">CLI</a>
     <a href="#roadmap">路线图</a>
     <a href="#claim">定位</a>
   </div>
@@ -736,41 +732,41 @@
   <div class="container">
     <div class="tldr">
       <strong>一句话定位：</strong>
-      CastFactory（铸星坊）是一个 <strong>recipe-centric 的 LLM-based 时间序列预测微调训练框架</strong>——
-      用一份 YAML recipe 描述完整实验，将 <strong>CPT、SFT 与 RLVR</strong> 三阶段训练、
-      数据构建、时序表示、可验证奖励、Agentic 工具调用与评测流程统一封装，
-      支撑 Time-R1 风格分阶段训练与 Cast-R1 风格工具增强决策两条研究路线。
+      CastFactory（铸星坊） 是一个<strong>面向科研人员的 LLM-based Multimodal Time Series 模型训练工厂</strong>——
+      标准化从多模态数据接入、证据对齐、时序适应、指令预测到可验证奖励优化的完整训练流程，
+      每次实验对应一套可复现、可消融、可发布的 training recipe。
     </div>
 
     <h2 class="section-title">项目简介</h2>
     <p>
-      近年来，越来越多的研究尝试将大语言模型用于时间序列预测。然而，现有工作往往依赖
-      <strong>临时性的数据序列化方式、手工构造的 prompt 模板和分散的微调脚本</strong>，
-      导致模型训练难以复现、实验结果难以比较、方法扩展成本高。
+      近年来，越来越多的研究尝试将大语言模型用于时间序列预测，并进一步引入新闻、事件、天气、
+      传感器图像、运维记录、领域知识等外部证据。然而，现有工作往往依赖
+      <strong>临时性的数据拼接方式、手工构造的 prompt 模板和分散的微调脚本</strong>，
+      导致多模态样本难以复现、实验结果难以比较、方法扩展成本高。
     </p>
     <p>
-      CastFactory（铸星坊） 聚焦于
-      <strong>LLM-based TSF 模型微调训练</strong>这一核心问题，
-      将整个训练流程从"临时写脚本"升级为"数据格式统一、训练阶段清晰、评测协议标准、实验过程可复现"的
+      CastFactory（铸星坊） 借鉴 RecBole 等统一框架的设计理念，聚焦于
+      <strong>LLM-based Multimodal Time Series 模型训练</strong>这一核心问题，
+      将整个训练流程从"临时写脚本"升级为"数据契约统一、训练阶段清晰、评测协议标准、实验过程可复现"的
       <strong>模型工厂式框架</strong>。
     </p>
 
     <div class="stat-row">
       <div class="stat-box">
         <div class="stat-num">3</div>
-        <div class="stat-label">训练阶段<br>CPT · SFT · RLVR</div>
+        <div class="stat-label">训练阶段<br>CPT · SFT · RL</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">7</div>
-        <div class="stat-label">时序表示<br>statistics / table / patch …</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">2</div>
-        <div class="stat-label">RLVR Workflow<br>Single-Turn · Agent-Loop</div>
+        <div class="stat-num">8</div>
+        <div class="stat-label">核心模块<br>从多模态数据到 Recipe</div>
       </div>
       <div class="stat-box">
         <div class="stat-num">5</div>
         <div class="stat-label">设计原则<br>SAIOR 框架</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">可扩展模态<br>Series · Text · Events · Exogenous</div>
       </div>
     </div>
   </div>
@@ -781,40 +777,78 @@
   <div class="container">
     <h2 class="section-title">核心痛点</h2>
     <p>
-      将 LLM 用于时间序列预测时，当前研究面临五类系统性挑战：
+      将 LLM 用于多模态时间序列建模时，当前研究面临五类系统性挑战：
     </p>
     <div class="card-grid">
       <div class="card">
-        <div class="card-icon">🔤</div>
-        <h4>序列化缺乏统一标准</h4>
-        <p>不同研究采用不同数值序列化方式——逗号分隔、自然语言、patch、时间戳拼接各不相同，细节设计差异直接影响 LLM 训练效果。</p>
+        <div class="card-icon">▦</div>
+        <h4>多模态样本缺乏数据契约</h4>
+        <p>时序窗口、文本事件、外部变量、图像化证据和领域知识常被临时拼接，缺少统一 schema、时间对齐规则和可追踪来源。</p>
       </div>
       <div class="card">
-        <div class="card-icon">🧠</div>
-        <h4>LLM 时序适应能力不足</h4>
-        <p>通用 LLM 在自然语言语料上预训练，并不天然熟悉连续数值序列、趋势变化和周期模式，直接 SFT 难以形成稳定的时序表达能力。</p>
+        <div class="card-icon">⌁</div>
+        <h4>LLM 时序与证据对齐能力不足</h4>
+        <p>通用 LLM 并不天然理解连续数值序列、趋势变化、周期模式，也不清楚外部事件在预测窗口中的时效性和影响边界。</p>
       </div>
       <div class="card">
-        <div class="card-icon">🎯</div>
-        <h4>SFT 目标与预测指标错位</h4>
-        <p>SFT 训练目标是 token-level cross entropy，而预测真正关心的是 MAE、MSE、趋势方向准确率——学会生成格式不等于预测优化。</p>
+        <div class="card-icon">◇</div>
+        <h4>SFT 目标与研究问题错位</h4>
+        <p>SFT 训练目标是 token-level cross entropy，而科研问题关心 forecast error、context utility、modality ablation 和解释一致性。</p>
       </div>
       <div class="card">
-        <div class="card-icon">📄</div>
-        <h4>生成式预测格式不稳定</h4>
-        <p>LLM 输出文本需经 parser 转换为数值数组。输出长度错误、格式失效、数值无法解析都会影响评测，但多数框架缺乏生成有效性指标。</p>
+        <div class="card-icon">□</div>
+        <h4>生成式输出难以稳定评测</h4>
+        <p>LLM 输出需要同时包含预测数组、置信度、解释或证据引用。长度错误、格式失效、证据幻觉都会影响评测可信度。</p>
       </div>
       <div class="card">
-        <div class="card-icon">🔁</div>
+        <div class="card-icon">↻</div>
         <h4>实验 recipe 缺乏可复现管理</h4>
-        <p>base model、数据集、序列化方式、LoRA 配置、解码策略……任一设置变化都影响结果，但目前缺乏将这些设置沉淀为标准 recipe 的机制。</p>
+        <p>base model、模态组合、样本模板、LoRA 配置、奖励权重、解码策略任一变化都会影响结论，需要被沉淀为标准 recipe。</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ═══════════════════ DATA CONTRACT ═══════════════════ -->
+<section id="contract" class="alt">
+  <div class="container">
+    <h2 class="section-title">Multimodal Time Series Data Contract</h2>
+    <p>
+      CastFactory（铸星坊） 的第一层抽象不是 prompt，而是可复现的数据契约。
+      每条训练样本由历史窗口、预测目标和一组带时间戳、来源、可用性边界的 evidence pack 组成，
+      从源头保证多模态输入可以被训练、消融和复现。
+    </p>
+
+    <div class="contract-grid">
+      <div class="contract-card">
+        <h4>Series Window</h4>
+        <p>历史序列、目标变量、协变量、频率、lookback/horizon、归一化参数和 split 信息，统一进入可追踪 manifest。</p>
+      </div>
+      <div class="contract-card">
+        <h4>Text &amp; Event Evidence</h4>
+        <p>新闻、运维记录、节假日、政策事件、异常报告等文本证据按时间戳对齐，并记录是否在预测时刻可见。</p>
+      </div>
+      <div class="contract-card">
+        <h4>Exogenous Signals</h4>
+        <p>天气、价格、流量、空间位置、日历特征等外部变量以结构化字段进入样本，支持单独消融和组合消融。</p>
+      </div>
+      <div class="contract-card">
+        <h4>Visualized Evidence</h4>
+        <p>曲线图、频谱图、诊断截图或传感器图像可作为图像模态接入，用于训练视觉语言模型或生成解释型预测。</p>
+      </div>
+    </div>
+
+    <div class="schema-line">
+      <strong>样本抽象：</strong>
+      <code>sample = {history, target, time_features, evidence_pack, task_instruction, output_schema}</code>。
+      其中 <code>evidence_pack</code> 记录 modality、timestamp、source、visibility 和 ablation tag，
+      支撑 context_gain、modality_ablation 等科研评测。
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════ CORE IDEA ═══════════════════ -->
-<section id="idea" class="alt">
+<section id="idea">
   <div class="container">
     <h2 class="section-title">核心设计思想</h2>
     <p>
@@ -827,35 +861,35 @@
         <div class="pillar-num">S</div>
         <div class="pillar-text">
           <strong>Standardize — 统一标准</strong>
-          <span>统一数据接入（CSV reader + timestamp/ratio split + rolling windows + leakage 检查）、时序表示（statistics、textual_summary、context、markdown_table、discrete_token、numerical_patch、hybrid 七种内置 representation）、instruction 模板与评测协议，让不同数据集、不同模型、不同训练阶段在统一接口下运行。</span>
+          <span>统一多模态数据契约、序列化方式、instruction 模板、训练配置和评测协议。CastFactory（铸星坊） 首先是一个标准化框架，让不同数据集、不同模态组合、不同训练阶段在统一接口下运行。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num">A</div>
         <div class="pillar-text">
           <strong>Adapt — 时序适应</strong>
-          <span>通过 CPT 阶段让 LLM 接触序列化时序值与元信息（channel、domain、unit），在进入 SFT 之前先形成基础的时序表达能力——即 Temporal-adapted LLM。<code>CPTDataset</code> + <code>TransformersCPTBackend</code> 提供完整的 next-token 训练管线。</span>
+          <span>通过 CPT 阶段让 LLM 接触大量时序数值语料、时间元信息、文本事件和外部变量，在进入 SFT 之前先形成基础的时序表达与证据对齐能力。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num">I</div>
         <div class="pillar-text">
           <strong>Instruct — 指令预测</strong>
-          <span>通过 SFT 阶段让模型学会按照预测任务指令输出未来序列。<code>SFTDataset</code> 将每条样本格式化为指令 + 可见时序上下文 + JSON 预测目标，Transformers backend 用 <code>-100</code> mask prompt token，loss 仅作用在 response token 上。支持外部 <code>.txt</code> instruction 模板与丰富的占位符（cutoff_time、prediction_length、attr_meaning、target_channels…）。</span>
+          <span>通过 SFT 阶段让模型学会按照预测任务指令读取 history 与 evidence pack，并输出未来序列、置信度、解释或证据引用。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num">O</div>
         <div class="pillar-text">
-          <strong>Optimize — 可验证奖励优化</strong>
-          <span>TSF 天然具有 ground truth future values，因此可以将预测误差、格式有效性、推理结构、季节性/趋势/突变点结构转化为<b>可验证奖励</b>，通过 RLVR 阶段使优化目标更接近真实预测指标。RLVR 同时支持 single-turn rollout 与 verl 原生 AgentLoop 工具调用两种 workflow。</span>
+          <strong>Optimize — 奖励优化</strong>
+          <span>TSF 天然具有 ground truth future values，因此可以将预测误差、趋势方向、格式有效性、证据一致性转化为可验证奖励，通过 RL 阶段使优化目标更接近真实科研指标。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num">R</div>
         <div class="pillar-text">
           <strong>Reproduce — 完整复现</strong>
-          <span>每一次实验都沉淀为一份 YAML recipe + 一组 trace artifacts（recipe 快照、metrics、predictions、leaderboard、report、stage metadata、prompt/response/parsed rows/errors）。<code>Experiment.fit()</code> 与 <code>Experiment.evaluate()</code> 自动写出全部产物，支撑论文实验和开源生态建设。</span>
+          <span>每一次实验都沉淀为完整的 training recipe、modality ablation report 和 model card。一个模型对应一个 recipe，一个 recipe 对应一套可复现实验流程。</span>
         </div>
       </li>
     </ul>
@@ -865,83 +899,87 @@
 <!-- ═══════════════════ THREE STAGES ═══════════════════ -->
 <section id="stages">
   <div class="container">
-    <h2 class="section-title">CPT-SFT-RLVR 三阶段训练</h2>
+    <h2 class="section-title">CPT-SFT-RL 三阶段训练</h2>
     <p>
-      CastFactory（铸星坊）将 LLM-based TSF 微调流程系统化为三个递进阶段，
-      对应 <code>experiment.stage</code> 的 <code>cpt</code> / <code>sft</code> / <code>rlvr</code> 三个一级取值，
-      由 <code>Experiment.fit()</code> 统一调度，每个阶段都有清晰的输入、目标与产出：
+      CastFactory（铸星坊） 的核心训练范式将 LLM-based Multimodal Time Series 的微调流程系统化为三个递进阶段，
+      每个阶段有清晰的输入、目标和产出：
     </p>
 
     <div class="stage-row">
       <div class="stage-card">
         <div class="stage-badge badge-cpt">Stage 1 · CPT</div>
         <h4>持续预训练<br>时序适应阶段</h4>
-        <p class="stage-input">输入：序列化时序值 + channel/domain/unit 元信息</p>
-        <p><code>CPTDataset</code> 将预测窗口序列化为因果 LM 文本流，<code>TransformersCPTBackend</code> 完成 tokenize 并以 input tokens 同步作为 labels 训练 next-token 目标，支持 FSDP 多卡。</p>
-        <div class="stage-output">输出：Temporal-adapted LLM</div>
+        <p class="stage-input">输入：序列化时序语料、文本事件、外部变量、metadata、合成时序模式</p>
+        <p>训练目标为 next-token prediction。模型需要接触连续数值序列、趋势结构、周期变化、领域语义和事件上下文，形成对"时间序列语言"与外部证据的基础感知能力。</p>
+        <div class="stage-output">输出：Temporal-evidence adapted LLM</div>
       </div>
       <div class="stage-card">
         <div class="stage-badge badge-sft">Stage 2 · SFT</div>
         <h4>监督微调<br>指令预测阶段</h4>
-        <p class="stage-input">输入：instruction + 可见时序上下文 + future-known 协变量</p>
-        <p><code>SFTDataset</code> 将每条样本格式化为指令 + 时序表示 + JSON 目标输出，prompt token 用 <code>-100</code> 屏蔽，loss 仅作用于 response。支持外部 <code>.txt</code> 模板与 cutoff_time、prediction_length、target_channels、data_lookback 等占位符。</p>
-        <div class="stage-output">输出：Instruction-following TSF LLM</div>
+        <p class="stage-input">输入：instruction + historical window + evidence pack + output schema</p>
+        <p>让模型学会按照预测任务指令输出未来序列。支持 numeric-only、context-aware、multimodal-evidence、reasoning-enhanced 四类模板。SFT 阶段确立任务格式、输出格式和证据使用方式。</p>
+        <div class="stage-output">输出：Instruction-following multimodal TS LLM</div>
       </div>
       <div class="stage-card">
-        <div class="stage-badge badge-rl">Stage 3 · RLVR</div>
-        <h4>可验证奖励强化学习<br>奖励优化阶段</h4>
-        <p class="stage-input">输入：滚动窗口 + ground truth future values + 奖励配置</p>
-        <p>RLVR 自动构造 rollout 行、verl 0.7.1 GRPO+vLLM 配置、reward 入口与启动命令；支持 single-turn 与 time_series_agent 两种 workflow，后者对接 verl 原生 AgentLoop 形成 Cast-R1 风格工具调用循环。</p>
-        <div class="stage-output">输出：Reward-optimized TSF LLM</div>
+        <div class="stage-badge badge-rl">Stage 3 · RL</div>
+        <h4>强化学习<br>ReasoningRL / AgenticRL 阶段</h4>
+        <p class="stage-input">输入：同一多模态样本的多个候选预测，ground truth future values，evidence pack，可选工具轨迹</p>
+        <p>RL 阶段同时支持 ReasoningRL 与 AgenticRL：前者优化预测推理过程、证据引用和解释一致性；后者优化工具调用、检索、日历/事件查询等 agentic 行为，使模型在受控工具策略下完成预测决策。</p>
+        <div class="stage-output">输出：Reward-optimized reasoning &amp; agentic TS LLM</div>
+      </div>
+    </div>
+
+    <h3 class="sub-title" style="margin-top: 36px;">RL 能力边界：ReasoningRL 与 AgenticRL</h3>
+    <div class="rl-mode-grid">
+      <div class="rl-mode-card">
+        <h4>ReasoningRL</h4>
+        <p>面向“如何推理”的 RL 路径：优化预测前的结构化分析、证据归因、趋势解释和 uncertainty 描述。输出不是自由文本推理，而是可评测的 rationale schema，例如 trend_factors、evidence_refs、risk_notes。</p>
+      </div>
+      <div class="rl-mode-card">
+        <h4>AgenticRL</h4>
+        <p>面向“如何行动”的 RL 路径：训练模型在受控 tool_policy 下选择检索、日历特征、事件查询、外部变量读取等工具，并用 tool trace 与预测结果共同接受 reward 评估。</p>
       </div>
     </div>
 
     <h3 class="sub-title" style="margin-top: 36px;">端到端训练流程</h3>
     <div class="flow-pipeline">
-      <div class="flow-step">YAML Recipe<div class="fs-sub">单一契约</div></div>
+      <div class="flow-step">Raw Multimodal Data<div class="fs-sub">时序 · 文本 · 事件 · 外部变量</div></div>
       <div class="flow-sep">→</div>
-      <div class="flow-step">Data Layer<div class="fs-sub">CSV · split · 滑窗 · leakage</div></div>
+      <div class="flow-step">CastData Manifest<div class="fs-sub">滑窗 · 对齐 · 可见性</div></div>
       <div class="flow-sep">→</div>
-      <div class="flow-step">Representation<div class="fs-sub">7 种时序表示</div></div>
+      <div class="flow-step">Evidence Pack<div class="fs-sub">序列化 · instruction · schema</div></div>
       <div class="flow-sep">→</div>
       <div class="flow-step">CPT<div class="fs-sub">时序适应</div></div>
       <div class="flow-sep">→</div>
       <div class="flow-step">SFT<div class="fs-sub">指令预测</div></div>
       <div class="flow-sep">→</div>
-      <div class="flow-step">RLVR<div class="fs-sub">可验证奖励</div></div>
+      <div class="flow-step">RL<div class="fs-sub">ReasoningRL · AgenticRL</div></div>
       <div class="flow-sep">→</div>
-      <div class="flow-step">Evaluation<div class="fs-sub">standard / rolling / zero-shot</div></div>
+      <div class="flow-step">Evaluation<div class="fs-sub">预测指标 + 证据效用 + 消融</div></div>
       <div class="flow-sep">→</div>
-      <div class="flow-step">Trace<div class="fs-sub">recipe · metrics · report</div></div>
+      <div class="flow-step">Recipe &amp; Card<div class="fs-sub">可复现实验记录</div></div>
     </div>
 
-    <h3 class="sub-title">RLVR 奖励设计</h3>
+    <h3 class="sub-title">RL 奖励设计</h3>
     <p>
-      CastFactory 内置一组面向 TSF 的可验证奖励函数，可在 <code>training.rewards</code> 中按需组合；
-      single-turn workflow 强调 <strong>结构化输出 + 数值精度</strong>，agentic workflow 进一步引入与时序结构相关的辅助奖励：
+      多模态 TSF 的奖励函数以预测准确性为主导，同时约束输出格式、证据使用、结构化推理与工具行动：
     </p>
     <div class="table-wrap">
       <table>
         <thead>
-          <tr><th>奖励项</th><th>含义</th><th>适用 Workflow</th></tr>
+          <tr><th>奖励项</th><th>含义</th><th>权重建议</th></tr>
         </thead>
         <tbody>
-          <tr><td><code>format</code></td><td>检查 <code>&lt;think&gt;…&lt;/think&gt;&lt;answer&gt;…&lt;/answer&gt;</code> 结构与可解析性，作为硬约束/前置门</td><td>single-turn / agentic</td></tr>
-          <tr><td><code>accuracy</code></td><td>基于 MAE / MSE 等点预测指标的准确性奖励</td><td>single-turn</td></tr>
-          <tr><td><code>mse</code></td><td>带温度的 MSE 有界奖励，作为主要数值精度信号</td><td>single-turn</td></tr>
-          <tr><td><code>calibration</code></td><td>基于分位数（q10/q90）的不确定性校准奖励</td><td>single-turn</td></tr>
-          <tr><td><code>reasoning</code></td><td>对推理段长度 / 与 horizon 的匹配性的辅助奖励</td><td>single-turn</td></tr>
-          <tr><td><code>length</code></td><td>预测长度是否与 horizon 一致</td><td>agentic</td></tr>
-          <tr><td><code>normalized_mse</code></td><td>归一化 MSE，跨窗口尺度更稳定</td><td>agentic</td></tr>
-          <tr><td><code>change_point</code></td><td>突变点位置一致性，鼓励抓住趋势翻转</td><td>agentic</td></tr>
-          <tr><td><code>season_trend</code></td><td>季节性 + 趋势分量的结构相似性</td><td>agentic</td></tr>
+          <tr><td><code>R_accuracy</code></td><td>MAE / MSE / SMAPE 转换，衡量预测误差</td><td>主导项 α, β</td></tr>
+          <tr><td><code>R_format</code></td><td>输出是否能被成功解析为数值数组</td><td>硬约束或辅助 γ</td></tr>
+          <tr><td><code>R_length</code></td><td>预测长度是否与要求的 horizon 一致</td><td>辅助约束 δ</td></tr>
+          <tr><td><code>R_trend</code></td><td>预测序列的趋势方向与真实未来的一致性</td><td>辅助项 η</td></tr>
+          <tr><td><code>R_evidence</code></td><td>解释或引用是否与可见 evidence pack 一致，避免使用未来信息或无来源证据</td><td>辅助项 λ</td></tr>
+          <tr><td><code>R_reasoning</code></td><td>结构化 rationale 是否引用可见证据、覆盖关键趋势因素、与预测方向一致</td><td>ReasoningRL 辅助项 ρ</td></tr>
+          <tr><td><code>R_agentic</code></td><td>工具选择、调用顺序、查询范围和工具结果使用是否符合 tool_policy 与任务约束</td><td>AgenticRL 辅助项 τ</td></tr>
         </tbody>
       </table>
     </div>
-    <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
-      所有奖励通过统一入口 <code>castfactory.training.verl_reward_adapter:compute_score</code> 暴露给 verl 0.7.1，
-      框架自动写出 rollout 数据集、reward 入口与启动命令，使外部 verl 运行时可直接执行 GRPO + vLLM 训练。
-    </p>
   </div>
 </section>
 
@@ -950,240 +988,219 @@
   <div class="container">
     <h2 class="section-title">框架模块设计</h2>
     <p>
-      CastFactory（铸星坊）由若干职责清晰、可独立扩展的子包构成，与代码仓库一一对应：
+      CastFactory（铸星坊） 由八个核心模块组成，各模块职责边界清晰、可独立扩展：
     </p>
     <div class="module-grid">
       <div class="module-card">
-        <h5>core · Recipe &amp; Experiment</h5>
-        <p><code>RecipeConfig</code> 校验/规整 YAML，<code>Experiment</code> 装配数据、表示、模型、训练、奖励、评测、trace 组件，<code>registry</code> 管理可插拔的 backbone/trainer 注册表。</p>
+        <h5>Multimodal Data Module</h5>
+        <p>时间序列、文本事件、外部变量、图像化证据和 metadata 的加载、时间戳解析、缺失值处理、归一化、滑窗切分、train/val/test split。</p>
       </div>
       <div class="module-card">
-        <h5>data · 数据流水线</h5>
-        <p>CSV reader、timestamp/ratio split、rolling windows、leakage 检查、train-only 归一化工具，并将原始数据封装为可见性分离的 <code>ForecastSample</code>（observed / future-known / future-unknown 三段）。</p>
+        <h5>Evidence Pack Builder</h5>
+        <p>按预测时刻聚合可见证据，记录 modality、timestamp、source、visibility 和 ablation tag，避免未来信息泄漏并支持模态消融。</p>
       </div>
       <div class="module-card">
-        <h5>representation · 时序表示</h5>
-        <p>七种内置表示：<code>statistics</code>、<code>textual_summary</code>、<code>context</code>、<code>markdown_table</code>、<code>discrete_token</code>、<code>numerical_patch</code>、<code>hybrid</code>，统一输出 <code>ModelInput</code> 文本提示。</p>
+        <h5>Serialization Module</h5>
+        <p>将 history、evidence pack 和 task instruction 转换为 LLM 可读取输入。支持 numeric-only、context-aware、multimodal_forecast_v1 和 JSON 输出解析。</p>
       </div>
       <div class="module-card">
-        <h5>parsers · 输出解析</h5>
-        <p>JSON、array、timestamp/value、<code>&lt;think&gt;/&lt;answer&gt;</code> 四类 forecast parser，附带 fallback 行为与解析上下文 <code>ParseContext</code>，将 LLM 文本输出稳定还原为数值数组。</p>
+        <h5>CPT Data Builder</h5>
+        <p>构造持续预训练语料：无标注时序片段、带 metadata 的时序语料、文本事件片段、合成时序模式和跨模态对齐样本。</p>
       </div>
       <div class="module-card">
-        <h5>models · 模型骨架</h5>
-        <p>HuggingFace Causal LM backbone、<code>TextConcatBridge</code>、<code>TextGenerationHead</code>、PEFT/LoRA 适配器、vLLM 引擎适配器，构成与训练后端解耦的"积木式"模型层。</p>
+        <h5>SFT Data Builder</h5>
+        <p>将滑窗样本转换为 instruction-response 格式。支持 numeric-only forecasting、context-aware forecasting、multimodal evidence forecasting 和 reasoning-enhanced forecasting。</p>
       </div>
       <div class="module-card">
-        <h5>training · 三阶段训练</h5>
-        <p>CPT/SFT/RLVR 各自的 <code>Dataset + Trainer</code>，含 <code>TransformersCPTBackend</code>、<code>TransformersSFTBackend</code>（FSDP）与 <code>VerlBackend</code>；<code>prompt_template</code> 支持外部 <code>.txt</code> 模板与丰富占位符。</p>
+        <h5>Training Engine</h5>
+        <p>三阶段统一训练引擎，含 CPTTrainer、SFTTrainer、ReasoningRLTrainer 和 AgenticRLTrainer。支持全参数微调、LoRA / QLoRA 参数高效微调和多模态模板配置。</p>
       </div>
       <div class="module-card">
-        <h5>training.agentic · Agent-Loop</h5>
-        <p>Cast-R1 风格工具集：basic statistics、within-channel dynamics、forecast residuals、data quality、event summary 共 5 个分析工具，外加 <code>predict_time_series</code>（chronos2 / arima / patchtst / itransformer + ARIMA / last-value 本地兜底）。</p>
+        <h5>Evaluation Module</h5>
+        <p>覆盖 forecast metrics、generation validity、context_gain、modality_ablation、evidence consistency、reasoning_trace_validity、tool_use_success 和 tool_policy_violation。</p>
       </div>
       <div class="module-card">
-        <h5>rewards · 可验证奖励</h5>
-        <p><code>FormatReward</code>、<code>AccuracyReward</code>、<code>CalibrationReward</code>、<code>MSEReward</code>、<code>ReasoningReward</code> 与 agentic 路径下的 <code>length</code>、<code>normalized_mse</code>、<code>change_point</code>、<code>season_trend</code>，可在 recipe 中按需组合。</p>
-      </div>
-      <div class="module-card">
-        <h5>evaluation · 评测协议</h5>
-        <p>三类评测器：<code>StandardEvaluator</code>、<code>RollingEvaluator</code>、<code>ZeroShotEvaluator</code>，配合点预测指标库；支持单协议或多协议同时评估并写入 leaderboard。</p>
-      </div>
-      <div class="module-card">
-        <h5>trace · 实验产物</h5>
-        <p><code>RunStore</code> 自动写出 recipe 快照、metrics、predictions、leaderboard、report 与 stage metadata，并提供 prompt/response/parsed rows/error 等扩展槽位，让"实验即可复现"。</p>
-      </div>
-      <div class="module-card">
-        <h5>cli · 统一命令入口</h5>
-        <p><code>python -m castfactory.cli.run &lt;recipe&gt;.yaml --mode fit|evaluate</code> 单命令驱动整个实验，支持 dotlist 覆盖（如 <code>training.args.learning_rate=2e-4</code>）。</p>
+        <h5>Recipe Manager</h5>
+        <p>保存每次训练的完整配置：base model、dataset、modalities、序列化参数、CPT/SFT/RL 超参、评测协议、消融报告和 model card。</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ AGENTIC RLVR ═══════════════════ -->
-<section id="agentic">
+<!-- ═══════════════════ RESEARCH WORKFLOW ═══════════════════ -->
+<section id="research-workflow">
   <div class="container">
-    <h2 class="section-title">Agentic RLVR：Cast-R1 风格工具调用</h2>
+    <h2 class="section-title">科研人员工作流</h2>
     <p>
-      除了经典的 single-turn rollout，CastFactory 在 RLVR 阶段同时支持 <strong>time_series_agent</strong> workflow，
-      原生对接 verl 0.7.1 的 <code>AgentLoop</code>，让模型通过多轮工具调用形成"分析—预测—验证—回答"的闭环决策过程。
+      CastFactory（铸星坊） 面向科研人员的目标不是只跑一个训练脚本，而是把研究问题、数据构造、
+      模型训练、消融实验和论文级产物组织成可复用流程。
     </p>
 
-    <h3 class="sub-title">两种 Rollout Workflow</h3>
-    <div class="card-grid-3">
-      <div class="card">
-        <div class="card-icon">📝</div>
-        <h4>single_turn</h4>
-        <p>文本 prompt 行 → <code>rollout_dataset.jsonl</code> → <code>verl_config.yaml</code>，配合 <code>compute_score</code> reward 入口完成 GRPO + vLLM 训练；适合稳定可复现的指令跟随预测训练。</p>
+    <div class="workflow-grid">
+      <div class="workflow-card">
+        <h4>1. 定义研究假设</h4>
+        <p>明确任务、预测 horizon、候选模态和对照组，例如“天气与政策事件是否提升电力负荷长期预测”。</p>
       </div>
-      <div class="card">
-        <div class="card-icon">🛠️</div>
-        <h4>time_series_agent</h4>
-        <p>原始 chat 消息 + <code>agent_name: time_series_forecast_agent</code> + Cast-R1 风格 timestamp/value ground truth；导出 <code>agent_loop_config.yaml</code> 由 verl AgentLoop 驱动多轮工具调用。</p>
+      <div class="workflow-card">
+        <h4>2. 构建数据契约</h4>
+        <p>将原始数据转为 CastData Manifest，记录每个模态的来源、时间对齐、可见性边界和消融标签。</p>
       </div>
-      <div class="card">
-        <div class="card-icon">🎯</div>
-        <h4>统一奖励适配</h4>
-        <p>两种 workflow 共享统一入口；single-turn 主打 format / accuracy / mse，agentic 进一步引入 length / normalized_mse / change_point / season_trend。</p>
+      <div class="workflow-card">
+        <h4>3. 训练多阶段模型</h4>
+        <p>按 CPT → SFT → ReasoningRL / AgenticRL 运行训练，复用同一套 base model、模板、reward、工具策略和输出 schema。</p>
       </div>
-    </div>
-
-    <h3 class="sub-title">六类 Cast-R1 风格工具</h3>
-    <div class="module-grid">
-      <div class="module-card">
-        <h5>extract_basic_statistics</h5>
-        <p>计算单变量观测序列的 count / mean / std / min / max / median / first / last 等基础统计量。</p>
+      <div class="workflow-card">
+        <h4>4. 执行消融与评测</h4>
+        <p>比较 series-only、series+text、series+exogenous、full-modal 等设置，报告 context_gain 和 modality_ablation。</p>
       </div>
-      <div class="module-card">
-        <h5>extract_within_channel_dynamics</h5>
-        <p>分析趋势斜率、平均变化、波动率、峰值数与方向反转次数，刻画局部动力学。</p>
-      </div>
-      <div class="module-card">
-        <h5>extract_forecast_residuals</h5>
-        <p>基于简单局部基线汇总残差均值、std、绝对均值与最近残差，提示模型短期偏差。</p>
-      </div>
-      <div class="module-card">
-        <h5>extract_data_quality</h5>
-        <p>识别非有限值、零差段、重复时间戳，给出 nonfinite_ratio、dropout_ratio 等数据质量指标。</p>
-      </div>
-      <div class="module-card">
-        <h5>extract_event_summary</h5>
-        <p>基于差分阈值检测突变事件，返回事件段数量与代表性事件的时间戳/数值。</p>
-      </div>
-      <div class="module-card">
-        <h5>predict_time_series</h5>
-        <p>调用配置好的 HTTP 模型服务（chronos2 / arima / patchtst / itransformer），失败时本地 ARIMA → last-value 兜底，输出与时间戳对齐的候选预测。</p>
+      <div class="workflow-card">
+        <h4>5. 沉淀研究产物</h4>
+        <p>自动保存 training recipe、evaluation report、ablation matrix、model card 和可复现实验命令。</p>
       </div>
     </div>
-
-    <h3 class="sub-title">最小 Agentic Recipe 片段</h3>
-    <pre>rollout:
-  workflow:
-    name: time_series_agent
-    max_steps: 3
-    max_parallel_calls: 5
-    tool_parser_format: hermes
-    model_service_url: http://localhost:8994
-    prediction_models: [chronos2, arima, patchtst, itransformer]
-    local_fallback: arima_then_last_value
-
-training:
-  rewards:
-    - name: format
-    - name: length
-    - name: normalized_mse
-    - name: change_point
-    - name: season_trend</pre>
-    <p style="font-size: 0.9rem; color: #666;">
-      Agentic workflow 通过 <code>agent_loop_config.yaml</code> 与 verl 原生 AgentLoop 对接，
-      模型最终以 <code>&lt;answer&gt;YYYY-MM-DD HH:MM:SS value&lt;/answer&gt;</code> 行式输出预测，
-      由 timestamp/value parser 与对应奖励函数闭环验证。
-    </p>
   </div>
 </section>
 
 <!-- ═══════════════════ WORKFLOW ═══════════════════ -->
-<section id="workflow">
+<section id="workflow" class="alt">
   <div class="container">
-    <h2 class="section-title">典型使用工作流</h2>
+    <h2 class="section-title">典型 CLI 工作流</h2>
     <p>
-      CastFactory 的 CLI 入口 <code>python -m castfactory.cli.run</code> 接收一份 YAML recipe 并按 <code>experiment.stage</code> 自动调度
-      CPT / SFT / RLVR；CPT 与 SFT 走本地 Transformers backend，RLVR 走 verl 0.7.1（CastFactory 准备好 dataset、verl_config、reward 入口与启动命令）。
-      所有命令都支持 dotlist 覆盖，便于扫超参：
+      CastFactory（铸星坊） 提供 CLI 接口，覆盖从多模态数据准备到模型评测的完整链路：
     </p>
 
-    <h3 class="sub-title">1. 安装</h3>
-    <pre>python -m pip install -e .                # 核心
-python -m pip install -e ".[hf]"          # 可选：HuggingFace 模型加载
-python -m pip install -e ".[train]"       # 可选：本地 CPT/SFT 训练栈
-python -m pip install -e ".[agentic]"     # 可选：time-series agentic RL 工具</pre>
+    <h3 class="sub-title">1. 多模态数据准备</h3>
+    <pre>castfactory prepare-data \
+  --dataset electricity \
+  --data_path ./data/electricity.csv \
+  --event_path ./data/electricity_events.jsonl \
+  --exogenous_path ./data/weather.csv \
+  --metadata_path ./data/region_meta.json \
+  --modalities series,text,event,exogenous \
+  --freq hourly \
+  --input_len 336 \
+  --pred_len 96 \
+  --normalization z_score \
+  --visibility_rule no_future_context \
+  --output_dir ./castdata/electricity</pre>
 
-    <h3 class="sub-title">2. 运行 CPT</h3>
-    <pre>python -m castfactory.cli.run examples/cpt/etth1_qwen_cpt.yaml --mode fit
-# 输出：./checkpoints/etth1_ot_qwen_cpt</pre>
+    <h3 class="sub-title">2. 构造 CPT 语料 &amp; 执行 CPT</h3>
+    <pre>castfactory build-cpt-corpus \
+  --datasets electricity,traffic,weather \
+  --modalities series,text,event,exogenous \
+  --serialization multimodal_temporal_v1 \
+  --seq_len 4096 \
+  --include_evidence_pack true \
+  --output_dir ./corpus/cpt_temporal
 
-    <h3 class="sub-title">3. 运行 SFT（接 CPT checkpoint）</h3>
-    <pre>python -m castfactory.cli.run examples/sft/etth1_qwen_sft.yaml --mode fit
-# 自动读取 init_checkpoint: ./checkpoints/etth1_ot_qwen_cpt
-# 输出：./checkpoints/etth1_ot_qwen_sft</pre>
+castfactory cpt \
+  --base_model Qwen-7B \
+  --corpus ./corpus/cpt_temporal \
+  --method lora \
+  --output_dir ./checkpoints/cast-qwen-cpt</pre>
 
-    <h3 class="sub-title">4. 运行 RLVR（导出 verl 0.7.1 训练产物）</h3>
-    <pre>python -m castfactory.cli.run examples/rlvr/etth1_qwen_grpo.yaml --mode fit
-# 在 ./checkpoints/etth1_ot_qwen_grpo/rlvr/ 下生成：
-#   rollout_dataset.jsonl
-#   verl_config.yaml
-#   agent_loop_config.yaml   (仅 time_series_agent workflow)
-#   launch_command.txt
-# Reward 入口：castfactory.training.verl_reward_adapter:compute_score</pre>
+    <h3 class="sub-title">3. 构造 SFT 数据 &amp; 执行 SFT</h3>
+    <pre>castfactory build-sft-data \
+  --castdata ./castdata/electricity \
+  --template multimodal_forecast_v1 \
+  --evidence_policy event_weather_text \
+  --output_schema forecast_with_rationale_json \
+  --output_dir ./corpus/sft_electricity_336_96
 
-    <h3 class="sub-title">5. dotlist 覆盖（按需扫超参）</h3>
-    <pre>python -m castfactory.cli.run examples/sft/etth1_qwen_sft.yaml --mode fit \
-  model.backbone.model_name=Qwen/Qwen2.5-1.5B \
-  training.args.num_train_epochs=1 \
-  training.args.learning_rate=2.0e-4</pre>
+castfactory sft \
+  --base_model ./checkpoints/cast-qwen-cpt \
+  --sft_data ./corpus/sft_electricity_336_96 \
+  --method lora \
+  --output_dir ./checkpoints/cast-qwen-sft</pre>
 
-    <h3 class="sub-title">6. 评测</h3>
-    <pre>python -m castfactory.cli.run examples/sft/etth1_qwen_sft.yaml --mode evaluate
-# 写出 trace artifacts：
-#   recipe.json · metrics.json · predictions.* · leaderboard · report.md</pre>
+    <h3 class="sub-title">4. 执行 RL 优化</h3>
+    <pre>castfactory rl \
+  --base_model ./checkpoints/cast-qwen-sft \
+  --castdata ./castdata/electricity \
+  --algorithm grpo \
+  --rl_mode reasoning,agentic \
+  --reward mae+format+length+trend+evidence+reasoning+agentic \
+  --reasoning_trace_schema forecast_rationale_v1 \
+  --tool_policy calendar,event_search,retrieval \
+  --num_generations 8 \
+  --output_dir ./checkpoints/cast-qwen-rl</pre>
 
-    <h3 class="sub-title">Recipe 示例（SFT）</h3>
-    <p>每次实验对应一份完整 YAML recipe：</p>
-    <pre>experiment:
-  name: etth1_ot_qwen_sft
-  stage: sft
-  seed: 42
+    <h3 class="sub-title">5. 评测 &amp; 推理</h3>
+    <pre>castfactory evaluate \
+  --model ./checkpoints/cast-qwen-rl \
+  --castdata ./castdata/electricity \
+  --metrics mse,mae,smape,direction_acc,parse_rate,context_gain,modality_ablation,evidence_consistency,reasoning_trace_validity,tool_use_success,tool_policy_violation \
+  --ablation series_only,series_text,series_exogenous,full_modal \
+  --output_report ./reports/electricity_336_96.json
 
-data:
-  reader:
-    name: csv
-    path: ./castfactory/dataset/ETTh1/ETTh1.csv
-    timestamp_col: date
-    target_channels: [OT]
-  split: { type: ratio, ratios: [0.7, 0.1, 0.2] }
-  window: { context_length: 96, prediction_length: 96, stride: 96 }
+castfactory predict \
+  --model ./checkpoints/cast-qwen-rl \
+  --input_series "0.12,0.15,0.18,0.21,0.19,0.16" \
+  --context "holiday=0; weather=rain; grid_event=maintenance" \
+  --pred_len 24</pre>
 
-representation:
-  name: markdown_table
-  significant_digits: 2
+    <h3 class="sub-title">Training Recipe 示例</h3>
+    <p>每次训练自动保存 recipe，确保实验可复现：</p>
+    <pre>model_name: Cast-Qwen-Electricity-96
+base_model: Qwen-7B
+stage: cpt_sft_rl
 
-model:
-  backbone:
-    name: hf_causal_lm
-    model_name: Qwen/Qwen2.5-1.5B
-    trust_remote_code: true
-  peft:
-    method: lora
-    r: 16
-    lora_alpha: 32
-    target_modules: [q_proj, v_proj]
+dataset:
+  name: Electricity
+  input_len: 336
+  pred_len: 96
+  frequency: hourly
+  normalization: z_score
 
-training:
-  init_checkpoint: ./checkpoints/etth1_ot_qwen_cpt
-  checkpoint_dir: ./checkpoints/etth1_ot_qwen_sft
-  backend:
-    name: transformers
-    max_prompt_length: 2048
-    max_response_length: 1024
-  args:
-    num_train_epochs: 1
-    learning_rate: 2.0e-4</pre>
+modalities:
+  series:
+    target: load
+    covariates: temperature,humidity,calendar
+  text:
+    source: electricity_events.jsonl
+    visibility: no_future_context
+  exogenous:
+    source: weather.csv
+    alignment: hourly
+  event:
+    source: maintenance_policy_events.jsonl
+    ablation_tag: event_context
 
-    <h3 class="sub-title">Example Recipes 一览</h3>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr><th>Stage</th><th>Recipe</th><th>用途</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>CPT</td><td><code>examples/cpt/etth1_qwen_cpt.yaml</code></td><td>将 ETTh1 窗口转为 causal LM 文本流</td></tr>
-          <tr><td>SFT</td><td><code>examples/sft/etth1_qwen_sft.yaml</code></td><td>从 CPT checkpoint 构造单轮预测指令数据</td></tr>
-          <tr><td>RLVR</td><td><code>examples/rlvr/etth1_qwen_grpo.yaml</code></td><td>为 verl 0.7.1 准备 single-turn GRPO 产物</td></tr>
-          <tr><td>Agentic RLVR</td><td><code>examples/rlvr/etth1_qwen3_1_7b_agentic_grpo_4gpu.yaml</code></td><td>Cast-R1 风格工具增强 AgentLoop 产物</td></tr>
-        </tbody>
-      </table>
-    </div>
+serialization:
+  type: multimodal_forecast_v1
+  precision: 4
+  include_timestamp: true
+  evidence_policy: event_weather_text
+  output_schema: forecast_with_rationale_json
+
+cpt:
+  enabled: true
+  corpus: electricity,traffic,weather
+  include_evidence_pack: true
+
+sft:
+  enabled: true
+  template: multimodal_forecast_v1
+  method: lora
+
+rl:
+  enabled: true
+  algorithm: grpo
+  modes:
+    - ReasoningRL
+    - AgenticRL
+  reward: mae+format+length+trend+evidence+reasoning+agentic
+  reasoning_trace_schema: forecast_rationale_v1
+  tool_policy: calendar,event_search,retrieval
+  num_generations: 8
+
+evaluation:
+  metrics: mse,mae,smape,direction_acc,parse_rate,context_gain,modality_ablation,evidence_consistency,reasoning_trace_validity,tool_use_success,tool_policy_violation
+  ablation:
+    - series_only
+    - series_text
+    - series_exogenous
+    - full_modal</pre>
   </div>
 </section>
 
@@ -1192,43 +1209,35 @@ training:
   <div class="container">
     <h2 class="section-title">阶段性建设路线</h2>
     <p>
-      CastFactory 采用渐进式发布策略，已经按版本完成核心 CPT-SFT-RLVR 链路与 Agentic RLVR 集成，
-      后续将持续扩展骨架、表示与基准设施：
+      CastFactory（铸星坊） 采用渐进式建设策略，优先跑通核心链路，再逐步扩展能力边界：
     </p>
     <ul class="roadmap-list">
       <li>
-        <div class="roadmap-ver">v0.1</div>
+        <div class="roadmap-ver">V0.1</div>
         <div class="roadmap-text">
-          <strong>SFT + Evaluation MVP（已发布）</strong>
-          <span>recipe-centric 实验骨架、CSV reader、滑窗与 leakage 检查、SFT 数据集与 Transformers backend、JSON forecast parser，以及 standard / rolling / zero_shot 三种评测协议。</span>
+          <strong>SFT + Evaluation MVP</strong>
+          <span>实现多模态数据契约、滑窗构造、证据对齐、SFT 样本构造、LoRA 微调、forecast parser 和基础评测指标。优先目标是最快跑通完整链路。</span>
         </div>
       </li>
       <li>
-        <div class="roadmap-ver">v0.2</div>
+        <div class="roadmap-ver">V0.2</div>
         <div class="roadmap-text">
-          <strong>CPT 支持（已发布）</strong>
-          <span><code>CPTDataset</code> + <code>TransformersCPTBackend</code> 完成 next-token 训练管线，FSDP 多卡，与 SFT 共享同一份 recipe schema。</span>
+          <strong>CPT 支持</strong>
+          <span>加入 CPT corpus builder 和 CPT trainer，实现 temporal-evidence adaptation。构建时序、文本事件、外部变量混合预训练语料管理体系。</span>
         </div>
       </li>
       <li>
-        <div class="roadmap-ver">v0.3</div>
+        <div class="roadmap-ver">V0.3</div>
         <div class="roadmap-text">
-          <strong>RLVR 支持（已发布）</strong>
-          <span>Time-R1 风格 single-turn rollout、verl 0.7.1 GRPO + vLLM 配置、format / accuracy / mse / calibration / reasoning 五类可验证奖励、统一 reward 入口 <code>compute_score</code>。</span>
+          <strong>ReasoningRL / AgenticRL 支持</strong>
+          <span>加入 rollout sampler、forecast parser、reward module、reasoning trace schema、tool_policy 和 GRPO/PPO 类训练接口，实现预测准确性、格式有效性、证据一致性、结构化推理和工具行动质量的联合优化。</span>
         </div>
       </li>
       <li>
-        <div class="roadmap-ver">v0.4</div>
+        <div class="roadmap-ver">V0.4</div>
         <div class="roadmap-text">
-          <strong>Agentic RLVR（已发布）</strong>
-          <span>Cast-R1 风格 time_series_agent workflow、6 类时序分析与预测工具、verl 原生 AgentLoop 配置导出，以及 length / normalized_mse / change_point / season_trend 四种 agentic 奖励。</span>
-        </div>
-      </li>
-      <li>
-        <div class="roadmap-ver">v0.5+</div>
-        <div class="roadmap-text">
-          <strong>Benchmark &amp; Model Zoo（建设中）</strong>
-          <span>沉淀更多数据集、horizon、表示与 base model 组合的 recipe，构建标准 benchmark 配置与跨实验 leaderboard 比较基础设施，逐步扩展为 CastFactory Model Zoo。</span>
+          <strong>Benchmark &amp; Model Zoo</strong>
+          <span>建立标准 benchmark 配置，沉淀不同数据集、不同 horizon、不同模态组合、不同模板和不同 base model 的结果，形成 Model Zoo 和实验对比基础设施。</span>
         </div>
       </li>
     </ul>
@@ -1245,56 +1254,54 @@ training:
       <li>
         <div class="pillar-num">1</div>
         <div class="pillar-text">
-          <strong>提出 CPT-SFT-RLVR 三阶段 LLM-based TSF 训练范式</strong>
-          <span>明确区分时序适应、指令预测和可验证奖励优化三个阶段，建立 LLM-based TSF 的系统性训练方法论，并在一份 YAML recipe 内统一表达。</span>
+          <strong>提出 CPT-SFT-RL 三阶段 LLM-based Multimodal TS 训练范式</strong>
+          <span>明确区分时序证据适应、指令预测和奖励优化三个阶段，建立 LLM-based Multimodal Time Series 的系统性训练方法论。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num">2</div>
         <div class="pillar-text">
-          <strong>提供统一的时间序列到 LLM 训练样本的构建框架</strong>
-          <span>统一 CSV reader、timestamp/ratio split、rolling windows、leakage 检查与 7 种内置时序表示，消除数据构建碎片化；外部 instruction 模板与丰富占位符让 prompt 工程可版本化。</span>
+          <strong>提供统一的多模态时间序列训练样本构建框架</strong>
+          <span>标准化 history、evidence pack、instruction 模板和输出解析方式，消除现有研究中多模态数据构建碎片化问题。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num">3</div>
         <div class="pillar-text">
-          <strong>构建面向 TSF 的可验证 RL 与 Agentic 训练接口</strong>
-          <span>同时支持 single-turn GRPO 与 verl 原生 AgentLoop 两种 rollout workflow；将格式有效性、点预测误差、季节性/趋势/突变点结构转化为奖励，使 LLM 微调目标贴近真实预测指标，超越 token-level 交叉熵。</span>
+          <strong>构建同时支持 ReasoningRL 与 AgenticRL 的可验证 RL 训练接口</strong>
+          <span>将预测误差、趋势一致性、格式有效性、证据一致性、结构化推理质量和工具行动质量转化为 reward，使 LLM 微调目标更贴近真实科研指标。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num">4</div>
         <div class="pillar-text">
-          <strong>形成可复现的 LLM-based TSF 实验基础设施</strong>
-          <span>通过 recipe 快照、metrics、predictions、leaderboard、report 与 stage metadata 等 trace artifacts 自动归档，支撑 Time-R1 与 Cast-R1 两条研究路线在同一框架内迭代。</span>
+          <strong>形成可复现的 LLM-based Multimodal TS 实验基础设施</strong>
+          <span>通过 training recipe、ablation matrix、model card、evaluation report 支撑论文实验和开源生态建设。</span>
         </div>
       </li>
     </ul>
 
     <div class="claim-box" style="margin-top: 36px;">
       <p>
-        现有 LLM-based 时间序列预测研究通常依赖临时性的数据序列化方式、指令构造方式和微调方案。
-        CastFactory（铸星坊）以 recipe 为唯一契约，提供一个统一的 CPT-SFT-RLVR 三阶段微调训练框架，
-        系统化标准时间序列数据构建、LLM 时序适应、指令跟随预测、可验证奖励优化、Agentic 工具调用与预测评测流程。
+        现有 LLM-based 多模态时间序列研究通常依赖临时性的数据拼接方式、指令构造方式和微调方案。
+        CastFactory（铸星坊） 提供一个统一的 CPT-SFT-ReasoningRL/AgenticRL 三阶段训练框架，
+        系统化标准多模态数据契约、LLM 时序证据适应、指令跟随预测、可验证推理与行动奖励优化、消融评测和实验复现流程。
       </p>
       <p class="claim-en">
-        Existing LLM-based time series forecasting studies often rely on ad-hoc data serialization,
-        instruction construction, and fine-tuning recipes. CastFactory provides a recipe-centric,
-        unified CPT-SFT-RLVR fine-tuning framework that standardizes temporal data construction,
-        LLM adaptation, instruction-following forecasting, verifiable reward optimization,
-        agentic tool use, and forecasting evaluation.
+        Existing LLM-based multimodal time series studies often rely on ad-hoc data stitching,
+        instruction construction, and fine-tuning recipes. CastFactory（铸星坊） provides a unified CPT-SFT-ReasoningRL/AgenticRL
+        training framework that standardizes multimodal data contracts, temporal-evidence adaptation,
+        instruction-following forecasting, verifiable reasoning and agentic reward optimization, ablation, and evaluation.
       </p>
     </div>
 
     <p style="margin-top: 24px; color: #666; font-size: 0.9rem;">
       <strong>项目边界声明：</strong>
-      CastFactory（铸星坊）专注于 LLM-based TSF 微调训练框架本身，不重复造 verl 运行时——
-      RLVR 阶段以"准备 dataset、verl_config、reward 入口与启动命令"的方式与外部 verl 0.7.1 环境对接。
-      它首先是一个面向 LLM-based TSF 的模型工厂，
+      CastFactory（铸星坊） 第一阶段专注于训练框架本身，不做自动科研智能体、模型结构搜索或复杂多智能体预测平台。
+      它首先是一个训练框架，一个面向 LLM-based Multimodal Time Series Model 的模型工厂，
       帮助研究者用统一流程回答核心问题：
-      <em>给定一个基础 LLM 和一个时间序列预测任务，如何通过 CPT、SFT 和 RLVR 三阶段训练，
-      稳定、可复现地构建一个 LLM-based TSF Model？</em>
+      <em>给定一个基础 LLM、一组时间序列和一批外部多模态证据，如何通过数据契约、CPT、SFT、RL 和消融评测，
+      稳定、可复现地构建一个 LLM-based Multimodal Time Series Model？</em>
     </p>
   </div>
 </section>

@@ -4,25 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FutureCast（天星台） — 面向情境感知时间序列预测的大模型训练语料与评估基准</title>
-  <meta name="description" content="FutureCast（天星台） 是一个面向情境感知时间序列预测的 Benchmark 数据集与大模型训练语料库，将预测样本扩展为&quot;历史序列—上下文情境—证据标注—预测目标&quot;的联合实例，系统评估情境语义对齐、因果推理与动态自适应三类能力。" />
+  <meta name="description" content="FutureCast（天星台） 是一个面向情境感知时间序列预测的 Benchmark 数据集与大模型训练语料库，将预测样本扩展为“历史序列—上下文情境—证据标注—预测目标”的联合实例，系统评估情境语义对齐、因果推理与动态自适应三类能力。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
     :root {
-      --navy:       #1e3a5f;
-      --navy-dark:  #152c48;
+      --navy:       #111816;
+      --navy-dark:  #070a09;
       --teal:       #0f766e;
-      --teal-light: #14b8a6;
+      --teal-light: #2dd4bf;
       --accent:     #0f766e;
       --accent-dark:#0b5f59;
-      --indigo:     #3730a3;
       --text:       #1a1a1a;
       --muted:      #555;
       --faint:      #888;
-      --line:       #e4e4e0;
-      --bg:         #f7f7f5;
+      --line:       #dce7e2;
+      --bg:         #f7faf8;
       --card:       #ffffff;
     }
 
@@ -99,7 +98,7 @@
 
     /* ── Hero ──────────────────────────────────────── */
     header {
-      background: linear-gradient(160deg, #ffffff 50%, #f0fdf9 80%, #eef3ff 100%);
+      background: linear-gradient(160deg, #ffffff 48%, #f0fdf9 78%, #edf7f3 100%);
       border-bottom: 1px solid #e8e8e8;
       padding: 60px 0 48px;
       text-align: center;
@@ -182,6 +181,27 @@
       color: #999;
       letter-spacing: 0.02em;
     }
+    .hero-badges {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px auto 0;
+      max-width: 820px;
+    }
+    .hero-badges span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(15, 118, 110, 0.08);
+      border: 1px solid rgba(15, 118, 110, 0.22);
+      color: var(--teal);
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
 
     /* ── Buttons ───────────────────────────────────── */
     .btn-row {
@@ -242,8 +262,8 @@
 
     /* ── TL;DR banner ──────────────────────────────── */
     .tldr {
-      background: #eff8ff;
-      border-left: 4px solid var(--navy);
+      background: #f0fdf9;
+      border-left: 4px solid var(--teal);
       border-radius: 0 8px 8px 0;
       padding: 16px 22px;
       font-size: 1.01rem;
@@ -252,6 +272,43 @@
       line-height: 1.75;
     }
     .tldr strong { color: var(--navy); }
+
+    /* ── Benchmark overview ───────────────────────── */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 28px 0 0;
+    }
+    .overview-card {
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbf9 100%);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.035);
+    }
+    .overview-card .overview-kicker {
+      color: var(--teal);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .overview-card h4 {
+      color: var(--navy);
+      font-size: 0.9rem;
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+    .overview-card p {
+      color: #5c6763;
+      font-size: 0.8rem;
+      line-height: 1.55;
+      margin: 0;
+      text-align: left;
+      text-justify: auto;
+    }
 
     /* ── Stat row ───────────────────────────────────── */
     .stat-row {
@@ -305,51 +362,6 @@
     .card .card-icon { font-size: 1.6rem; margin-bottom: 10px; line-height: 1; }
     .card h4 { font-size: 0.93rem; font-weight: 700; margin-bottom: 7px; color: #111; }
     .card p  { font-size: 0.87rem; color: #555; margin: 0; line-height: 1.65; }
-
-    /* ── Dataset cards ────────────────────────────── */
-    .dataset-card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(255px, 1fr));
-      gap: 14px;
-      margin: 22px 0 34px;
-    }
-    .dataset-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-top: 3px solid var(--navy);
-      border-radius: 8px;
-      padding: 16px 18px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: transform .2s, box-shadow .2s;
-    }
-    .dataset-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 7px 20px rgba(0,0,0,0.08);
-    }
-    .dataset-card:nth-child(3n+2) { border-top-color: var(--teal); }
-    .dataset-card:nth-child(3n) { border-top-color: var(--indigo); }
-    .dataset-meta {
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: var(--teal);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .dataset-card h4 {
-      font-size: 0.95rem;
-      font-weight: 800;
-      color: var(--navy);
-      margin-bottom: 8px;
-    }
-    .dataset-card p {
-      font-size: 0.82rem;
-      color: #555;
-      line-height: 1.55;
-      margin-bottom: 6px;
-    }
-    .dataset-card p:last-child { margin-bottom: 0; }
-    .dataset-card strong { color: #222; }
 
     /* ── Pillar (numbered) list ────────────────────── */
     .pillar-list {
@@ -426,7 +438,7 @@
       transition: transform .22s, box-shadow .22s;
     }
     .cap-card:nth-child(2) { border-top-color: var(--teal); }
-    .cap-card:nth-child(3) { border-top-color: var(--indigo); }
+    .cap-card:nth-child(3) { border-top-color: #22c55e; }
     .cap-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 10px 28px rgba(0,0,0,0.09);
@@ -442,13 +454,90 @@
     }
     .cap-card p { font-size: 0.87rem; color: #555; line-height: 1.65; margin: 0; }
 
+    .cap-matrix {
+      margin-top: 26px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+    .cap-matrix-title {
+      padding: 16px 20px 0;
+      color: var(--navy);
+      font-size: 0.96rem;
+      font-weight: 800;
+    }
+    .cap-matrix .table-wrap {
+      margin: 14px 0 0;
+      border: 0;
+      border-radius: 0;
+    }
+    .cap-matrix td {
+      font-size: 0.84rem;
+      color: #4f5a56;
+      line-height: 1.6;
+    }
+
     /* ── Sample structure table ────────────────────── */
     .table-wrap { overflow-x: auto; margin: 20px 0; border-radius: 8px; border: 1px solid var(--line); }
     table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
     th { background: var(--navy); color: #fff; padding: 10px 16px; text-align: left; font-weight: 600; }
     td { padding: 9px 16px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
-    tr:nth-child(even) td { background: #f9fafc; }
+    tr:nth-child(even) td { background: #f8fbf9; }
     tr:last-child td { border-bottom: none; }
+
+    .sample-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      align-items: stretch;
+      gap: 10px;
+      margin: 22px 0;
+    }
+    .sample-step {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 14px;
+      min-height: 118px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.035);
+    }
+    .sample-step .sample-index {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #dcfce7;
+      color: var(--teal);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 9px;
+    }
+    .sample-step strong {
+      color: var(--navy);
+      font-size: 0.88rem;
+      margin-bottom: 5px;
+    }
+    .sample-step span {
+      color: #5c6763;
+      font-size: 0.78rem;
+      line-height: 1.48;
+      text-align: left;
+      text-justify: auto;
+    }
+    .sample-arrow {
+      color: var(--teal);
+      font-size: 1.25rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
     /* ── Task grid ─────────────────────────────────── */
     .task-grid {
@@ -468,7 +557,7 @@
     }
     .task-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.08); }
     .task-card:nth-child(3n+2) { border-left-color: var(--teal); }
-    .task-card:nth-child(3n)   { border-left-color: var(--indigo); }
+    .task-card:nth-child(3n)   { border-left-color: #22c55e; }
     .task-card h5 {
       font-size: 0.9rem;
       font-weight: 700;
@@ -509,7 +598,7 @@
 
     /* ── Special metric box ────────────────────────── */
     .metric-highlight {
-      background: linear-gradient(135deg, #f0fdf9 0%, #eff8ff 100%);
+      background: linear-gradient(135deg, #f0fdf9 0%, #f7faf8 100%);
       border: 1px solid #b2e8d8;
       border-radius: 10px;
       padding: 22px 24px;
@@ -574,7 +663,7 @@
 
     /* ── Claim box ─────────────────────────────────── */
     .claim-box {
-      background: linear-gradient(135deg, #0f1f3d 0%, #1e3a5f 60%, #0c4a44 100%);
+      background: linear-gradient(135deg, #07100e 0%, #111816 54%, #0c4a44 100%);
       border-radius: 12px;
       padding: 32px 32px;
       color: #fff;
@@ -590,7 +679,7 @@
 
     /* ── Footer ────────────────────────────────────── */
     footer {
-      background: #131c2e;
+      background: #07100e;
       color: #999;
       text-align: center;
       padding: 30px 24px;
@@ -600,11 +689,23 @@
     footer p + p { margin-top: 6px; }
 
     /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 900px) {
+      .overview-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 820px) {
+      .sample-flow { grid-template-columns: 1fr; }
+      .sample-arrow { transform: rotate(90deg); min-height: 18px; }
+    }
+
     @media (max-width: 680px) {
       header { padding: 40px 0 40px; }
       header h1 { font-size: 1.5rem; }
       .hero-title-main { white-space: normal; }
+      .hero-badges { gap: 6px; margin-top: 14px; }
+      .hero-badges span { min-height: 26px; padding: 4px 9px; font-size: 0.7rem; }
       .cap-grid { grid-template-columns: 1fr; }
+      .overview-grid { grid-template-columns: 1fr; }
       section { padding: 48px 0; }
       .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
       h2.section-title { font-size: 1.25rem; }
@@ -623,11 +724,18 @@
       <span class="hero-title-sub">情境感知时间序列预测评估基准</span>
     </h1>
     <p class="subtitle hero-clickable">
-      FutureCast（天星台） 将预测样本从"历史序列—未来标签"扩展为
-      "历史序列—上下文情境—证据标注—预测目标"，
+      FutureCast（天星台） 将预测样本从“历史序列—未来标签”扩展为
+      “历史序列—上下文情境—证据标注—预测目标”，
       系统评估下一代时间序列预测模型的情境理解、因果推理与动态自适应能力。
     </p>
     <p class="affiliation hero-clickable">中国科学技术大学 · 认知智能全国重点实验室 · AGI 研究组</p>
+
+    <div class="hero-badges" aria-label="FutureCast benchmark tags">
+      <span>Benchmark Dataset</span>
+      <span>Training Corpus</span>
+      <span>Context-aware Forecasting</span>
+      <span>Evaluation Protocol</span>
+    </div>
 
     <div class="btn-row">
       <a class="btn btn-secondary" href="https://github.com/ustc-time-series/Future-Cast" target="_blank" rel="noopener">
@@ -669,7 +777,7 @@
       <strong>一句话定位：</strong>
       FutureCast（天星台） 是一个面向<strong>情境感知时间序列预测</strong>的
       <strong>Benchmark 数据集与大模型训练语料库</strong>——
-      将每个预测样本构造为"历史序列—上下文情境—证据标注—预测目标"的联合实例，
+      将每个预测样本构造为“历史序列—上下文情境—证据标注—预测目标”的联合实例，
       系统化训练和评估模型的<strong>情境理解、因果推理与动态自适应</strong>三类核心能力。
     </div>
 
@@ -678,7 +786,7 @@
       时间序列预测方法已从统计建模和深度学习逐步发展到时间序列基础模型。
       现有通用预测基准关注模型在跨领域、跨频率、跨预测长度场景下的泛化能力，
       但在真实预测场景中，<strong>未来变化往往不只由历史序列本身决定</strong>——
-      天气、空气污染、节假日、政策变化、突发事件、空间环境、领域知识和人类经验等
+      天气、节假日、政策变化、突发事件、空间环境、领域知识和人类经验等
       多源异构情境因素对预测结果具有实质性影响，而现有 Benchmark 对这类信息的建模与评估仍然不足。
     </p>
     <p>
@@ -689,20 +797,43 @@
 
     <div class="stat-row">
       <div class="stat-box">
-        <div class="stat-num">15</div>
-        <div class="stat-label">已整理数据集<br>覆盖真实业务场景</div>
+        <div class="stat-num">3</div>
+        <div class="stat-label">核心能力维度<br>对齐 · 推理 · 自适应</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5</div>
+        <div class="stat-label">设计原则<br>覆盖数据到评测</div>
       </div>
       <div class="stat-box">
         <div class="stat-num">10</div>
-        <div class="stat-label">领域方向<br>能源到空气质量</div>
+        <div class="stat-label">任务类型<br>从数值预测到动态修正</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">149K</div>
-        <div class="stat-label">预测序列<br>多实体细粒度拆分</div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">评估维度<br>含 Forecast Revision Gain</div>
       </div>
-      <div class="stat-box">
-        <div class="stat-num">277M</div>
-        <div class="stat-label">时间戳记录<br>统一 CSV 组织</div>
+    </div>
+
+    <div class="overview-grid" aria-label="FutureCast benchmark overview">
+      <div class="overview-card">
+        <div class="overview-kicker">Instance</div>
+        <h4>情境化预测样本</h4>
+        <p>把历史序列、上下文证据、证据标注和预测目标组织成统一实例。</p>
+      </div>
+      <div class="overview-card">
+        <div class="overview-kicker">Capability</div>
+        <h4>能力导向评测</h4>
+        <p>围绕情境对齐、因果推理和动态修正，而不是只比较误差指标。</p>
+      </div>
+      <div class="overview-card">
+        <div class="overview-kicker">Protocol</div>
+        <h4>训练测试隔离</h4>
+        <p>通过时间、区域、事件和情境组合划分，降低未来信息泄漏风险。</p>
+      </div>
+      <div class="overview-card">
+        <div class="overview-kicker">Ecosystem</div>
+        <h4>连接模型与智能体</h4>
+        <p>作为 CastMind、Cast-R1、CastClaw 等工作的数据与评测底座。</p>
       </div>
     </div>
   </div>
@@ -714,128 +845,31 @@
     <h2 class="section-title">为什么需要 FutureCast（天星台）</h2>
     <p>
       现有时间序列预测基准大多<strong>围绕数值序列本身构建</strong>，
-      主要关注模型在不同领域、频率、预测长度下的误差表现。
-      这类 Benchmark 对检验模型的基础外推能力非常重要，但它们通常把预测问题简化为
-      “给定过去数值，预测未来数值”。在真实世界中，这种设定往往不够充分：
-      同样的历史曲线可能对应完全不同的未来走向，决定差异的关键因素常常来自序列之外。
-    </p>
-    <p>
-      例如，一条销售曲线突然下降，可能是需求自然衰退，也可能是门店关闭、断货、促销结束或节假日结构变化；
-      一条交通流量曲线突然上升，可能是正常通勤高峰，也可能是大型活动、事故绕行或天气变化；
-      一条电价或负荷曲线出现尖峰，可能与温度、供需紧张、区域互联、市场规则和异常事件有关。
-      一条 PM2.5 曲线突然升高，可能来自局地排放、区域污染传输、气象扩散条件变化或相邻污染物共同作用。
-      如果 Benchmark 只评估数值预测误差，就很难判断模型到底是在学习统计模式，
-      还是能够理解<strong>为什么未来会变化</strong>。
-    </p>
-    <p>
-      因此，FutureCast（天星台） 的核心出发点是：
-      时间序列预测正在从“序列模式拟合”走向“情境感知的未来推理”。
-      未来的时间序列大模型不仅需要拟合历史趋势，还需要利用日历、空间、天气、事件、业务规则、
-      领域知识和文本描述等外部信息，判断哪些情境与预测相关、这些情境如何影响未来，
-      以及在新证据出现时是否应该修正原有预测。
-    </p>
-
-    <h3 class="sub-title">现有基准仍然缺少的能力评估</h3>
-    <ul class="feature-list">
-      <li><strong>缺少情境变量的系统组织：</strong>许多数据集只提供数值协变量，缺少对实体背景、事件文本、领域先验和时间状态的统一表达。</li>
-      <li><strong>缺少“情境是否有用”的评估：</strong>模型使用了外生变量，并不等于真正理解了外生变量；现有评测较少检验模型能否识别关键情境。</li>
-      <li><strong>缺少情境与序列变化的对齐：</strong>真实预测中，需要知道某个事件影响的是哪个时间段、哪条序列、哪种目标变量，而不是简单把所有信息拼接进去。</li>
-      <li><strong>缺少可解释的未来推理：</strong>预测结果不仅要准确，还应能说明主要依据，尤其是在能源、医疗、金融等高风险场景中。</li>
-      <li><strong>缺少动态修正能力测试：</strong>当新信息出现时，模型是否能更新判断、修正预测，是实际部署中非常关键但常被忽略的能力。</li>
-    </ul>
-
-    <p style="margin-top: 22px;">
-      GIFT-Eval 等工作展示了跨领域、跨频率、跨预测长度评估的重要性。
-      FutureCast（天星台） 在此基础上进一步把<strong>情境信息</strong>作为 Benchmark 的核心对象，
-      希望回答一个更进一步的问题：当模型面对真实世界中不断变化、信息不完整且带有领域语义的预测任务时，
-      它是否仍然能够做出可靠、可解释、可更新的预测？
-    </p>
-
-    <h3 class="sub-title">真实场景中的预测高度依赖情境</h3>
-    <p>
-      这种情境依赖并不局限在少数行业，而是普遍存在于能源、电力市场、交通、销售、医疗、
-      宏观经济、气候、水文、空气质量、AIOps 云资源、工业设备和城市运行等多类时间序列预测任务中。
-      不同领域的目标变量不同，但共同特点是：
-      未来变化往往由<strong>历史模式与外部情境共同决定</strong>。
+      关注预测误差在不同领域、频率、预测长度下的表现。
+      GIFT-Eval 展示了这种系统化评估的重要性，但真实世界的预测任务往往具有更强的情境依赖性：
     </p>
     <div class="card-grid">
       <div class="card">
         <div class="card-icon">⚡</div>
-        <h4>能源与电力系统</h4>
-        <p>风电功率、电力负荷和区域电价受天气、节假日、供需关系、区域互联和市场调度规则影响，仅靠历史序列难以解释尖峰与突变。</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🔌</div>
-        <h4>电力市场与负荷</h4>
-        <p>日前电价、实际负荷、可再生能源出力和区域需求共同决定电力系统运行状态，适合评估模型对市场情境和物理约束的联合理解。</p>
+        <h4>能源与电力</h4>
+        <p>电力负荷受温度、节假日和工业活动影响，仅靠历史序列无法捕捉负荷突变的外部原因。</p>
       </div>
       <div class="card">
         <div class="card-icon">🚦</div>
         <h4>交通与出行</h4>
-        <p>交通流量和出行需求受天气、事故、大型活动、通勤周期和区域功能影响，这些情境信号对短期预测尤为关键。</p>
+        <p>交通流量受天气、事故和大型活动影响，这些情境信号对短期预测尤为关键。</p>
       </div>
       <div class="card">
-        <div class="card-icon">🛒</div>
-        <h4>销售与零售</h4>
-        <p>商品销量受价格、促销、节假日、门店位置、库存状态和区域消费习惯影响，相同历史销量可能在不同活动情境下走向完全不同。</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🏭</div>
-        <h4>工业与设备</h4>
-        <p>设备功率、传感器读数和运行状态受工况、环境、维护计划和异常操作影响，预测模型需要理解设备所处的运行情境。</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🖥️</div>
-        <h4>AIOps 与云计算</h4>
-        <p>机器 CPU、内存、磁盘和网络利用率受任务调度、业务负载、集群资源竞争和周期性访问模式影响，是典型的云资源预测场景。</p>
+        <div class="card-icon">📈</div>
+        <h4>金融与市场</h4>
+        <p>政策变化、新闻事件和市场情绪直接驱动价格波动，情境理解能力是金融预测的核心。</p>
       </div>
       <div class="card">
         <div class="card-icon">🏥</div>
         <h4>医疗与健康</h4>
-        <p>临床时间序列受病人状态、治疗干预、缺失机制和医学知识影响，纯序列建模难以融入领域先验和风险解释。</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">📈</div>
-        <h4>宏观经济与金融</h4>
-        <p>利率、就业、通胀、汇率、政策变化和市场预期会改变经济指标走势，模型需要理解变量含义与外部事件之间的关系。</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🌦️</div>
-        <h4>气候与环境</h4>
-        <p>温度、湿度、气压、风速和降水受季节、地形、环流、极端天气和人类活动影响，需要结合物理背景与局地情境进行预测。</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🌫️</div>
-        <h4>空气质量与环境健康</h4>
-        <p>PM2.5 浓度受站点位置、区域污染传输、共同污染物、季节变化和气象扩散条件影响，适合评估模型对环境情境的综合理解。</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🌊</div>
-        <h4>水文与径流</h4>
-        <p>流域径流受降水、积雪、温度、地形、海拔、土壤蓄水和季节性水文过程影响，是情境变量与目标序列强耦合的科学预测任务。</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">🏙️</div>
-        <h4>城市与公共管理</h4>
-        <p>城市客流、能耗、应急需求和公共服务压力受人口流动、活动安排、节假日和突发事件影响，适合评估情境更新后的动态预测能力。</p>
+        <p>医疗时间序列受病人状态、治疗干预和临床知识影响，纯序列建模无法融入领域先验。</p>
       </div>
     </div>
-
-    <h3 class="sub-title">FutureCast（天星台） 的定位</h3>
-    <p>
-      FutureCast（天星台） 不是简单增加更多时间序列数据，而是把每个预测样本组织为
-      <strong>目标序列、外生数值变量、外生文本变量、证据标注和预测目标</strong>的联合实例。
-      这样可以同时支持三类研究：第一，训练模型把数值序列与文本/事件/领域知识对齐；
-      第二，评估模型是否能够利用情境解释未来变化；第三，检验模型在信息更新后的预测修正能力。
-    </p>
-    <p>
-      换句话说，FutureCast（天星台） 希望补齐当前时间序列 Benchmark 中缺少的一层能力：
-      不只是让模型“看过去、猜未来”，而是让模型在更接近真实业务和科学场景的条件下，
-      学会<strong>看懂背景、找出证据、判断影响、更新预测</strong>。
-      这也是它能够作为大模型训练语料库的原因：它将预测任务转化为同时包含数值、文本、证据和推理链条的训练样本，
-      更适合支持 LLM-driven TSF、Slow-thinking TSF 和 Agentic TSF 等下一代时间序列模型。
-    </p>
-
     <p style="margin-top: 22px;">
       FutureCast（天星台） 将评估重点从 <strong>general forecasting capability</strong> 拓展为
       <strong>context-aware forecasting capability</strong>，
@@ -915,7 +949,7 @@
         <div class="cap-focus">Context-Sequence Alignment &amp; Fusion</div>
         <p>
           关注多源异构上下文情境如何有效表示、语义对齐并融入预测模型。
-          FutureCast（天星台） 的情境信息来自天气、空气质量、日历、节假日、新闻事件、空间环境、业务规则和专家经验。
+          FutureCast（天星台） 的情境信息来自天气、日历、节假日、新闻事件、空间环境、业务规则和专家经验。
           模型需要判断哪些情境与当前预测任务相关，
           并将情境与目标时间序列的变化区间在<strong>语义、时间和预测目标</strong>上形成有效融合。
         </p>
@@ -941,6 +975,34 @@
         </p>
       </div>
     </div>
+
+    <div class="cap-matrix">
+      <div class="cap-matrix-title">能力—任务—指标矩阵</div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>能力维度</th><th>代表任务</th><th>关键评估信号</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>情境语义对齐</strong></td>
+              <td>情境选择、情境—序列对齐、情境感知预测</td>
+              <td>Context Relevance Accuracy、Evidence Selection F1、预测误差变化</td>
+            </tr>
+            <tr>
+              <td><strong>情境因果推理</strong></td>
+              <td>趋势推理、事件影响分析、反事实预测、解释生成</td>
+              <td>Trend Accuracy、Counterfactual Consistency、Reasoning Faithfulness</td>
+            </tr>
+            <tr>
+              <td><strong>动态自适应</strong></td>
+              <td>情境缺口识别、工具调用规划、预测修正</td>
+              <td>Context Gap Detection、Tool-use Success Rate、Forecast Revision Gain</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -954,6 +1016,33 @@
       FutureCast（天星台） 中的每个样本被构造成一个 <strong>context-aware forecasting instance</strong>，
       包含八类组成部分：
     </p>
+
+    <div class="sample-flow" aria-label="FutureCast sample structure flow">
+      <div class="sample-step">
+        <div class="sample-index">01</div>
+        <strong>Historical Series</strong>
+        <span>原始历史观测、变量含义、采样频率和预测窗口。</span>
+      </div>
+      <div class="sample-arrow">→</div>
+      <div class="sample-step">
+        <div class="sample-index">02</div>
+        <strong>Context Evidence</strong>
+        <span>天气、节假日、事件、空间环境、业务规则和领域描述。</span>
+      </div>
+      <div class="sample-arrow">→</div>
+      <div class="sample-step">
+        <div class="sample-index">03</div>
+        <strong>Evidence Label</strong>
+        <span>相关情境、趋势标签、事件影响、证据依据和推理摘要。</span>
+      </div>
+      <div class="sample-arrow">→</div>
+      <div class="sample-step">
+        <div class="sample-index">04</div>
+        <strong>Forecast Target</strong>
+        <span>未来数值、趋势方向、变化点、预测区间和修正目标。</span>
+      </div>
+    </div>
+
     <div class="table-wrap">
       <table>
         <thead>
@@ -962,127 +1051,14 @@
         <tbody>
           <tr><td><strong>目标时间序列</strong></td><td>历史观测值、变量名称、采样频率、预测长度</td></tr>
           <tr><td><strong>时间情境</strong></td><td>日期、季节、工作日、周末、节假日、特殊时间段</td></tr>
-          <tr><td><strong>空间情境</strong></td><td>区域、站点、地理位置、环境状态、空气质量监测站、空间邻近关系</td></tr>
-          <tr><td><strong>外部事件</strong></td><td>天气变化、污染过程、政策调整、突发事件、市场波动、重大活动</td></tr>
+          <tr><td><strong>空间情境</strong></td><td>区域、站点、地理位置、环境状态、空间邻近关系</td></tr>
+          <tr><td><strong>外部事件</strong></td><td>天气变化、政策调整、突发事件、市场波动、重大活动</td></tr>
           <tr><td><strong>文本知识</strong></td><td>新闻描述、事件摘要、领域背景、任务说明</td></tr>
           <tr><td><strong>领域先验</strong></td><td>业务规则、专家知识、变量含义、历史经验</td></tr>
           <tr><td><strong>标注信息</strong></td><td>相关情境、趋势标签、事件影响、证据依据、推理摘要</td></tr>
           <tr><td><strong>预测目标</strong></td><td>未来数值、趋势方向、变化点、预测区间或事件结果</td></tr>
         </tbody>
       </table>
-    </div>
-
-    <h3 class="sub-title">数据集卡片</h3>
-    <p>
-      当前版本已经整理出 15 个真实业务数据集，覆盖能源、电力市场、销售、医疗、交通、经济、气候、水文、AIOps 和空气质量等方向。
-      每个数据集均按目标变量、外生数值变量、外生文本变量和任务 YAML 组织，并在任务配置中写明回溯窗口与预测窗口。
-    </p>
-    <div class="dataset-card-grid">
-      <article class="dataset-card">
-        <div class="dataset-meta">Energy · 10 min · 134 series</div>
-        <h4>SDWPF 风电功率</h4>
-        <p><strong>目标变量：</strong>单台风机有功功率。</p>
-        <p><strong>情境变量：</strong>风速、风向、温度、风机位置与机组信息。</p>
-        <p><strong>业务窗口：</strong>24h -> 8h，7d -> 24h，30d -> 7d。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Power Market · 5 min · 5 series</div>
-        <h4>AEMO NEM 区域电价</h4>
-        <p><strong>目标变量：</strong>澳大利亚 NEM 区域参考电价 RRP。</p>
-        <p><strong>情境变量：</strong>区域需求、可用发电、跨区交换与结算时间。</p>
-        <p><strong>业务窗口：</strong>24h -> 1h，7d -> 24h，28d -> 7d。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Power Load · 1 h · 1 series</div>
-        <h4>OPSD 德国电力负荷</h4>
-        <p><strong>目标变量：</strong>德国实际电力负荷。</p>
-        <p><strong>情境变量：</strong>风电出力、光伏出力、日前电价与日历信息。</p>
-        <p><strong>业务窗口：</strong>7d -> 24h，30d -> 7d，90d -> 30d。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Sales · 1 d · 30,490 series</div>
-        <h4>M5 商品销售</h4>
-        <p><strong>目标变量：</strong>门店商品日销量。</p>
-        <p><strong>情境变量：</strong>价格、节假日、SNAP、事件与商品层级信息。</p>
-        <p><strong>业务窗口：</strong>8w -> 28d，24w -> 12w，1y -> 24w。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Sales · 1 d · 1,115 series</div>
-        <h4>Rossmann 门店销售</h4>
-        <p><strong>目标变量：</strong>单店日销售额。</p>
-        <p><strong>情境变量：</strong>促销、客流、开店状态、节假日与竞争距离。</p>
-        <p><strong>业务窗口：</strong>8w -> 28d，24w -> 12w，1y -> 24w。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Sales · 1 d · 4,081 series</div>
-        <h4>Favorita 单店子集</h4>
-        <p><strong>目标变量：</strong>选定门店的商品销量 unit_sales。</p>
-        <p><strong>情境变量：</strong>促销、交易量、油价、节假日、门店与商品描述。</p>
-        <p><strong>业务窗口：</strong>8w -> 28d，24w -> 12w，1y -> 24w。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Medical · 1 h · 107,188 series</div>
-        <h4>PhysioNet 2012 ICU</h4>
-        <p><strong>目标变量：</strong>ICU 患者临床指标时间序列。</p>
-        <p><strong>情境变量：</strong>生命体征、化验指标、患者属性、评分与缺失模式。</p>
-        <p><strong>业务窗口：</strong>6h -> 6h，12h -> 12h，24h -> 24h。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Traffic · 5 min · 307 series</div>
-        <h4>PEMS04 交通流量</h4>
-        <p><strong>目标变量：</strong>道路传感器交通流量。</p>
-        <p><strong>情境变量：</strong>占有率、速度、传感器空间关系与时间周期。</p>
-        <p><strong>业务窗口：</strong>24h -> 1h，7d -> 24h，28d -> 7d。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Traffic · 5 min · 883 series</div>
-        <h4>PEMS07 交通流量</h4>
-        <p><strong>目标变量：</strong>道路传感器交通流量。</p>
-        <p><strong>情境变量：</strong>占有率、速度、传感器空间关系与时间周期。</p>
-        <p><strong>业务窗口：</strong>24h -> 1h，7d -> 24h，28d -> 7d。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Urban Mobility · 1 h · 513 series</div>
-        <h4>NYC TLC 出行需求</h4>
-        <p><strong>目标变量：</strong>出租车分区上车需求。</p>
-        <p><strong>情境变量：</strong>行程统计、费用、下车分布、区域与日历信息。</p>
-        <p><strong>业务窗口：</strong>7d -> 24h，28d -> 7d，90d -> 14d。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Economics · 1 month · 126 series</div>
-        <h4>FRED-MD 宏观经济</h4>
-        <p><strong>目标变量：</strong>宏观经济变量的变换后取值。</p>
-        <p><strong>情境变量：</strong>原始值、变换编码、变量分组、月份与季度周期。</p>
-        <p><strong>业务窗口：</strong>3y -> 1m，5y -> 12m，10y -> 24m。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Climate · 10 min · 1 series</div>
-        <h4>Jena Climate 气象观测</h4>
-        <p><strong>目标变量：</strong>空气温度。</p>
-        <p><strong>情境变量：</strong>湿度、气压、风速、风向与季节周期。</p>
-        <p><strong>业务窗口：</strong>24h -> 6h，7d -> 24h，30d -> 7d。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Hydrology · 1 d · 27 series</div>
-        <h4>Basin Streamflow 径流</h4>
-        <p><strong>目标变量：</strong>流域日径流量。</p>
-        <p><strong>情境变量：</strong>降水、温度、蒸散、流域属性与水文年信息。</p>
-        <p><strong>业务窗口：</strong>1y -> 7d，3y -> 30d，10y -> 1y。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">AIOps · 1 h · 100 series</div>
-        <h4>Alibaba Cluster 机器资源</h4>
-        <p><strong>目标变量：</strong>机器 CPU 利用率。</p>
-        <p><strong>情境变量：</strong>内存、磁盘、网络利用率、机器标识与日历周期。</p>
-        <p><strong>业务窗口：</strong>24h -> 6h，7d -> 24h，30d -> 7d。</p>
-      </article>
-      <article class="dataset-card">
-        <div class="dataset-meta">Air Quality · 1 h · 3,720 series</div>
-        <h4>AQ Data 空气质量</h4>
-        <p><strong>目标变量：</strong>PM2.5 浓度。</p>
-        <p><strong>情境变量：</strong>PM10、NO2、O3、SO2、CO、经纬度、区域与日历信息。</p>
-        <p><strong>业务窗口：</strong>24h -> 24h，7d -> 3d，30d -> 7d。</p>
-      </article>
     </div>
 
     <h3 class="sub-title">数据划分方式</h3>
@@ -1280,7 +1256,7 @@
   <div class="container">
     <p>
       &copy; 2025 FutureCast（天星台） Team &middot; AGI Group · State Key Laboratory of Cognitive Intelligence, USTC &middot;
-      <a href="https://github.com/ustc-time-series/Future-Cast" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/Mingyue-Cheng" target="_blank" rel="noopener">GitHub</a>
     </p>
     <p style="font-size: 0.78rem; color: #555; margin-top: 6px;">
       From sequence pattern fitting to context-aware future reasoning.
