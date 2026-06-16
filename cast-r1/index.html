@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cast-R1 — 工具增强型自主交互时间序列预测智能体</title>
-  <meta name="description" content="Cast-R1 是一个面向已有语言模型的工具增强型自主交互时间序列预测智能体，直接将原始时间序列与情境上下文作为 Token 输入，并通过 Cast-R1-SFT、Cast-R1-Reasoning、Cast-R1-Agentic RL 多阶段训练，学习在 Harness 工具环境中进行自主工具调用、上下文推理和多轮预测决策。" />
+  <title>CastStar — Agentic Time Series Forecasting Model</title>
+  <meta name="description" content="CastStar 是一个经过强化学习训练得到的 Agentic Time Series Forecasting Model，具备慢思考、工具调用、情境理解和反思修正能力。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -124,7 +124,6 @@
     header.hero-refreshing .hero-refresh-sheen { animation: hero-sheen 0.9s ease; }
     header.hero-refreshing h1                  { animation: hero-title-refresh 0.75s ease; }
     header.hero-refreshing .subtitle,
-    header.hero-refreshing .affiliation,
     header.hero-refreshing .btn-row            { animation: hero-copy-refresh 0.75s ease; }
     .hero-refresh-wave {
       position: absolute; width: 20px; height: 20px; border-radius: 999px;
@@ -179,11 +178,27 @@
       text-align: center;
       text-justify: auto;
     }
-    .affiliation {
-      margin-top: 10px;
-      font-size: 0.88rem;
-      color: #999;
-      letter-spacing: 0.02em;
+    .hero-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin: 18px auto 0;
+      max-width: 820px;
+    }
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(30, 58, 95, 0.18);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--navy);
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.35;
+      white-space: nowrap;
     }
 
     /* ── Buttons ───────────────────────────────────── */
@@ -214,6 +229,12 @@
     }
     .btn-secondary { background: #fff; color: #222; border-color: #d0d0d0; }
     .btn-secondary:hover { background: #f8f8f8; border-color: #aaa; }
+    .btn-primary {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+    .btn-primary:hover { background: var(--navy-dark); border-color: var(--navy-dark); }
     .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
 
     /* ── Sections ──────────────────────────────────── */
@@ -240,6 +261,13 @@
       margin: 32px 0 10px;
     }
     h3.sub-title:first-of-type { margin-top: 0; }
+    .section-lead {
+      font-size: 0.98rem;
+      color: #555;
+      max-width: 840px;
+      line-height: 1.76;
+      margin-bottom: 18px;
+    }
     p { margin-bottom: 14px; }
     p:last-child { margin-bottom: 0; }
 
@@ -544,24 +572,85 @@
 
     /* ── Claim box ─────────────────────────────────── */
     .claim-box {
-      background: linear-gradient(135deg, #1c0f00 0%, #7c2d00 45%, #1e3a5f 100%);
+      background: linear-gradient(135deg, #fff7ed 0%, #f8fbff 48%, #eef7fb 100%);
+      border: 1px solid #d8e4ef;
+      border-left: 4px solid var(--navy);
       border-radius: 12px;
       padding: 32px 32px;
-      color: #fff;
+      color: var(--text);
       margin-top: 24px;
+      box-shadow: 0 2px 10px rgba(30, 58, 95, 0.06);
     }
     .claim-box p {
       font-size: 0.97rem;
-      color: rgba(255,255,255,0.88);
+      color: #26384d;
       line-height: 1.8;
       margin: 0;
     }
-    .claim-box .claim-en {
-      font-size: 0.87rem;
-      color: rgba(255,255,255,0.5);
-      margin-top: 14px;
-      line-height: 1.7;
+    /* ── Evaluation table ──────────────────────────── */
+    .eval-split {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin: 24px 0;
     }
+    .eval-half {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 22px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .eval-badge {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .badge-in { background: #e8f1fa; color: var(--navy); }
+    .badge-out { background: #f0fdf4; color: #15803d; }
+    .eval-half h4 {
+      font-size: 1rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .eval-note {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      font-size: 0.84rem;
+      color: #666;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 680px;
+      font-size: 0.86rem;
+    }
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f1f5f9;
+      color: var(--navy);
+      font-weight: 800;
+    }
+    tr:last-child td { border-bottom: none; }
 
     /* ── Footer ────────────────────────────────────── */
     footer {
@@ -585,6 +674,7 @@
       header h1 { font-size: 1.5rem; }
       .hero-title-main { white-space: normal; }
       .cap-grid, .stage-row { grid-template-columns: 1fr; }
+      .eval-split { grid-template-columns: 1fr; }
       .flow-pipeline { flex-direction: column; }
       .flow-sep { transform: rotate(90deg); align-self: center; }
       .position-strip { flex-direction: column; }
@@ -604,16 +694,29 @@
   <div class="hero-refresh-sheen" aria-hidden="true"></div>
   <div class="container">
     <h1 class="hero-clickable">
-      <span class="hero-title-main"><span class="cr">Cast-R1</span></span>
-      <span class="hero-title-sub">工具增强型自主交互时间序列预测智能体</span>
+      <span class="hero-title-main"><span class="cr">CastStar</span></span>
+      <span class="hero-title-sub">Agentic Time Series Forecasting Model</span>
     </h1>
     <p class="subtitle hero-clickable">
-      面向已有语言模型，直接将原始时间序列与情境上下文作为 Token 输入——
-      通过 Cast-R1-SFT、Cast-R1-Reasoning 与 Cast-R1-Agentic RL，
-      让模型先<strong>会做</strong>、再<strong>会想</strong>、最终<strong>会行动</strong>。
+      训练具备<strong>慢思考、工具调用、情境理解、反思修正</strong>能力的时间序列预测智能体，
+      让大模型从“直接给预测结果”进化为“会分析、会查证、会调用工具、会反思、会修正”的预测决策系统。
     </p>
-    <p class="affiliation hero-clickable">中国科学技术大学 · 认知智能全国重点实验室 · AGI 研究组</p>
-
+    <div class="hero-chip-row" aria-label="CastStar 核心能力标签">
+      <span class="hero-chip">Slow-thinking Forecasting</span>
+      <span class="hero-chip">Tool-augmented Reasoning</span>
+      <span class="hero-chip">Context Evidence Acquisition</span>
+      <span class="hero-chip">Agentic RL / RLVR</span>
+    </div>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener" aria-label="打开 CastStar 论文 PDF">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+        Paper
+      </a>
+      <a class="btn btn-secondary" href="https://github.com/Xiaoyu-Tao/Cast-R1-TS" target="_blank" rel="noopener" aria-label="打开 CastStar Github">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m16 18 6-6-6-6"/><path d="m8 6-6 6 6 6"/></svg>
+        Github
+      </a>
+    </div>
   </div>
 </header>
 
@@ -622,9 +725,12 @@
   <div class="container">
     <a href="../" class="nav-home">首页</a>
     <a href="#intro">简介</a>
-    <a href="#capabilities">三大能力</a>
+    <a href="#innovation">创新定位</a>
+    <a href="#workflow">Agent 流程</a>
     <a href="#harness">工具环境</a>
     <a href="#training">训练范式</a>
+    <a href="#reward">奖励机制</a>
+    <a href="#eval">性能评估</a>
   </div>
 </nav>
 
@@ -633,55 +739,49 @@
   <div class="container">
     <div class="tldr">
       <strong>一句话定位：</strong>
-      Cast-R1 是一个<strong>工具增强型自主交互时间序列预测智能体</strong>。
-      它不以构建新的时序基础模型底座为核心目标，而是面向已有语言模型，
-      直接将原始时间序列与情境上下文作为 Token 输入，并通过
-      <strong>Cast-R1-SFT、Cast-R1-Reasoning 和 Cast-R1-Agentic RL</strong>
-      多阶段训练，使模型学会在 Harness 工具环境中进行
-      <strong>自主工具调用、上下文推理和多轮预测决策</strong>。
+      CastStar 是一个<strong>经过强化学习训练得到的 Agentic Time Series Forecasting Model</strong>，
+      能够通过工具调用、情境证据获取和预测反馈强化学习，
+      形成<strong>可解释、可验证、可迭代优化</strong>的预测行为策略。
     </div>
 
     <h2 class="section-title">项目简介</h2>
     <p>
-      <strong>Cast-R1</strong> 是一个工具增强型自主交互时间序列预测智能体，
-      旨在推动时间序列预测从传统的单次模型推断，
-      走向基于工具调用、情境推理和多轮交互的<strong>智能体式预测范式</strong>。
-      与 CastMind（星思）通过独立 Feature Encoder 将时序编码为 Embedding 再送入 LLM 的
-      基础模型路线不同，<strong>Cast-R1 直接将原始时间序列作为 Token 输入语言模型</strong>，
-      不依赖独立编码器，而是将数值序列、统计特征、Meta Data、外生变量、
-      领域描述和任务情境等信息统一 Token 化，使模型能够端到端地感知任务背景、
-      数据语义和预测目标。
+      <strong>CastStar</strong> 可以理解为这条研究线中偏“Agent 能力模型”的核心模型。
+      传统时序预测通常遵循“输入历史序列 → 输出未来数值”的单步范式；
+      CastStar 则把复杂系统预测建模为一个多步智能体决策过程：
+      模型需要先理解历史动态，主动收集情境证据，调用统计分析、检索、可视化或小预测模型等工具，
+      再综合证据形成预测判断，并在发现不合理之处后反思和修正。
     </p>
     <p>
-      Cast-R1 的训练路线不是为了重新训练一个时序基础模型底座，
-      而是围绕已有 LLM 的智能体能力逐级增强：
-      <strong>Cast-R1-SFT</strong> 让模型会做，掌握预测任务格式、Token 输入理解、工具调用协议和标准工作流；
-      <strong>Cast-R1-Reasoning</strong> 让模型会想，理解上下文、工具反馈和预测不确定性；
-      <strong>Cast-R1-Agentic RL</strong> 让模型会行动，在 Harness 工具环境中学习何时调用工具、
-      调用哪个工具、如何组合工具链、如何更新上下文，以及何时停止交互并输出预测。
+      因此，CastStar 的核心不是再提出一个单一预测模型结构，
+      而是训练一个具备行为能力的 forecasting agent：
+      它要学会看懂趋势、周期、突变、噪声和异常，理解外生变量、事件、节假日和领域背景，
+      在合适时机调用工具，并把工具反馈、上下文证据和自身推理轨迹整合成最终预测。
+      这一路线把预测从 <strong>single-step prediction</strong> 升级为
+      <strong>multi-step reasoning and decision-making process</strong>。
     </p>
 
     <div class="position-strip">
       <div class="ps-item">
-        <div class="ps-label">输入层</div>
-        <div class="ps-val">原始时序直接 Token 化（无独立编码器）</div>
+        <div class="ps-label">Perception</div>
+        <div class="ps-val">历史动态与情境理解</div>
       </div>
-      <div class="ps-connector">+</div>
+      <div class="ps-connector">→</div>
       <div class="ps-item">
-        <div class="ps-label">行动空间</div>
-        <div class="ps-val">Harness 工具环境</div>
+        <div class="ps-label">Action</div>
+        <div class="ps-val">工具调用与证据获取</div>
       </div>
       <div class="ps-connector">→</div>
       <div class="ps-item highlighted">
-        <div class="ps-label">目标</div>
-        <div class="ps-val">Agentic Forecasting System</div>
+        <div class="ps-label">Learning</div>
+        <div class="ps-val">可验证强化学习与反思修正</div>
       </div>
     </div>
 
     <div class="stat-row">
       <div class="stat-box">
-        <div class="stat-num">3</div>
-        <div class="stat-label">核心能力<br>工具调用 · 推理 · 多轮交互</div>
+        <div class="stat-num">6</div>
+        <div class="stat-label">Agent 能力<br>理解 · 感知 · 调用 · 推理 · 反思 · 报告</div>
       </div>
       <div class="stat-box">
         <div class="stat-num">8</div>
@@ -689,65 +789,113 @@
       </div>
       <div class="stat-box">
         <div class="stat-num">3</div>
-        <div class="stat-label">训练阶段<br>SFT · Reasoning · Agentic RL</div>
+        <div class="stat-label">训练阶段<br>Tool SFT · Reasoning SFT · Agentic RL</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">3</div>
-        <div class="stat-label">能力递进<br>会做 · 会想 · 会行动</div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">奖励信号<br>误差 · 趋势 · 工具 · 一致性 · 反思</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ CAPABILITIES ═══════════════════ -->
-<section id="capabilities">
+<!-- ═══════════════════ INNOVATION ═══════════════════ -->
+<section id="innovation">
   <div class="container">
-    <h2 class="section-title">三大核心能力</h2>
-    <p>Cast-R1 的三阶段训练对应三类能力递进：SFT 让模型会做，Reasoning 让模型会想，Agentic RL 让模型会行动。</p>
+    <h2 class="section-title">创新定位</h2>
+    <p class="section-lead">
+      CastStar 的技术主张不是“又一个 Time Series LLM”，而是系统探索
+      <strong>Agentic RL for Time Series Forecasting</strong>：
+      让模型学习如何分析、查证、调用工具、形成预测并通过反馈修正。
+    </p>
     <div class="cap-grid">
       <div class="cap-card">
-        <div class="cap-icon">🛠️</div>
-        <h4>Cast-R1-SFT：会做</h4>
-        <div class="cap-focus">Task Format · Tool Protocol · Standard Workflow</div>
+        <div class="cap-icon">01</div>
+        <h4>从模型预测到 Agentic Forecasting</h4>
+        <div class="cap-focus">Prediction as Sequential Decision Making</div>
         <p>
-          通过高质量专家轨迹监督学习，让模型掌握基本预测任务格式、
-          时间序列 Token 输入理解、工具调用协议和标准工作流。
-          模型学习如何读取原始时序 Token、理解情境上下文、调用数据预处理 / 特征抽取 /
-          小模型工具，并整合结果输出预测。
+          传统工作关注预测模型结构，CastStar 关注预测过程中的智能行为：
+          模型不只是输出未来值，而是学习如何感知序列状态、规划分析步骤、
+          选择证据来源，并在多轮决策中形成更可靠的预测。
         </p>
       </div>
       <div class="cap-card">
-        <div class="cap-icon">🧩</div>
-        <h4>Cast-R1-Reasoning：会想</h4>
-        <div class="cap-focus">Context Reasoning · Tool-feedback Reasoning</div>
+        <div class="cap-icon">02</div>
+        <h4>工具增强的时序推理环境</h4>
+        <div class="cap-focus">Tool-augmented Time-series Environment</div>
         <p>
-          通过推理数据蒸馏、CoT 数据构造、过程监督或偏好优化，
-          强化模型的上下文推理和工具反馈推理能力。
-          目标不是让模型只会调用工具，而是理解工具返回结果的含义，
-          能分析趋势、周期、异常、外部事件影响和预测不确定性。
+          CastStar 构建支持 Agent 与时序数据交互的环境，
+          让模型能够调用统计工具、小预测模型、检索系统、可视化分析、
+          异常检测和知识库，把预测从黑箱输出转变为证据驱动的预测决策。
         </p>
       </div>
       <div class="cap-card">
-        <div class="cap-icon">🔄</div>
-        <h4>Cast-R1-Agentic RL：会行动</h4>
-        <div class="cap-focus">Tool Action Policy · Context Update · Stop Decision</div>
+        <div class="cap-icon">03</div>
+        <h4>面向预测任务的可验证强化学习</h4>
+        <div class="cap-focus">Verifiable Forecasting Feedback</div>
         <p>
-          在 Harness 工具环境中进行多轮交互，重点优化<strong>行动策略</strong>：
-          何时调用工具、调用哪个工具、如何组合工具链、如何利用工具结果更新上下文、
-          何时停止交互并输出预测。奖励来自最终预测误差、过程质量、工具调用成本、
-          工具结果有效性和上下文更新质量。
+          不同于通用数学推理 RL，CastStar 的奖励来自预测任务本身：
+          数值误差、趋势判断、结构识别、工具调用质量、推理一致性和反思改进幅度。
+          训练目标是可解释、可验证、可迭代优化的预测行为策略。
         </p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ WORKFLOW ═══════════════════ -->
+<section id="workflow" class="alt">
+  <div class="container">
+    <h2 class="section-title">Agent 预测流程</h2>
+    <p class="section-lead">
+      CastStar 把预测过程从一次性生成升级为多步推理和决策过程。
+      Agent 在每一轮中维护任务状态，判断是否需要新证据，调用工具后再更新上下文与预测假设。
+    </p>
+
+    <div class="flow-pipeline">
+      <div class="flow-step">Perception<div class="fs-sub">趋势 · 周期 · 异常</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">Planning<div class="fs-sub">识别证据缺口</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">Tool Use<div class="fs-sub">分析 · 检索 · 小模型</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">Reasoning<div class="fs-sub">历史 + 情境 + 工具反馈</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">Forecasting<div class="fs-sub">数值 · 区间 · 趋势</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">Reflection<div class="fs-sub">约束与证据检查</div></div>
+      <div class="flow-sep">→</div>
+      <div class="flow-step">Revision<div class="fs-sub">修正预测与报告</div></div>
+    </div>
+
+    <h3 class="sub-title">Agentic 预测实例结构</h3>
+    <div class="instance-box">
+      CastStar Forecasting Episode = {<br>
+      &nbsp;&nbsp;<span class="ib-key">history_series</span>       <span class="ib-arrow">←</span> <span class="ib-val">历史时间序列与可见窗口</span><br>
+      &nbsp;&nbsp;<span class="ib-key">context_evidence</span>     <span class="ib-arrow">←</span> <span class="ib-val">外生变量、事件、日历、领域背景与任务描述</span><br>
+      &nbsp;&nbsp;<span class="ib-key">tool_environment</span>     <span class="ib-arrow">←</span> <span class="ib-val">统计分析、检索、可视化、小预测模型、异常诊断等工具</span><br>
+      &nbsp;&nbsp;<span class="ib-key">reasoning_trace</span>      <span class="ib-arrow">←</span> <span class="ib-val">分析、证据整合、预测假设与不确定性判断</span><br>
+      &nbsp;&nbsp;<span class="ib-key">reflection_trace</span>     <span class="ib-arrow">←</span> <span class="ib-val">预测后检查、约束验证与错误修正轨迹</span><br>
+      &nbsp;&nbsp;<span class="ib-key">reward_signals</span>       <span class="ib-arrow">←</span> <span class="ib-val">预测误差、趋势判断、工具质量、推理一致性与反思有效性</span><br>
+      }
+    </div>
+
+    <div class="claim-box">
+      <p>
+        <strong>一句话论文 claim：</strong>
+        CastStar 证明了时间序列预测可以被建模为一个可验证的智能体推理问题：
+        大模型能够通过工具调用、情境证据获取和预测反馈强化学习，逐步提升复杂系统预测能力。
+      </p>
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════ HARNESS ═══════════════════ -->
-<section id="harness" class="alt">
+<section id="harness">
   <div class="container">
     <h2 class="section-title">Harness 工具环境</h2>
     <p>
-      Cast-R1 借助 <strong>Harness Engineering</strong> 思想构建了面向时间序列预测的工具环境，
+      CastStar 借助 <strong>Harness Engineering</strong> 思想构建了面向时间序列预测的工具环境，
       为智能体提供可操作、可反馈、可验证的外部行动空间，
       使模型能够在预测过程中主动感知数据、分析模式、调用模型、修正判断：
     </p>
@@ -787,46 +935,15 @@
       </div>
     </div>
 
-    <h3 class="sub-title">智能体预测决策流程</h3>
-    <div class="flow-pipeline">
-      <div class="flow-step">Token 输入<div class="fs-sub">时序 + 情境</div></div>
-      <div class="flow-sep">→</div>
-      <div class="flow-step">任务感知<div class="fs-sub">状态分析</div></div>
-      <div class="flow-sep">→</div>
-      <div class="flow-step">工具选择<div class="fs-sub">按需调用</div></div>
-      <div class="flow-sep">→</div>
-      <div class="flow-step">证据获取<div class="fs-sub">工具反馈</div></div>
-      <div class="flow-sep">→</div>
-      <div class="flow-step">上下文推理<div class="fs-sub">多证据融合</div></div>
-      <div class="flow-sep">→</div>
-      <div class="flow-step">预测生成<div class="fs-sub">初步结果</div></div>
-      <div class="flow-sep">→</div>
-      <div class="flow-step">反思修正<div class="fs-sub">多轮迭代</div></div>
-      <div class="flow-sep">→</div>
-      <div class="flow-step">最终预测<div class="fs-sub">精准输出</div></div>
-    </div>
-
-    <h3 class="sub-title">Agentic 预测实例结构</h3>
-    <div class="instance-box">
-      Agentic Prediction = {<br>
-      &nbsp;&nbsp;<span class="ib-key">input_tokens</span>      <span class="ib-arrow">←</span> <span class="ib-val">原始时间序列 + 情境上下文 Token</span><br>
-      &nbsp;&nbsp;<span class="ib-key">tool_environment</span>  <span class="ib-arrow">←</span> <span class="ib-val">Harness 工具集（8 类可调用工具）</span><br>
-      &nbsp;&nbsp;<span class="ib-key">standard_workflow</span> <span class="ib-arrow">←</span> <span class="ib-val">SFT 学习的基础预测流程与工具协议</span><br>
-      &nbsp;&nbsp;<span class="ib-key">reasoning_chain</span>   <span class="ib-arrow">←</span> <span class="ib-val">上下文推理、工具反馈解释与不确定性分析</span><br>
-      &nbsp;&nbsp;<span class="ib-key">interaction_rounds</span><span class="ib-arrow">←</span> <span class="ib-val">多轮工具选择、证据获取、上下文更新与停止决策</span><br>
-      &nbsp;&nbsp;<span class="ib-key">reward_signals</span>    <span class="ib-arrow">←</span> <span class="ib-val">预测误差 + 过程奖励 + 工具成本 + 结果有效性 + 上下文更新质量</span><br>
-      &nbsp;&nbsp;<span class="ib-key">final_prediction</span>  <span class="ib-arrow">←</span> <span class="ib-val">精准预测输出</span><br>
-      }
-    </div>
   </div>
 </section>
 
 <!-- ═══════════════════ TRAINING ═══════════════════ -->
 <section id="training">
   <div class="container">
-    <h2 class="section-title">Cast-R1-SFT → Cast-R1-Reasoning → Cast-R1-Agentic RL</h2>
+    <h2 class="section-title">Tool SFT → Reasoning Tuning → Agentic RL</h2>
     <p>
-      Cast-R1 采用三阶段递进训练路径：<strong>SFT 让模型会做，Reasoning 让模型会想，
+      CastStar 采用三阶段递进训练路径：<strong>SFT 让模型会做，Reasoning 让模型会想，
       Agentic RL 让模型会行动</strong>。这一路线面向已有语言模型，
       不以构建新的时序基础模型底座为核心目标，而是训练模型在 Harness 工具环境中进行
       自主工具调用、上下文推理和多轮预测决策。
@@ -834,7 +951,7 @@
 
     <div class="stage-row">
       <div class="stage-card">
-        <div class="stage-badge badge-sft">Stage 1 · Cast-R1-SFT</div>
+        <div class="stage-badge badge-sft">Stage 1 · Tool SFT</div>
         <h4>监督微调<br>任务格式与标准工作流</h4>
         <p class="stage-input">输入：高质量专家轨迹 + 工具调用协议 + 标准预测流程</p>
         <p>
@@ -845,7 +962,7 @@
         <div class="stage-output">能力：会做 · 任务格式 · 工具协议 · 标准流程</div>
       </div>
       <div class="stage-card">
-        <div class="stage-badge badge-rrl">Stage 2 · Cast-R1-Reasoning</div>
+        <div class="stage-badge badge-rrl">Stage 2 · Reasoning Tuning</div>
         <h4>推理增强<br>上下文与工具反馈理解</h4>
         <p class="stage-input">输入：推理数据蒸馏 + CoT 构造 + 过程监督 / 偏好优化</p>
         <p>
@@ -856,7 +973,7 @@
         <div class="stage-output">能力：会想 · 上下文推理 · 工具反馈推理 · 不确定性解释</div>
       </div>
       <div class="stage-card">
-        <div class="stage-badge badge-arl">Stage 3 · Cast-R1-Agentic RL</div>
+        <div class="stage-badge badge-arl">Stage 3 · Agentic RL</div>
         <h4>智能体强化学习<br>行动策略优化</h4>
         <p class="stage-input">输入：Harness 工具环境交互 + 多源奖励信号</p>
         <p>
@@ -867,6 +984,106 @@
         </p>
         <div class="stage-output">能力：会行动 · 工具选择 · 工具链组合 · 上下文更新 · 停止决策</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ REWARD ═══════════════════ -->
+<section id="reward" class="alt">
+  <div class="container">
+    <h2 class="section-title">奖励机制</h2>
+    <p class="section-lead">
+      CastStar 的关键在于把预测结果、工具行动和推理过程共同纳入可验证反馈。
+      奖励不是单一误差指标，而是面向 Agentic Forecasting 的多目标信号组合。
+    </p>
+
+    <ul class="pillar-list">
+      <li>
+        <div class="pillar-num">1</div>
+        <div class="pillar-text">
+          <strong>数值预测奖励 · Forecast Accuracy</strong>
+          <span>用 MAE、MSE、sMAPE、MASE、CRPS 或 Pinball Loss 衡量预测值与真实未来之间的误差，作为最基础的可验证反馈。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num violet">2</div>
+        <div class="pillar-text">
+          <strong>趋势与结构奖励 · Trend and Pattern Recognition</strong>
+          <span>判断模型是否正确识别上升、下降、转折、周期、异常、变点和分布漂移，避免只追逐局部数值误差。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num amber">3</div>
+        <div class="pillar-text">
+          <strong>工具调用奖励 · Tool Action Quality</strong>
+          <span>评估模型是否在合适时机调用必要工具，是否避免无效工具链，并能把统计诊断、小模型预测和检索证据用于修正判断。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num">4</div>
+        <div class="pillar-text">
+          <strong>推理一致性奖励 · Reasoning-Forecast Consistency</strong>
+          <span>检查推理轨迹是否真正支持最终预测，工具反馈、情境证据和预测结论之间是否存在冲突。</span>
+        </div>
+      </li>
+      <li>
+        <div class="pillar-num violet">5</div>
+        <div class="pillar-text">
+          <strong>反思有效性奖励 · Reflection Improvement</strong>
+          <span>关注初始预测经过诊断和反思后是否变好，鼓励模型发现不合理假设并进行有证据支撑的预测修正。</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════════════ EVALUATION ═══════════════════ -->
+<section id="eval" class="alt">
+  <div class="container">
+    <h2 class="section-title">性能评估</h2>
+    <p class="section-lead">
+      CastStar 的评估同时覆盖预测结果、智能体行为和可解释推理。
+      关键问题不是“是否会写解释”，而是“工具调用和反思修正是否真正提升预测质量”。
+    </p>
+
+    <div class="eval-split">
+      <div class="eval-half">
+        <div class="eval-badge badge-in">Forecasting Metrics</div>
+        <h4>结果质量</h4>
+        <ul class="feature-list">
+          <li><strong>点预测：</strong>MAE · MSE · RMSE · sMAPE · MASE</li>
+          <li><strong>概率预测：</strong>CRPS · Pinball Loss · Prediction Interval Coverage</li>
+          <li><strong>趋势判断：</strong>Direction Accuracy · Turning-point F1</li>
+          <li><strong>稳健性：</strong>OOD 泛化 · 非平稳变化 · 缺失与异常场景</li>
+        </ul>
+      </div>
+      <div class="eval-half">
+        <div class="eval-badge badge-out">Agent Metrics</div>
+        <h4>过程质量</h4>
+        <ul class="feature-list">
+          <li><strong>工具策略：</strong>必要工具召回率 · 无效工具调用率 · 工具成本</li>
+          <li><strong>证据利用：</strong>Context Grounding · Evidence Attribution</li>
+          <li><strong>推理一致性：</strong>Prediction-Reasoning Consistency</li>
+          <li><strong>反思修正：</strong>Revision Gain · Constraint Violation Reduction</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub-title">指标总览</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>评估维度</th><th>关注问题</th><th>典型指标</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>数值预测</td><td>最终预测是否更准</td><td>MAE · MSE · RMSE · sMAPE · MASE · CRPS</td></tr>
+          <tr><td>趋势与结构</td><td>是否识别趋势、周期、转折和异常</td><td>Direction Accuracy · Turning-point F1 · Pattern Hit Rate</td></tr>
+          <tr><td>工具调用</td><td>是否调用了必要工具并控制成本</td><td>Tool Recall · Tool Precision · Action Cost · Invalid Call Rate</td></tr>
+          <tr><td>情境证据</td><td>是否利用外生变量、事件和领域知识</td><td>Context Attribution · Evidence Use Rate · Counterfactual Robustness</td></tr>
+          <tr><td>推理一致性</td><td>推理过程是否支持最终预测</td><td>Prediction-Reasoning Consistency · Constraint Satisfaction</td></tr>
+          <tr><td>反思修正</td><td>修正后是否比初始预测更好</td><td>Revision Gain · Error Reduction · Violation Reduction</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
