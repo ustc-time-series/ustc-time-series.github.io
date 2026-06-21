@@ -317,7 +317,7 @@
     /* ── Cap cards (三大能力) ───────────────────────── */
     .cap-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
       margin-top: 24px;
     }
@@ -331,7 +331,6 @@
       transition: transform .22s, box-shadow .22s;
     }
     .cap-card:nth-child(2) { border-top-color: var(--violet-mid); }
-    .cap-card:nth-child(3) { border-top-color: var(--amber-mid); }
     .cap-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.09); }
     .cap-card .cap-icon { font-size: 1.8rem; margin-bottom: 12px; line-height: 1; }
     .cap-card h4 { font-size: 0.98rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
@@ -339,7 +338,6 @@
       font-size: 0.78rem; font-weight: 600;
       color: var(--violet-mid); margin-bottom: 10px; letter-spacing: 0.01em;
     }
-    .cap-card:nth-child(3) .cap-focus { color: var(--amber-mid); }
     .cap-card p { font-size: 0.87rem; color: #555; line-height: 1.65; margin: 0; }
 
     /* ── Module grid (Harness 工具) ─────────────────── */
@@ -695,18 +693,12 @@
   <div class="container">
     <h1 class="hero-clickable">
       <span class="hero-title-main"><span class="cr">CastStar</span></span>
-      <span class="hero-title-sub">Agentic Time Series Forecasting Model</span>
+      <span class="hero-title-sub">情境感知的时间序列推演智能体</span>
     </h1>
     <p class="subtitle hero-clickable">
       训练具备<strong>慢思考、工具调用、情境理解、反思修正</strong>能力的时间序列预测智能体，
       让大模型从“直接给预测结果”进化为“会分析、会查证、会调用工具、会反思、会修正”的预测决策系统。
     </p>
-    <div class="hero-chip-row" aria-label="CastStar 核心能力标签">
-      <span class="hero-chip">Slow-thinking Forecasting</span>
-      <span class="hero-chip">Tool-augmented Reasoning</span>
-      <span class="hero-chip">Context Evidence Acquisition</span>
-      <span class="hero-chip">Agentic RL / RLVR</span>
-    </div>
     <div class="btn-row">
       <a class="btn btn-primary" href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener" aria-label="打开 CastStar 论文 PDF">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
@@ -739,28 +731,16 @@
   <div class="container">
     <div class="tldr">
       <strong>一句话定位：</strong>
-      CastStar 是一个<strong>经过强化学习训练得到的 Agentic Time Series Forecasting Model</strong>，
-      能够通过工具调用、情境证据获取和预测反馈强化学习，
-      形成<strong>可解释、可验证、可迭代优化</strong>的预测行为策略。
+      CastStar 是一个面向时间序列推演的智能体系统，通过工具调用、证据获取、认知推理、反思验证与预测修正，实现对复杂系统未来趋势的可解释、可验证推演。
     </div>
 
     <h2 class="section-title">项目简介</h2>
     <p>
-      <strong>CastStar</strong> 可以理解为这条研究线中偏“Agent 能力模型”的核心模型。
-      传统时序预测通常遵循“输入历史序列 → 输出未来数值”的单步范式；
-      CastStar 则把复杂系统预测建模为一个多步智能体决策过程：
-      模型需要先理解历史动态，主动收集情境证据，调用统计分析、检索、可视化或小预测模型等工具，
-      再综合证据形成预测判断，并在发现不合理之处后反思和修正。
+      <strong>CastStar</strong> 是一个面向时间序列推演的工具增强智能体系统，通过主动调用时序分析、知识检索、情境获取、预测模型和验证工具，围绕历史序列、外部情境与领域知识开展证据驱动的认知推理、趋势推演与预测修正，从而实现复杂系统未来趋势的可解释、可追溯、可验证预测。
     </p>
     <p>
-      因此，CastStar 的核心不是再提出一个单一预测模型结构，
-      而是训练一个具备行为能力的 forecasting agent：
-      它要学会看懂趋势、周期、突变、噪声和异常，理解外生变量、事件、节假日和领域背景，
-      在合适时机调用工具，并把工具反馈、上下文证据和自身推理轨迹整合成最终预测。
-      这一路线把预测从 <strong>single-step prediction</strong> 升级为
-      <strong>multi-step reasoning and decision-making process</strong>。
+      CastStar 的核心技术哲学是通过工具调用实现证据驱动的时间序列推演：智能体首先借助时序分析、统计建模和可视化工具理解历史数值序列中的趋势、周期、波动和异常；随后自主收集天气、事件、政策、新闻、知识库和相似案例等情境线索；进一步围绕这些多源证据开展上下文认知推理，判断未来趋势在特定情境下的延续、增强、削弱、偏移或反转，并通过反思验证与预测修正形成可靠的推演结果。
     </p>
-
     <div class="position-strip">
       <div class="ps-item">
         <div class="ps-label">Perception</div>
@@ -772,9 +752,14 @@
         <div class="ps-val">工具调用与证据获取</div>
       </div>
       <div class="ps-connector">→</div>
-      <div class="ps-item highlighted">
-        <div class="ps-label">Learning</div>
-        <div class="ps-val">可验证强化学习与反思修正</div>
+      <div class="ps-item">
+        <div class="ps-label">Forecasting</div>
+        <div class="ps-val">上下文推理与趋势推演</div>
+      </div>
+      <div class="ps-connector">→</div>
+      <div class="ps-item">
+        <div class="ps-label">Reflection</div>
+        <div class="ps-val">反思与验证</div>
       </div>
     </div>
 
@@ -829,16 +814,6 @@
           异常检测和知识库，把预测从黑箱输出转变为证据驱动的预测决策。
         </p>
       </div>
-      <div class="cap-card">
-        <div class="cap-icon">03</div>
-        <h4>面向预测任务的可验证强化学习</h4>
-        <div class="cap-focus">Verifiable Forecasting Feedback</div>
-        <p>
-          不同于通用数学推理 RL，CastStar 的奖励来自预测任务本身：
-          数值误差、趋势判断、结构识别、工具调用质量、推理一致性和反思改进幅度。
-          训练目标是可解释、可验证、可迭代优化的预测行为策略。
-        </p>
-      </div>
     </div>
   </div>
 </section>
@@ -846,7 +821,7 @@
 <!-- ═══════════════════ WORKFLOW ═══════════════════ -->
 <section id="workflow" class="alt">
   <div class="container">
-    <h2 class="section-title">Agent 预测流程</h2>
+    <h2 class="section-title">模拟专家思维的时序预测</h2>
     <p class="section-lead">
       CastStar 把预测过程从一次性生成升级为多步推理和决策过程。
       Agent 在每一轮中维护任务状态，判断是否需要新证据，调用工具后再更新上下文与预测假设。
@@ -893,7 +868,7 @@
 <!-- ═══════════════════ HARNESS ═══════════════════ -->
 <section id="harness">
   <div class="container">
-    <h2 class="section-title">Harness 工具环境</h2>
+    <h2 class="section-title">面向时序预测的工具环境</h2>
     <p>
       CastStar 借助 <strong>Harness Engineering</strong> 思想构建了面向时间序列预测的工具环境，
       为智能体提供可操作、可反馈、可验证的外部行动空间，
@@ -1065,6 +1040,28 @@
           <li><strong>证据利用：</strong>Context Grounding · Evidence Attribution</li>
           <li><strong>推理一致性：</strong>Prediction-Reasoning Consistency</li>
           <li><strong>反思修正：</strong>Revision Gain · Constraint Violation Reduction</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub-title">泛化评估</h3>
+    <div class="eval-split">
+      <div class="eval-half">
+        <div class="eval-badge badge-in">In-Domain Generalization</div>
+        <h4>In-Domain 泛化</h4>
+        <ul class="feature-list">
+          <li><strong>同域新序列：</strong>在相同数据域、相同变量体系下评估未见序列的预测质量。</li>
+          <li><strong>时间切片泛化：</strong>检验不同时间窗口、不同预测长度和不同季节阶段下的稳定性。</li>
+          <li><strong>样本扰动鲁棒性：</strong>评估缺失、噪声、异常点和局部结构变化对预测与推理的影响。</li>
+        </ul>
+      </div>
+      <div class="eval-half">
+        <div class="eval-badge badge-out">Out-Domain Generalization</div>
+        <h4>Out-Domain 泛化</h4>
+        <ul class="feature-list">
+          <li><strong>跨数据集迁移：</strong>测试模型从训练域迁移到新行业、新传感器或新业务场景的表现。</li>
+          <li><strong>分布漂移适应：</strong>关注非平稳变化、制度切换、突发事件和外部情境变化下的预测修正能力。</li>
+          <li><strong>工具与证据泛化：</strong>检验智能体能否在新任务中自主选择工具、获取证据并维持推理一致性。</li>
         </ul>
       </div>
     </div>

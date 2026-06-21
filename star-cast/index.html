@@ -179,12 +179,7 @@
       border-bottom: 1px solid #e8e8e8;
       padding: 74px 0 58px;
       text-align: center;
-      cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-    header.is-refreshing {
-      transform: scale(0.995);
-      opacity: 0.82;
+      transition: opacity 0.2s ease;
     }
     header:focus-visible {
       outline: 3px solid #99e6d8;
@@ -223,6 +218,65 @@
     main {
       flex: 1;
       padding: 46px 0 82px;
+    }
+    .ecosystem-map {
+      margin-bottom: 28px;
+    }
+    .ecosystem-heading {
+      max-width: 760px;
+      margin-bottom: 20px;
+    }
+    .ecosystem-heading h2 {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--ink);
+      text-align: left;
+      margin-bottom: 8px;
+    }
+    .ecosystem-heading p {
+      color: var(--text-muted);
+      font-size: 0.96rem;
+      line-height: 1.85;
+    }
+    .ecosystem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .ecosystem-node {
+      min-height: 150px;
+      padding: 18px 16px;
+      border: 1px solid #dcebe6;
+      border-top: 4px solid var(--accent);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 6px 18px rgba(15, 118, 110, 0.045);
+    }
+    .ecosystem-node strong {
+      display: block;
+      color: var(--ink);
+      font-size: 0.98rem;
+      line-height: 1.35;
+      text-align: left;
+    }
+    .ecosystem-node span {
+      display: block;
+      margin-top: 8px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      text-align: left;
+    }
+    .ecosystem-role {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #edf3f0;
+      color: var(--accent-dark);
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: left;
     }
     .systems-shell {
       background: rgba(255, 255, 255, 0.92);
@@ -317,7 +371,6 @@
     .project-tag {
       display: inline-flex;
       align-items: center;
-      margin-top: 18px;
       padding: 6px 11px;
       border-radius: 999px;
       border: 1px solid #d8eee9;
@@ -326,6 +379,38 @@
       font-size: 0.78rem;
       font-weight: 800;
       line-height: 1.3;
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid #d8eee9;
+      background: #fff;
+      color: #4d5f5c;
+      font-size: 0.78rem;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+    .status-badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px var(--green-tint);
+    }
+    .status-badge.building::before {
+      background: #b45309;
+      box-shadow: 0 0 0 4px rgba(180, 83, 9, 0.12);
     }
     .feature-list {
       display: grid;
@@ -380,7 +465,8 @@
     .project-card.neoresearch,
     .project-card.factory,
     .project-card.eval,
-    .project-card.castmind {
+    .project-card.castmind,
+    .project-card.caststar {
       --card-accent: linear-gradient(90deg, #101010, #0f766e);
     }
     .project-card.full-width { grid-column: 1 / -1; min-height: auto; }
@@ -435,6 +521,9 @@
     }
 
     @media (max-width: 900px) {
+      .ecosystem-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
       .systems-intro,
       .project-grid {
         grid-template-columns: 1fr;
@@ -479,6 +568,9 @@
       .container {
         padding: 0 16px;
       }
+      .ecosystem-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -510,7 +602,7 @@
   </div>
 </nav>
 
-<header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
+<header id="hero-header">
   <div class="container">
     <h1><span class="highlight">StarCast</span> 逐星方舟</h1>
     <p class="header-sub">
@@ -522,24 +614,65 @@
 
 <main>
   <div class="container">
+    <section class="ecosystem-map" aria-labelledby="ecosystem-title">
+      <div class="ecosystem-heading">
+        <h2 id="ecosystem-title">逐星方舟生态图谱</h2>
+        <p>
+          StarCast 不是单一系统，而是一组围绕 LLM-based Time Series Research 的协同项目：
+          CastMind 提供推演基础模型底座，CastStar 与 CastClaw 构成推演智能体系统，NeoResearch 支撑自主研究闭环，
+          CastFactory 沉淀训练与实验工厂，FutureCast 负责基准评测与能力校准。
+        </p>
+      </div>
+      <div class="ecosystem-grid" aria-label="StarCast 项目关系">
+        <div class="ecosystem-node">
+          <strong>CastMind（星思）</strong>
+          <span>面向时间序列的认知大模型，提供时序感知、情境理解、慢思考推理与记忆交互能力。</span>
+          <div class="ecosystem-role">Model Backbone</div>
+        </div>
+        <div class="ecosystem-node">
+          <strong>CastStar（星辰）</strong>
+          <span>工具增强的时间序列推演智能体，联动证据获取、工具调用、反思验证与预测修正。</span>
+          <div class="ecosystem-role">Agentic Forecasting</div>
+        </div>
+        <div class="ecosystem-node">
+          <strong>CastClaw（观星阁）</strong>
+          <span>人在回路的预测研究工作台，把规划、预测、批判与人类确认组织成可控流程。</span>
+          <div class="ecosystem-role">Interactive Workbench</div>
+        </div>
+        <div class="ecosystem-node">
+          <strong>NeoResearch（智多星）</strong>
+          <span>自主研究闭环，围绕研究假设、模型配方、实验执行、结果归因和研究记忆迭代。</span>
+          <div class="ecosystem-role">Research Agent</div>
+        </div>
+        <div class="ecosystem-node">
+          <strong>CastFactory（铸星坊）</strong>
+          <span>LLM-based Multimodal Time Series 模型训练工厂，串联数据契约、CPT-SFT-RL 与 recipe 复现。</span>
+          <div class="ecosystem-role">Training Factory</div>
+        </div>
+        <div class="ecosystem-node">
+          <strong>FutureCast（天星台）</strong>
+          <span>面向时序模型与智能体系统的统一评测基准，衡量预测、解释、证据使用与系统收益。</span>
+          <div class="ecosystem-role">Benchmark Suite</div>
+        </div>
+      </div>
+    </section>
+
     <section class="systems-shell" aria-labelledby="models-title">
       <div class="systems-intro">
         <div class="intro-copy">
-          <h2 id="models-title">时间序列认知大模型</h2>
+          <h2 id="models-title">时间序列推演基础模型</h2>
           <p>
-            CastMind（星思）关注语言大模型能否成为时间序列的统一认知 Backbone，
-            探索通过 Feature Encoder、跨域预训练、慢思考推理与 Memory 交互，构建具备感知—理解—推理—检索—修正能力的时序认知基础模型。
+            以时序结构感知、情境理解、慢思考推理与记忆检索为核心，把预测从数值外推推进为可解释、可修正的未来推演。
           </p>
-        </div>
-        <div class="pipeline" aria-label="时序大模型研发路径">
-          <div class="pipeline-step"><span>01</span><strong>Encode temporal patterns with Time Series Feature Encoder</strong></div>
-          <div class="pipeline-step"><span>02</span><strong>Reason &amp; retrieve with interactive slow thinking + Memory</strong></div>
         </div>
       </div>
 
       <div class="project-grid">
         <article class="project-card castmind full-width">
-          <span class="project-tag violet">Time Series Foundation Model</span>
+          <div class="card-meta">
+            <span class="project-tag violet">Time Series Foundation Model</span>
+            <span class="status-badge building">主页已开放 · 能力建设中</span>
+          </div>
           <h3>CastMind（星思）</h3>
           <p>
             CastMind（星思）希望把时间序列预测从一次性的数值外推，推进到可诊断、可解释、可修正的认知推理过程。
@@ -551,7 +684,7 @@
             <li><strong>慢思考推理能力：</strong>围绕当前趋势、潜在扰动、未来可能路径和不确定性来源进行分步分析，区别于 fast-thinking 式一次性预测。</li>
             <li><strong>记忆交互能力：</strong>检索历史相似模式、失败预测经验、领域规律、推理轨迹和过往分析结论，形成 experience-conditioned reasoning。</li>
           </ul>
-          <span class="project-link disabled">主页 Coming Soon</span>
+          <a class="project-link" href="../cast-mind/">查看CastMind（星思）主页</a>
         </article>
       </div>
 
@@ -566,21 +699,38 @@
     <section class="systems-shell" aria-labelledby="systems-title">
       <div class="systems-intro">
         <div class="intro-copy">
-          <h2 id="systems-title">面向时间序列分析研究的自主智能体系统</h2>
+          <h2 id="systems-title">时间序列推演智能体系统</h2>
           <p>
-            CastClaw（观星阁）关注人在回路的预测研究工作台，
-            NeoResearch（智多星）关注受控自主研究闭环，两者共同支撑从数据理解、实验编排到知识沉淀的系统化时序研究流程。
+            CastStar（星辰）关注工具增强的时序推演智能体，CastClaw（观星阁）关注人在回路的预测研究工作台，
+            两者共同支撑从证据获取、推理决策到交互校验的时间序列推演流程。
           </p>
-        </div>
-        <div class="pipeline" aria-label="系统研发链路">
-          <div class="pipeline-step"><span>01</span><strong>Human-in-the-loop forecasting with CastClaw</strong></div>
-          <div class="pipeline-step"><span>02</span><strong>Autonomous research loop with NeoResearch</strong></div>
         </div>
       </div>
 
       <div class="project-grid">
+        <article class="project-card caststar">
+          <div class="card-meta">
+            <span class="project-tag">模型-环境协同的时间序列预测智能体系统</span>
+            <span class="status-badge">主页已开放</span>
+          </div>
+          <h3>CastStar（星辰）</h3>
+          <p>
+            CastStar（星辰）是面向时间序列推演的工具增强智能体系统，通过工具调用、证据获取、认知推理、
+            反思验证与预测修正，实现对复杂系统未来趋势的可解释、可追溯、可验证推演。
+          </p>
+          <ul class="feature-list">
+            <li><strong>Agentic Forecasting：</strong>将预测过程建模为多步分析、证据选择、工具调用和预测决策。</li>
+            <li><strong>工具增强推理：</strong>调用统计工具、检索系统、可视化分析、异常检测和小预测模型获取证据。</li>
+            <li><strong>反思修正机制：</strong>通过验证工具和反馈信号检查预测结果、工具行动与推理过程，并进行修正。</li>
+          </ul>
+          <a class="project-link" href="../CastStar/">查看 CastStar（星辰）主页</a>
+        </article>
+
         <article class="project-card castclaw">
-          <span class="project-tag">Human-Agent Forecasting Workbench</span>
+          <div class="card-meta">
+            <span class="project-tag">人机物协同的时间序列预测智能体系统</span>
+            <span class="status-badge">主页已开放</span>
+          </div>
           <h3>CastClaw（观星阁）</h3>
           <p>
             面向时间序列预测研究的人机协同智能体框架。CastClaw 通过 Planner、Forecaster、Critic 三个专属智能体编排完整预测流程，
@@ -591,11 +741,38 @@
             <li>人在回路机制：关键计划、实验与结果节点支持确认、暂停和修正</li>
             <li>研究工作台：实验沙盒、数据分析工具、特征分析与时序模型工具箱</li>
           </ul>
-          <a class="project-link" href="../cast-claw/">查看 CastClaw 主页</a>
+          <a class="project-link" href="../cast-claw/">查看CastClaw（观星阁）主页</a>
         </article>
+      </div>
 
-        <article class="project-card neoresearch">
-          <span class="project-tag">Forecast Research Operating System</span>
+      <div class="status-row" aria-label="系统能力标签">
+        <span class="status-chip"><span class="status-dot"></span>Agentic Workflow</span>
+        <span class="status-chip"><span class="status-dot"></span>Tool-augmented</span>
+        <span class="status-chip"><span class="status-dot"></span>Human-in-the-loop</span>
+        <span class="status-chip"><span class="status-dot"></span>Forecast Correction</span>
+      </div>
+    </section>
+
+    <section class="systems-shell" aria-labelledby="research-title">
+      <div class="systems-intro">
+        <div class="intro-copy">
+          <h2 id="research-title">面向时间序列预测的AutoResearch智能体系统</h2>
+          <p>
+            NeoResearch（智多星）关注受控自主研究闭环，将研究假设、模型配方、实验执行、结果归因与研究记忆组织成可复现的系统化时序研究流程。
+          </p>
+        </div>
+        <div class="pipeline" aria-label="自主研究链路">
+          <div class="pipeline-step"><span>01</span><strong>Generate hypotheses and candidate recipes</strong></div>
+          <div class="pipeline-step"><span>02</span><strong>Close the loop with controlled experiments + memory</strong></div>
+        </div>
+      </div>
+
+      <div class="project-grid">
+        <article class="project-card neoresearch full-width">
+          <div class="card-meta">
+            <span class="project-tag">Forecast Research Operating System</span>
+            <span class="status-badge building">主页已开放 · 研究闭环建设中</span>
+          </div>
           <h3>NeoResearch（智多星）</h3>
           <p>
             面向时间序列预测小模型研发的自主研究智能体系统，将研究假设、模型配方、受控实验、评估归因与研究记忆串成可复现闭环，
@@ -606,14 +783,14 @@
             <li>CandidateRecipe 搜索：在受限协议内组合模型结构、训练策略与评估方案</li>
             <li>受控研究闭环：实验执行、结果归因、keep / discard 与研究记忆沉淀</li>
           </ul>
-          <span class="project-link disabled">主页 Coming Soon</span>
+          <a class="project-link" href="../NeoResearch/">查看 NeoResearch 主页</a>
         </article>
       </div>
 
-      <div class="status-row" aria-label="系统能力标签">
-        <span class="status-chip"><span class="status-dot"></span>Agentic Workflow</span>
-        <span class="status-chip"><span class="status-dot"></span>Human-in-the-loop</span>
+      <div class="status-row" aria-label="自主研究能力标签">
+        <span class="status-chip"><span class="status-dot"></span>Research Hypothesis</span>
         <span class="status-chip"><span class="status-dot"></span>Controlled Experiment</span>
+        <span class="status-chip"><span class="status-dot"></span>Result Attribution</span>
         <span class="status-chip"><span class="status-dot"></span>Research Memory</span>
       </div>
     </section>
@@ -623,7 +800,7 @@
         <div class="intro-copy">
           <h2 id="opensource-title">面向时序研究的开源基础设施</h2>
           <p>
-            CastFactory（铸星坊）关注研究与实验的组件化生产，
+            CastFactory（铸星坊）关注 LLM-based Multimodal Time Series 模型训练与 recipe 复现，
             FutureCast（天星台）关注模型、数据集与应用场景的统一评测，共同支撑更高效、可复现、可扩展的时序研究与应用落地。
           </p>
         </div>
@@ -635,22 +812,28 @@
 
       <div class="project-grid">
         <article class="project-card factory">
-          <span class="project-tag">Experiment Factory</span>
+          <div class="card-meta">
+            <span class="project-tag">LLM-based TS Training Factory</span>
+            <span class="status-badge">主页已开放</span>
+          </div>
           <h3>CastFactory（铸星坊）</h3>
           <p>
-            面向时间序列研究的实验工厂，沉淀数据处理、特征构造、模型配方、训练运行与结果归档等模块，
-            让新任务能够沿着统一协议快速搭建、复用和复现实验流程。
+            面向科研人员的 LLM-based Multimodal Time Series 模型训练工厂，以统一数据契约串联多模态样本构建、
+            CPT-SFT-ReasoningRL / AgenticRL 训练、消融评测与 training recipe 复现。
           </p>
           <ul class="feature-list">
-            <li>数据接入、清洗、切分与场景配置模板</li>
-            <li>模型配方、训练脚本和实验运行规范</li>
-            <li>面向论文与应用研究的可复现结果资产</li>
+            <li>多模态时间序列数据契约与 evidence pack 构建</li>
+            <li>CPT-SFT-RL 三阶段训练与 ReasoningRL / AgenticRL 接口</li>
+            <li>面向论文实验的 recipe、ablation matrix 与 evaluation report</li>
           </ul>
           <a class="project-link" href="../cast-factory/">查看 CastFactory（铸星坊）主页</a>
         </article>
 
         <article class="project-card eval">
-          <span class="project-tag">Evaluation Suite</span>
+          <div class="card-meta">
+            <span class="project-tag">Evaluation Suite</span>
+            <span class="status-badge">主页已开放</span>
+          </div>
           <h3>FutureCast（天星台）</h3>
           <p>
             面向时序模型与智能体系统的统一评测套件，覆盖 benchmark 管理、指标计算、误差归因和报告生成，
@@ -717,26 +900,6 @@
       if (event.key === 'Escape') closeAll();
     });
 
-    const heroHeader = document.querySelector('#hero-header');
-    const refreshPage = () => {
-      if (!heroHeader || heroHeader.classList.contains('is-refreshing')) return;
-      heroHeader.classList.add('is-refreshing');
-      window.setTimeout(() => {
-        window.location.reload();
-      }, 160);
-    };
-
-    if (heroHeader) {
-      heroHeader.addEventListener('click', (event) => {
-        if (event.target.closest('a, button')) return;
-        refreshPage();
-      });
-      heroHeader.addEventListener('keydown', (event) => {
-        if (event.key !== 'Enter' && event.key !== ' ') return;
-        event.preventDefault();
-        refreshPage();
-      });
-    }
   })();
 </script>
 

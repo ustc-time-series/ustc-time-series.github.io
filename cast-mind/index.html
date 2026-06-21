@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CastMind（星思） — Agentic 时间序列认知大模型</title>
-  <meta name="description" content="CastMind（星思）是面向复杂时序场景的 Agentic 时间序列认知大模型：以 Feature Encoder 原生建模动态数值序列信息，融入 Context-aware Feature，并通过 Agentic Reasoning 与环境自主多轮交互、上下文推理和预测修正。" />
+  <title>CastMind（星思） — 情境推理驱动的时间序列推演大模型</title>
+  <meta name="description" content="CastMind（星思）是面向复杂时序场景的情境推理驱动的时间序列推演大模型：以 Feature Encoder 原生建模动态数值序列信息，融入 Context-aware Feature，并通过 Agentic Reasoning 推演未来趋势、状态变化与可能演化路径。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -164,6 +164,7 @@
     header h1 .cm { color: var(--primary); }
     .hero-title-main,
     .hero-title-sub { display: inline; white-space: nowrap; }
+    .hero-title-sub { color: var(--primary); }
     .hero-kicker {
       display: inline-flex;
       align-items: center;
@@ -194,29 +195,6 @@
       color: #999;
       letter-spacing: 0.02em;
     }
-    .hero-chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin: 18px auto 0;
-      max-width: 780px;
-    }
-    .hero-chip {
-      display: inline-flex;
-      align-items: center;
-      min-height: 30px;
-      padding: 5px 11px;
-      border-radius: 999px;
-      border: 1px solid rgba(30, 58, 95, 0.18);
-      background: rgba(255, 255, 255, 0.78);
-      color: var(--primary);
-      font-size: 0.78rem;
-      font-weight: 700;
-      line-height: 1.35;
-      white-space: nowrap;
-    }
-
     /* ── Buttons ───────────────────────────────────── */
     .btn-row {
       display: flex;
@@ -300,10 +278,8 @@
       max-width: 820px;
     }
     .intro-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1.28fr) minmax(260px, 0.72fr);
-      gap: 30px;
-      align-items: start;
+      display: block;
+      max-width: 960px;
       margin-top: 2px;
     }
     .intro-copy {
@@ -312,35 +288,60 @@
       text-justify: auto;
     }
     .intro-copy .section-title {
-      margin-bottom: 20px;
+      margin-bottom: 14px;
     }
     .intro-copy p {
       color: #333;
-      line-height: 1.9;
+      line-height: 1.82;
     }
-    .intro-copy p + p {
-      margin-top: 18px;
+    .intro-copy .intro-lead {
+      max-width: none;
+      margin-bottom: 18px;
+      color: #2c3744;
+      font-size: 0.98rem;
     }
-    .intro-insight {
-      min-width: 0;
-      padding-top: 3px;
+    .intro-step-list {
+      display: grid;
+      gap: 12px;
     }
-    .insight-label {
+    .intro-step {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 13px;
+      align-items: start;
+      padding: 15px 16px;
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--primary);
+      border-radius: 10px;
+      background: linear-gradient(135deg, #fff 0%, #f6f9fc 100%);
+      box-shadow: 0 2px 12px rgba(30, 58, 95, 0.05);
+    }
+    .intro-step-index {
       display: inline-flex;
       align-items: center;
-      min-height: 28px;
-      padding: 4px 10px;
-      border-radius: 999px;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
       background: var(--primary-soft);
       border: 1px solid var(--primary-line);
       color: var(--primary);
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      letter-spacing: 0.04em;
     }
-
+    .intro-step-title {
+      margin-bottom: 4px;
+      color: var(--navy);
+      font-size: 0.96rem;
+      font-weight: 800;
+    }
+    .intro-step p {
+      margin: 0;
+      color: #444;
+      font-size: 0.91rem;
+      line-height: 1.72;
+    }
     /* ── Card grid ─────────────────────────────────── */
     .card-grid {
       display: grid;
@@ -418,57 +419,76 @@
       top: 1px;
     }
 
-    /* ── Three-feature cap cards ───────────────────── */
-    .cap-grid {
+    /* ── Key technical path ─────────────────────────── */
+    .path-stack {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 18px;
       margin-top: 24px;
+      max-width: 1040px;
     }
-    .cap-card {
+    .path-card {
       background: var(--card);
       border: 1px solid var(--line);
-      border-top: 4px solid var(--navy);
-      border-radius: 0 0 12px 12px;
-      padding: 24px 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: transform .22s, box-shadow .22s;
-      min-height: 255px;
+      border-left: 4px solid var(--primary);
+      border-radius: 12px;
+      padding: 24px 24px;
+      box-shadow: 0 3px 16px rgba(30, 58, 95, 0.06);
     }
-    .cap-card:nth-child(2) { border-top-color: var(--primary-mid); }
-    .cap-card:nth-child(3) { border-top-color: var(--primary); }
-    .cap-card:nth-child(4) { border-top-color: #0369a1; }
-    .cap-card:nth-child(5) { border-top-color: var(--primary); }
-    .cap-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.09); }
-    .cap-card .cap-icon { font-size: 1.8rem; margin-bottom: 12px; line-height: 1; }
-    .cap-card .cap-icon-text {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 24px;
-      border-radius: 6px;
-      background: var(--primary-soft);
-      border: 1px solid var(--primary-line);
-      color: var(--primary);
-      font-size: 0.9rem;
-      font-weight: 900;
-      letter-spacing: 0.04em;
+    .path-card h3 {
+      margin-bottom: 14px;
+      color: var(--navy);
+      font-size: 1.08rem;
+      font-weight: 850;
+      line-height: 1.45;
     }
-    .cap-card h4 { font-size: 0.98rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-    .cap-card .cap-focus {
-      font-size: 0.78rem; font-weight: 600;
-      color: var(--primary-mid); margin-bottom: 10px; letter-spacing: 0.01em;
+    .path-card p {
+      margin: 0 0 12px;
+      color: #3f3f3f;
+      font-size: 0.94rem;
+      line-height: 1.78;
     }
-    .cap-card:nth-child(3) .cap-focus { color: var(--primary); }
-    .cap-card:nth-child(4) .cap-focus { color: #0369a1; }
-    .cap-card:nth-child(5) .cap-focus { color: var(--primary); }
-    .cap-card p { font-size: 0.87rem; color: #555; line-height: 1.65; margin: 0; }
+    .path-card p:last-child { margin-bottom: 0; }
+    .path-list {
+      margin: 8px 0 14px 22px;
+      color: #333;
+      line-height: 1.72;
+      font-size: 0.92rem;
+    }
+    .path-list li { margin: 4px 0; }
+    .path-formula,
+    .path-flow {
+      margin: 16px auto;
+      padding: 10px 14px;
+      max-width: 760px;
+      text-align: center;
+      color: #111;
+      background: #f8fafc;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font-family: "Times New Roman", "Songti SC", serif;
+      font-size: 1.18rem;
+      line-height: 1.7;
+    }
+    .path-flow {
+      font-family: var(--font);
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+    .path-quote {
+      margin: 14px 0 16px;
+      padding: 12px 16px;
+      border-left: 4px solid #d6dce5;
+      color: #151515;
+      background: #fbfcfe;
+      font-size: 0.94rem;
+      font-weight: 800;
+      line-height: 1.68;
+    }
 
     /* ── Tech layer grid ───────────────────────────── */
     .tech-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 16px;
       margin-top: 22px;
     }
@@ -713,62 +733,6 @@
       line-height: 1.7;
     }
 
-    /* ── Positioning compare strip ─────────────────── */
-    .position-strip {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      margin: 22px 0;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-    }
-    .ps-item {
-      flex: 1;
-      padding: 16px 14px;
-      text-align: center;
-      border-right: 1px solid var(--line);
-    }
-    .ps-item:last-child { border-right: none; }
-    .ps-item .ps-label {
-      font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 4px;
-    }
-    .ps-item .ps-val {
-      font-size: 0.88rem; font-weight: 700; color: var(--navy);
-      line-height: 1.45;
-    }
-    .ps-item.highlighted { background: var(--primary-soft); }
-    .ps-item.highlighted .ps-val { color: var(--primary); }
-    .ps-connector {
-      flex-shrink: 0;
-      font-size: 1.1rem;
-      color: #bbb;
-      padding: 0 2px;
-    }
-    .intro-insight .position-strip {
-      flex-direction: column;
-      align-items: stretch;
-      margin: 0;
-      border-radius: 12px;
-    }
-    .intro-insight .ps-item {
-      padding: 15px 14px;
-      border-right: none;
-      border-bottom: 1px solid var(--line);
-    }
-    .intro-insight .ps-item:last-child { border-bottom: none; }
-    .intro-insight .ps-connector {
-      align-self: center;
-      transform: rotate(90deg);
-      padding: 0;
-      margin: -3px 0;
-      line-height: 1;
-    }
-
     /* ── Table ─────────────────────────────────────── */
     .table-wrap { overflow-x: auto; margin: 20px 0; border-radius: 8px; border: 1px solid var(--line); }
     table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
@@ -776,6 +740,23 @@
     td { padding: 9px 16px; border-bottom: 1px solid #f0f0f0; }
     tr:nth-child(even) td { background: #f9fafc; }
     tr:last-child td { border-bottom: none; }
+
+    /* ── Closing statement ────────────────────────────── */
+    .closing-section {
+      padding: 48px 0;
+      background: linear-gradient(135deg, #f8fbff 0%, #eef5fc 100%);
+    }
+    .closing-statement {
+      max-width: 960px;
+      margin: 0;
+      padding: 18px 22px;
+      border-left: 4px solid var(--primary);
+      color: var(--navy);
+      font-size: 1.02rem;
+      font-weight: 700;
+      line-height: 1.82;
+      background: rgba(255, 255, 255, 0.72);
+    }
 
     /* ── Footer ────────────────────────────────────── */
     footer {
@@ -799,21 +780,17 @@
       header h1 { font-size: 1.5rem; }
       .hero-title-main,
       .hero-title-sub { white-space: normal; }
-      .hero-chip { white-space: normal; justify-content: center; text-align: center; }
-      .intro-layout,
-      .cap-grid, .tech-grid, .stage-row, .version-grid, .pillar-list, .route-line { grid-template-columns: 1fr; }
+      .tech-grid, .stage-row, .version-grid, .pillar-list, .route-line { grid-template-columns: 1fr; }
+      .intro-step { grid-template-columns: 1fr; gap: 9px; }
       .eval-split  { grid-template-columns: 1fr; }
-      .position-strip { flex-direction: column; }
-      .ps-item { border-right: none; border-bottom: 1px solid var(--line); }
-      .ps-item:last-child { border-bottom: none; }
-      .ps-connector { transform: rotate(90deg); padding: 2px 0; }
-      .intro-insight { padding-top: 0; }
       .route-step::after { display: none; }
       section { padding: 48px 0; }
       .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
       h2.section-title { font-size: 1.25rem; }
       .claim-box { padding: 24px 20px; }
-      .cap-card { min-height: auto; }
+      .path-card { padding: 20px 18px; }
+      .path-formula,
+      .path-flow { font-size: 0.94rem; overflow-x: auto; }
     }
   </style>
 </head>
@@ -825,19 +802,11 @@
   <div class="container">
     <h1 class="hero-clickable">
       <span class="hero-title-main"><span class="cm">CastMind（星思）</span></span>
-      <span class="hero-title-sub">Agentic 时间序列认知大模型</span>
+      <span class="hero-title-sub">情境推理驱动的时间序列推演大模型</span>
     </h1>
     <p class="subtitle hero-clickable">
-      面向复杂时序场景的新型基础模型——以 <strong>Feature Encoder 原生建模动态数值序列信息</strong>，
-      融入 <strong>Context-aware Feature</strong>，并通过 <strong>Agentic Reasoning</strong>
-      与环境自主多轮交互、上下文推理和预测修正。
+      CastMind 是一个面向复杂系统的情境推理驱动时间序列推演大模型，通过融合历史序列、外部情境与领域知识，推演未来趋势在特定条件下的延续、增强、削弱、偏移或反转，并实现预测修正与机制解释。
     </p>
-    <div class="hero-chip-row" aria-label="CastMind 核心能力标签">
-      <span class="hero-chip">Native Time Series Modeling</span>
-      <span class="hero-chip">Contextual Feature Fusion</span>
-      <span class="hero-chip">Slow-thinking Reasoning</span>
-      <span class="hero-chip">Autonomous Multi-turn Interaction</span>
-    </div>
   </div>
 </header>
 
@@ -846,7 +815,7 @@
   <div class="container">
     <a href="../" class="nav-home">首页</a>
     <a href="#intro">简介</a>
-    <a href="#features">三大亮点</a>
+    <a href="#features">关键技术路径</a>
     <a href="#tech">核心技术</a>
     <a href="#training">训练范式</a>
     <a href="#versions">能力路线</a>
@@ -859,53 +828,47 @@
   <div class="container">
     <div class="tldr">
       <div class="brief-main">
-        <strong>一句话定位：</strong>
-        CastMind（星思）是一个<strong>Agentic 时间序列认知大模型</strong>：
-        用 Feature Encoder 原生建模动态数值序列，完成情境融入与 Context-aware Feature 对齐，
-        并通过 Agentic Reasoning 与环境自主多轮交互、上下文推理和预测修正。
+        CastMind 是一个面向复杂系统的情境推理驱动时间序列推演大模型，旨在突破传统预测仅依赖历史数值外推的局限。模型首先基于历史序列挖掘趋势、周期、波动和变量依赖，形成基础未来轨迹；随后融合天气、事件、政策、文本、领域知识和系统状态等多源情境，理解系统运行条件；进一步通过大模型的知识推理与机制分析，判断历史趋势在特定情境下是否延续、增强、削弱、偏移或反转，并完成未来趋势的条件化推演与预测修正。
       </div>
     </div>
 
     <div class="intro-layout">
       <div class="intro-copy">
         <h2 class="section-title">项目简介</h2>
-        <p class="section-lead">
-          <strong>CastMind（星思）</strong>是一类面向复杂时序场景的新型基础模型。
-          它不把数值序列简单文本化，而是以 <strong>Feature Encoder 原生建模动态数值序列</strong>，
-          将连续变化、局部波动、周期结构、突变和异常转化为可被 LLM 使用的时序表示。
-          在此基础上，CastMind（星思）进一步融入 <strong>Context-aware Feature</strong>——包括
-          Meta Data、外生变量、协变量、领域描述、事件信息和环境状态——让预测建立在序列本身
-          与其所处情境的联合理解上。
+        <p class="section-lead intro-lead">
+          CastMind 的核心技术哲学，是用慢思考、长链路、可验证的认知推理过程，实现对时间序列未来趋势的条件化推演。其关键技术路径围绕“外推—理解—推演—修正”展开，将历史数值模式、多源情境信息和大模型推理能力组织为一个可解释、可修正的预测流程。
         </p>
-        <p>
-          CastMind（星思）的关键范式是 <strong>Agentic Reasoning</strong>：
-          模型不是一次性输出预测，而是在推理过程中动态识别证据缺口，
-          与 Memory、检索器、外部变量服务和任务环境进行自主多轮交互。
-          它可以检索历史相似模式、领域规律、失败经验和过往数据分析结论，
-          再把新证据纳入上下文推理，持续修正中间判断和最终预测，
-          实现从数值拟合到情境认知与自主决策的范式升级。
-        </p>
-      </div>
-
-      <aside class="intro-insight" aria-label="CastMind 模型链路与能力指标">
-        <div class="insight-label">Model Path</div>
-        <div class="position-strip">
-          <div class="ps-item">
-            <div class="ps-label">序列层</div>
-            <div class="ps-val">Feature Encoder</div>
+        <div class="intro-step-list">
+          <div class="intro-step">
+            <div class="intro-step-index">01</div>
+            <div>
+              <div class="intro-step-title">历史序列理解与基础轨迹外推</div>
+              <p>模型通过时间序列编码器或时序 Tokenizer 对历史序列进行表征学习，挖掘趋势、周期、波动、局部形态和多变量依赖，形成基于历史数值模式的基础未来轨迹。</p>
+            </div>
           </div>
-          <div class="ps-connector">→</div>
-          <div class="ps-item">
-            <div class="ps-label">情境融入层</div>
-            <div class="ps-val">Context-aware Feature</div>
+          <div class="intro-step">
+            <div class="intro-step-index">02</div>
+            <div>
+              <div class="intro-step-title">多源情境获取与可信质量评估</div>
+              <p>模型引入天气、节假日、事件、政策、新闻文本、领域知识和系统状态等多源情境信息，并通过跨模态对齐机制将数值时序与语义情境统一到可推理的表示空间中。</p>
+            </div>
           </div>
-          <div class="ps-connector">→</div>
-          <div class="ps-item highlighted">
-            <div class="ps-label">认知推理层</div>
-            <div class="ps-val">Agentic Reasoning</div>
+          <div class="intro-step">
+            <div class="intro-step-index">03</div>
+            <div>
+              <div class="intro-step-title">时序—情境协同推理与趋势推演</div>
+              <p>CastMind 借助大模型的情境理解、知识调用、机制分析和结构化推理能力，判断历史趋势在特定情境下是否延续、增强、削弱、偏移或反转。</p>
+            </div>
+          </div>
+          <div class="intro-step">
+            <div class="intro-step-index">04</div>
+            <div>
+              <div class="intro-step-title">推演驱动的预测修正与解释生成</div>
+              <p>模型将推演结果转化为对基础预测的修正量，输出最终预测结果、趋势变化解释和不确定性判断，并通过监督微调、强化学习、工具调用反馈和案例记忆不断提升情境推理与趋势推演能力。</p>
+            </div>
           </div>
         </div>
-      </aside>
+      </div>
     </div>
   </div>
 </section>
@@ -913,41 +876,117 @@
 <!-- ═══════════════════ CORE HIGHLIGHTS ═══════════════════ -->
 <section id="features">
   <div class="container">
-    <h2 class="section-title">三大核心亮点</h2>
+    <h2 class="section-title">关键技术路径</h2>
     <p class="section-lead">
-      CastMind（星思）的页面表达聚焦三项差异化能力：原生时序特征编码、情境感知特征融合和可与环境交互的 Agentic Reasoning。
+      预训练语言大模型作为 Backbone Network，SFT / RLVR / OPD 作为能力优化算法，数据质量评估与调度优化作为训练与泛化的基础支撑。
     </p>
-    <div class="cap-grid">
-      <div class="cap-card">
-        <div class="cap-icon cap-icon-text">TS</div>
-        <h4>Feature Encoder 原生建模动态数值序列</h4>
-        <div class="cap-focus">Feature-native Temporal Modeling</div>
-        <p>
-          动态数值序列不再被直接压平成文本 token。CastMind（星思）通过 Feature Encoder
-          原生建模连续值、局部波动、周期结构、突变点和异常模式，形成
-          <code>dynamic_numeric_sequence</code> 表示，再交给 LLM Backbone 进行预测和推理。
-        </p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-icon cap-icon-text">CTX</div>
-        <h4>情境融入：Context-aware Feature</h4>
-        <div class="cap-focus">Contextual Integration</div>
-        <p>
-          每个预测 instance 同时包含可见的上下文特征：metadata、外生变量、协变量、事件、日历、
-          领域描述和环境状态。模型学习如何把 <code>context_aware_features</code>
-          与时序表示对齐，从情境原因解释趋势变化。
-        </p>
-      </div>
-      <div class="cap-card">
-        <div class="cap-icon cap-icon-text">AGT</div>
-        <h4>Agentic Reasoning：自主多轮交互与上下文推理</h4>
-        <div class="cap-focus">Agentic Reasoning</div>
-        <p>
-          模型可以在预测过程中主动判断缺失证据，调用 Memory、检索器、上下文工具或外部变量服务，
-          形成 <code>agentic_interaction_trace</code>。重点不是一次工具调用，而是可评估的自主多轮交互、
-          上下文推理和预测修正能力。
-        </p>
-      </div>
+    <div class="path-stack">
+      <article class="path-card">
+        <h3>1. Backbone Network：预训练语言大模型作为推演主干</h3>
+        <p>CastMind 不一定从零训练时间序列大模型，而是以预训练语言大模型作为 <strong>Backbone Network</strong>，利用其已有的语言理解、知识表达、复杂推理、指令跟随和工具调用能力，作为时间序列推演的认知核心。</p>
+        <p>它的输入不只是历史时间序列，还包括：</p>
+        <div class="path-formula"><var>X</var><sub>past</sub>, C, K, T</div>
+        <p>其中：</p>
+        <ul class="path-list">
+          <li><var>X</var><sub>past</sub>：历史时间序列；</li>
+          <li>C：多源情境信息；</li>
+          <li>K：领域知识；</li>
+          <li>T：预测任务目标。</li>
+        </ul>
+        <p>Backbone 的作用不是简单生成数值，而是完成：</p>
+        <div class="path-quote">历史序列理解、情境语义理解、时序—情境协同推理、未来趋势推演与预测修正。</div>
+        <p>这里可以配合时序编码器、统计工具、时序 tokenizer、特征提取器或可视化输入接口，把数值时序转化为大模型可理解、可推理的表示。</p>
+      </article>
+
+      <article class="path-card">
+        <h3>2. SFT：监督微调，让模型学会“如何推演”</h3>
+        <p>SFT 的核心作用是把通用语言大模型适配到时间序列推演任务。</p>
+        <p>训练样本可以构造成：</p>
+        <div class="path-flow">历史序列 + 情境信息 + 任务指令 → 趋势理解 + 情境分析 + 推演判断 + 修正预测</div>
+        <p>SFT 重点训练模型学会四类能力：</p>
+        <ol class="path-list">
+          <li><strong>历史序列理解：</strong>识别趋势、周期、波动、异常、转折点；</li>
+          <li><strong>情境理解：</strong>判断天气、事件、政策、文本等情境是否与预测相关；</li>
+          <li><strong>趋势推演：</strong>判断未来趋势是延续、增强、削弱、偏移还是反转；</li>
+          <li><strong>预测修正：</strong>根据推演结果调整基础预测。</li>
+        </ol>
+        <p>所以 SFT 的目标不是简单拟合数值，而是让模型学习一套标准化的推演工作流：</p>
+        <div class="path-quote">看懂历史 → 理解情境 → 推演未来 → 修正预测 → 生成解释。</div>
+      </article>
+
+      <article class="path-card">
+        <h3>3. RLVR：强化模型的可验证推演能力</h3>
+        <p>RLVR 可以理解为 <strong>Reinforcement Learning with Verifiable Rewards</strong>，即用可验证奖励优化模型的推演行为。</p>
+        <p>它适合 CastMind，因为时间序列预测有天然可验证信号：</p>
+        <ul class="path-list">
+          <li>预测误差是否降低；</li>
+          <li>趋势方向是否判断正确；</li>
+          <li>峰谷位置是否命中；</li>
+          <li>转折点是否识别正确；</li>
+          <li>情境引用是否合理；</li>
+          <li>推演解释是否与数值修正一致；</li>
+          <li>是否避免 context leakage。</li>
+        </ul>
+        <p>可以构造奖励函数：</p>
+        <div class="path-formula">R = R<sub>forecast</sub> + R<sub>trend</sub> + R<sub>turning</sub> + R<sub>context</sub> + R<sub>consistency</sub> − R<sub>leakage</sub></div>
+        <p>其中：</p>
+        <ul class="path-list">
+          <li>R<sub>forecast</sub>：预测误差奖励；</li>
+          <li>R<sub>trend</sub>：趋势方向奖励；</li>
+          <li>R<sub>turning</sub>：拐点识别奖励；</li>
+          <li>R<sub>context</sub>：情境相关性奖励；</li>
+          <li>R<sub>consistency</sub>：解释与预测修正一致性奖励；</li>
+          <li>R<sub>leakage</sub>：未来信息泄漏惩罚。</li>
+        </ul>
+        <p>RLVR 的价值在于让模型不只是“会说解释”，而是：</p>
+        <div class="path-quote">推演过程能够真正带来预测性能提升，并且推理结论可以被结果验证。</div>
+      </article>
+
+      <article class="path-card">
+        <h3>4. OPD：面向轻量化与稳定部署的策略蒸馏</h3>
+        <p>OPD 可以作为 CastMind 后期的重要优化算法，即 <strong>On-policy Distillation</strong>。</p>
+        <p>它的思路是：先用强大的 CastMind-Agent 或大模型进行多轮情境推理、工具调用和预测修正，再把这些高质量推演轨迹蒸馏到更小、更快、更稳定的模型中。</p>
+        <p>OPD 蒸馏的不只是最终答案，而是整个推演策略：</p>
+        <div class="path-flow">历史理解 → 情境选择 → 推理路径 → 修正决策</div>
+        <p>这样可以得到：</p>
+        <ul class="path-list">
+          <li>更低推理成本；</li>
+          <li>更快响应速度；</li>
+          <li>更适合行业部署；</li>
+          <li>更稳定的预测修正能力；</li>
+          <li>保留强模型的情境推演策略。</li>
+        </ul>
+        <p>所以 OPD 可以定位为：</p>
+        <div class="path-quote">将大模型/智能体的复杂推演能力压缩到轻量模型中的关键算法。</div>
+      </article>
+
+      <article class="path-card">
+        <h3>5. 数据质量评估与调度优化：决定模型能否真正学会推演</h3>
+        <p>这是 CastMind 很关键的一层。因为情境感知预测不是数据越多越好，而是要求数据具有：</p>
+        <ul class="path-list">
+          <li>高情境相关性；</li>
+          <li>高机制多样性；</li>
+          <li>高趋势变化覆盖；</li>
+          <li>高信息密度；</li>
+          <li>低冗余；</li>
+          <li>低噪声；</li>
+          <li>无未来泄漏。</li>
+        </ul>
+        <p>可以为每个训练样本设计质量评分：</p>
+        <div class="path-formula">Q<sub>i</sub> = αR<sub>i</sub> + βD<sub>i</sub> + γM<sub>i</sub> + ηI<sub>i</sub> − λN<sub>i</sub> − μL<sub>i</sub></div>
+        <p>其中：</p>
+        <ul class="path-list">
+          <li>R<sub>i</sub>：情境相关性；</li>
+          <li>D<sub>i</sub>：领域覆盖度；</li>
+          <li>M<sub>i</sub>：机制多样性；</li>
+          <li>I<sub>i</sub>：信息密度；</li>
+          <li>N<sub>i</sub>：噪声程度；</li>
+          <li>L<sub>i</sub>：信息泄漏风险。</li>
+        </ul>
+        <p>然后通过调度优化控制训练数据采样：</p>
+        <div class="path-formula">p<sub>i</sub> ∝ exp(Q<sub>i</sub> / τ)</div>
+        <p>也就是优先训练高质量、高信息密度、高情境覆盖的数据，同时动态加入困难样本、失败案例和不同领域样本。</p>
+      </article>
     </div>
   </div>
 </section>
@@ -957,44 +996,28 @@
   <div class="container">
     <h2 class="section-title">核心技术体系</h2>
     <p class="section-lead">
-      CastMind（星思）的技术体系从<strong>模型、数据、算法</strong>三个层面构建，
-      分别对应 Feature Encoder、Context-aware Feature 与 Agentic Reasoning 三项亮点：
+      CastMind（星思）的推演输入由<strong>历史序列</strong>与<strong>情境特征</strong>两个模块构成：
+      前者提供数值轨迹基础，后者提供条件约束与机制解释。
     </p>
     <div class="tech-grid">
       <div class="tech-card">
-        <div class="tech-layer">Model Layer</div>
-        <h4>Feature Encoder 原生动态序列建模</h4>
+        <div class="tech-layer">Sequence Module</div>
+        <h4>历史序列</h4>
         <p>
-          原始时间序列首先经过独立的 <strong>Feature Encoder</strong>，
-          在数值空间内建模连续变化、局部波动、周期结构、突变点和异常。
-          Encoder 输出 soft temporal tokens 与结构化 temporal embeddings，
-          再送入预训练语言模型 Backbone。这样模型接收的是原生时序表示，
-          而不是把数值强行转写成自然语言片段。
+          历史序列是 CastMind 进行趋势推演的基础观测信号，负责刻画连续变化、局部波动、
+          周期结构、异常点、转折点和多变量依赖，形成可被后续情境推理修正的基础未来轨迹。
         </p>
-        <div class="tech-highlight">Feature Encoder · dynamic_numeric_sequence · Temporal Embedding · Forecasting Head</div>
+        <div class="tech-highlight">Trend · Seasonality · Volatility · Turning Point · Multivariate Dependency</div>
       </div>
       <div class="tech-card">
-        <div class="tech-layer">Data Layer</div>
-        <h4>Context-aware Feature 训练 Instance</h4>
+        <div class="tech-layer">Context Module</div>
+        <h4>情境特征</h4>
         <p>
-          训练数据不是普通时间序列窗口，而是<strong>情境感知预测 instance</strong>：
-          历史序列之外，还包含 metadata、协变量、外生变量、事件、领域描述、
-          可见性边界和环境状态。Context-aware Feature 明确回答
-          “当前预测发生在什么情境中、哪些上下文可以被模型合法使用”。
-          <strong>FutureCast（天星台）</strong> 可作为情境感知训练语料与 out-of-domain 评测底座。
+          情境特征为预测提供外部条件和领域约束，包括天气、节假日、事件、政策、文本、
+          领域知识和系统状态等信息，用于判断历史趋势在特定情境下是否延续、增强、削弱、
+          偏移或反转。
         </p>
-        <div class="tech-highlight">context_aware_features · Metadata · Events · Exogenous Signals · Visibility</div>
-      </div>
-      <div class="tech-card">
-        <div class="tech-layer">Algorithm Layer</div>
-        <h4>Agentic Reasoning 与环境多轮交互</h4>
-        <p>
-          CastMind（星思）按能力递进组织为 Base、SFT、Structured Reasoning 与
-          Agentic Reasoning 四个阶段。最后阶段训练模型在预测过程中识别证据缺口、
-          与 Memory、检索器、上下文工具和外部变量服务进行自主多轮交互，
-          再基于环境反馈更新上下文推理和预测判断。
-        </p>
-        <div class="tech-highlight">Agentic Reasoning · Environment State · Multi-turn Interaction · Forecast Revision</div>
+        <div class="tech-highlight">Weather · Events · Policy · Text · Domain Knowledge · System State</div>
       </div>
     </div>
 
@@ -1229,6 +1252,15 @@
         </tbody>
       </table>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CLOSING STATEMENT ═══════════════════ -->
+<section class="closing-section" aria-label="CastMind 总结">
+  <div class="container">
+    <p class="closing-statement">
+      CastMind 借鉴大模型慢思考推理范式，构建面向时间序列推演的长链路认知推理机制，通过多步情境分析、知识调用、机制判断和反思修正，实现对复杂系统未来趋势的可解释、可验证预测。
+    </p>
   </div>
 </section>
 
