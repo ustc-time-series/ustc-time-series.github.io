@@ -205,18 +205,6 @@
       text-wrap: balance;
       overflow-wrap: anywhere;
     }
-    .hero-kicker {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-      color: #0f766e;
-      font-size: 0.76rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      line-height: 1.4;
-      text-transform: uppercase;
-    }
     .hero-logo {
       display: block;
       width: min(360px, 72vw);
@@ -244,28 +232,6 @@
       text-align: center;
       text-justify: auto;
     }
-    .hero-track-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 22px;
-    }
-    .hero-track-row span {
-      display: inline-flex;
-      align-items: center;
-      min-height: 30px;
-      padding: 5px 11px;
-      border: 1px solid #c9ebe6;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.72);
-      color: #315a55;
-      font-size: 0.78rem;
-      font-weight: 700;
-      line-height: 1.35;
-      box-shadow: 0 4px 14px rgba(15, 118, 110, 0.05);
-    }
-
     /* ── Main ──────────────────────────────────────── */
     main {
       flex: 1;
@@ -327,6 +293,7 @@
     .accent-anomaly,
     .accent-foundation,
     .accent-systems,
+    .accent-caststar,
     .accent-castclaw,
     .accent-castfactory,
     .accent-futurecast,
@@ -585,19 +552,13 @@
         min-width: 220px;
       }
       header { padding: 44px 0 42px; }
-      .hero-kicker {
-        margin-bottom: 12px;
-        font-size: 0.7rem;
-        letter-spacing: 0.05em;
-      }
       .hero-logo { width: min(300px, 82vw); margin-bottom: 18px; }
       header h1 {
         max-width: 13em;
         font-size: 1.68rem;
         line-height: 1.22;
       }
-      header h1 .highlight,
-      .hero-title-cn {
+      header h1 .highlight {
         display: block;
       }
       header .header-sub {
@@ -607,14 +568,6 @@
       header .header-motto {
         font-size: 0.98rem;
         line-height: 1.75;
-      }
-      .hero-track-row {
-        flex-wrap: wrap;
-        justify-content: center;
-        overflow-x: visible;
-        margin-left: 0;
-        margin-right: 0;
-        padding: 0;
       }
       .project-grid { grid-template-columns: 1fr; }
       .project-card-wide { grid-column: auto; }
@@ -656,21 +609,14 @@
 <!-- ═══════════════════ HEADER ═══════════════════ -->
 <header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
   <div class="container">
-    <p class="hero-kicker">USTC-AGI Research Group</p>
     <img class="hero-logo" src="asset/ts_logo.png" alt="USTC Time Series Logo" />
-    <h1><span class="highlight">Time Series Cognition</span> <span class="hero-title-cn">研究方向</span></h1>
+    <h1><span class="highlight">Time Series Cognition</span></h1>
     <p class="header-sub">
       My research explores how LLMs and Agentic AI can transform forecasting from pattern extrapolation over time-series data into knowledge-guided, context-aware, and decision-oriented predictive intelligence for complex systems.
     </p>
     <p class="header-motto">
       星思启时序认知之智，铸星坊铸预测之器，智多星谋自主之研，观星阁观未来之势，天星台立评测之尺。
     </p>
-    <div class="hero-track-row" aria-label="研究方向覆盖范围">
-      <span>Forecasting</span>
-      <span>Anomaly Detection</span>
-      <span>Foundation Models</span>
-      <span>Agentic Analysis</span>
-    </div>
   </div>
 </header>
 
@@ -988,8 +934,8 @@
 
     <!-- ── Generative Reasoning Model for Time Series ── -->
     <div class="section-intro section-anchor" id="cognitive-llm">
-      <h2>情境推理驱动的时间序列推演大模型</h2>
-      <p>情境推理驱动的时间序列推演大模型是一类面向复杂时序场景的新型基础模型。它不仅学习时间序列中的数值模式，还进一步理解序列所处的情境上下文，分析趋势变化背后的原因，并通过慢思考推理与记忆交互不断获取证据，推演未来趋势、状态变化与可能演化路径，从而实现更可靠、更可解释和更具适应性的时序预测。</p>
+      <h2>情境推理的时间序列推演基础模型</h2>
+      <p>情境推理的时间序列推演基础模型是一类面向复杂时序场景的新型基础模型。它不仅学习时间序列中的数值模式，还进一步理解序列所处的情境上下文，分析趋势变化背后的原因，并通过慢思考推理与记忆交互不断获取证据，推演未来趋势、状态变化与可能演化路径，从而实现更可靠、更可解释和更具适应性的时序预测。</p>
     </div>
 
     <div class="project-grid">
@@ -1047,6 +993,34 @@
     </div>
 
     <div class="project-grid">
+
+      <!-- CastStar -->
+      <div class="project-card project-card-wide">
+        <div class="card-accent accent-caststar"></div>
+        <div class="card-body">
+          <h3><a class="card-title-link" href="CastStar/">CastStar（星辰）</a></h3>
+          <p class="card-desc">
+            面向时间序列推演的模型-环境协同预测智能体系统。CastStar 通过工具调用、证据获取、认知推理、反思验证与预测修正，实现对复杂系统未来趋势的可解释、可追溯、可验证推演。
+          </p>
+          <div class="card-meta">
+            <div class="meta-row">
+              <span class="meta-icon">🧭</span>
+              <span>模型-环境协同 · 证据驱动推演 · Agentic Forecasting</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">🧰</span>
+              <span>工具环境：统计分析 · 检索系统 · 可视化分析 · 异常检测 · 小预测模型</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-icon">🔁</span>
+              <span>反思验证 · 预测修正 · 面向复杂系统未来趋势推演</span>
+            </div>
+          </div>
+          <div class="card-links">
+            <a class="card-btn btn-enter-forecast" href="CastStar/">查看主页 →</a>
+          </div>
+        </div>
+      </div>
 
       <!-- CastClaw -->
       <div class="project-card project-card-wide">
