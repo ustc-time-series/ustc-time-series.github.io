@@ -944,35 +944,35 @@
         <div class="card-body">
           <h3>CastMind（星思）</h3>
           <p class="card-desc">
-            以语言大模型为统一认知 Backbone 的时间序列基础模型。原始时序经 Time Series Feature Encoder 编码为 Temporal Embedding 后送入 LLM，
-            在长思维链慢思考过程中动态发现证据缺口、访问 Memory、检索历史相似模式并逐步修正预测判断——
-            类比 Search-o1 的"边思考边检索"，实现交互式时序认知推理。
+            面向复杂系统的情境推理驱动时间序列推演大模型。CastMind 融合历史序列、外部情境与领域知识，
+            围绕“外推—理解—推演—修正”展开长链路认知推理，判断未来趋势在特定条件下的延续、增强、削弱、偏移或反转，
+            并实现预测修正与机制解释。
           </p>
           <div class="subdomain-grid">
             <div class="subdomain-card era-llm">
-              <span class="subdomain-label">Feature Encoder + LLM Backbone</span>
+              <span class="subdomain-label">历史序列 + 情境特征输入</span>
               <div class="subdomain-header">
                 <span class="subdomain-icon">🔩</span>
                 <div>
-                  <p class="subdomain-desc">原始时序经多尺度 patch 投影与量化语义通路编码为 Temporal Embedding，送入预训练 LLM Backbone 进行联合推理。</p>
+                  <p class="subdomain-desc">历史序列刻画趋势、周期、波动、转折点和多变量依赖，情境特征引入天气、事件、政策、文本、领域知识与系统状态，提供条件约束。</p>
                 </div>
               </div>
             </div>
             <div class="subdomain-card era-llm">
-              <span class="subdomain-label">慢思考中动态证据发现</span>
+              <span class="subdomain-label">外推—理解—推演—修正</span>
               <div class="subdomain-header">
                 <span class="subdomain-icon">🧠</span>
                 <div>
-                  <p class="subdomain-desc">推理过程中主动感知证据缺口，暂停推理转向 Memory 检索，获取补充证据后继续推理，实现真正意义上的交互式慢思考。</p>
+                  <p class="subdomain-desc">先形成基础未来轨迹，再理解多源情境，通过知识调用、机制分析和结构化推理判断趋势是否延续、增强、削弱、偏移或反转。</p>
                 </div>
               </div>
             </div>
             <div class="subdomain-card era-llm">
-              <span class="subdomain-label">CPT-SFT-RL 三阶段训练</span>
+              <span class="subdomain-label">四阶段能力路线</span>
               <div class="subdomain-header">
                 <span class="subdomain-icon">🚀</span>
                 <div>
-                  <p class="subdomain-desc">跨域持续预训练形成时序感知能力，SFT 学习慢思考指令推理，RL 通过可验证奖励优化预测判断与推理路径。</p>
+                  <p class="subdomain-desc">CastMind-Base 接入动态数值序列，SFT 完成任务适配，Structured Reasoning 强化上下文推理，Agentic Reasoning 通过交互获取证据并修正判断。</p>
                 </div>
               </div>
             </div>
