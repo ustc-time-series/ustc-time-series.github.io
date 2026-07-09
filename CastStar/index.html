@@ -166,8 +166,8 @@
       text-wrap: balance;
     }
     header h1 .cr { color: var(--amber-mid); }
-    .hero-title-main { display: block; white-space: nowrap; }
-    .hero-title-sub  { display: block; }
+    .hero-title-main { display: inline; white-space: nowrap; }
+    .hero-title-sub  { display: inline; }
 
     .subtitle {
       margin: 10px auto 0;
@@ -283,6 +283,38 @@
       line-height: 1.75;
     }
     .tldr strong { color: var(--amber); }
+
+    /* ── News ─────────────────────────────────────────── */
+    .news-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .news-list li {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--amber-mid);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    .news-copy {
+      margin: 0;
+      color: #26384d;
+      line-height: 1.7;
+      text-align: left;
+      text-justify: auto;
+    }
+    .news-date {
+      font-weight: 800;
+      color: var(--amber);
+      white-space: nowrap;
+    }
+    .news-icon {
+      display: inline-block;
+      margin: 0 3px;
+    }
 
     /* ── Stat row ───────────────────────────────────── */
     .stat-row {
@@ -717,6 +749,7 @@
   <div class="container">
     <a href="../" class="nav-home">首页</a>
     <a href="#intro">简介</a>
+    <a href="#news">动态发布</a>
     <a href="#innovation">创新定位</a>
     <a href="#workflow">Agent 流程</a>
     <a href="#harness">工具环境</a>
@@ -781,6 +814,24 @@
         <div class="stat-label">奖励信号<br>误差 · 趋势 · 工具 · 一致性 · 反思</div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ NEWS ═══════════════════ -->
+<section id="news">
+  <div class="container">
+    <h2 class="section-title">动态发布</h2>
+    <ul class="news-list">
+      <li>
+        <p class="news-copy">
+          <span class="news-date">[Jul. 2026]</span>
+          <span class="news-icon" aria-hidden="true">🏆</span>
+          Our Agentic Time Series Forecasting solution CastStar ranked #1 on the
+          <a href="https://huggingface.co/spaces/Salesforce/GIFT-Eval" target="_blank" rel="noopener">GIFT-Eval</a>
+          Overall leaderboard.
+        </p>
+      </li>
+    </ul>
   </div>
 </section>
 

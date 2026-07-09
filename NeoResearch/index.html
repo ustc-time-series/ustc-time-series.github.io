@@ -41,6 +41,7 @@
       font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
       font-size: 0.85em;
       color: var(--accent);
+      overflow-wrap: anywhere;
     }
     .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
 
@@ -123,6 +124,7 @@
       line-height: 1.7;
       text-align: center;
       text-justify: auto;
+      overflow-wrap: anywhere;
     }
     .affiliation {
       margin-top: 10px;
@@ -195,6 +197,33 @@
       line-height: 1.75;
     }
     .tldr strong { color: var(--accent); }
+
+    .updates-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .updates-list li {
+      background: #fff;
+      border: 1px solid #e6e6e6;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    }
+    .update-copy {
+      color: #333;
+      line-height: 1.7;
+      margin: 0;
+      text-align: left;
+      text-justify: auto;
+    }
+    .update-date {
+      color: var(--accent);
+      font-weight: 800;
+      white-space: nowrap;
+    }
 
     .stat-row {
       display: flex;
@@ -396,12 +425,60 @@
     }
 
     @media (max-width: 720px) {
+      body {
+        text-align: left;
+        text-justify: auto;
+      }
       header h1 { font-size: 1.45rem; }
       section { padding: 48px 0; }
       .card-grid-2 { grid-template-columns: 1fr; }
       .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
       h2.section-title { font-size: 1.25rem; }
       .pipeline { grid-template-columns: 1fr 1fr; }
+      .hero-logo { width: min(100%, 260px); }
+      .btn-row {
+        align-items: stretch;
+        flex-direction: column;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 280px;
+      }
+      .btn {
+        justify-content: center;
+        width: 100%;
+      }
+      .table-wrap {
+        border: none;
+        border-radius: 0;
+        overflow: visible;
+      }
+      table, thead, tbody, tr, th, td {
+        display: block;
+        width: 100%;
+      }
+      thead { display: none; }
+      tr {
+        background: #fff;
+        border: 1px solid #e4e4e4;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        overflow: hidden;
+      }
+      tr:nth-child(even) td { background: transparent; }
+      td {
+        border-bottom: 1px solid #f0f0f0;
+        display: grid;
+        gap: 10px;
+        grid-template-columns: 7.2em minmax(0, 1fr);
+        padding: 10px 12px;
+        overflow-wrap: anywhere;
+      }
+      td:last-child { border-bottom: none; }
+      td::before {
+        color: var(--accent);
+        content: attr(data-label);
+        font-weight: 700;
+      }
     }
   </style>
 </head>
@@ -451,6 +528,7 @@
   <div class="container">
     <a href="../" class="nav-home">首页</a>
     <a href="#intro">简介</a>
+    <a href="#news">News / Updates</a>
     <a href="#problem">核心问题</a>
     <a href="#architecture">系统架构</a>
     <a href="#loop">研究闭环</a>
@@ -502,6 +580,20 @@
   </div>
 </section>
 
+<section id="news">
+  <div class="container">
+    <h2 class="section-title">News / Updates</h2>
+    <ul class="updates-list">
+      <li>
+        <p class="update-copy">
+          <span class="update-date">[Jul. 2026]</span>
+          NeoResearch project page released with the first public overview of the controlled autonomous research loop for time-series forecasting model research.
+        </p>
+      </li>
+    </ul>
+  </div>
+</section>
+
 <section id="problem">
   <div class="container">
     <h2 class="section-title">核心问题</h2>
@@ -536,6 +628,7 @@
       <li>第一阶段聚焦 forecasting，不做开放式文献综述 Agent，不接管生产部署。</li>
       <li>优先研究小模型：同时关注精度、参数量、延迟、稳定性与复现性。</li>
       <li>先协议后智能：先冻结数据协议、评估协议、预算协议和代码边界，再让 Agent 在边界内创新。</li>
+      <li>明确区分预设组件与设计对象：<strong>Dataset Loader</strong>、数据切分、<strong>Evaluation</strong> 与指标计算采用预设协议；<strong>Model Network Design</strong>、模块组合、损失函数和训练策略才是自主设计与搜索对象。</li>
     </ul>
   </div>
 </section>
@@ -556,16 +649,16 @@
     <h3 class="sub-title">核心服务模块</h3>
     <div class="card-grid">
       <div class="card">
-        <h4>Task / Dataset / Diagnostic</h4>
-        <p>创建 TaskSpec，绑定数据版本，抽取趋势、季节性、变量相关、缺失率等 TaskFingerprint。</p>
+        <h4>Task / Preset Dataset Loader / Diagnostic</h4>
+        <p>创建 TaskSpec，绑定数据版本，Dataset Loader 采用预设协议，只抽取趋势、季节性、变量相关、缺失率等 TaskFingerprint。</p>
       </div>
       <div class="card">
-        <h4>Proposal / Patch / Validator</h4>
-        <p>基于任务指纹和记忆生成 CandidateRecipe，再转为配置或模板化 patch，并检查越权、预算和接口兼容性。</p>
+        <h4>Proposal / Model Network Design / Validator</h4>
+        <p>基于任务指纹和记忆生成 CandidateRecipe，把自主设计集中在 Model Network Design、模块组合、loss 与 training strategy，并检查越权、预算和接口兼容性。</p>
       </div>
       <div class="card">
-        <h4>Runner / Evaluator</h4>
-        <p>在隔离执行环境中运行训练、收集 artifact、计算指标，并用统一晋级规则比较 challenger 与 champion。</p>
+        <h4>Runner / Preset Evaluation</h4>
+        <p>在隔离执行环境中运行训练、收集 artifact，Evaluation 和指标计算采用预设协议，用统一晋级规则比较 challenger 与 champion。</p>
       </div>
       <div class="card">
         <h4>Memory / Governance</h4>
@@ -579,8 +672,8 @@
   <div class="container">
     <h2 class="section-title">研究闭环</h2>
     <p>
-      MVP 阶段采用 autoresearch 同构的最小文件结构：冻结的 <code>prepare_tsf.py</code> 负责数据加载与评估，
-      <code>train.py</code> 是 Agent 唯一可编辑实验层，<code>program.md</code> 则承载人类制定的研究策略与行为协议。
+      MVP 阶段采用 autoresearch 同构的最小文件结构：冻结的 <code>prepare_tsf.py</code> 负责预设 Dataset Loader、数据切分与 Evaluation，
+      <code>train.py</code> 是 Agent 唯一可编辑实验层，主要承载 Model Network Design、loss 和 training strategy，<code>program.md</code> 则承载人类制定的研究策略与行为协议。
     </p>
 
     <ul class="pillar-list">
@@ -625,24 +718,24 @@
         </thead>
         <tbody>
           <tr>
-            <td><code>prepare.py</code></td>
-            <td><code>prepare_tsf.py</code></td>
-            <td>冻结数据加载、切分、标准化和评估协议</td>
+            <td data-label="autoresearch"><code>prepare.py</code></td>
+            <td data-label="NeoResearch MVP"><code>prepare_tsf.py</code></td>
+            <td data-label="角色">冻结数据加载、切分、标准化和评估协议</td>
           </tr>
           <tr>
-            <td><code>train.py</code></td>
-            <td><code>train.py</code></td>
-            <td>模型结构、loss、训练循环的受控实验层</td>
+            <td data-label="autoresearch"><code>train.py</code></td>
+            <td data-label="NeoResearch MVP"><code>train.py</code></td>
+            <td data-label="角色">模型结构、loss、训练循环的受控实验层</td>
           </tr>
           <tr>
-            <td><code>program.md</code></td>
-            <td><code>program.md</code></td>
-            <td>人类定义研究策略、预算、keep / discard 规则</td>
+            <td data-label="autoresearch"><code>program.md</code></td>
+            <td data-label="NeoResearch MVP"><code>program.md</code></td>
+            <td data-label="角色">人类定义研究策略、预算、keep / discard 规则</td>
           </tr>
           <tr>
-            <td><code>val_bpb</code></td>
-            <td><code>val_avg_mse</code></td>
-            <td>Agent 可见主指标，越低越好</td>
+            <td data-label="autoresearch"><code>val_bpb</code></td>
+            <td data-label="NeoResearch MVP"><code>val_avg_mse</code></td>
+            <td data-label="角色">Agent 可见主指标，越低越好</td>
           </tr>
         </tbody>
       </table>
@@ -655,7 +748,7 @@
     <h2 class="section-title">CandidateRecipe 配方搜索</h2>
     <p>
       NeoResearch 的关键升级是从“选择完整模型族”转向 TimeRecipe 风格的模块级配方搜索。
-      Agent 不再直接问“用 PatchTST 还是 iTransformer”，而是在受限 registry 中选择 preprocessing、embedding、backbone、fusion、head 与 training strategy。
+      Agent 不再直接问“用 PatchTST 还是 iTransformer”，而是在受限 registry 中选择 preprocessing、embedding、backbone、fusion、head、loss function 与 training strategy。
     </p>
 
     <div class="pipeline" aria-label="CandidateRecipe pipeline">
@@ -681,24 +774,29 @@
         </thead>
         <tbody>
           <tr>
-            <td>Preprocessing</td>
-            <td><code>none</code>, <code>instance_norm</code>, <code>series_decomposition</code>, <code>seasonal_differencing</code></td>
-            <td>处理尺度漂移、趋势、季节性和缺失提示</td>
+            <td data-label="模块">Preprocessing</td>
+            <td data-label="候选 action"><code>none</code>, <code>instance_norm</code>, <code>series_decomposition</code>, <code>seasonal_differencing</code></td>
+            <td data-label="研究偏置">处理尺度漂移、趋势、季节性和缺失提示</td>
           </tr>
           <tr>
-            <td>Embedding</td>
-            <td><code>none</code>, <code>token</code>, <code>patch</code>, <code>invert</code>, <code>frequency</code></td>
-            <td>控制序列进入主干网络的表示粒度</td>
+            <td data-label="模块">Embedding</td>
+            <td data-label="候选 action"><code>none</code>, <code>token</code>, <code>patch</code>, <code>invert</code>, <code>frequency</code></td>
+            <td data-label="研究偏置">控制序列进入主干网络的表示粒度</td>
           </tr>
           <tr>
-            <td>Backbone</td>
-            <td><code>linear</code>, <code>mlp</code>, <code>rnn</code>, <code>tcn</code>, <code>transformer</code>, <code>ssm</code>, <code>mixer</code></td>
-            <td>探索轻量、低延迟与长依赖建模之间的权衡</td>
+            <td data-label="模块">Backbone</td>
+            <td data-label="候选 action"><code>linear</code>, <code>mlp</code>, <code>rnn</code>, <code>tcn</code>, <code>transformer</code>, <code>ssm</code>, <code>mixer</code></td>
+            <td data-label="研究偏置">探索轻量、低延迟与长依赖建模之间的权衡</td>
           </tr>
           <tr>
-            <td>Fusion / Head</td>
-            <td><code>temporal</code>, <code>feature</code>, <code>gated_hybrid</code>, <code>linear</code>, <code>quantile</code></td>
-            <td>决定优先建模时间依赖、变量依赖或不确定性输出</td>
+            <td data-label="模块">Fusion / Head</td>
+            <td data-label="候选 action"><code>temporal</code>, <code>feature</code>, <code>gated_hybrid</code>, <code>linear</code>, <code>quantile</code></td>
+            <td data-label="研究偏置">决定优先建模时间依赖、变量依赖或不确定性输出</td>
+          </tr>
+          <tr>
+            <td data-label="模块">Loss / Training</td>
+            <td data-label="候选 action"><code>mse</code>, <code>mae</code>, <code>huber</code>, <code>pinball_loss</code>, <code>trend_loss</code>, <code>frequency_loss</code></td>
+            <td data-label="研究偏置">把损失函数纳入搜索空间，决定优化目标、异常鲁棒性、趋势约束与概率预测偏好</td>
           </tr>
         </tbody>
       </table>
@@ -745,22 +843,22 @@
         </thead>
         <tbody>
           <tr>
-            <td>L1</td>
-            <td>Dev Validation</td>
-            <td>日常 keep / discard 决策</td>
-            <td>每次实验</td>
+            <td data-label="层次">L1</td>
+            <td data-label="名称">Dev Validation</td>
+            <td data-label="用途">日常 keep / discard 决策</td>
+            <td data-label="查询频率">每次实验</td>
           </tr>
           <tr>
-            <td>L2</td>
-            <td>Reference Test / Shadow Holdout</td>
-            <td>晋级筛选与对外参考对齐</td>
-            <td>每 N 次 keep 后由 Runner 查询</td>
+            <td data-label="层次">L2</td>
+            <td data-label="名称">Reference Test / Shadow Holdout</td>
+            <td data-label="用途">晋级筛选与对外参考对齐</td>
+            <td data-label="查询频率">每 N 次 keep 后由 Runner 查询</td>
           </tr>
           <tr>
-            <td>L3</td>
-            <td>Blind Test</td>
-            <td>最终 champion 确认</td>
-            <td>仅晋级节点，后期独立服务暴露</td>
+            <td data-label="层次">L3</td>
+            <td data-label="名称">Blind Test</td>
+            <td data-label="用途">最终 champion 确认</td>
+            <td data-label="查询频率">仅晋级节点，后期独立服务暴露</td>
           </tr>
         </tbody>
       </table>

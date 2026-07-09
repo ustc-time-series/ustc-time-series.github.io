@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 260" role="img" aria-labelledby="title desc">
-  <title id="title">NeoCast logo</title>
-  <desc id="desc">NeoCast Forecast Research Operating System logo with time series and research loop motifs</desc>
+  <title id="title">NeoResearch logo</title>
+  <desc id="desc">NeoResearch Forecast Research Operating System logo with time series and research loop motifs</desc>
   <defs>
     <linearGradient id="markGrad" x1="116" y1="34" x2="214" y2="204" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#c0392b"/>
@@ -33,7 +33,7 @@
     <path d="M88 192 L84 222 L59 204" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 
-  <text x="306" y="111" fill="#111111" font-size="72" font-family="Arial, Helvetica, sans-serif" font-weight="800">NeoCast</text>
+  <text x="306" y="111" fill="#111111" font-size="72" font-family="Arial, Helvetica, sans-serif" font-weight="800">NeoResearch</text>
   <text x="310" y="154" fill="#c0392b" font-size="26" font-family="Arial, Helvetica, sans-serif" font-weight="700">Forecast Research Operating System</text>
   <text x="310" y="192" fill="#5d5d5d" font-size="22" font-family="Arial, Helvetica, sans-serif">Hypothesis · Recipe · Experiment · Memory</text>
 </svg>

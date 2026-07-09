@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 720" role="img" aria-labelledby="title desc">
-  <title id="title">NeoCast system architecture</title>
-  <desc id="desc">Seven layer NeoCast architecture and closed research loop for time series forecasting model discovery</desc>
+  <title id="title">NeoResearch system architecture</title>
+  <desc id="desc">Seven layer NeoResearch architecture and closed research loop for time series forecasting model discovery</desc>
   <defs>
     <linearGradient id="layerA" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#fff7f5"/>
@@ -10,7 +10,7 @@
       <stop offset="0" stop-color="#f0fdf9"/>
       <stop offset="1" stop-color="#ffffff"/>
     </linearGradient>
-    <linearGradient id="loopGrad" x1="252" y1="132" x2="908" y2="132" gradientUnits="userSpaceOnUse">
+    <linearGradient id="loopGrad" x1="420" y1="132" x2="900" y2="132" gradientUnits="userSpaceOnUse">
       <stop offset="0" stop-color="#c0392b"/>
       <stop offset="0.5" stop-color="#e67e22"/>
       <stop offset="1" stop-color="#0f766e"/>
@@ -25,22 +25,23 @@
   <g filter="url(#shadow)">
     <rect x="72" y="44" width="1016" height="136" rx="20" fill="#ffffff" stroke="#ead9d4"/>
     <text x="102" y="92" font-size="30" font-weight="800" font-family="Arial, Helvetica, sans-serif" fill="#111">Closed Research Loop</text>
-    <text x="102" y="126" font-size="18" font-family="Arial, Helvetica, sans-serif" fill="#666">The agent keeps only reproducible improvements under fixed protocol constraints.</text>
-    <path d="M374 132 H788" fill="none" stroke="url(#loopGrad)" stroke-width="8" stroke-linecap="round"/>
-    <path d="M790 132 l-22 -15 m22 15 l-22 15" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="102" y="126" font-size="17" font-family="Arial, Helvetica, sans-serif" fill="#666">Fixed protocols keep each</text>
+    <text x="102" y="150" font-size="17" font-family="Arial, Helvetica, sans-serif" fill="#666">improvement reproducible.</text>
+    <path d="M464 132 H816" fill="none" stroke="url(#loopGrad)" stroke-width="8" stroke-linecap="round"/>
+    <path d="M818 132 l-22 -15 m22 15 l-22 15" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
     <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
-      <circle cx="286" cy="132" r="34" fill="#fff7f5" stroke="#f0c8be" stroke-width="2"/>
-      <text x="286" y="126" font-size="13" font-weight="800" fill="#c0392b">Hypothesis</text>
-      <text x="286" y="145" font-size="12" fill="#555">问题归因</text>
-      <circle cx="462" cy="132" r="34" fill="#fffaf2" stroke="#f3d39b" stroke-width="2"/>
-      <text x="462" y="126" font-size="13" font-weight="800" fill="#b9770e">Recipe</text>
-      <text x="462" y="145" font-size="12" fill="#555">候选配方</text>
-      <circle cx="636" cy="132" r="34" fill="#f2fbff" stroke="#b9d9ee" stroke-width="2"/>
-      <text x="636" y="126" font-size="13" font-weight="800" fill="#2471a3">Experiment</text>
-      <text x="636" y="145" font-size="12" fill="#555">受控实验</text>
-      <circle cx="812" cy="132" r="34" fill="#f0fdf9" stroke="#a9e2d9" stroke-width="2"/>
-      <text x="812" y="126" font-size="13" font-weight="800" fill="#0f766e">Memory</text>
-      <text x="812" y="145" font-size="12" fill="#555">经验沉淀</text>
+      <circle cx="430" cy="132" r="34" fill="#fff7f5" stroke="#f0c8be" stroke-width="2"/>
+      <text x="430" y="126" font-size="13" font-weight="800" fill="#c0392b">Hypothesis</text>
+      <text x="430" y="145" font-size="12" fill="#555">问题归因</text>
+      <circle cx="570" cy="132" r="34" fill="#fffaf2" stroke="#f3d39b" stroke-width="2"/>
+      <text x="570" y="126" font-size="13" font-weight="800" fill="#b9770e">Recipe</text>
+      <text x="570" y="145" font-size="12" fill="#555">候选配方</text>
+      <circle cx="710" cy="132" r="34" fill="#f2fbff" stroke="#b9d9ee" stroke-width="2"/>
+      <text x="710" y="126" font-size="13" font-weight="800" fill="#2471a3">Experiment</text>
+      <text x="710" y="145" font-size="12" fill="#555">受控实验</text>
+      <circle cx="850" cy="132" r="34" fill="#f0fdf9" stroke="#a9e2d9" stroke-width="2"/>
+      <text x="850" y="126" font-size="13" font-weight="800" fill="#0f766e">Memory</text>
+      <text x="850" y="145" font-size="12" fill="#555">经验沉淀</text>
     </g>
   </g>
 
