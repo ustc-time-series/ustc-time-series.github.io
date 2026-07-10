@@ -398,11 +398,6 @@
       line-height: 1.65;
     }
     .doc-table th { background: #fafafa; font-weight: 700; color: #333; }
-    .doc-table .ascend-row td { background: #fff7ef; }
-    .doc-table .ascend-row td:first-child {
-      color: #9a4200;
-      font-weight: 700;
-    }
     .inline-tag { margin-left: 8px; vertical-align: middle; }
 
     /* ── Panel ── */
@@ -800,6 +795,8 @@
       <div class="sidebar-links">
         <a class="sidebar-link" href="#install-setup">安装与环境配置</a>
         <a class="sidebar-link" href="#first-forecast">第一个预测任务</a>
+        <a class="sidebar-link" href="#advanced-task-input">灵活任务输入</a>
+        <a class="sidebar-link" href="#prediction-prior-reasoning">预测先验与生成式推理</a>
         <a class="sidebar-link" href="#cli-basics">CLI 基础操作</a>
       </div>
     </div>
@@ -816,7 +813,7 @@
       <div class="sidebar-links">
         <a class="sidebar-link" href="#launch-options">启动选项</a>
         <a class="sidebar-link" href="#shortcut-cheatsheet">快捷键速查</a>
-        <a class="sidebar-link" href="#forecast-tools">forecast_state / task</a>
+        <a class="sidebar-link" href="#forecast-tools">forecast 工具链</a>
       </div>
     </div>
     <div class="sidebar-group">
@@ -915,11 +912,6 @@
               <td>CUDA 12.8</td>
               <td>深度学习模型加速</td>
             </tr>
-            <tr class="ascend-row">
-              <td>Ascend NPU（可选）<span class="tag hi inline-tag">推荐试用</span></td>
-              <td>Atlas 800 A2/A3（Ascend HDK 25.5.1）</td>
-              <td>华为昇腾上的深度学习加速，鼓励优先体验国产计算算力。</td>
-            </tr>
           </tbody>
         </table>
         <p><strong>安装</strong></p>
@@ -993,6 +985,41 @@
         <div class="callout info">
           <strong>Planner 输入示例</strong>
           <p>请用 <code>load.csv</code> 做未来 24 小时电力负荷预测；时间列为 <code>TIMESTAMP</code>，目标列为 <code>LOAD</code>，评估指标使用 MAE 与 MAPE，实验预算控制在 20 次以内。</p>
+        </div>
+      </article>
+
+      <article class="doc-block" id="advanced-task-input" data-title="灵活任务输入">
+        <h3>灵活任务输入</h3>
+        <p>除了常规比例切分，CastClaw 也支持在任务描述中用两个时间戳切分训练集、验证集和测试集。每个切分时间戳都是前一段可作为历史/预测起点的最后一行；后续评估窗口可以复用更早的真实历史作为上下文，并在跳过 <code>forecast_gap</code> 后开始计算目标窗口。</p>
+        <div class="panel-row">
+          <div class="panel">
+            <h4>可配置步长</h4>
+            <p>任务描述中可以写 <code>stride = 24</code> 或“步长 = 24”。如果不写，默认步长为 1；写入后会真正影响训练、验证和测试窗口采样。</p>
+          </div>
+          <div class="panel">
+            <h4>预测间隔</h4>
+            <p>当历史窗口和目标窗口之间存在间隔时，可设置 <code>forecast_gap</code>。模型内部预测 <code>forecast_gap + pred_len</code>，评估和生成式推理只暴露最后的 <code>pred_len</code> 目标窗口。</p>
+          </div>
+        </div>
+        <div class="code-block"><pre><code>请使用时间戳切分，通过 2025-06-30 09:30:00 与 2025-09-30 09:30:00 划分数据集。
+lookback_window = 711
+predicted_window = 96
+forecast_gap = 57
+stride = 96</code></pre></div>
+      </article>
+
+      <article class="doc-block" id="prediction-prior-reasoning" data-title="预测先验与生成式预测推理">
+        <h3>预测先验与生成式预测推理</h3>
+        <p>当你已经有一份外部模型或人工系统给出的预测结果时，可以使用用户自主提交预测先验功能。预测先验文件必须是完整数据集，时间列、列名、列顺序、行数和外生变量与真实数据集一致；训练集目标值保持真实值，验证集和测试集目标列可替换为已有预测先验。</p>
+        <div class="panel-row">
+          <div class="panel">
+            <h4>UserPrior 路径</h4>
+            <p>校验通过后，系统进入 UserPrior 流程，不再进行模型 Zoo 搜索、模型调参或小模型训练，而是把用户提交的预测先验作为 raw prediction。</p>
+          </div>
+          <div class="panel">
+            <h4>验证约束</h4>
+            <p>生成式预测推理只用验证集前半部分设计候选 Skill，用验证集后半部分检验是否接受。测试集只在最终阶段应用已锁定 Skill，并保留 raw / adjusted 双轨结果。</p>
+          </div>
         </div>
       </article>
 
@@ -1138,8 +1165,8 @@
         <p style="margin-top:10px;font-size:0.9rem;color:#555;">熟练使用这三个快捷键后，你会自然形成节奏：在 Planner 定义与审核，在 Forecaster 看迭代，在 Critic 看结论。</p>
       </article>
 
-      <article class="doc-block" id="forecast-tools" data-title="forecast_state / forecast_task 工具">
-        <h3><code>forecast_state</code> / <code>forecast_task</code> 工具</h3>
+      <article class="doc-block" id="forecast-tools" data-title="forecast 工具链">
+        <h3>forecast 工具链</h3>
         <div class="panel-row">
           <div class="panel">
             <h4><code>forecast_state</code></h4>
@@ -1153,6 +1180,22 @@
             <ul>
               <li>面向 <code>task.json</code> 的任务定义辅助工具。</li>
               <li>适合在 Init 阶段确认目标列、时间列、步长与评估指标。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="panel-row" style="margin-top:12px;">
+          <div class="panel">
+            <h4><code>forecast_prediction_prior</code></h4>
+            <ul>
+              <li>导入并校验用户提交的完整预测先验 CSV。</li>
+              <li>校验通过后创建 UserPrior 运行产物，并直接进入深度生成式预测推理路径。</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <h4><code>forecast_adjustment_*</code></h4>
+            <ul>
+              <li>冻结可修正源模型、生成验证集前半部分诊断、写入候选 Skill。</li>
+              <li>在验证集后半部分评估并锁定通过的 Skill，最终由 Critic 在测试集上应用。</li>
             </ul>
           </div>
         </div>
@@ -1311,14 +1354,14 @@ Reflection / Report</code></pre></div>
             <div class="wf-left"><div class="wf-num">4</div><div class="wf-line"></div></div>
             <div class="wf-body">
               <h4>预测迭代（Forecasting）</h4>
-              <p>读取历史最佳结果 → 选配置 → CastFeat 构建表示 → CastZoo 执行训练评估 → 反思记录 → 预算检查 → 循环。停滞时触发人在回路。</p>
+              <p>读取历史最佳结果 → 选配置 → CastFeat 构建表示 → CastZoo 执行训练评估 → 反思记录 → 预算检查 → 循环。若启用生成式预测推理，则基于验证集前半部分生成候选 Skill，并用验证集后半部分做接受检验；若处于 UserPrior 模式，则跳过模型搜索与训练，直接优化用户提交的预测先验。</p>
             </div>
           </div>
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">5</div><div class="wf-line"></div></div>
             <div class="wf-body">
               <h4>后置报告（Post-forecast Report）</h4>
-              <p>Critic 汇总实验产物、性能分解与可视化说明，生成结构化的 <code>final-report.md</code>。</p>
+              <p>Critic 汇总实验产物、性能分解与可视化说明，生成结构化的 <code>final-report.md</code>。若存在已锁定的生成式预测 Skill，则额外输出 raw / adjusted 对比与修正产物。</p>
             </div>
           </div>
         </div>
@@ -1443,7 +1486,7 @@ Reflection / Report</code></pre></div>
         <div class="panel-row">
           <div class="panel">
             <h4>支持的模型族</h4>
-            <p>统计模型（ARIMA、ETS、Theta）、机器学习、深度学习（Informer、PatchTST）、基础模型（Chronos、TimesFM、Moirai）。</p>
+            <p>统计模型（ARIMA、AutoARIMA、ETS、ExponentialSmoothing、SimpleExponentialSmoothing、Holt、HoltWinters、Theta）、机器学习、深度学习（Informer、PatchTST）、基础模型（Chronos、TimesFM、Moirai）。</p>
           </div>
           <div class="panel">
             <h4>支持的策略</h4>

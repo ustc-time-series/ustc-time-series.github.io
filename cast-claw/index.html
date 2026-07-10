@@ -535,7 +535,7 @@
     <h1 class="hero-clickable">CastClaw<span class="hl">（观星阁）</span></h1>
     <p class="subtitle hero-clickable">
       自主交互与人机协同双驱的新一代时间序列预测智能体<br>
-      多智能体协同、插件化能力生态、Skill 驱动策略层、流程自主编排与持续进化
+      多智能体协同、插件化能力生态、Skill 驱动策略层、生成式预测推理与预测先验优化
     </p>
     <div class="btn-row">
       <a class="btn btn-primary" href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener">
@@ -589,7 +589,7 @@
   <div class="container">
     <div class="tldr">
       <strong>一句话介绍：</strong>
-      CastClaw 是专为时间序列预测打造的<strong>自主交互式智能体框架</strong>。该框架采用 Planner、Forecaster 和 Critic 三位一体的架构，并以 CastRuntime、CastSkill 与插件能力生态共同驱动初始化、预测前分析、技能审核、实验循环及后置报告的全链路 Agentic Workflow。通过自动化执行繁琐的实验与分析流程，并配合“人在回路”机制进行关键节点把控，CastClaw 实现了 AI 执行力与人类判断力的深度融合。
+      CastClaw 是专为时间序列预测打造的<strong>自主交互式智能体框架</strong>。该框架采用 Planner、Forecaster 和 Critic 三位一体的架构，并以 CastRuntime、CastSkill 与插件能力生态共同驱动初始化、预测前分析、技能审核、实验循环及后置报告的全链路 Agentic Workflow。通过自动化执行繁琐的实验与分析流程，并配合“人在回路”机制进行关键节点把控，CastClaw 实现了 AI 执行力与人类判断力的深度融合。当前版本进一步支持<strong>生成式预测推理</strong>与<strong>用户自主提交预测先验</strong>，可在严格验证约束下对已有预测结果进行可审计的二次优化。
     </div>
 
     <h2 class="section-title">项目概览</h2>
@@ -748,7 +748,7 @@
     <h2 class="section-title">关键特色介绍</h2>
     <div class="tldr">
       <strong>核心结构：</strong>
-      CastClaw 的核心竞争力并非功能的简单堆叠，而是由<strong>多智能体协同</strong>、<strong>人机深度融合</strong>、<strong>Skill 驱动策略层</strong>与<strong>插件化能力生态</strong>共同驱动。它们分别定义了系统的任务组织方式、人类智慧的介入路径、能力调度策略，以及从感知到模型调用的执行闭环。
+      CastClaw 的核心竞争力并非功能的简单堆叠，而是由<strong>多智能体协同</strong>、<strong>人机深度融合</strong>、<strong>Skill 驱动策略层</strong>、<strong>插件化能力生态</strong>与<strong>生成式预测推理</strong>共同驱动。它们分别定义了系统的任务组织方式、人类智慧的介入路径、能力调度策略、从感知到模型调用的执行闭环，以及面向预测结果再优化的证据化推理机制。
     </div>
 
     <div class="highlight-stack">
@@ -844,6 +844,41 @@
           <span class="pill pill-out">适用条件说明</span>
           <span class="pill pill-out">风险与失败经验</span>
           <span class="pill pill-out">领域先验备注</span>
+        </div>
+      </div>
+
+      <div id="prediction-reasoning" class="highlight-panel highlight-panel-human-loop">
+        <div class="highlight-head">
+          <span class="highlight-index">04</span>
+          <h3 class="highlight-title">生成式预测推理与预测先验优化</h3>
+        </div>
+        <p>CastClaw 不只生成原始预测，还可以在严格防止数据泄露的前提下，对已有预测结果进行可验证的生成式推理修正。系统先在验证集前半部分提取可执行的候选 Skill，再只用验证集后半部分做接受检验；测试集只应用已经锁定的规则，不参与规则制定。</p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">🧪</div>
+            <h4>验证驱动的推理 Skill</h4>
+            <p>候选修正规则必须来自验证集前半部分的诊断证据，并经过验证集后半部分整体指标检验后才能锁定，避免凭直觉直接改测试集。</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">📥</div>
+            <h4>用户预测先验优化</h4>
+            <p>当用户已有一份完整预测先验数据集时，可进入 UserPrior 流程，跳过模型 Zoo 搜索与小模型训练，直接对已有预测结果做深度预测推理。</p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">🧾</div>
+            <h4>原始与修正结果分离</h4>
+            <p>系统将 raw prediction 与 adjusted prediction 分开保存、分开评估，并记录规则来源、验证结果与泄露审计信息，便于复盘和对外汇报。</p>
+          </div>
+        </div>
+
+        <div class="pill-links">
+          <span class="pill pill-out">validation-front 规则证据</span>
+          <span class="pill pill-out">validation-back 接受检验</span>
+          <span class="pill pill-out">UserPrior</span>
+          <span class="pill pill-out">raw / adjusted 双轨输出</span>
+          <span class="pill pill-out">测试集泄露审计</span>
         </div>
       </div>
     </div>
@@ -1037,7 +1072,12 @@ Reflection & Report</div>
               <h4>模型选择与调度</h4>
               <div class="model-pills">
                 <span class="model-pill highlight">ARIMA</span>
+                <span class="model-pill highlight">AutoARIMA</span>
                 <span class="model-pill highlight">ETS</span>
+                <span class="model-pill highlight">ExponentialSmoothing</span>
+                <span class="model-pill highlight">SimpleExponentialSmoothing</span>
+                <span class="model-pill highlight">Holt</span>
+                <span class="model-pill highlight">HoltWinters</span>
                 <span class="model-pill highlight">Theta</span>
                 <span class="model-pill">Informer</span>
                 <span class="model-pill">PatchTST</span>
@@ -1148,7 +1188,7 @@ Reflection & Report</div>
         <div class="step-body">
           <span class="step-tag">Forecaster · 人在回路</span>
           <h4>带着假设做迭代验证</h4>
-          <p>Forecaster 使用已确认 Skill 组织实验：读取当前最佳结果与近期失败历史 → 选取插件与模型配置 → 调用 CastFeat 构建表示 → 由 CastZoo 执行训练评估 → 用 <code>forecast_reflect</code> 记录失败归因与改进线索 → 预算检查 → 进入下一轮。若长期停滞或结果异常，则触发人在回路暂停，让专家反馈进入下一轮决策。</p>
+          <p>Forecaster 使用已确认 Skill 组织实验：读取当前最佳结果与近期失败历史 → 选取插件与模型配置 → 调用 CastFeat 构建表示 → 由 CastZoo 执行训练评估 → 用 <code>forecast_reflect</code> 记录失败归因与改进线索 → 预算检查 → 进入下一轮。若启用生成式预测推理，系统会基于验证集前半部分生成候选修正 Skill，并在验证集后半部分做接受检验；若用户提交预测先验，则进入 UserPrior 分支，跳过模型搜索与训练，直接优化已有预测结果。</p>
         </div>
       </div>
 
@@ -1160,7 +1200,7 @@ Reflection & Report</div>
         <div class="step-body">
           <span class="step-tag">Critic</span>
           <h4>最后做证据复盘与结论输出</h4>
-          <p>Critic 读取全部实验产物，完成一次类似专家复盘会的整理：比较各模型族最佳结果，按时序特征（趋势 / 季节性 / 平稳性）拆解性能，生成时序图与误差分布图，并输出结构化最终预测报告到 <code>.forecast/reports/final-report.md</code>。最终交付的不只是分数，更是可解释的判断依据与下一步建议。</p>
+          <p>Critic 读取全部实验产物，完成一次类似专家复盘会的整理：比较各模型族最佳结果，按时序特征（趋势 / 季节性 / 平稳性）拆解性能，生成时序图与误差分布图，并输出结构化最终预测报告到 <code>.forecast/reports/final-report.md</code>。若存在已锁定的生成式预测 Skill，Critic 会在原始测试评估后额外生成可审计的修正结果，并将 raw 与 adjusted 指标分开呈现。</p>
         </div>
       </div>
 
@@ -1281,7 +1321,7 @@ Reflection & Report</div>
 - label_len = 96
 - 评估指标使用 MSE 和 MAE
 - 模型族包含 statistical, deep_learning, foundation 三个家族
-- 具体模型：ARIMA, DLinear, TimeXer, PatchTST, iTransformer, Chronos
+- 具体模型：ARIMA, AutoARIMA, ETS, Theta, DLinear, TimeXer, PatchTST, iTransformer, Chronos
 - 澳大利亚冬季（6-8 月，UTC）日照时间短，整体功率低；夏季（12-2 月）峰值高，具有明显的日周期（24 小时）和周周期（168 小时）特征
 - 夏季和冬季用电高峰，春秋季为低谷</div>
       </div>
