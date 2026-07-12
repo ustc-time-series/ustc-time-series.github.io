@@ -407,59 +407,6 @@
       margin-top: 12px;
     }
 
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .page-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 42px;
-      padding: 0 16px;
-      border-radius: 999px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      border: 1px solid transparent;
-      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s, color .18s;
-    }
-
-    .page-btn:hover,
-    .page-btn:active {
-      transform: translateY(-1px);
-      text-decoration: none;
-      box-shadow: 0 6px 14px rgba(15, 118, 110, 0.10);
-      background: #f0fdf9;
-      border-color: #99e6d8;
-      color: #0f766e;
-    }
-
-    .page-btn-primary {
-      background: #0f766e;
-      color: #fff;
-      border-color: #0f766e;
-    }
-    .page-btn-primary:hover,
-    .page-btn-primary:active {
-      background: #f0fdf9;
-      border-color: #99e6d8;
-      color: #0f766e;
-    }
-    .page-btn-secondary {
-      background: #fff;
-      color: #444;
-      border-color: #d8d8d8;
-    }
-    .page-btn-secondary:hover,
-    .page-btn-secondary:active {
-      background: #f0fdf9;
-      border-color: #99e6d8;
-      color: #0f766e;
-    }
-
     .scenario-grid,
     .focus-grid {
       display: grid;
@@ -481,7 +428,6 @@
     }
 
     .scenario-media,
-    .system-figure,
     .focus-figure {
       position: relative;
       overflow: hidden;
@@ -496,7 +442,6 @@
     }
 
     .scenario-media img,
-    .system-figure img,
     .focus-figure img {
       display: block;
       width: 100%;
@@ -580,70 +525,6 @@
       font-weight: 800;
     }
 
-    .system-shell {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 18px;
-      margin-top: 18px;
-    }
-
-    .system-figure {
-      margin-top: 18px;
-    }
-
-    .system-panel,
-    .system-side {
-      border: 1px solid #e8e8e8;
-      border-radius: 14px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
-      padding: 20px;
-    }
-
-    .system-panel h4,
-    .system-side h4 {
-      font-size: 1rem;
-      font-weight: 800;
-      color: #111;
-      margin-bottom: 10px;
-    }
-
-    .system-side .task-title {
-      margin-top: 20px;
-    }
-
-    .system-panel p,
-    .system-side p {
-      font-size: 0.93rem;
-      color: #555;
-      line-height: 1.8;
-    }
-
-    .capability-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .capability-item {
-      border-radius: 12px;
-      border: 1px solid #ecece8;
-      background: #fafaf8;
-      padding: 14px 14px 13px;
-    }
-
-    .capability-item strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 0.94rem;
-      color: #111;
-    }
-
-    .capability-item span {
-      font-size: 0.88rem;
-      color: #555;
-      line-height: 1.7;
-    }
-
     .workflow-steps {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -684,29 +565,6 @@
       color: #555;
     }
 
-    .task-list {
-      display: grid;
-      gap: 8px;
-      margin-top: 14px;
-    }
-    .task-list span {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      font-size: 0.86rem;
-      color: #555;
-      line-height: 1.6;
-    }
-    .task-list span::before {
-      content: "";
-      flex: 0 0 auto;
-      width: 7px;
-      height: 7px;
-      margin-top: 10px;
-      border-radius: 50%;
-      background: #0f766e;
-    }
-
     .focus-figure {
       margin-bottom: 14px;
     }
@@ -729,7 +587,6 @@
     @media (max-width: 960px) {
       .scenario-grid,
       .focus-grid,
-      .system-shell,
       .overview-grid,
       .workflow-steps,
       .hero-workflow-steps,
@@ -786,8 +643,6 @@
       main { padding: 40px 0 60px; }
       .container { padding: 0 16px; }
       .section-card,
-      .system-panel,
-      .system-side,
       .scenario-card,
       .focus-card {
         padding-left: 18px;
@@ -994,61 +849,6 @@
             <h4>结果沉淀</h4>
             <p>将误差模式、可解释结论和可迁移策略整理成文档与 Skill，支持后续场景快速复用。</p>
           </article>
-        </div>
-      </section>
-
-      <section class="section-card">
-        <h3>时序预测智能体 CastClaw</h3>
-        <div class="system-shell">
-          <div class="system-panel">
-            <h4>面向真实预测工作流的人机协同智能体框架</h4>
-            <p>
-              CastClaw 是课题组围绕时间序列预测研发构建的工作台系统。它不把预测任务简化为单次模型训练，
-              而是把数据理解、特征构建、模型选择、实验执行、结果分析和人类确认统一组织到一个可交互的工作流中。
-            </p>
-            <p>
-              在应用研究中，CastClaw 更像是一个可以反复复用的研发载体：它帮助研究者快速进入新场景、组合已有能力、
-              保留关键判断节点，并把场景经验逐步沉淀为长期可复用的策略资产。
-            </p>
-            <div class="btn-row">
-              <a class="page-btn page-btn-primary" href="../cast-claw/">查看主页</a>
-              <a class="page-btn page-btn-secondary" href="../cast-claw/docs/">用户文档</a>
-              <a class="page-btn page-btn-secondary" href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener">GitHub</a>
-            </div>
-            <div class="system-figure">
-              <img src="../cast-claw/assets/architecture.jpeg" alt="CastClaw 多智能体与运行时架构图" />
-              <div class="figure-caption">CastClaw 架构图展示了人类专家、三智能体协作、工具层、核心引擎与 Python 时序运行时的闭环关系。</div>
-            </div>
-          </div>
-
-          <aside class="system-side">
-            <h4>核心能力</h4>
-            <div class="capability-list">
-              <div class="capability-item">
-                <strong>多智能体协同</strong>
-                <span>通过 Planner、Forecaster、Critic 组织问题分析、模型执行与结果反思。</span>
-              </div>
-              <div class="capability-item">
-                <strong>插件化工具链</strong>
-                <span>把数据分析、特征工程与经典时序模型封装为可调用、可组合的运行时能力。</span>
-              </div>
-              <div class="capability-item">
-                <strong>人在回路</strong>
-                <span>在关键节点保留人工确认与策略修正，兼顾自动化效率与研究可控性。</span>
-              </div>
-              <div class="capability-item">
-                <strong>经验沉淀</strong>
-                <span>将场景经验和可复用策略持续积累，形成跨任务、跨会话的研发资产。</span>
-              </div>
-            </div>
-            <h4 class="task-title">适用任务</h4>
-            <div class="task-list">
-              <span>给定新场景数据，快速完成任务澄清和数据诊断。</span>
-              <span>对比经典模型、深度模型与特征策略的有效性。</span>
-              <span>围绕误差峰值、异常窗口和业务约束生成分析报告。</span>
-              <span>把一次实验流程沉淀成可复用的预测 Skill。</span>
-            </div>
-          </aside>
         </div>
       </section>
 
