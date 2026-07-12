@@ -176,12 +176,53 @@
       content: "";
       position: absolute;
       inset: 0;
-      z-index: -1;
+      z-index: 0;
       background:
-        linear-gradient(110deg, transparent 0 18%, rgba(16, 16, 16, 0.035) 18% 18.4%, transparent 18.4% 32%),
-        linear-gradient(110deg, transparent 0 52%, rgba(15, 118, 110, 0.10) 52% 52.4%, transparent 52.4% 100%);
-      opacity: 0.72;
+        linear-gradient(110deg, transparent 0 18%, rgba(16, 16, 16, 0.028) 18% 18.35%, transparent 18.35% 32%),
+        linear-gradient(110deg, transparent 0 52%, rgba(15, 118, 110, 0.075) 52% 52.35%, transparent 52.35% 100%);
+      opacity: 0.52;
       pointer-events: none;
+    }
+    .hero-signal {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      opacity: 0.58;
+      pointer-events: none;
+    }
+    .hero-signal .signal-primary {
+      fill: none;
+      stroke: #279d91;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+    }
+    .hero-signal .signal-secondary {
+      fill: none;
+      stroke: #8ed4ca;
+      stroke-width: 1.35;
+      stroke-dasharray: 8 10;
+      stroke-linecap: round;
+      vector-effect: non-scaling-stroke;
+    }
+    .hero-signal .signal-node {
+      fill: #0f766e;
+      stroke: #ffffff;
+      stroke-width: 3;
+      vector-effect: non-scaling-stroke;
+    }
+    .hero-signal .signal-node-muted {
+      fill: #9bded5;
+      stroke: #ffffff;
+      stroke-width: 2;
+      vector-effect: non-scaling-stroke;
+    }
+    header .container {
+      position: relative;
+      z-index: 2;
     }
     header:hover {
       background:
@@ -552,6 +593,14 @@
         min-width: 220px;
       }
       header { padding: 44px 0 42px; }
+      .hero-signal {
+        opacity: 0.40;
+        transform: scale(1.08);
+        transform-origin: center;
+      }
+      .hero-signal .signal-secondary,
+      .hero-signal .signal-node-muted { display: none; }
+      .hero-signal .signal-primary { stroke-width: 1.5; }
       .hero-logo { width: min(300px, 82vw); margin-bottom: 18px; }
       header h1 {
         max-width: 13em;
@@ -608,6 +657,15 @@
 
 <!-- ═══════════════════ HEADER ═══════════════════ -->
 <header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
+  <svg class="hero-signal" viewBox="0 0 1440 500" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path class="signal-secondary" d="M-40 370C54 318 140 410 250 348" />
+    <path class="signal-secondary" d="M1160 292C1264 358 1360 212 1490 266" />
+    <path class="signal-primary" d="M-30 442C72 386 152 466 268 410" />
+    <path class="signal-primary" d="M1178 418C1272 320 1362 248 1470 286" />
+    <circle class="signal-node-muted" cx="250" cy="348" r="6" />
+    <circle class="signal-node" cx="268" cy="410" r="7" />
+    <circle class="signal-node" cx="1178" cy="418" r="7" />
+  </svg>
   <div class="container">
     <img class="hero-logo" src="asset/ts_logo.png" alt="USTC Time Series Logo" />
     <h1><span class="highlight">Time Series Cognition</span></h1>
@@ -934,7 +992,7 @@
 
     <!-- ── Generative Reasoning Model for Time Series ── -->
     <div class="section-intro section-anchor" id="cognitive-llm">
-      <h2>情境认知驱动的时间序列推演基础模型</h2>
+      <h2>情境认知驱动的时间序列推演基础模型（Time Series Foundation Model）</h2>
       <p>情境认知驱动的时间序列推演基础模型是一类面向复杂时序场景的新型基础模型。它不仅学习时间序列中的数值模式，还进一步理解序列所处的情境上下文，分析趋势变化背后的原因，并通过慢思考推理与记忆交互不断获取证据，推演未来趋势、状态变化与可能演化路径，从而实现更可靠、更可解释和更具适应性的时序预测。</p>
     </div>
 
@@ -988,7 +1046,7 @@
 
     <!-- ── System Development ── -->
     <div class="section-intro section-anchor" id="system-integration">
-      <h2>基于自主交互的时序预测智能体</h2>
+      <h2>基于自主交互的时序预测智能体（Agentic TSF）</h2>
       <p>面向时间序列研究与分析工作流，建设可交互、可编排、可沉淀的智能体系统，将任务规划、实验执行、结果评估与研究记忆整合为端到端平台。</p>
     </div>
 
