@@ -805,7 +805,6 @@
       <div class="sidebar-links">
         <a class="sidebar-link" href="#mode-socratic">Socratic Interaction</a>
         <a class="sidebar-link" href="#mode-accompaniment">Cognitive Accompaniment</a>
-        <a class="sidebar-link" href="#mode-fusion">General-Specialist Fusion</a>
       </div>
     </div>
     <div class="sidebar-group">
@@ -1067,7 +1066,7 @@ stride = 96</code></pre></div>
     <!-- Interaction Modes -->
     <section class="doc-section" id="interaction-modes" data-group-title="Interaction Modes">
       <h2>Interaction Modes</h2>
-      <p>CastClaw is not limited to a single usage pattern. Depending on task ambiguity, collaboration depth, and engineering context, you can use it in three modes: clarify the problem first, co-drive the execution loop, or plug CastClaw into a broader AI workflow as a specialist forecasting module.</p>
+      <p>CastClaw is not limited to a single usage pattern. Depending on task ambiguity and collaboration depth, you can use it in two modes: clarify the problem first, then move into co-driven execution. These two modes cover the core stages of task definition and collaborative forecasting.</p>
 
       <article class="doc-block" id="mode-socratic" data-title="Socratic Interaction">
         <h3>Socratic Interaction</h3>
@@ -1107,24 +1106,6 @@ stride = 96</code></pre></div>
         </div>
       </article>
 
-      <article class="doc-block" id="mode-fusion" data-title="General-Specialist Fusion">
-        <h3>General-Specialist Fusion</h3>
-        <p>This mode fits larger engineering workflows. A general AI agent handles code, environment, and orchestration, while CastClaw contributes specialist forecasting capabilities through Skills, CLI entry points, or plugin-style integration.</p>
-        <table class="doc-table">
-          <thead>
-            <tr><th>Focus</th><th>Description</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>Best for</td><td>Engineering integration, research workbenches, and unified agent entry points.</td></tr>
-            <tr><td>Core action</td><td>Use CastClaw as a specialist forecasting module inside a broader workflow.</td></tr>
-            <tr><td>Your role</td><td>Define clean input/output boundaries and decide which tasks belong to the general agent versus CastClaw.</td></tr>
-          </tbody>
-        </table>
-        <div class="callout warn">
-          <strong>Boundary warning</strong>
-          <p>This mode often fails when ownership is vague. Decide in advance who owns task definition and explanation, and who owns model execution and reporting.</p>
-        </div>
-      </article>
     </section>
 
     <!-- CLI Reference -->

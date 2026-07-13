@@ -611,10 +611,10 @@
 <!-- ═══════════════════ INTERACTION MODES ═══════════════════ -->
 <section id="interaction-modes" class="alt">
   <div class="container">
-    <h2 class="section-title">三种交互模式</h2>
+    <h2 class="section-title">两种交互模式</h2>
     <div class="tldr">
       <strong>核心思路：</strong>
-      CastClaw 并非只有一种固定的交互方式，而是根据用户角色与使用场景，提供三种层次递进的协作模式——从深度决策支持的<strong>苏格拉底式交互</strong>，到人机实时共建的<strong>认知伴随式交互</strong>，再到生态插件化的<strong>通专融合式交互</strong>，覆盖科研全链路的不同需求。
+      CastClaw 并非只有一种固定的交互方式，而是根据用户角色与使用场景，提供两种互补的协作模式——面向深度决策支持的<strong>苏格拉底式交互</strong>，以及面向实时共建预测流程的<strong>认知伴随式交互</strong>，分别服务于任务澄清与执行协同两个关键阶段。
     </div>
 
     <div class="highlight-stack">
@@ -677,39 +677,10 @@
         </div>
       </div>
 
-      <!-- 模式三：通专融合式 -->
-      <div class="highlight-panel" style="border-top:4px solid #d35400;">
-        <div class="highlight-head">
-          <span class="highlight-index" style="background:#d35400;">03</span>
-          <h3 class="highlight-title">通专融合式交互（General-Specialist Fusion）</h3>
-        </div>
-        <p><strong>关键词：Claude Code + Plugin + 专业能力注入。</strong>将 CastClaw 作为一个能力插件（Skill / MCP Server），利用通用 LLM（如 Claude Code）作为前端接口，CastClaw 提供专业预测算力，分工互补，无缝渲染结果。</p>
-        <div class="feature-grid">
-          <div class="feature-card">
-            <div class="feature-icon">🔗</div>
-            <h4>自然语言桥接</h4>
-            <p>在 Claude Code 的终端里，用户直接下令 <code>/castclaw predict ./sales.csv</code>，无需切换工具或环境。</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🤝</div>
-            <h4>能力互补</h4>
-            <p>Claude Code 负责代码编写、环境配置和通用逻辑分析；CastClaw 负责深度的 VQ-VAE 表征、多维时序建模和归因分析。</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <h4>无缝结果渲染</h4>
-            <p>预测生成的趋势图、误差分布图和带关键驱动因素的 Markdown 报告，直接在通用 AI 的 UI 中统一展示。</p>
-          </div>
-        </div>
-        <div class="pill-links" style="margin-top:18px;">
-          <span class="pill pill-out" style="color:#d35400;border-color:#f5cba7;">核心价值：借力 Claude 生态降低使用门槛</span>
-        </div>
-      </div>
-
     </div>
 
     <!-- 对比表 -->
-    <h3 class="sub-title" style="margin-top:36px;">三种模式横向对比</h3>
+    <h3 class="sub-title" style="margin-top:36px;">两种模式横向对比</h3>
     <table class="team-table">
       <thead>
         <tr><th>模式</th><th>用户角色</th><th>CastClaw 角色</th><th>关键动作</th><th>交付物</th></tr>
@@ -728,13 +699,6 @@
           <td>智能搭档</td>
           <td>监控、反馈、即时调整</td>
           <td>动态过程可视化 + 迭代结果</td>
-        </tr>
-        <tr>
-          <td><strong>通专融合式</strong></td>
-          <td>终端用户</td>
-          <td>专业插件</td>
-          <td>调用、转换、标准输出</td>
-          <td>预测 API 结果 + 渲染图表</td>
         </tr>
       </tbody>
     </table>

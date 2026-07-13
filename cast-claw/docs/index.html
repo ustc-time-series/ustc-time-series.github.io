@@ -805,7 +805,6 @@
       <div class="sidebar-links">
         <a class="sidebar-link" href="#mode-socratic">苏格拉底式交互</a>
         <a class="sidebar-link" href="#mode-accompaniment">认知伴随式交互</a>
-        <a class="sidebar-link" href="#mode-fusion">通专融合式交互</a>
       </div>
     </div>
     <div class="sidebar-group">
@@ -1067,7 +1066,7 @@ stride = 96</code></pre></div>
     <!-- ── 交互模式 ── -->
     <section class="doc-section" id="interaction-modes" data-group-title="交互模式">
       <h2>交互模式</h2>
-      <p>CastClaw 不只有一种固定使用方式。根据任务复杂度、用户角色和协作深度，你可以在三种交互模式之间切换：先澄清需求，再进入协同执行，或者把 CastClaw 作为专业能力模块接入更大的 AI 工作流。</p>
+      <p>CastClaw 不只有一种固定使用方式。根据任务复杂度、用户角色和协作深度，你可以在两种交互模式之间切换：先澄清需求，再进入协同执行，分别对应任务定义与预测共建这两个核心阶段。</p>
 
       <article class="doc-block" id="mode-socratic" data-title="苏格拉底式交互">
         <h3>苏格拉底式交互</h3>
@@ -1107,24 +1106,6 @@ stride = 96</code></pre></div>
         </div>
       </article>
 
-      <article class="doc-block" id="mode-fusion" data-title="通专融合式交互">
-        <h3>通专融合式交互</h3>
-        <p>适用于把 CastClaw 接入更大开发链路的场景。通用 AI 负责代码、环境和外围编排，CastClaw 负责时间序列预测的专业能力输出，两者通过 Skill、CLI 或插件接口协同。</p>
-        <table class="doc-table">
-          <thead>
-            <tr><th>关注点</th><th>说明</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>适用阶段</td><td>工程集成、研究工作台、统一 Agent 入口。</td></tr>
-            <tr><td>核心动作</td><td>把 CastClaw 当作专业预测模块调用。</td></tr>
-            <tr><td>用户要做什么</td><td>定义输入输出边界，明确哪些能力由通用 AI 负责，哪些由 CastClaw 负责。</td></tr>
-          </tbody>
-        </table>
-        <div class="callout warn">
-          <strong>边界提醒</strong>
-          <p>这种模式最容易出现“谁负责什么”不清的问题。建议提前约定：任务定义与结果解释由谁主导，模型实验与报告生成由谁执行。</p>
-        </div>
-      </article>
     </section>
 
     <!-- ── CLI 命令参考 ── -->
