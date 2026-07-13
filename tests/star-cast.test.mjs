@@ -33,6 +33,18 @@ test('StarCast labels its agentic forecasting system', () => {
   includes('<h2 id="systems-title">时间序列推演智能体系统（Agentic TSF）</h2>');
 });
 
+test('StarCast labels its time-series foundation model', () => {
+  includes('<h2 id="models-title">时间序列推演基础模型（Time Series Foundation Model）</h2>');
+});
+
+test('StarCast labels its AI-for-AI research system', () => {
+  includes('<h2 id="research-title">面向时间序列预测的AutoResearch智能体系统（AI for AI）</h2>');
+});
+
+test('StarCast labels its open-source project infrastructure', () => {
+  includes('<h2 id="opensource-title">面向时序研究的开源基础设施（Open Source Project）</h2>');
+});
+
 test('StarCast omits the auxiliary autonomous research pipeline', () => {
   assert.ok(!page.includes('aria-label="自主研究链路"'), 'Autonomous research pipeline should not be present');
 });
