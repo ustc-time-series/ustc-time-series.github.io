@@ -29,6 +29,10 @@ test('StarCast hero introduces 星辰 as the forecasting agent', () => {
   assert.ok(hero.includes('星辰推演未来之势'), 'Hero should describe 星辰 as the forecasting agent');
 });
 
+test('StarCast labels its agentic forecasting system', () => {
+  includes('<h2 id="systems-title">时间序列推演智能体系统（Agentic TSF）</h2>');
+});
+
 test('StarCast omits the auxiliary autonomous research pipeline', () => {
   assert.ok(!page.includes('aria-label="自主研究链路"'), 'Autonomous research pipeline should not be present');
 });
