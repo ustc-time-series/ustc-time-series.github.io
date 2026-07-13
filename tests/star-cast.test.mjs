@@ -21,6 +21,18 @@ test('StarCast cards expose project stage and available evidence links', () => {
   includes('https://github.com/ustc-time-series/Future-Cast');
 });
 
+test('CastStar omits the redundant open-research status badge', () => {
+  assert.ok(!page.includes('Open Research · 论文与代码可用'), 'CastStar should not show the open-research status badge');
+});
+
+test('CastClaw omits the redundant open-source status badge', () => {
+  assert.ok(!page.includes('Open Source · 代码与文档可用'), 'CastClaw should not show the open-source status badge');
+});
+
+test('CastMind omits the public-resources pending badge', () => {
+  assert.ok(!page.includes('公共资源筹备中'), 'CastMind should not show the public-resources pending badge');
+});
+
 test('StarCast hero omits the ecosystem update badge', () => {
   assert.ok(!page.includes('StarCast Ecosystem · 最近更新：2026-07'), 'Update badge should not be present');
 });
