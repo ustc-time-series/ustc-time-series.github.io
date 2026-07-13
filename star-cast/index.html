@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>StarCast（逐星方舟） | USTC-AGI Time Series</title>
   <meta name="description" content="StarCast（逐星方舟）以“星”为共同意象，围绕情境感知时间序列预测与自主研究智能体，构建从模型训练、自主研究、交互预测到基准评测的开源生态。" />
+  <link rel="canonical" href="https://ustc-time-series.github.io/star-cast/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="zh_CN" />
+  <meta property="og:title" content="StarCast（逐星方舟） | USTC-AGI Time Series" />
+  <meta property="og:description" content="从模型训练、时序推演智能体到自主研究与统一评测的开源生态入口。" />
+  <meta property="og:url" content="https://ustc-time-series.github.io/star-cast/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="StarCast（逐星方舟）" />
+  <meta name="twitter:description" content="面向情境感知时间序列预测与自主研究智能体的开源生态。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     :root {
@@ -167,6 +176,20 @@
       border-color: #99e6d8 !important;
       font-weight: 700 !important;
     }
+    .mobile-menu-toggle {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border: 1px solid #b9e8df;
+      border-radius: 999px;
+      background: #f0fdf9;
+      color: var(--accent-dark);
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
 
     header {
       position: relative;
@@ -184,19 +207,6 @@
     header:focus-visible {
       outline: 3px solid #99e6d8;
       outline-offset: -6px;
-    }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-      padding: 6px 12px;
-      border: 1px solid var(--green-line);
-      border-radius: 999px;
-      background: rgba(240, 253, 249, 0.82);
-      color: var(--accent-dark);
-      font-size: 0.82rem;
-      font-weight: 800;
     }
     header h1 {
       font-size: clamp(2rem, 5vw, 3.25rem);
@@ -223,7 +233,7 @@
       margin-bottom: 28px;
     }
     .ecosystem-heading {
-      max-width: 760px;
+      max-width: none;
       margin-bottom: 20px;
     }
     .ecosystem-heading h2 {
@@ -237,14 +247,20 @@
       color: var(--text-muted);
       font-size: 0.96rem;
       line-height: 1.85;
+      text-align: justify;
+      text-justify: inter-ideograph;
     }
-    .ecosystem-grid {
+    .ecosystem-flow {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
-    .ecosystem-node {
-      min-height: 150px;
+    .flow-stage {
+      position: relative;
+      min-height: 172px;
       padding: 18px 16px;
       border: 1px solid #dcebe6;
       border-top: 4px solid var(--accent);
@@ -252,22 +268,48 @@
       background: #fff;
       box-shadow: 0 6px 18px rgba(15, 118, 110, 0.045);
     }
-    .ecosystem-node strong {
+    .flow-stage:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -22px;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--green-soft);
+      color: var(--accent-dark);
+      font-weight: 900;
+      line-height: 1;
+      transform: translateY(-50%);
+    }
+    .flow-index {
       display: block;
+      color: var(--accent-dark);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+    .flow-stage strong {
+      display: block;
+      margin-top: 6px;
       color: var(--ink);
       font-size: 0.98rem;
       line-height: 1.35;
       text-align: left;
     }
-    .ecosystem-node span {
+    .flow-stage span:not(.flow-index) {
       display: block;
       margin-top: 8px;
       color: var(--text-muted);
       font-size: 0.82rem;
       line-height: 1.55;
-      text-align: left;
+      text-align: justify;
+      text-justify: inter-ideograph;
     }
-    .ecosystem-role {
+    .flow-projects {
       margin-top: 12px;
       padding-top: 10px;
       border-top: 1px solid #edf3f0;
@@ -277,6 +319,19 @@
       letter-spacing: 0.04em;
       text-transform: uppercase;
       text-align: left;
+    }
+    .ecosystem-feedback {
+      margin: 14px 0 0;
+      padding: 12px 14px;
+      border: 1px solid #d8eee9;
+      border-radius: 14px;
+      background: #f8fffd;
+      color: #365c56;
+      font-size: 0.86rem;
+      font-weight: 700;
+      line-height: 1.65;
+      text-align: justify;
+      text-justify: inter-ideograph;
     }
     .systems-shell {
       background: rgba(255, 255, 255, 0.92);
@@ -304,6 +359,11 @@
       color: var(--text-muted);
       font-size: 0.98rem;
       line-height: 1.9;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+    .systems-intro > .intro-copy:only-child {
+      grid-column: 1 / -1;
     }
     .pipeline {
       display: grid;
@@ -461,6 +521,46 @@
       background: #f6f6f4;
       border-color: #ddddda;
     }
+    .project-resources {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .project-resources .project-link { margin-top: 0; }
+    .resource-link,
+    .resource-pending {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 8px 11px;
+      border: 1px solid #dcebe6;
+      border-radius: 999px;
+      background: #fff;
+      color: #49635e;
+      font-size: 0.8rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .resource-link:hover {
+      border-color: #99e6d8;
+      background: #f0fdf9;
+      color: var(--accent-dark);
+      text-decoration: none;
+    }
+    .resource-pending { color: #7a7a74; background: #fafaf8; }
+    .status-legend {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 14px;
+      margin-top: 16px;
+      color: #5f6f6c;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+    .status-legend strong { color: var(--accent-dark); }
     .project-card.castclaw,
     .project-card.neoresearch,
     .project-card.factory,
@@ -520,10 +620,11 @@
       line-height: 1.6;
     }
 
-    @media (max-width: 900px) {
-      .ecosystem-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
+      @media (max-width: 900px) {
+        .ecosystem-flow {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .flow-stage:nth-child(2)::after { display: none; }
       .systems-intro,
       .project-grid {
         grid-template-columns: 1fr;
@@ -532,33 +633,36 @@
         min-height: auto;
       }
     }
-    @media (max-width: 640px) {
-      .top-nav .container {
-        align-items: flex-start;
-        flex-direction: column;
-        justify-content: center;
-        gap: 2px;
-        padding-top: 8px;
-        padding-bottom: 8px;
-      }
-      .nav-brand { white-space: normal; }
-      .nav-links {
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        padding-top: 2px;
-      }
-      .nav-links a,
-      .nav-dropdown-toggle {
-        padding: 7px 12px;
-        font-size: 0.81rem;
+      @media (max-width: 640px) {
+        .top-nav .container {
+          flex-wrap: wrap;
+          min-height: 56px;
+          gap: 8px;
+          padding-top: 7px;
+          padding-bottom: 7px;
+        }
+        .nav-brand { white-space: nowrap; }
+        .mobile-menu-toggle { display: inline-flex; margin-left: auto; }
+        .nav-links {
+          display: none;
+          width: 100%;
+          justify-content: flex-start;
+          flex-wrap: wrap;
+          padding: 0 0 2px;
+        }
+        .nav-links.open { display: flex; }
+        .nav-links a,
+        .nav-dropdown-toggle {
+          padding: 7px 10px;
+          font-size: 0.8rem;
       }
       .nav-dropdown-menu {
         left: 0;
         min-width: 200px;
       }
-      header {
-        padding: 54px 0 46px;
-      }
+        header {
+          padding: 46px 0 40px;
+        }
       .systems-intro,
       .project-grid,
       .status-row {
@@ -568,22 +672,31 @@
       .container {
         padding: 0 16px;
       }
-      .ecosystem-grid {
-        grid-template-columns: 1fr;
+        .ecosystem-flow {
+          grid-template-columns: 1fr;
+        }
+        .flow-stage { min-height: auto; }
+        .flow-stage:not(:last-child)::after {
+          top: auto;
+          right: auto;
+          bottom: -18px;
+          left: 50%;
+          transform: translateX(-50%) rotate(90deg);
+        }
       }
-    }
   </style>
 </head>
 <body>
 
-<nav class="top-nav" aria-label="首页顶部导航">
-  <div class="container">
-    <a class="nav-brand" href="../index.html">USTC-AGI <span>Time Series</span></a>
-    <div class="nav-links">
-      <a href="../index.html#hero-header">首页</a>
-      <div class="nav-dropdown">
-        <button class="nav-dropdown-toggle" type="button" aria-expanded="false">研究方向</button>
-        <div class="nav-dropdown-menu" role="menu">
+  <nav class="top-nav" aria-label="首页顶部导航">
+    <div class="container">
+      <a class="nav-brand" href="../index.html">USTC-AGI <span>Time Series</span></a>
+      <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">导航</button>
+      <div class="nav-links" id="primary-navigation">
+        <a href="../index.html#hero-header">首页</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle" type="button" aria-expanded="false" aria-haspopup="true" aria-controls="research-menu">研究方向</button>
+          <div class="nav-dropdown-menu" id="research-menu" role="menu" aria-label="研究方向">
           <a href="../forecasting/" role="menuitem">时间序列预测</a>
           <a href="../classification-anomaly/" role="menuitem">时间序列分类与异常检测</a>
         </div>
@@ -607,7 +720,7 @@
     <h1><span class="highlight">逐星方舟</span></h1>
     <p class="header-sub">
       以“星”为共同意象，围绕情境感知时间序列预测与自主研究智能体，构建从模型训练、自主研究、交互预测到基准评测的开源生态。
-      其中，铸星坊铸预测之器，智多星谋自主之研，观星阁观未来之势，天星台立评测之尺。
+      其中，星思明辨时序之理，星辰推演未来之势，观星阁协同人机之智，智多星谋自主之研，铸星坊铸预测之器，天星台立评测之尺。
     </p>
   </div>
 </header>
@@ -623,41 +736,39 @@
           CastFactory 沉淀训练与实验工厂，FutureCast 负责基准评测与能力校准。
         </p>
       </div>
-      <div class="ecosystem-grid" aria-label="StarCast 项目关系">
-        <div class="ecosystem-node">
-          <strong>CastMind（星思）</strong>
-          <span>面向时间序列的认知大模型，提供时序感知、情境理解、慢思考推理与记忆交互能力。</span>
-          <div class="ecosystem-role">Model Backbone</div>
-        </div>
-        <div class="ecosystem-node">
-          <strong>CastStar（星辰）</strong>
-          <span>工具增强的时间序列推演智能体，联动证据获取、工具调用、反思验证与预测修正。</span>
-          <div class="ecosystem-role">Agentic Forecasting</div>
-        </div>
-        <div class="ecosystem-node">
-          <strong>CastClaw（观星阁）</strong>
-          <span>人在回路的预测研究工作台，把规划、预测、批判与人类确认组织成可控流程。</span>
-          <div class="ecosystem-role">Interactive Workbench</div>
-        </div>
-        <div class="ecosystem-node">
-          <strong>NeoResearch（智多星）</strong>
-          <span>自主研究闭环，围绕研究假设、模型配方、实验执行、结果归因和研究记忆迭代。</span>
-          <div class="ecosystem-role">Research Agent</div>
-        </div>
-        <div class="ecosystem-node">
-          <strong>CastFactory（铸星坊）</strong>
-          <span>LLM-based Multimodal Time Series 模型训练工厂，串联数据契约、CPT-SFT-RL 与 recipe 复现。</span>
-          <div class="ecosystem-role">Training Factory</div>
-        </div>
-        <div class="ecosystem-node">
-          <strong>FutureCast（天星台）</strong>
-          <span>面向时序模型与智能体系统的统一评测基准，衡量预测、解释、证据使用与系统收益。</span>
-          <div class="ecosystem-role">Benchmark Suite</div>
-        </div>
+      <ol class="ecosystem-flow" id="ecosystem-flow" aria-label="StarCast 从训练到评测的项目关系">
+        <li class="flow-stage">
+          <span class="flow-index">01 · MODEL</span>
+          <strong>模型底座</strong>
+          <span>让时序结构、外部情境与经验记忆进入统一的推演表示。</span>
+          <div class="flow-projects">CastMind（星思）</div>
+        </li>
+        <li class="flow-stage">
+          <span class="flow-index">02 · FORECAST</span>
+          <strong>推演与交互</strong>
+          <span>把证据获取、工具调用、反思修正和人类确认组织成可控预测流程。</span>
+          <div class="flow-projects">CastStar · CastClaw</div>
+        </li>
+        <li class="flow-stage">
+          <span class="flow-index">03 · RESEARCH</span>
+          <strong>自主研究闭环</strong>
+          <span>围绕假设、候选配方、受控实验、结果归因与研究记忆持续迭代。</span>
+          <div class="flow-projects">NeoResearch（智多星）</div>
+        </li>
+        <li class="flow-stage">
+          <span class="flow-index">04 · BUILD &amp; EVAL</span>
+          <strong>训练与评测</strong>
+          <span>沉淀可复现的训练 recipe，并用统一协议校准模型与系统收益。</span>
+          <div class="flow-projects">CastFactory · FutureCast</div>
+        </li>
+      </ol>
+      <p class="ecosystem-feedback">CastFactory 让训练与实验可复现，FutureCast 用一致评测把结果反馈给模型、智能体和研究闭环，形成持续校准的生态回路。</p>
+      <div class="status-legend" aria-label="项目状态说明">
+        <strong>项目状态：</strong><span>Research Preview 表示能力仍在建设中</span><span>Open Research / Open Source 表示已有可访问的论文、代码或文档资源</span>
       </div>
     </section>
 
-    <section class="systems-shell" aria-labelledby="models-title">
+    <section class="systems-shell" id="project-directory" aria-labelledby="models-title">
       <div class="systems-intro">
         <div class="intro-copy">
           <h2 id="models-title">时间序列推演基础模型</h2>
@@ -671,7 +782,7 @@
         <article class="project-card castmind full-width">
           <div class="card-meta">
             <span class="project-tag violet">Time Series Foundation Model</span>
-            <span class="status-badge building">主页已开放 · 能力建设中</span>
+            <span class="status-badge building">Research Preview · 能力建设中</span>
           </div>
           <h3>CastMind（星思）</h3>
           <p>
@@ -684,7 +795,10 @@
             <li><strong>慢思考推理能力：</strong>围绕当前趋势、潜在扰动、未来可能路径和不确定性来源进行分步分析，区别于 fast-thinking 式一次性预测。</li>
             <li><strong>记忆交互能力：</strong>检索历史相似模式、失败预测经验、领域规律、推理轨迹和过往分析结论，形成 experience-conditioned reasoning。</li>
           </ul>
-          <a class="project-link" href="../cast-mind/">查看CastMind（星思）主页</a>
+            <div class="project-resources">
+              <a class="project-link" href="../cast-mind/">查看项目主页</a>
+              <span class="resource-pending">公共资源筹备中</span>
+            </div>
         </article>
       </div>
 
@@ -711,7 +825,7 @@
         <article class="project-card caststar">
           <div class="card-meta">
             <span class="project-tag">模型-环境协同的时间序列预测智能体系统</span>
-            <span class="status-badge">主页已开放</span>
+            <span class="status-badge">Open Research · 论文与代码可用</span>
           </div>
           <h3>CastStar（星辰）</h3>
           <p>
@@ -723,13 +837,17 @@
             <li><strong>工具增强推理：</strong>调用统计工具、检索系统、可视化分析、异常检测和小预测模型获取证据。</li>
             <li><strong>反思修正机制：</strong>通过验证工具和反馈信号检查预测结果、工具行动与推理过程，并进行修正。</li>
           </ul>
-          <a class="project-link" href="../CastStar/">查看 CastStar（星辰）主页</a>
+            <div class="project-resources">
+              <a class="project-link" href="../CastStar/">查看项目主页</a>
+              <a class="resource-link" href="https://arxiv.org/pdf/2602.13802" target="_blank" rel="noopener">论文</a>
+              <a class="resource-link" href="https://github.com/Xiaoyu-Tao/Cast-R1-TS" target="_blank" rel="noopener">GitHub</a>
+            </div>
         </article>
 
         <article class="project-card castclaw">
           <div class="card-meta">
             <span class="project-tag">人机物协同的时间序列预测智能体系统</span>
-            <span class="status-badge">主页已开放</span>
+            <span class="status-badge">Open Source · 代码与文档可用</span>
           </div>
           <h3>CastClaw（观星阁）</h3>
           <p>
@@ -741,7 +859,11 @@
             <li>人在回路机制：关键计划、实验与结果节点支持确认、暂停和修正</li>
             <li>研究工作台：实验沙盒、数据分析工具、特征分析与时序模型工具箱</li>
           </ul>
-          <a class="project-link" href="../cast-claw/">查看CastClaw（观星阁）主页</a>
+            <div class="project-resources">
+              <a class="project-link" href="../cast-claw/">查看项目主页</a>
+              <a class="resource-link" href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener">GitHub</a>
+              <a class="resource-link" href="../cast-claw/docs/">使用文档</a>
+            </div>
         </article>
       </div>
 
@@ -761,17 +883,13 @@
             NeoResearch（智多星）关注受控自主研究闭环，将研究假设、模型配方、实验执行、结果归因与研究记忆组织成可复现的系统化时序研究流程。
           </p>
         </div>
-        <div class="pipeline" aria-label="自主研究链路">
-          <div class="pipeline-step"><span>01</span><strong>Generate hypotheses and candidate recipes</strong></div>
-          <div class="pipeline-step"><span>02</span><strong>Close the loop with controlled experiments + memory</strong></div>
-        </div>
       </div>
 
       <div class="project-grid">
         <article class="project-card neoresearch full-width">
           <div class="card-meta">
             <span class="project-tag">Forecast Research Operating System</span>
-            <span class="status-badge building">主页已开放 · 研究闭环建设中</span>
+            <span class="status-badge building">Research Preview · 研究闭环建设中</span>
           </div>
           <h3>NeoResearch（智多星）</h3>
           <p>
@@ -783,7 +901,10 @@
             <li>CandidateRecipe 搜索：在受限协议内组合模型结构、训练策略与评估方案</li>
             <li>受控研究闭环：实验执行、结果归因、keep / discard 与研究记忆沉淀</li>
           </ul>
-          <a class="project-link" href="../NeoResearch/">查看 NeoResearch 主页</a>
+            <div class="project-resources">
+              <a class="project-link" href="../NeoResearch/">查看项目主页</a>
+              <span class="resource-pending">公开资源筹备中</span>
+            </div>
         </article>
       </div>
 
@@ -804,17 +925,13 @@
             FutureCast（天星台）关注模型、数据集与应用场景的统一评测，共同支撑更高效、可复现、可扩展的时序研究与应用落地。
           </p>
         </div>
-        <div class="pipeline" aria-label="开源工具链">
-          <div class="pipeline-step"><span>01</span><strong>Build research pipelines with CastFactory（铸星坊）</strong></div>
-          <div class="pipeline-step"><span>02</span><strong>Evaluate models and systems with FutureCast（天星台）</strong></div>
-        </div>
       </div>
 
       <div class="project-grid">
         <article class="project-card factory">
           <div class="card-meta">
             <span class="project-tag">LLM-based TS Training Factory</span>
-            <span class="status-badge">主页已开放</span>
+            <span class="status-badge">Open Source · 代码可用</span>
           </div>
           <h3>CastFactory（铸星坊）</h3>
           <p>
@@ -826,13 +943,16 @@
             <li>CPT-SFT-RL 三阶段训练与 ReasoningRL / AgenticRL 接口</li>
             <li>面向论文实验的 recipe、ablation matrix 与 evaluation report</li>
           </ul>
-          <a class="project-link" href="../cast-factory/">查看 CastFactory（铸星坊）主页</a>
+            <div class="project-resources">
+              <a class="project-link" href="../cast-factory/">查看项目主页</a>
+              <a class="resource-link" href="https://github.com/ustc-time-series/CastFactory" target="_blank" rel="noopener">GitHub</a>
+            </div>
         </article>
 
         <article class="project-card eval">
           <div class="card-meta">
             <span class="project-tag">Evaluation Suite</span>
-            <span class="status-badge">主页已开放</span>
+            <span class="status-badge">Open Source · 代码可用</span>
           </div>
           <h3>FutureCast（天星台）</h3>
           <p>
@@ -844,7 +964,10 @@
             <li>跨数据集、跨场景、跨模型的指标对齐</li>
             <li>面向 ablation、diagnosis 和 leaderboard 的报告结构</li>
           </ul>
-          <a class="project-link" href="../future-cast/">查看 FutureCast（天星台）主页</a>
+            <div class="project-resources">
+              <a class="project-link" href="../future-cast/">查看项目主页</a>
+              <a class="resource-link" href="https://github.com/ustc-time-series/Future-Cast" target="_blank" rel="noopener">GitHub</a>
+            </div>
         </article>
       </div>
     </section>
@@ -867,30 +990,77 @@
 <script>
   (() => {
     const dropdowns = document.querySelectorAll('.nav-dropdown');
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const primaryNavigation = document.querySelector('#primary-navigation');
+    const closeMobileMenu = () => {
+      if (!mobileToggle || !primaryNavigation) return;
+      primaryNavigation.classList.remove('open');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+    };
     const closeAll = () => {
       dropdowns.forEach((dropdown) => {
         dropdown.classList.remove('open');
         const toggle = dropdown.querySelector('.nav-dropdown-toggle');
         if (toggle) toggle.setAttribute('aria-expanded', 'false');
       });
+      closeMobileMenu();
     };
+
+    if (mobileToggle && primaryNavigation) {
+      mobileToggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const willOpen = !primaryNavigation.classList.contains('open');
+        primaryNavigation.classList.toggle('open', willOpen);
+        mobileToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      });
+      primaryNavigation.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', closeMobileMenu);
+      });
+    }
 
     dropdowns.forEach((dropdown) => {
       const toggle = dropdown.querySelector('.nav-dropdown-toggle');
       const menuLinks = dropdown.querySelectorAll('.nav-dropdown-menu a');
       if (!toggle) return;
 
+      const setOpen = (willOpen) => {
+        dropdown.classList.toggle('open', willOpen);
+        toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      };
+
       toggle.addEventListener('click', (event) => {
         event.stopPropagation();
         const willOpen = !dropdown.classList.contains('open');
-        closeAll();
-        dropdown.classList.toggle('open', willOpen);
-        toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        dropdowns.forEach((item) => item.classList.remove('open'));
+        dropdowns.forEach((item) => item.querySelector('.nav-dropdown-toggle')?.setAttribute('aria-expanded', 'false'));
+        setOpen(willOpen);
       });
 
-      menuLinks.forEach((link) => {
+      toggle.addEventListener('keydown', (event) => {
+        if (!['ArrowDown', 'Enter', ' '].includes(event.key)) return;
+        event.preventDefault();
+        setOpen(true);
+        menuLinks[0]?.focus();
+      });
+
+      menuLinks.forEach((link, index) => {
         link.addEventListener('click', () => {
           closeAll();
+        });
+        link.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') {
+            event.preventDefault();
+            closeAll();
+            toggle.focus();
+          }
+          if (event.key === 'ArrowDown') {
+            event.preventDefault();
+            menuLinks[(index + 1) % menuLinks.length]?.focus();
+          }
+          if (event.key === 'ArrowUp') {
+            event.preventDefault();
+            menuLinks[(index - 1 + menuLinks.length) % menuLinks.length]?.focus();
+          }
         });
       });
     });
