@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CastClaw 用户文档</title>
-  <meta name="description" content="CastClaw 用户文档：快速开始、Agentic Workflow、人在回路、插件工具箱、Skill 技能库、配置参考、CLI 命令与典型使用示例。" />
+  <meta name="description" content="CastClaw 用户文档：快速开始、预测工作流学习框架、人在回路、插件工具箱、Skill/经验库、配置参考、CLI 命令与典型使用示例。" />
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -781,6 +781,7 @@
         <span class="search-kbd">Ctrl K</span>
       </button>
       <a class="topbar-btn" href="./en.html">EN</a>
+      <a class="topbar-btn" href="../assets/CastClaw.pdf" target="_blank" rel="noopener">技术报告</a>
       <a class="topbar-btn" href="../">返回主页</a>
     </div>
   </div>
@@ -826,9 +827,9 @@
     <div class="sidebar-group">
       <div class="sidebar-group-title">核心概念</div>
       <div class="sidebar-links">
-        <a class="sidebar-link" href="#architecture-overview">系统架构概览</a>
-        <a class="sidebar-link" href="#three-agents">多智能体协同</a>
-        <a class="sidebar-link" href="#agentic-workflow">智能体运行流程</a>
+        <a class="sidebar-link" href="#architecture-overview">框架总览</a>
+        <a class="sidebar-link" href="#three-agents">执行角色分工</a>
+        <a class="sidebar-link" href="#agentic-workflow">工作流学习主线</a>
       </div>
     </div>
     <div class="sidebar-group">
@@ -848,7 +849,7 @@
       </div>
     </div>
     <div class="sidebar-group">
-      <div class="sidebar-group-title">Skill 技能库</div>
+      <div class="sidebar-group-title">Skill 与经验库</div>
       <div class="sidebar-links">
         <a class="sidebar-link" href="#skill-what">Skill 是什么</a>
         <a class="sidebar-link" href="#skill-structure">文件结构</a>
@@ -967,14 +968,14 @@
             <div class="wf-left"><div class="wf-num">4</div><div class="wf-line"></div></div>
             <div class="wf-body">
               <h4>审核 Skill 草案</h4>
-              <p>确认模型族、搜索空间与风险提示无明显偏差后继续。</p>
+              <p>确认候选经验的适用条件、证据来源与风险提示无明显偏差后继续。</p>
             </div>
           </div>
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">5</div><div class="wf-line"></div></div>
             <div class="wf-body">
               <h4>观察迭代与最终报告</h4>
-              <p>Forecaster 执行实验循环，Critic 生成 <code>final-report.md</code>，留意是否出现人在回路暂停。</p>
+              <p>Forecaster 执行工作流适配，Critic 生成 <code>final-report.md</code>，留意是否出现经验审核型人在回路暂停。</p>
             </div>
           </div>
         </div>
@@ -1042,7 +1043,7 @@ stride = 96</code></pre></div>
             <tr>
               <td><code>Ctrl+2</code></td>
               <td>切换到 Forecaster</td>
-              <td>实验是否停滞，是否持续改善，是否触发人在回路。</td>
+              <td>经验链路是否停滞，候选规律是否有证据支撑，是否触发人在回路。</td>
             </tr>
             <tr>
               <td><code>Ctrl+3</code></td>
@@ -1089,20 +1090,20 @@ stride = 96</code></pre></div>
 
       <article class="doc-block" id="mode-accompaniment" data-title="认知伴随式交互">
         <h3>认知伴随式交互</h3>
-        <p>适用于你希望一边运行、一边观察、一边纠偏的场景。系统会把阶段推进、Skill 审核、实验停滞和关键结果暴露给你，你可以在关键节点即时介入。</p>
+        <p>适用于你希望一边运行、一边审核经验、一边纠偏的场景。系统会把阶段推进、Skill 审核、候选经验冲突和关键证据暴露给你，你可以在关键节点介入经验沉淀。</p>
         <table class="doc-table">
           <thead>
             <tr><th>关注点</th><th>说明</th></tr>
           </thead>
           <tbody>
-            <tr><td>适用阶段</td><td>实验迭代、结果分析、人机协同调优。</td></tr>
-            <tr><td>核心动作</td><td>查看中间状态、审核 Skill、在停滞或异常时干预。</td></tr>
-            <tr><td>用户要做什么</td><td>监控预算、识别异常实验、在关键节点提供领域反馈。</td></tr>
+            <tr><td>适用阶段</td><td>经验审核、结果解释、人机协同沉淀。</td></tr>
+            <tr><td>核心动作</td><td>查看中间证据、审核 Skill、在经验冲突或适用边界不清时干预。</td></tr>
+            <tr><td>用户要做什么</td><td>补充领域证据、标注异常 Case、确认哪些结论应沉淀为经验。</td></tr>
           </tbody>
         </table>
         <div class="callout">
           <strong>典型触发点</strong>
-          <p>当 Forecaster 连续多轮无改善、结果突然劣化，或候选最优结果与你的领域常识冲突时，就应切入这种模式。</p>
+          <p>当候选经验没有带来新信息、结果解释与领域常识冲突，或某条经验的适用边界不清时，就应切入这种模式。</p>
         </div>
       </article>
 
@@ -1119,7 +1120,7 @@ stride = 96</code></pre></div>
           <tbody>
             <tr>
               <td><code>castclaw</code></td>
-              <td>在当前目录启动 CLI，基于当前项目上下文接管预测任务。</td>
+              <td>在当前目录启动 CLI，基于当前项目上下文接管任务。</td>
             </tr>
             <tr>
               <td><code>castclaw --model anthropic/claude-sonnet-4-6</code></td>
@@ -1153,14 +1154,14 @@ stride = 96</code></pre></div>
             <h4><code>forecast_state</code></h4>
             <ul>
               <li><code>forecast_state init</code>：初始化任务并创建 <code>.forecast/</code> 目录。</li>
-              <li>阶段转换强制执行，不可随意跳过，确保过程可追溯。</li>
+              <li>阶段转换强制执行，确保过程可追溯。</li>
             </ul>
           </div>
           <div class="panel">
             <h4><code>forecast_task</code></h4>
             <ul>
               <li>面向 <code>task.json</code> 的任务定义辅助工具。</li>
-              <li>适合在 Init 阶段确认目标列、时间列、步长与评估指标。</li>
+              <li>适合在 Init 阶段确认目标列、步长与评估指标。</li>
             </ul>
           </div>
         </div>
@@ -1195,7 +1196,7 @@ stride = 96</code></pre></div>
           <tbody>
             <tr><td><code>banned_models</code></td><td>禁用模型列表，直接排除低价值或资源不允许的模型族。</td></tr>
             <tr><td><code>max_experiments</code></td><td>最大实验次数，限制 Forecaster 的探索预算。</td></tr>
-            <tr><td><code>no_improve_threshold</code></td><td>连续无改善阈值，到达后触发人在回路暂停。</td></tr>
+            <tr><td><code>no_improve_threshold</code></td><td>经验链路连续无新增时的暂停阈值，到达后触发人在回路审核。</td></tr>
             <tr><td><code>eval_metric</code></td><td>评估指标偏好，例如 MAE、MAPE 或 RMSE。</td></tr>
             <tr><td><code>domain_notes</code></td><td>领域背景说明，注入每个 Agent 上下文，帮助结果判断更符合业务认知。</td></tr>
           </tbody>
@@ -1227,7 +1228,7 @@ stride = 96</code></pre></div>
           </div>
           <div class="panel">
             <h4>国内提供商</h4>
-            <p>DeepSeek、Qwen、GLM 等，适合国内网络环境和更灵活的接入策略。</p>
+            <p>DeepSeek、Qwen、GLM 等，适合国内网络环境。</p>
           </div>
           <div class="panel">
             <h4>部署方式</h4>
@@ -1241,114 +1242,114 @@ stride = 96</code></pre></div>
     <section class="doc-section" id="core-concepts" data-group-title="核心概念">
       <h2>核心概念</h2>
 
-      <article class="doc-block" id="architecture-overview" data-title="系统架构概览">
-        <h3>系统架构概览</h3>
-        <p>CastClaw 是四层协同结构：<code>CastRuntime</code> 负责执行与状态，<code>CastSkill</code> 负责策略选择，插件生态承担具体能力，<code>TimeEmbed</code> 提供表征与经验对齐。</p>
+      <article class="doc-block" id="architecture-overview" data-title="预测工作流学习框架总览">
+        <h3>预测工作流学习框架总览</h3>
+        <p>CastClaw 的核心不只是执行一次预测，而是学习一套可复用的预测工作流。完整链路由四个阶段构成：<strong>任务协商与价值感知交互</strong>、<strong>离线规律学习与经验沉淀</strong>、<strong>在线慢思考推理与工作流适配</strong>、<strong>结果评估与工作流发布</strong>。</p>
         <div class="code-block"><pre><code>User Task
   ↓
-CastRuntime（执行循环、上下文管理）
+价值感知交互（任务规格化 / 约束偏好 / 人类反馈）
   ↓
-CastSkill（策略检索与选择）
+规律-经验双层学习（预测规律 / 求解经验 / 工作流评分）
   ↓
-CastSense → CastFeat → CastZoo
+在线慢思考适配（情境识别 / 工具调用 / 反思校正）
   ↓
-Reflection / Report</code></pre></div>
-        <img src="../assets/architecture.jpeg" alt="CastClaw 系统架构图" class="arch-img" onerror="this.style.display='none'" />
+结果评估与发布（性能评估 / Case 级解释 / 可部署工作流）</code></pre></div>
+        <img src="../assets/architecture-1.jpeg" alt="CastClaw 预测工作流学习框架图" class="arch-img" onerror="this.style.display='none'" />
         <table class="doc-table">
-          <thead><tr><th>层级</th><th>职责</th><th>何时接触</th></tr></thead>
+          <thead><tr><th>阶段</th><th>职责</th><th>何时接触</th></tr></thead>
           <tbody>
             <tr>
-              <td><strong>CastRuntime</strong></td>
-              <td>任务上下文管理、阶段推进、Agent Loop、文件状态同步。</td>
-              <td>启动任务、切换阶段、恢复暂停任务。</td>
+              <td><strong>价值感知交互</strong></td>
+              <td>澄清目标、冻结任务规格、记录约束偏好和人类反馈。</td>
+              <td>任务启动、需求不完整、关键判断需要确认时。</td>
             </tr>
             <tr>
-              <td><strong>CastSkill</strong></td>
-              <td>根据分析结果检索或生成策略，决定模型路线与搜索空间。</td>
-              <td>审核 Skill 草案、沉淀经验、复用历史策略。</td>
+              <td><strong>规律-经验学习</strong></td>
+              <td>从训练集归纳预测规律，从验证集沉淀工具路线、失败原因和工作流评分。</td>
+              <td>预测前分析、Skill 审核、经验复用和团队资产沉淀时。</td>
             </tr>
             <tr>
-              <td><strong>Plugin Ecosystem</strong></td>
-              <td>通过 CastSense / CastFeat / CastZoo 完成诊断、表示构建和模型编排。</td>
-              <td>分析结果解释、特征设计和模型选择。</td>
+              <td><strong>在线慢思考适配</strong></td>
+              <td>检索规律/经验/反馈，实例化候选工作流，调用工具并进行反思校正。</td>
+              <td>实际预测执行、结果异常、策略需要调整时。</td>
             </tr>
             <tr>
-              <td><strong>TimeEmbed</strong></td>
-              <td>跨任务表征、相似模式检索和经验对齐的能力底座。</td>
-              <td>通常不直接操作，影响 Skill 检索质量。</td>
+              <td><strong>评估与发布</strong></td>
+              <td>评估预测性能、验证工作流有效性，生成 Case 级证据解释并发布可复用流程。</td>
+              <td>查看最终报告、复盘项目、准备复用或部署时。</td>
             </tr>
           </tbody>
         </table>
       </article>
 
-      <article class="doc-block" id="three-agents" data-title="多智能体协同">
-        <h3>多智能体协同（Planner / Forecaster / Critic）</h3>
-        <p>三个智能体是严格分工的流水线，把它们看成不同岗位，而不是可互相替代的聊天窗口。</p>
+      <article class="doc-block" id="three-agents" data-title="执行角色分工">
+        <h3>执行角色分工（Planner / Forecaster / Critic）</h3>
+        <p>Planner、Forecaster、Critic 是 CLI 中的执行入口，用来承载工作流学习框架的不同阶段。把它们看成不同岗位，而不是可互相替代的聊天窗口。</p>
         <table class="doc-table">
           <thead><tr><th>智能体</th><th>核心职责</th><th>关键行为</th></tr></thead>
           <tbody>
             <tr>
               <td><strong>Planner</strong></td>
-              <td>任务定义、数据诊断、阶段编排。</td>
-              <td>并发执行定性与定量分析，输出预测前报告，生成候选 Skill。</td>
+              <td>任务规格化、价值偏好记录、规律归纳。</td>
+              <td>并发执行定性与定量分析，输出预测前报告，生成候选规律与 Skill。</td>
             </tr>
             <tr>
               <td><strong>Forecaster</strong></td>
-              <td>实验循环与策略试错。</td>
-              <td>读取历史、选配置、调用 CastFeat / CastZoo、记录反思、触发人在回路。</td>
+              <td>在线工作流适配与实验循环。</td>
+              <td>读取经验、选配置、调用 CastFeat / CastZoo、记录反思、触发人在回路。</td>
             </tr>
             <tr>
               <td><strong>Critic</strong></td>
-              <td>结果聚合与最终报告。</td>
-              <td>对比模型族表现、生成可视化与结构化结论，产出 <code>final-report.md</code>。</td>
+              <td>结果评估、证据解释与工作流发布。</td>
+              <td>对比性能、生成可视化与 Case 级解释，产出 <code>final-report.md</code>。</td>
             </tr>
           </tbody>
         </table>
       </article>
 
-      <article class="doc-block" id="agentic-workflow" data-title="智能体运行流程">
-        <h3>智能体运行流程</h3>
-        <p>CastClaw 把预测任务拆成五个强约束阶段，阶段切换由工具和文件协议控制，不依赖 LLM 自律性，因此流程可追溯、可审计。</p>
+      <article class="doc-block" id="agentic-workflow" data-title="预测工作流学习主线">
+        <h3>预测工作流学习主线</h3>
+        <p>CastClaw 把预测任务拆成可审查的学习链路：先明确价值目标，再离线学习规律和经验，随后在线适配工作流，最后评估、解释并发布可复用流程。CLI 内部仍通过阶段切换和文件协议保证流程可追溯、可审计。</p>
         <div class="workflow">
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">1</div><div class="wf-line"></div></div>
             <div class="wf-body">
-              <h4>初始化（Init）</h4>
-              <p>冻结 <code>task.json</code>，创建 <code>.forecast/</code> 工作目录。后续所有实验都绑定在同一任务定义上。</p>
+              <h4>任务协商与规格化</h4>
+              <p>冻结 <code>task.json</code>，创建 <code>.forecast/</code> 工作目录，并记录目标列、预测步长、评估指标、预算约束和人类偏好。</p>
             </div>
           </div>
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">2</div><div class="wf-line"></div></div>
             <div class="wf-body">
-              <h4>预测前分析（Pre-forecast Analysis）</h4>
-              <p>双轨并发：定性领域分析（WebSearch）+ 定量数据诊断（CastSense），融合为驱动 Skill 生成的预测前报告。</p>
+              <h4>离线规律归纳</h4>
+              <p>双轨并发：定性领域分析（WebSearch）+ 定量数据诊断（CastSense），从数据、情境和领域知识中归纳预测规律。</p>
             </div>
           </div>
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">3</div><div class="wf-line"></div></div>
             <div class="wf-body">
-              <h4>技能审核（Skill Audit）</h4>
-              <p>Planner 生成 2–4 个 Skill 候选后暂停，等待人类审核模型路线、风险与搜索空间，再进入实验循环。</p>
+              <h4>经验沉淀与 Skill 审核</h4>
+              <p>Planner 生成 2–4 个候选 Skill 后暂停，等待人类审核证据来源、风险、失败边界和适用边界。通过审核的 Skill 会成为可复用求解经验。</p>
             </div>
           </div>
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">4</div><div class="wf-line"></div></div>
             <div class="wf-body">
-              <h4>预测迭代（Forecasting）</h4>
-              <p>读取历史最佳结果 → 选配置 → CastFeat 构建表示 → CastZoo 执行训练评估 → 反思记录 → 预算检查 → 循环。若启用生成式预测推理，则基于验证集前半部分生成候选 Skill，并用验证集后半部分做接受检验；若处于 UserPrior 模式，则跳过模型搜索与训练，直接优化用户提交的预测先验。</p>
+              <h4>在线慢思考适配</h4>
+              <p>读取历史经验 → 识别当前情境 → 选配置 → CastFeat 构建表示 → CastZoo 执行训练评估 → 反思记录 → 预算检查 → 循环。若启用生成式预测推理，则基于验证集前半部分生成候选 Skill，并用验证集后半部分做接受检验；若处于 UserPrior 模式，则跳过模型搜索与训练，直接优化用户提交的预测先验。</p>
             </div>
           </div>
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">5</div><div class="wf-line"></div></div>
             <div class="wf-body">
-              <h4>后置报告（Post-forecast Report）</h4>
-              <p>Critic 汇总实验产物、性能分解与可视化说明，生成结构化的 <code>final-report.md</code>。若存在已锁定的生成式预测 Skill，则额外输出 raw / adjusted 对比与修正产物。</p>
+              <h4>评估解释与工作流发布</h4>
+              <p>Critic 汇总实验产物、性能分解与可视化说明，生成结构化的 <code>final-report.md</code>。报告会保留工作流有效性判断、Case 级证据解释，以及 raw / adjusted 等可审计产物。</p>
             </div>
           </div>
         </div>
         <div class="callout">
           <strong>设计重点</strong>
-          <p>CastClaw 的差异化不在"跑更多模型"，而在先分析、再审核、后迭代，并在关键节点允许人介入纠偏。</p>
+          <p>CastClaw 的差异化不在"跑更多模型"，而在学习什么情境下该怎样组织预测工作流，并把成功经验沉淀为下一次任务可复用的流程资产。</p>
         </div>
       </article>
 
@@ -1360,45 +1361,46 @@ Reflection / Report</code></pre></div>
 
       <article class="doc-block" id="human-loop-pause" data-title="什么是人在回路">
         <h3>什么是人在回路</h3>
-        <p>当 Forecaster 连续多轮无改善、出现异常结果，或策略与领域认知明显冲突时，系统会暂停在可恢复点等待人类反馈。这不是任务失败，而是强制校正窗口。</p>
+        <p>当候选经验连续没有新增价值、结果解释异常，或经验结论与领域认知明显冲突时，系统会暂停在可恢复点等待人类反馈。这不是任务失败，而是经验积累的校正窗口。</p>
         <div class="panel-row-3">
           <div class="panel">
             <h4>节点一：任务设定确认</h4>
             <p>确认目标列、时间列、预测步长、评估指标与资源约束，防止错误任务定义被后续持续放大。</p>
           </div>
           <div class="panel">
-            <h4>节点二：技能策略审核</h4>
-            <p>确认模型族、参数搜索空间和风险提示是否合理，避免在错误方向上生成大规模实验。</p>
+            <h4>节点二：候选经验审核</h4>
+            <p>确认 Skill 的适用条件、证据来源和失败边界是否合理，避免把低质量结论沉淀进经验库。</p>
           </div>
           <div class="panel">
-            <h4>节点三：实验停滞干预</h4>
-            <p>注入领域先验、限制无效模型族或补充数据特征假设，再恢复迭代。</p>
+            <h4>节点三：经验积累干预</h4>
+            <p>补充领域先验、标注异常 Case、修正适用边界或补充失败归因，再继续沉淀经验。</p>
           </div>
         </div>
         <div class="callout warn">
           <strong>不要把人在回路理解成"重跑按钮"</strong>
-          <p>有效的介入应当改变策略假设，例如限定模型族、缩窄搜索空间、说明异常日期，或补充外部约束。</p>
+          <p>有效的介入可改变经验积累的内容，例如补充证据、修正适用条件、说明异常日期、记录失败边界或补充外部约束。</p>
         </div>
       </article>
 
       <article class="doc-block" id="skill-audit" data-title="技能审核：如何介入">
         <h3>技能审核：如何介入</h3>
-        <p>审核 Skill 时，重点是判断"这套策略是否真的适用于当前任务"，而不是 YAML 写得是否漂亮。关注适用条件、搜索空间和风险提示三部分。</p>
+        <p>审核 Skill 时，重点是判断"这条经验是否真的适用于当前任务"，而不是 YAML 写得是否漂亮。关注适用条件、证据来源、失败边界和风险提示。</p>
         <div class="panel-row">
           <div class="panel">
             <h4>审核关注点</h4>
             <ul>
               <li>适用条件是否与数据特征匹配（强季节性、长序列、稳定频率等）。</li>
-              <li>参数搜索空间是否过宽，会浪费预算在低价值区域。</li>
+              <li>证据来源是否足以支持这条经验被复用。</li>
               <li>风险警告是否覆盖已知缺陷（小样本过拟合、分布漂移、夜间零值等）。</li>
             </ul>
           </div>
           <div class="panel">
             <h4>建议的介入方式</h4>
             <ul>
-              <li>直接删掉明显不合适的模型族，而不是让 Forecaster 用预算去证明它不合适。</li>
+
               <li>把已知的重要节假日、设备变更、政策事件写进领域说明。</li>
-              <li>缩窄学习率、窗口长度或 patch 长度等关键搜索维度。</li>
+              <li>标注这条经验适用或不适用的 Case 类型。</li>
+              <li>补充失败原因，避免重复沉淀低质量经验。</li>
             </ul>
           </div>
         </div>
@@ -1406,17 +1408,17 @@ Reflection / Report</code></pre></div>
 
       <article class="doc-block" id="intervention-timing" data-title="结果确认与干预时机">
         <h3>结果确认与干预时机</h3>
-        <p>最值得人类确认的是"方向性信息"发生变化的时候，而不是每一轮实验结果。</p>
+        <p>最值得人类确认的是"经验是否值得沉淀"发生变化的时候，而不是每一轮结果。</p>
         <div class="tag-row">
-          <span class="tag hi">连续无改善</span>
+          <span class="tag hi">经验无新增</span>
           <span class="tag hi">结果与领域常识冲突</span>
-          <span class="tag">最佳模型族切换</span>
+          <span class="tag">候选经验冲突</span>
           <span class="tag">异常日期影响明显</span>
-          <span class="tag">预算即将耗尽</span>
+          <span class="tag">适用边界不清</span>
         </div>
         <div class="callout info">
           <strong>实用原则</strong>
-          <p>如果你的介入无法改变下一轮策略，先不要介入。人在回路最有价值的地方是改变路径，而不是重复确认现状。</p>
+          <p>如果你的介入无法改变经验库中沉淀的内容，先不要介入。人在回路最有价值的地方是改变经验积累，而不是重复确认现状。</p>
         </div>
       </article>
     </section>
@@ -1435,7 +1437,7 @@ Reflection / Report</code></pre></div>
           </div>
           <div class="panel">
             <h4>异常与漂移定位</h4>
-            <p>发现突变、离群点、非平稳性和分布漂移，为风险提示与人在回路干预提供依据。</p>
+            <p>发现突变、离群点、非平稳性和分布漂移，为风险提示与经验审核提供依据。</p>
           </div>
           <div class="panel">
             <h4>结构化输出</h4>
@@ -1457,7 +1459,7 @@ Reflection / Report</code></pre></div>
         </div>
         <div class="callout">
           <strong>理解方式</strong>
-          <p>CastFeat 不是"再做一遍手工特征工程"，它把领域特征、统计特征和基础模型输入形式统一到同一条表示构建管线上。</p>
+          <p>CastFeat 不是"再做一遍手工特征工程"，它把领域特征、统计特征和基础模型输入形式统一到同一条表示构建上。</p>
         </div>
       </article>
 
@@ -1477,32 +1479,32 @@ Reflection / Report</code></pre></div>
       </article>
     </section>
 
-    <!-- ── Skill 技能库 ── -->
-    <section class="doc-section" id="skill-system" data-group-title="Skill 技能库">
-      <h2>Skill 技能库</h2>
+    <!-- ── Skill 与经验库 ── -->
+    <section class="doc-section" id="skill-system" data-group-title="Skill 与经验库">
+      <h2>Skill 与经验库</h2>
 
       <article class="doc-block" id="skill-what" data-title="Skill 是什么">
         <h3>Skill 是什么</h3>
-        <p>Skill 是"经过分析与审核的策略模板"，描述某类数据在什么条件下适合什么模型族、搜索空间、特征模板，以及有哪些已知风险。它是系统持续进化的关键资产层。</p>
+        <p>Skill 是"经过分析、验证与审核的策略模板"，描述某类情境在什么条件下适合什么模型族、工具组合、搜索空间、特征模板，以及有哪些已知风险。它既是可执行策略，也是 CastClaw 沉淀求解经验和发布可复用工作流的关键资产。</p>
         <div class="panel-row-3">
           <div class="panel">
             <h4>承接历史经验</h4>
-            <p>把实验中验证过的路线沉淀下来，不是每次从空白开始。</p>
+            <p>把验证过的规律、工具调用路线和失败边界沉淀下来，不是每次从空白开始。</p>
           </div>
           <div class="panel">
             <h4>指导未来任务</h4>
-            <p>为新任务缩小模型空间，让 Forecaster 从更合理的起点出发。</p>
+            <p>为新任务缩小模型空间和工作流选择空间，让 Forecaster 从更合理的起点出发。</p>
           </div>
           <div class="panel">
             <h4>允许人类把关</h4>
-            <p>先审核再使用，使系统进化建立在可信策略之上，而不是自动累积噪声。</p>
+            <p>先审核再使用，使系统进化建立在可信经验之上，而不是自动累积噪声。</p>
           </div>
         </div>
       </article>
 
       <article class="doc-block" id="skill-structure" data-title="Skill 文件结构">
         <h3>Skill 文件结构</h3>
-        <p>Skill 使用 YAML 表示，核心是适用条件、模型族、搜索空间、特征模板和风险项。</p>
+        <p>Skill 使用 YAML 表示，核心是适用条件、模型族、搜索空间、特征模板、风险项和经验备注。你可以把它理解为“某类 Case 的可复用工作流片段”。</p>
         <div class="code-block"><pre><code>name: deep_learning_periodic
 applicable_conditions:
   - 强季节性数据
@@ -1518,21 +1520,21 @@ risks:
 domain_notes: ""</code></pre></div>
         <div class="callout info">
           <strong>审核重点</strong>
-          <p>先看 <code>applicable_conditions</code> 和 <code>risks</code>，这两部分最直接决定当前任务是否该用这份 Skill。</p>
+          <p>先看 <code>applicable_conditions</code> 和 <code>risks</code>，再看是否有验证证据支持这条路线。这三部分最直接决定当前任务是否该用这份 Skill。</p>
         </div>
       </article>
 
       <article class="doc-block" id="skill-review" data-title="如何审核与沉淀 Skill">
         <h3>如何审核与沉淀 Skill</h3>
         <ol>
-          <li>Planner 基于预测前分析草拟 2–4 个候选 Skill。</li>
+          <li>Planner 基于预测前分析和候选规律草拟 2–4 个候选 Skill。</li>
           <li>人类审核模型路线、适用条件和风险提示，必要时直接编辑内容。</li>
           <li>通过审核的 Skill 进入 <code>.forecast/skills/</code>，供当前与相似任务复用。</li>
-          <li>随积累持续演化，逐步形成团队级策略资产。</li>
+          <li>随积累持续演化，逐步形成团队级经验库和工作流资产。</li>
         </ol>
         <div class="callout">
           <strong>审核原则</strong>
-          <p>宁可保留少量高质量 Skill，也不要囤积大量低信号策略。Skill 库的价值在于可信，而不是数量。</p>
+          <p>宁可保留少量高质量 Skill，也不要囤积大量低信号策略。Skill 库的价值在于可信、可验证、可复用，而不是数量。</p>
         </div>
       </article>
 
@@ -1555,7 +1557,7 @@ domain_notes: ""</code></pre></div>
     <!-- ── 使用示例 ── -->
     <section class="doc-section" id="examples" data-group-title="使用示例">
       <h2>使用示例</h2>
-      <p style="margin-bottom:28px;color:var(--muted);font-size:0.93rem;">三个案例分别覆盖负荷、光伏和金融时序，帮助你建立"不同数据形态对应不同策略"的感觉。重点看数据特征、推荐 Skill 与人在回路介入点。</p>
+      <p style="margin-bottom:28px;color:var(--muted);font-size:0.93rem;">三个案例分别覆盖负荷、光伏和金融时序，帮助你建立"不同数据形态对应不同经验"的感觉。重点看数据特征、推荐 Skill 与人在回路如何帮助沉淀经验。</p>
 
       <article class="doc-block" id="example-load" data-title="电力负荷预测">
         <h3>电力负荷预测（load.csv）</h3>
@@ -1578,15 +1580,15 @@ domain_notes: ""</code></pre></div>
 
       <article class="doc-block" id="example-solar" data-title="光伏发电预测">
         <h3>光伏发电预测</h3>
-        <p>光伏序列同时具备强日周期、夜间恒零和天气敏感性，是"需要领域知识介入"的典型案例。</p>
+        <p>光伏序列同时具备强日周期、夜间恒零和天气敏感性，是"需要领域知识参与经验沉淀"的典型案例。</p>
         <div class="panel-row">
           <div class="panel">
             <h4>数据特征与诊断重点</h4>
             <p>GEFCom2014 Solar Track 小时级数据。CastSense 应重点识别夜间零值、天气突变和季节性变化。</p>
           </div>
           <div class="panel">
-            <h4>推荐策略与人在回路</h4>
-            <p>从 statistical（Theta）+ foundation（TimesFM、Moirai）入手；人在回路重点在阴雨连续日与天气异常日的人类标注。</p>
+            <h4>推荐经验与人在回路</h4>
+            <p>从 statistical（Theta）+ foundation（TimesFM、Moirai）经验路线入手；人在回路重点在阴雨连续日与天气异常日的人类标注，帮助明确经验适用边界。</p>
           </div>
         </div>
       </article>
@@ -1600,8 +1602,8 @@ domain_notes: ""</code></pre></div>
             <p><code>statistical + foundation ensemble</code> 的保守组合，避免把所有预算压在单一路线上。</p>
           </div>
           <div class="panel">
-            <h4>人类介入重点</h4>
-            <p>标注财报、政策发布或宏观冲击等重大事件日期，重点查看 CastSense 的分布漂移与结构断点提醒。</p>
+            <h4>人类经验补充重点</h4>
+            <p>标注财报、政策发布或宏观冲击等重大事件日期，重点查看 CastSense 的分布漂移与结构断点提醒，并决定这些事件是否应进入经验库。</p>
           </div>
         </div>
       </article>
@@ -1619,8 +1621,8 @@ domain_notes: ""</code></pre></div>
             <p>修改 <code>castclaw.json</code> 中的模型配置，或切换对应环境变量即可。</p>
           </div>
           <div class="panel">
-            <h4>人在回路暂停后如何继续？</h4>
-            <p>在 Forecaster 标签页输入反馈并提交，系统会在当前上下文中继续，不需要从头初始化。</p>
+            <h4>人在回路干预后如何继续？</h4>
+            <p>在 Forecaster 标签页输入关于证据、适用边界或失败原因的反馈并提交，系统会在当前上下文中继续沉淀经验，不需要从头初始化。</p>
           </div>
           <div class="panel">
             <h4>Skill 文件在哪里管理？</h4>
@@ -1661,7 +1663,7 @@ domain_notes: ""</code></pre></div>
 
     <div class="footer-note">
       这份文档站按"先上手，再理解系统，再查细节"的顺序组织。第一次演示 CastClaw 建议直接从
-      <a href="#first-forecast">第一个预测任务</a> 和 <a href="#agentic-workflow">智能体运行流程</a> 开始。
+      <a href="#first-forecast">第一个预测任务</a> 和 <a href="#agentic-workflow">预测工作流学习主线</a> 开始。
     </div>
   </main>
 

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CastClaw — 人机协同时序预测 AI 智能体框架</title>
-  <meta name="description" content="CastClaw：面向时间序列预测的人机协同 AI 智能体框架，编排 Planner、Forecaster、Critic 三大智能体，支持 30+ 模型族、Agentic Workflow、技能生成与人在回路暂停机制。" />
+  <title>CastClaw — 预测工作流学习框架</title>
+  <meta name="description" content="CastClaw：面向时间序列预测的工作流学习框架，贯通价值感知交互、规律学习、经验沉淀、在线慢思考推理、工作流验证与发布。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -534,8 +534,8 @@
     </div>
     <h1 class="hero-clickable">CastClaw<span class="hl">（观星阁）</span></h1>
     <p class="subtitle hero-clickable">
-      自主交互与人机协同双驱的新一代时间序列预测智能体<br>
-      多智能体协同、插件化能力生态、Skill 驱动策略层、生成式预测推理与预测先验优化
+      面向时间序列预测的工作流学习框架<br>
+      价值感知交互、规律-经验双层学习、在线慢思考推理、工作流验证发布与 Case 级证据化解释
     </p>
     <div class="btn-row">
       <a class="btn btn-primary" href="https://github.com/ustc-time-series/CastClaw" target="_blank" rel="noopener">
@@ -545,7 +545,7 @@
         GitHub
       </a>
       <a class="btn btn-secondary" href="docs/">使用文档</a>
-      <span class="btn btn-disabled">技术文档 Coming Soon</span>
+      <a class="btn btn-secondary" href="assets/CastClaw.pdf" target="_blank" rel="noopener">技术报告 PDF</a>
     </div>
   </div>
 </header>
@@ -557,10 +557,10 @@
     <a href="#demo-video">演示视频</a>
     <a href="#overview">项目概览</a>
     <a href="#interaction-modes">交互模式</a>
-    <a href="#key-highlights">关键特色</a>
-    <a href="#system-design">系统架构</a>
+    <a href="#key-highlights">创新亮点</a>
+    <a href="#system-design">框架设计</a>
     <a href="#plugin-toolbox">工具插件</a>
-    <a href="#workflow">智能工作流</a>
+    <a href="#workflow">学习主线</a>
     <a href="#quickstart">使用指南</a>
     <a href="#related">相关项目</a>
     <a href="#about">关于我们</a>
@@ -574,7 +574,7 @@
     <div class="example-showcase">
       <div class="example-card">
         <span class="example-badge">Product Demo</span>
-        <p>下面的视频展示了 CastClaw 在真实终端工作流中的使用方式，包括任务建立、智能体协同切换，以及预测流程中的关键交互环节。注意：演示视频为静音版，播放时没有声音。你也可以直接下载原始压缩版演示文件 <a href="assets/castclaw-demo.mp4" download><code>castclaw-demo.mp4</code></a>。</p>
+        <p>下面的视频展示了 CastClaw 在真实终端工作流中的使用方式，包括任务规格化、工具调用、预测执行、结果评估和人类反馈等关键环节。注意：演示视频为静音版，播放时没有声音。你也可以直接下载原始压缩版演示文件 <a href="assets/castclaw-demo.mp4" download><code>castclaw-demo.mp4</code></a>。</p>
         <video class="demo-video" controls preload="metadata" playsinline muted>
           <source src="assets/castclaw-demo.mp4" type="video/mp4" />
           你的浏览器暂不支持视频播放，请直接下载演示文件查看。
@@ -589,7 +589,7 @@
   <div class="container">
     <div class="tldr">
       <strong>一句话介绍：</strong>
-      CastClaw 是专为时间序列预测打造的<strong>自主交互式智能体框架</strong>。该框架采用 Planner、Forecaster 和 Critic 三位一体的架构，并以 CastRuntime、CastSkill 与插件能力生态共同驱动初始化、预测前分析、技能审核、实验循环及后置报告的全链路 Agentic Workflow。通过自动化执行繁琐的实验与分析流程，并配合“人在回路”机制进行关键节点把控，CastClaw 实现了 AI 执行力与人类判断力的深度融合。当前版本进一步支持<strong>生成式预测推理</strong>与<strong>用户自主提交预测先验</strong>，可在严格验证约束下对已有预测结果进行可审计的二次优化。
+      CastClaw 是面向时间序列预测的<strong>工作流学习框架</strong>。它不只追求单次预测精度，而是把预测任务组织为“价值感知交互 → 规律学习 → 经验沉淀 → 在线慢思考推理 → 工作流验证与发布”的闭环过程，让系统能够从人类反馈、历史 Case、验证集证据和工具执行结果中学习可复用的预测工作流。
     </div>
 
     <h2 class="section-title">项目概览</h2>
@@ -600,10 +600,10 @@
       当前时序预测正面临一个显著的困局：模型虽然在基准数据集上不断刷新精度指标，但在真实复杂环境中却往往表现出脆弱性。一方面，<strong><u>模型缺乏对情境信息的深度理解，难以应对分布漂移与突发事件</u></strong>；另一方面，<strong><u>预测过程高度“黑箱化”，缺乏可解释的推理路径，也无法在关键决策节点引入人类经验与领域知识</u></strong>。这种<strong><u>“单次前向推理”</u></strong>的范式，使得模型难以像人类专家一样，通过分析、判断与反思不断修正预测结果。
     </p>
     <p>
-      针对这一挑战，中国科学技术大学认知智能全国重点实验室团队提出了一种全新的范式：<strong><u>基于自主决策与人机协同的时序预测智能体 CastClaw</u></strong>。该方法不再将预测视为一次性输出，而是将其重构为一个“感知-表示-行动-反思-进化”的多轮交互与动态演化过程。CastClaw 通过构建可交互的预测环境，使模型能够主动调用插件能力、分析数据结构、识别关键变化模式，从而逐步逼近更可靠的未来趋势。
+      针对这一挑战，中国科学技术大学认知智能全国重点实验室团队提出 CastClaw：一种<strong><u>面向预测工作流学习的人机协同框架</u></strong>。该方法不再把预测视为一次性模型输出，而是将其重构为“任务协商、规律归纳、经验沉淀、在线推理、证据评估”的连续学习过程。系统会先通过价值感知交互澄清目标和约束，再从训练集与验证集分别学习预测规律和求解经验，最终在测试场景中进行慢思考式工作流适配。
     </p>
     <p>
-      进一步地，CastClaw 突破了传统模型“被动响应”的局限，具备与环境进行自主交互的能力。它以 <strong>CastRuntime</strong> 作为执行核心，以 <strong>CastSkill</strong> 作为策略层，再通过 <strong>CastSense</strong>、<strong>CastFeat</strong>、<strong>CastZoo</strong> 等插件能力模块完成时序诊断、表示构建与模型编排；在关键节点上，还能够引入人类专家的判断，实现人机协同决策。这种从“模型预测”迈向“智能体决策”的转变，或将为时间序列研究打开一条通往认知智能的新路径。
+      进一步地，CastClaw 将“世界知识 + 求解知识”统一纳入工作流学习：规律归纳层负责从数据分析、领域知识和预测模型工具中生成候选预测规律；经验沉淀层负责从推理轨迹、工具调用结果与工作流评分中提炼可复用经验。在线阶段，Agent 通过检索规律、经验与人类反馈，实例化候选工作流，调用 CastSense、CastFeat、CastZoo、Evaluator 等工具进行预测，并在一致性检查与反思迭代后输出最终结果。
     </p>
   </div>
 </section>
@@ -654,22 +654,22 @@
           <span class="highlight-index" style="background:#117a65;">02</span>
           <h3 class="highlight-title">认知伴随式交互（Cognitive Accompaniment）</h3>
         </div>
-        <p><strong>关键词：边做边想 → 实时介入 → 人机共建预测。</strong>这是一种"人在回路（Human-in-the-loop）"的动态交互，Agent 将内部思考逻辑和中间状态实时透明地展示给用户，并允许随时中断修正。</p>
+        <p><strong>关键词：边做边想 → 经验审核 → 人机共建预测。</strong>这是一种"人在回路（Human-in-the-loop）"的动态交互，Agent 将内部思考逻辑和经验沉淀过程实时透明地展示给用户，并允许用户修正候选经验的适用边界。</p>
         <div class="feature-grid">
           <div class="feature-card">
             <div class="feature-icon">📡</div>
-            <h4>透明化流式输出</h4>
-            <p>在数据清洗、特征提取、模型训练阶段，实时输出中间特征图（如注意力热力图），让执行过程始终可观测。</p>
+            <h4>透明化经验链路</h4>
+            <p>在情境识别、候选规律生成、工作流评分和证据解释阶段，实时展示中间依据，让经验如何形成始终可观测。</p>
           </div>
           <div class="feature-card">
             <div class="feature-icon">✋</div>
-            <h4>即时介入（Interruptible）</h4>
-            <p>用户发现平滑窗口（Window Size）设置不合理时，可立即中断并在监控面板上修正参数，Agent 调整后继续执行。</p>
+            <h4>经验边界修正</h4>
+            <p>用户发现某条经验不适用于当前情境时，可补充领域证据、标注异常 Case 或调整适用条件，Agent 据此更新经验链。</p>
           </div>
           <div class="feature-card">
             <div class="feature-icon">🔁</div>
-            <h4>反馈进化（RLAIF）</h4>
-            <p>记录用户在执行过程中的点赞 / 踩 / 修改操作，作为基于 AI 反馈的强化学习信号，持续优化 Agent 的决策偏好。</p>
+            <h4>反馈沉淀</h4>
+            <p>记录用户对候选规律、失败归因和发布结论的反馈，作为经验库更新信号，持续优化后续工作流选择。</p>
           </div>
         </div>
         <div class="pill-links" style="margin-top:18px;">
@@ -697,8 +697,8 @@
           <td><strong>认知伴随式</strong></td>
           <td>协同开发者</td>
           <td>智能搭档</td>
-          <td>监控、反馈、即时调整</td>
-          <td>动态过程可视化 + 迭代结果</td>
+          <td>审核、反馈、经验沉淀</td>
+          <td>经验链路可视化 + 可复用工作流</td>
         </tr>
       </tbody>
     </table>
@@ -709,37 +709,37 @@
 <!-- ═══════════════════ KEY HIGHLIGHTS ═══════════════════ -->
 <section id="key-highlights">
   <div class="container">
-    <h2 class="section-title">关键特色介绍</h2>
+    <h2 class="section-title">创新亮点</h2>
     <div class="tldr">
       <strong>核心结构：</strong>
-      CastClaw 的核心竞争力并非功能的简单堆叠，而是由<strong>多智能体协同</strong>、<strong>人机深度融合</strong>、<strong>Skill 驱动策略层</strong>、<strong>插件化能力生态</strong>与<strong>生成式预测推理</strong>共同驱动。它们分别定义了系统的任务组织方式、人类智慧的介入路径、能力调度策略、从感知到模型调用的执行闭环，以及面向预测结果再优化的证据化推理机制。
+      CastClaw 的创新点围绕一条主线展开：先通过价值感知交互明确任务，再离线学习可迁移规律与求解经验，随后在在线阶段慢思考式适配工作流，最终用证据链验证、解释和发布结果。它关注的不只是“哪个模型更准”，而是“什么情境下该怎样组织预测工作流”。
     </div>
 
     <div class="highlight-stack">
       <div id="agents" class="highlight-panel highlight-panel-agent">
         <div class="highlight-head">
           <span class="highlight-index">01</span>
-          <h3 class="highlight-title">多智能体协同</h3>
+          <h3 class="highlight-title">价值感知交互</h3>
         </div>
-        <p>CastClaw 通过三个职责分明的专属智能体协同工作，使用 <code>Ctrl+1</code> / <code>Ctrl+2</code> / <code>Ctrl+3</code> 在 CLI 中切换。每个智能体维护独立上下文，通过 <code>.forecast/</code> 文件协议共享状态。</p>
+        <p>CastClaw 在任务开始时主动识别目标、约束、偏好和不确定点，只在高价值节点发起追问或请求确认。交互结果会被写入任务规格和反馈记忆，成为后续规律学习与工作流选择的价值依据。</p>
         <div class="agent-grid">
 
           <div class="agent-card">
-            <div class="agent-icon">🗂️</div>
-            <h4>Planner（规划者）</h4>
-            <p>负责任务定义、数据诊断与阶段编排。并发启动两条分析轨道：定性域研究（WebSearch）+ 定量数据统计，融合为预测前报告。生成 2–4 个技能文件供人类审核确认。</p>
+            <div class="agent-icon">❓</div>
+            <h4>按需提问</h4>
+            <p>围绕预测对象、时间粒度、外部变量等提问，避免过度打扰，也避免任务定义缺口进入后续流程。</p>
           </div>
 
           <div class="agent-card">
-            <div class="agent-icon">🔬</div>
-            <h4>Forecaster（预测者）</h4>
-            <p>驱动迭代实验循环——读取最佳结果与失败历史，从技能中选取模型配置，调用 <code>generate_model</code> 训练评估，进行反思记录，管理实验预算。停滞时触发人在回路暂停，等待人类反馈。</p>
+            <div class="agent-icon">🧭</div>
+            <h4>偏好建模</h4>
+            <p>把业务偏好转成可执行约束，例如精度优先、稳定性优先、可解释性优先或特定模型禁用。</p>
           </div>
 
           <div class="agent-card">
-            <div class="agent-icon">📊</div>
-            <h4>Critic（评审者）</h4>
-            <p>读取所有实验产物，生成各模型族最佳结果对比、按时序特征的性能分解、可视化脚本，以及结构化的最终 Markdown 预测报告，输出至 <code>.forecast/reports/final-report.md</code>。</p>
+            <div class="agent-icon">🧾</div>
+            <h4>反馈记忆</h4>
+            <p>将人类修正、拒绝理由和结果偏好沉淀为记忆，使相似任务能更快进入合适的工作流。</p>
           </div>
 
         </div>
@@ -748,27 +748,27 @@
       <div id="human-loop" class="highlight-panel highlight-panel-human-loop">
         <div class="highlight-head">
           <span class="highlight-index">02</span>
-          <h3 class="highlight-title">人机高效协作</h3>
+          <h3 class="highlight-title">规律-经验双层学习</h3>
         </div>
-        <p>CastClaw 不追求让人类完全退出预测流程，而是在<strong>关键决策与关键结果</strong>上保留人类确认。研究者可以在高价值节点注入领域知识、修正偏差并确认下一步策略，从而获得更高精度、更可信的预测结果。</p>
+        <p>CastClaw 将离线学习拆成两条互补路径：规律归纳层从训练数据、领域知识和模型工具中抽取“世界知识”；经验沉淀层从验证过程、推理轨迹和工作流评分中抽取“求解知识”。两类知识共同决定在线阶段怎么推理、怎么调用工具、怎么迭代。</p>
         <div class="feature-grid">
 
           <div class="feature-card">
-            <div class="feature-icon">🧭</div>
-            <h4>任务设定确认</h4>
-            <p>在初始化阶段，由人类确认目标列、时间列、预测步长、评估指标和资源约束，避免任务定义偏差在后续实验中被持续放大。</p>
+            <div class="feature-icon">📚</div>
+            <h4>规律归纳层</h4>
+            <p>基于数据分析、领域知识和预测模型工具，生成候选预测规律，回答“这个序列可能遵循什么模式”。</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon">✅</div>
-            <h4>关键策略审核</h4>
-            <p>Planner 生成技能草案后，研究者会审核模型族选择、参数搜索空间与风险警告，确保实验策略符合数据特征与领域先验。</p>
+            <div class="feature-icon">🧠</div>
+            <h4>经验沉淀层</h4>
+            <p>记录推理轨迹、工具调用结果、工作流评分和失败原因，提炼“面对这类 Case 应该怎么解”。</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon">🎯</div>
-            <h4>关键结果确认</h4>
-            <p>当实验停滞、结果显著变化或生成候选最优方案时，人类对关键结果进行确认与干预，帮助系统纠偏并指导下一轮更高精度的预测探索。</p>
+            <div class="feature-icon">🔗</div>
+            <h4>双层知识融合</h4>
+            <p>在线推理时同时检索规律与经验，让系统既知道“数据像什么”，也知道“过去怎样处理更可靠”。</p>
           </div>
 
         </div>
@@ -777,72 +777,97 @@
       <div id="skill-evolution" class="highlight-panel highlight-panel-skill">
         <div class="highlight-head">
           <span class="highlight-index">03</span>
-          <h3 class="highlight-title">基于 Skill 的持续进化</h3>
+          <h3 class="highlight-title">验证驱动工作流归纳</h3>
         </div>
-        <p>CastClaw 将 Planner 生成并经人类审核的技能文件视为可以长期积累的<strong>系统经验</strong>。这些 Skill 不只服务于单次实验，而是会持续沉淀模型选择策略、参数搜索空间、适用条件与风险提示；随着 Skill 的不断积累，CastClaw 可以在新任务中更快启动、更准决策，并逐步实现面向预测任务的自主进化。</p>
+        <p>CastClaw 不把经验停留在自然语言总结里，而是通过验证集把候选规律、工具组合和工作流实例进行筛选、评分与归纳。只有通过验证的工作流经验才会进入可复用链路，降低离线试错向在线应用迁移时的风险。</p>
         <div class="feature-grid">
           <div class="feature-card">
-            <div class="feature-icon">🧠</div>
-            <h4>技能资产沉淀</h4>
-            <p>将模型配置、适用数据特征、参数搜索空间和风险警告写成结构化技能文件，避免经验只停留在单次实验里。</p>
+            <div class="feature-icon">🧪</div>
+            <h4>候选规律验证</h4>
+            <p>对训练阶段归纳出的规律进行验证集检验，筛掉偶然相关、过拟合或与业务约束冲突的规则。</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon">✅</div>
-            <h4>人类审核后沉淀</h4>
-            <p>Skill 不会直接自动进入实验循环，而是先经过人类确认，再作为可信策略被长期保留，确保系统的后续进化建立在高质量经验之上。</p>
+            <div class="feature-icon">🧩</div>
+            <h4>工作流实例化</h4>
+            <p>把“规律、经验、工具、模型、评估指标”组合成候选工作流，形成可执行而不是只可描述的策略。</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon">🔁</div>
-            <h4>随积累持续进化</h4>
-            <p>面对相似的数据形态、预测步长或资源约束时，CastClaw 可以从已有 Skill 出发完成更快的任务初始化、更合理的实验设计和更高精度的预测探索，表现出随经验积累而增强的自主进化能力。</p>
+            <div class="feature-icon">📈</div>
+            <h4>评分与归纳</h4>
+            <p>依据预测性能、稳定性、成本、可解释性和人类反馈对工作流评分，沉淀为后续任务可检索的经验链。</p>
           </div>
         </div>
 
-        <h3 class="sub-title">可持续积累的 Skill 内容</h3>
+        <h3 class="sub-title">可持续积累的经验内容</h3>
         <div class="pill-links">
-          <span class="pill pill-out">模型选择策略</span>
-          <span class="pill pill-out">参数搜索空间</span>
-          <span class="pill pill-out">特征模板</span>
-          <span class="pill pill-out">适用条件说明</span>
-          <span class="pill pill-out">风险与失败经验</span>
-          <span class="pill pill-out">领域先验备注</span>
+          <span class="pill pill-out">候选预测规律</span>
+          <span class="pill pill-out">工具调用轨迹</span>
+          <span class="pill pill-out">工作流评分</span>
+          <span class="pill pill-out">失败归因</span>
+          <span class="pill pill-out">人类反馈</span>
+          <span class="pill pill-out">Case 证据链</span>
         </div>
       </div>
 
       <div id="prediction-reasoning" class="highlight-panel highlight-panel-human-loop">
         <div class="highlight-head">
           <span class="highlight-index">04</span>
-          <h3 class="highlight-title">生成式预测推理与预测先验优化</h3>
+          <h3 class="highlight-title">在线慢思考推理与工作流适配</h3>
         </div>
-        <p>CastClaw 不只生成原始预测，还可以在严格防止数据泄露的前提下，对已有预测结果进行可验证的生成式推理修正。系统先在验证集前半部分提取可执行的候选 Skill，再只用验证集后半部分做接受检验；测试集只应用已经锁定的规则，不参与规则制定。</p>
+        <p>在线阶段，CastClaw 面对新的测试情境不会直接套用固定模型，而是先识别情境、检索经验/人类反馈，再实例化工作流并调用工具链进行预测。Agent Loop 会持续做一致性检查、反思校正和内部迭代，直到形成最终预测结果。</p>
         <div class="feature-grid">
           <div class="feature-card">
-            <div class="feature-icon">🧪</div>
-            <h4>验证驱动的推理 Skill</h4>
-            <p>候选修正规则必须来自验证集前半部分的诊断证据，并经过验证集后半部分整体指标检验后才能锁定，避免凭直觉直接改测试集。</p>
+            <div class="feature-icon">🔍</div>
+            <h4>情境识别</h4>
+            <p>判断当前测试样本的趋势、周期、外部事件和与历史 Case 的相似性，确定该调用哪些规律与经验。</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon">📥</div>
-            <h4>用户预测先验优化</h4>
-            <p>当用户已有一份完整预测先验数据集时，可进入 UserPrior 流程，跳过模型 Zoo 搜索与小模型训练，直接对已有预测结果做深度预测推理。</p>
+            <div class="feature-icon">🛠️</div>
+            <h4>工具编排与初始预测</h4>
+            <p>按工作流调用 CastSense、CastFeat、CastZoo、Evaluator、Visualizer 等工具，完成分析、建模、评估和可视化。</p>
           </div>
 
           <div class="feature-card">
-            <div class="feature-icon">🧾</div>
-            <h4>原始与修正结果分离</h4>
-            <p>系统将 raw prediction 与 adjusted prediction 分开保存、分开评估，并记录规则来源、验证结果与泄露审计信息，便于复盘和对外汇报。</p>
+            <div class="feature-icon">🔁</div>
+            <h4>反思校正</h4>
+            <p>对预测结果做规律一致性检查、误差归因和内部迭代，必要时回到工作流实例化环节重新选择路线。</p>
           </div>
         </div>
 
         <div class="pill-links">
-          <span class="pill pill-out">validation-front 规则证据</span>
-          <span class="pill pill-out">validation-back 接受检验</span>
-          <span class="pill pill-out">UserPrior</span>
-          <span class="pill pill-out">raw / adjusted 双轨输出</span>
-          <span class="pill pill-out">测试集泄露审计</span>
+          <span class="pill pill-out">情境识别</span>
+          <span class="pill pill-out">规律/经验/反馈检索</span>
+          <span class="pill pill-out">工作流实例化</span>
+          <span class="pill pill-out">Agent Loop</span>
+          <span class="pill pill-out">最终预测结果</span>
+        </div>
+      </div>
+
+      <div id="evidence-release" class="highlight-panel highlight-panel-skill">
+        <div class="highlight-head">
+          <span class="highlight-index">05</span>
+          <h3 class="highlight-title">结果评估、证据化解释与工作流发布</h3>
+        </div>
+        <p>CastClaw 的输出不是孤立数值，而是“候选工作流 + 最终预测 + 证据链”。系统会评估预测性能、验证工作流有效性，并用 Case 级证据说明预测理由，最终发布经验证的可部署工作流。</p>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h4>预测性能评估</h4>
+            <p>从误差、稳定性、成本和业务指标多角度评估结果，避免只依赖单一排行榜式指标。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">✅</div>
+            <h4>工作流有效性验证</h4>
+            <p>验证工作流是否真的带来收益，是否可部署，并记录失败边界。</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <h4>可部署工作流</h4>
+            <p>将通过验证的流程发布为可复用工作流，为下一批任务提供起点。</p>
+          </div>
         </div>
       </div>
     </div>
@@ -852,84 +877,84 @@
 <!-- ═══════════════════ SYSTEM DESIGN ═══════════════════ -->
 <section id="system-design">
   <div class="container">
-    <h2 class="section-title">系统概要设计</h2>
+    <h2 class="section-title">预测工作流学习框架设计</h2>
     <div class="tldr">
       <strong>设计目标：</strong>
-      CastClaw 旨在为研究者打造一个开放的<strong>插件化预测工作台</strong>，而非封闭的“黑盒自动预测器”。系统以 CastRuntime 为执行环境、以 CastSkill 为策略层、以插件生态承接具体能力调用，再由人类在关键节点进行逻辑确认与策略校正，在降低科研负载的同时显著提升预测结果的精度与可信度。
+      CastClaw 旨在学习“如何完成预测任务”的工作流，而不是只封装一个预测模型。框架通过离线规律学习、经验沉淀和在线慢思考推理，把训练集、验证集、测试情境、人类反馈与工具执行结果连接成一个可验证、可解释、可发布的闭环。
     </div>
 
     <div class="feature-grid">
 
       <div class="feature-card">
-        <div class="feature-icon">🖥️</div>
-        <h4>终端优先工作台</h4>
-        <p>采用 CLI 作为主要交互界面，不引入额外 Web 服务。研究者可以在终端里直接切换智能体、查看状态、审核结果，保持研究流程的轻量与高效。</p>
-      </div>
-
-      <div class="feature-card">
         <div class="feature-icon">🤝</div>
-        <h4>关键节点人类确认</h4>
-        <p>在任务设定、技能审核、实验停滞处理和关键结果判断等节点保留人类确认，把领域知识注入流程，避免自动化系统在错误方向上持续放大偏差。</p>
+        <h4>价值感知交互</h4>
+        <p>从任务规格化、约束偏好建模、不确定性检测和主动问题生成开始，把人的判断转化为后续学习流程可使用的价值信号。</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">📂</div>
-        <h4>透明可追溯流程</h4>
-        <p>通过 <code>.forecast/</code> 工作目录协议组织任务状态、实验记录与报告产物，让多智能体协作过程始终可见、可审查、可复现，而不是隐藏在不可解释的内部状态里。</p>
+        <div class="feature-icon">📚</div>
+        <h4>规律与经验双层学习</h4>
+        <p>训练集侧归纳预测规律，验证集侧沉淀求解经验，用“世界知识 + 求解知识”共同支撑在线工作流适配。</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🚀</div>
+        <h4>验证发布闭环</h4>
+        <p>在线推理得到的工作流和预测结果会经过性能评估、有效性验证和 Case 级证据化解释，再发布为可部署流程。</p>
       </div>
 
     </div>
 
     <p style="margin-top: 20px;">
-      这套设计的核心取舍是：<strong>自动化负责效率，人类负责关键判断</strong>。CastClaw 不是替代研究者，而是帮助研究者更系统地组织预测流程、探索模型空间并沉淀可复用经验。
+      这套设计的核心取舍是：<strong>先学习可复用流程，再让流程服务具体预测</strong>。CastClaw 不是简单替代研究者选择模型，而是帮助研究者把判断、规律、经验和验证结果沉淀成可以迁移的预测工作流。
     </p>
 
-    <h3 id="architecture" class="sub-title">系统架构</h3>
+    <h3 id="architecture" class="sub-title">框架总览</h3>
     <p>
-      CastClaw 的系统架构可以概括为四层：<strong>CastRuntime</strong> 负责执行循环与上下文管理，<strong>CastSkill</strong> 负责技能检索与策略决策，<strong>Plugin Ecosystem</strong> 承担 CastSense / CastFeat / CastZoo 的具体能力调用，而 <strong>TimeEmbed</strong> 则提供统一表征、检索与经验对齐的基础能力支撑。
+      CastClaw 的主线可以概括为四个阶段：<strong>任务协商与价值感知交互</strong>负责把用户目标转成结构化任务；<strong>离线规律学习与经验沉淀</strong>负责从训练集和验证集中分别学习预测规律与求解经验；<strong>在线慢思考推理与工作流适配</strong>负责面向测试情境检索知识、实例化工作流并调用工具预测；<strong>结果评估与工作流发布</strong>负责验证效果、解释原因并沉淀可部署流程。
     </p>
-    <img src="assets/architecture.jpeg" alt="CastClaw 系统架构" class="arch-img" onerror="this.style.display='none'" />
+    <img src="assets/architecture-1.jpeg" alt="CastClaw 预测工作流学习框架" class="arch-img" onerror="this.style.display='none'" />
     <p style="margin-top: 20px;">
-      <strong>关键设计决策：</strong>阶段转换由 <code>forecast_state</code> 工具在文件系统层强制执行，而非依赖智能体自律性。即使 LLM 产生幻觉也无法跳过阶段，确保流程可靠性。<code>CAST.md</code> 约束文件在每次 Agent 初始化时自动注入上下文，实现项目级行为约束的持久化。
+      <strong>关键设计决策：</strong>框架将训练集、验证集和测试集承担的角色显式区分：训练集用于规律归纳，验证集用于经验沉淀与工作流筛选，测试集用于在线情境适配和最终评估。这样可以减少凭直觉改结果的风险，使每一次工作流发布都具备证据链。
     </p>
 
-    <h3 class="sub-title">核心特性</h3>
+    <h3 class="sub-title">框架中的关键能力</h3>
     <div class="feature-grid">
 
       <div class="feature-card">
         <div class="feature-icon">🤝</div>
-        <h4>人在回路暂停</h4>
-        <p>实验停滞或连续无改善时，Forecaster 自动暂停并请求人类反馈。你的领域知识将被记录为专家输入，重置无改善计数器后继续探索。</p>
+        <h4>主动问题生成</h4>
+        <p>检测任务缺口和高风险决策点，主动生成问题，把用户注意力集中在最影响结果的位置。</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">🔍</div>
-        <h4>双轨预测前分析</h4>
-        <p>并发运行定性域研究（网络调研行业背景、风险因素）与定量数据诊断（由 CastSense 完成趋势、季节性、异常值与分布变化分析），融合为驱动后续技能与插件路线选择的分析报告。</p>
+        <h4>候选预测规律</h4>
+        <p>从数据分析、领域知识和模型工具中提炼候选规律，形成可被检索、验证和解释的规则资产。</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">🎯</div>
-        <h4>技能文件审核</h4>
-        <p>Planner 基于分析报告生成结构化技能文件，含适用条件、参数搜索空间与风险警告。人类确认通过后才进入实验阶段，避免盲目跑模型。</p>
+        <h4>工作流实例化</h4>
+        <p>根据当前情境把规律、经验、工具和模型组合成候选工作流，而不是固定套用单一模型流程。</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">💰</div>
-        <h4>实验预算管理</h4>
-        <p>通过 <code>CAST.md</code> 或默认值设定最大实验次数、连续无改善阈值与崩溃阈值。预算追踪实时更新，防止资源浪费。</p>
+        <h4>规律一致性检查</h4>
+        <p>用已归纳规律、人类反馈和验证经验检查预测结果是否合理，发现冲突时进入反思校正。</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">🔒</div>
-        <h4>约束文件（CAST.md）</h4>
-        <p>项目级约束自动注入每个智能体上下文：禁用模型列表、资源限制、评估偏好、领域说明。使用 <code>/cast-creation</code> 交互式生成。</p>
+        <h4>Case 级证据化解释</h4>
+        <p>为每个关键结果保留情境识别、规律引用、工具调用、评估指标和反思记录，做到可追溯、可验证。</p>
       </div>
 
       <div class="feature-card">
         <div class="feature-icon">🧩</div>
-        <h4>插件化能力扩展</h4>
-        <p>通过 CastSense、CastFeat、CastZoo 等插件模块，把时序诊断、表示构建与模型编排拆分为可组合、可替换、可持续演进的专业能力层。</p>
+        <h4>可靠性与成本控制</h4>
+        <p>在工作流评分中同时纳入精度、稳定性、效率和预算约束，让发布结果既可靠又可落地。</p>
       </div>
 
     </div>
@@ -942,9 +967,9 @@
     <h2 class="section-title">插件工具箱</h2>
     <div class="tldr">
       <strong>核心定位：</strong>
-      CastClaw 并不是把一组零散工具简单堆在一起，而是将时间序列预测重构为一个<strong>插件化能力调用系统</strong>。在 CastRuntime 的执行循环中，CastSkill 负责策略选择，插件层负责完成具体能力调用，其中 <strong>CastSense</strong>、<strong>CastFeat</strong>、<strong>CastZoo</strong> 分别对应“看懂数据”“构建表示”“编排模型”三个关键环节。
+      CastClaw 的工具体系服务于工作流学习，而不是只服务于模型训练。LLM 认知与编排引擎负责规划、推理、记忆与反思；执行环境负责 Python Sandbox、Web Search、Data I/O 和 Context Data；工具引擎负责 CastSense、CastFeat、CastZoo、Evaluator、Visualizer 等可组合能力。
     </div>
-    <p>按照插件化 Agentic Time Series Forecasting 的设计逻辑，CastClaw 的能力链条不是“先选模型再直接训练”，而是沿着 <strong>Perception → Representation → Action → Reflection</strong> 的顺序逐步推进。这样做的结果是，系统不再只依赖某一个模型的泛化能力，而是依赖由诊断、表示、模型调度和反思共同组成的能力闭环。</p>
+    <p>按照预测工作流学习的设计逻辑，CastClaw 的能力链条不是“先选模型再直接训练”，而是围绕 <strong>情境识别 → 规律/经验检索 → 工作流实例化 → 工具调用与初始预测 → 评估反思</strong> 推进。这样做的结果是，系统不再只依赖某一个模型的泛化能力，而是依赖由知识、经验、工具和验证共同组成的能力闭环。</p>
 
     <div class="toolbox-layout">
       <div class="toolbox-group toolbox-group-shell">
@@ -952,37 +977,37 @@
           <div class="toolbox-group-index">A</div>
           <h3 class="toolbox-group-title">插件化执行闭环</h3>
         </div>
-        <p class="toolbox-group-desc">CastRuntime 负责驱动 Agent Loop，CastSkill 负责从经验与上下文中选择路线，插件层负责落地能力调用，底层表征能力则提供统一的语义支撑。</p>
+        <p class="toolbox-group-desc">LLM 认知与编排引擎负责规划、推理、记忆和反思，执行环境负责连接数据与外部信息，工具引擎负责落地分析、建模、评估与可视化调用。</p>
 
         <div class="toolbox-card toolbox-card-shell">
           <h4 class="toolbox-card-title">CastClaw 的能力调度链</h4>
-          <p>用户任务进入系统后，CastRuntime 维护上下文与中间状态，CastSkill 检索最合适的技能策略，再按需调用插件能力完成数据认知、表示构建和模型执行。预测不再是单点函数调用，而是一个可迭代、可审查、可反馈的多步决策过程。</p>
-          <div class="code-block">User Task
+          <p>用户任务进入系统后，LLM 编排引擎维护目标、记忆和反思状态，执行环境提供外部信息与数据处理能力，工具引擎落地诊断、特征、模型、评估和可视化调用。预测不再是单点函数调用，而是一个可迭代、可审查、可反馈的多步工作流。</p>
+          <div class="code-block">User Task / Human Feedback
   ↓
-CastRuntime（Agent Loop）
+LLM Cognition & Orchestration（Plan / Reason / Memory / Reflect）
   ↓
-CastSkill（Policy / Skill Selection）
+Workflow Learning（Rules / Experience / Case Evidence）
   ↓
-Plugins：CastSense → CastFeat → CastZoo
+Execution Environment（Python Sandbox / Web Search / Data I/O）
   ↓
-TimeEmbed / Foundation Capability
+Tool Engine（CastSense → CastFeat → CastZoo → Evaluator → Visualizer）
   ↓
-Reflection & Report</div>
+Evaluation / Explanation / Workflow Release</div>
           <div class="feature-grid">
             <div class="feature-card" style="background:#fafafa;">
               <div class="feature-icon">🧠</div>
-              <h4>CastRuntime</h4>
-              <p>负责任务解析、上下文管理、Reason-Act-Reflect 循环、中间状态维护和结果反馈闭环。</p>
+              <h4>LLM 认知与编排引擎</h4>
+              <p>负责规划、推理、记忆、反思和价值偏好对齐，让工具调用服务于完整预测工作流。</p>
             </div>
             <div class="feature-card" style="background:#fafafa;">
               <div class="feature-icon">🗂️</div>
-              <h4>CastSkill</h4>
-              <p>负责技能库检索与策略选择，根据任务上下文决定插件调用顺序、组合方式和搜索路径。</p>
+              <h4>执行环境</h4>
+              <p>提供 Python Sandbox、Web Search、Data I/O 和 Context Data，使系统能够获取情境并执行中间分析。</p>
             </div>
             <div class="feature-card" style="background:#fafafa;">
               <div class="feature-icon">🧬</div>
-              <h4>TimeEmbed</h4>
-              <p>作为底层能力层提供统一表征、相似模式检索、跨任务经验对齐和记忆索引支撑。</p>
+              <h4>计算资源与配置</h4>
+              <p>支撑 CPU/GPU、存储、网络和安全配置，让验证、评估和部署流程具备可控成本。</p>
             </div>
           </div>
         </div>
@@ -1060,7 +1085,7 @@ Reflection & Report</div>
     </div>
 
     <p style="margin-top: 20px;">
-      这套插件工具箱的意义在于：CastClaw 不再以“某个模型是否更强”作为唯一中心，而是以“系统是否能够先理解数据、再生成表示、再选择合适模型并持续反思”作为核心能力标准。也正因为如此，CastClaw 更适合复杂、多变且需要人机协作的真实预测环境。
+      这套工具箱的意义在于：CastClaw 不再以“某个模型是否更强”作为唯一中心，而是以“系统是否能够理解情境、检索规律与经验、组合合适工具、验证工作流并解释结果”作为核心能力标准。也正因为如此，CastClaw 更适合复杂、多变且需要持续沉淀经验的真实预测环境。
     </p>
 
   </div>
@@ -1069,40 +1094,40 @@ Reflection & Report</div>
 <!-- ═══════════════════ WORKFLOW ═══════════════════ -->
 <section id="workflow">
   <div class="container">
-    <h2 class="section-title">模拟专家思维的智能工作流</h2>
+    <h2 class="section-title">预测工作流学习主线</h2>
     <div class="tldr">
       <strong>核心思路：</strong>
-      CastClaw 希望模拟的不是“批量跑模型”的流水线，而是<strong>时序预测专家的思维顺序</strong>：先把任务问清楚，再看数据与场景，再提出策略假设，再用实验逐步验证，最后基于证据复盘并给出结论。Planner、Forecaster 与 Critic 的分工，本质上是在系统里重建这种 <strong>“诊断 → 假设 → 验证 → 复盘”</strong> 的专家式工作流。
+      CastClaw 的工作流主线与框架图一致：先完成价值感知交互，再离线学习规律并沉淀经验，随后在在线阶段进行慢思考式工作流适配，最后用评估、解释和发布机制把有效流程沉淀下来。
     </div>
 
     <div class="feature-grid">
 
       <div class="feature-card">
-        <div class="feature-icon">🗂️</div>
-        <h4>像专家一样先诊断问题</h4>
-        <p>Planner 不急着跑实验，而是先澄清任务定义、确认约束、理解行业背景并体检数据结构，先形成对“问题是什么、风险在哪里、该从哪条路线切入”的初步判断。</p>
+        <div class="feature-icon">🤝</div>
+        <h4>先问清价值目标</h4>
+        <p>系统先判断用户到底在优化什么：精度、稳定性、可解释性还是业务可用性，并把这些偏好写入任务规格。</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">🔬</div>
-        <h4>像专家一样带着假设验证</h4>
-        <p>Forecaster 不是盲目穷举模型，而是读取已有证据与 Skill 假设，小步快跑地组织实验、识别失败原因、控制预算，并在必要时引入人类反馈完成纠偏。</p>
+        <div class="feature-icon">📚</div>
+        <h4>再学习规律与经验</h4>
+        <p>训练集贡献情境规律，验证集贡献求解经验，二者共同形成在线阶段可检索、可组合、可验证的知识底座。</p>
       </div>
 
       <div class="feature-card">
-        <div class="feature-icon">📊</div>
-        <h4>像专家一样基于证据复盘</h4>
-        <p>Critic 负责把实验结果从“谁分数更高”提升到“为什么有效、在什么条件下有效、还存在哪些风险”，将性能分解、图表证据和结论建议整理为可审查的最终报告。</p>
+        <div class="feature-icon">🚀</div>
+        <h4>最后验证并发布流程</h4>
+        <p>系统评估预测结果和工作流有效性，输出 Case 级证据化解释，并把通过验证的流程发布为可部署工作流。</p>
       </div>
 
     </div>
 
-    <h3 class="sub-title">模拟专家思维的 Agentic Workflow</h3>
+    <h3 class="sub-title">四阶段工作流学习过程</h3>
     <div class="feature-grid" style="grid-template-columns:1fr;margin-top:16px;">
       <div class="feature-card" style="border-top:4px solid #d35400;">
         <div class="feature-icon">🧭</div>
-        <h4>不是盲目跑模型，而是按专家顺序推进</h4>
-        <p>CastClaw 遵循严格的阶段化工作流，阶段转换由 <code>forecast_state</code> 工具强制执行——<strong>不可跳过任何阶段</strong>。这意味着系统必须先完成问题诊断，再形成策略假设，再进入实验验证与报告复盘，确保每次预测都可追溯、可解释、可复现。</p>
+        <h4>不是单次模型推理，而是工作流学习与适配</h4>
+        <p>CastClaw 把每次预测都拆成可审查的链路：交互得到价值目标，离线阶段产生规律和经验，在线阶段实例化工作流并反思迭代，最终阶段验证流程并发布结果。这样每一次预测都能留下可复用的经验资产。</p>
       </div>
     </div>
 
@@ -1114,9 +1139,9 @@ Reflection & Report</div>
           <div class="step-line"></div>
         </div>
         <div class="step-body">
-          <span class="step-tag">Planner</span>
-          <h4>先把问题定义清楚</h4>
-          <p>专家不会在任务模糊时直接开跑。Planner 首先定义预测任务：数据集路径、目标列、时间列、预测步长（Horizon）、回看长度（Look-back）、训练/验证/测试分割比例、评估指标与候选模型族；随后调用 <code>forecast_state init</code> 创建 <code>.forecast/</code> 目录，并用 <code>forecast_task</code> 冻结 <code>task.json</code>。必要时还可用 <code>/cast-creation</code> 生成项目级约束文件。</p>
+          <span class="step-tag">价值感知交互</span>
+          <h4>任务协商与规格化</h4>
+          <p>系统通过按需提问明确预测对象、时间范围、外部变量、评价指标、成本预算和解释要求，并记录人类反馈。输出不是一句模糊指令，而是一份可执行的结构化任务规格。</p>
         </div>
       </div>
 
@@ -1126,9 +1151,9 @@ Reflection & Report</div>
           <div class="step-line"></div>
         </div>
         <div class="step-body">
-          <span class="step-tag">Planner</span>
-          <h4>再做背景研判与数据体检</h4>
-          <p>专家在动手前会先理解场景。Planner 并发启动两条分析轨道：<strong>定性轨道</strong> 调研行业背景、关键事件与潜在风险；<strong>定量轨道</strong> 调用 CastSense 诊断趋势、季节性、平稳性、波动率、异常值与分布变化。双轨结果融合为 <code>.forecast/reports/pre-forecast.md</code>，作为后续策略判断的证据基础。</p>
+          <span class="step-tag">离线学习</span>
+          <h4>规律归纳与候选规则生成</h4>
+          <p>系统基于训练集进行情境输入和情境识别，结合数据分析、领域知识和预测模型工具，形成候选预测规律，回答“当前序列可能遵循什么规律”。</p>
         </div>
       </div>
 
@@ -1138,9 +1163,9 @@ Reflection & Report</div>
           <div class="step-line"></div>
         </div>
         <div class="step-body">
-          <span class="step-tag">Planner · 人类审核</span>
-          <h4>形成策略假设并做人类把关</h4>
-          <p>基于前面的诊断证据，Planner 生成 2–4 个结构化<strong>技能文件</strong>，把“该尝试什么模型路线、在什么条件下尝试、风险点是什么”显式写出来。每个 Skill 都包含适用条件、参数搜索空间、特征模板（配置 JSON）及风险警告；经人类审核确认后，系统才进入实验循环。</p>
+          <span class="step-tag">经验沉淀</span>
+          <h4>验证驱动的工作流归纳</h4>
+          <p>系统在验证集上记录推理轨迹、工具调用结果、工作流评分和失败原因，将通过验证的规律、工具组合与求解路径沉淀为可复用经验。</p>
         </div>
       </div>
 
@@ -1150,9 +1175,9 @@ Reflection & Report</div>
           <div class="step-line"></div>
         </div>
         <div class="step-body">
-          <span class="step-tag">Forecaster · 人在回路</span>
-          <h4>带着假设做迭代验证</h4>
-          <p>Forecaster 使用已确认 Skill 组织实验：读取当前最佳结果与近期失败历史 → 选取插件与模型配置 → 调用 CastFeat 构建表示 → 由 CastZoo 执行训练评估 → 用 <code>forecast_reflect</code> 记录失败归因与改进线索 → 预算检查 → 进入下一轮。若启用生成式预测推理，系统会基于验证集前半部分生成候选修正 Skill，并在验证集后半部分做接受检验；若用户提交预测先验，则进入 UserPrior 分支，跳过模型搜索与训练，直接优化已有预测结果。</p>
+          <span class="step-tag">在线慢思考</span>
+          <h4>工作流适配与反思迭代</h4>
+          <p>面对测试情境，Agent 检索规律、经验和人类反馈，实例化候选工作流，调用 CastSense、CastFeat、CastZoo、Evaluator 等工具生成初始预测，并通过规律一致性检查、反思校正和内部迭代得到最终预测结果。</p>
         </div>
       </div>
 
@@ -1162,9 +1187,9 @@ Reflection & Report</div>
           <div class="step-line"></div>
         </div>
         <div class="step-body">
-          <span class="step-tag">Critic</span>
-          <h4>最后做证据复盘与结论输出</h4>
-          <p>Critic 读取全部实验产物，完成一次类似专家复盘会的整理：比较各模型族最佳结果，按时序特征（趋势 / 季节性 / 平稳性）拆解性能，生成时序图与误差分布图，并输出结构化最终预测报告到 <code>.forecast/reports/final-report.md</code>。若存在已锁定的生成式预测 Skill，Critic 会在原始测试评估后额外生成可审计的修正结果，并将 raw 与 adjusted 指标分开呈现。</p>
+          <span class="step-tag">评估发布</span>
+          <h4>结果评估与工作流发布</h4>
+          <p>系统输出候选工作流、最终预测和证据链，并完成预测性能评估、工作流有效性验证、Case 级证据化解释与可部署工作流发布，让成功经验进入下一轮学习循环。</p>
         </div>
       </div>
 
@@ -1269,7 +1294,7 @@ Reflection & Report</div>
 预测步长：96 步，回看长度：336。采用 70/20/10 分割，使用 MSE 和 MAE 评估。</div>
 
     <h3 class="sub-title">使用样例展示</h3>
-    <p>下面给出一个电力负荷预测任务的完整示例，展示如何在 Planner 中描述任务，以及如何通过 <code>CAST.md</code> 预先写入实验约束。</p>
+    <p>下面给出一个电力负荷预测任务的完整示例，展示如何在 Planner 中描述任务，以及如何通过 <code>CAST.md</code> 写入实验约束。</p>
 
     <div class="example-showcase">
       <div class="example-card">
@@ -1298,7 +1323,7 @@ Reflection & Report</div>
   <div class="container">
     <h2 class="section-title">相关项目</h2>
     <p>
-      CastClaw 所在的研究线并不局限于单一项目，而是与一系列围绕时间序列智能体、交互式预测、推理增强和经验进化展开的代表性论文共同构成。下面列出几篇与 CastClaw 关系最紧密的工作，更多论文可以在 <a href="https://mingyue-cheng.github.io/" target="_blank" rel="noopener">Mingyue Cheng 的主页</a> 中继续检索。
+      CastClaw 所在的研究线并不局限于单一项目，而是与一系列围绕时间序列智能体、交互式预测和推理增强展开的代表性论文共同构成。下面列出几篇与 CastClaw 关系最紧密的工作，更多论文可以在 <a href="https://mingyue-cheng.github.io/" target="_blank" rel="noopener">Mingyue Cheng 的主页</a> 中继续检索。
     </p>
 
     <div class="paper-grid">
@@ -1388,13 +1413,14 @@ Reflection & Report</div>
     </p>
 
     <h3 class="sub-title">引用</h3>
-    <p>如果 CastClaw 对你的研究或项目有帮助，欢迎引用：</p>
+    <p>如果 CastClaw 对你的研究或项目有帮助，欢迎引用；技术报告 PDF 可在 <a href="assets/CastClaw.pdf" target="_blank" rel="noopener">CastClaw.pdf</a> 查看。</p>
     <div class="citation-box">@misc{castclaw2026,
   title        = {CastClaw: A Human-Machine Collaborative System for Agentic
 Time Series Forecasting},
   author       = {Tao, Xiaoyu and Cheng, Mingyue and Gao, Tian and Guo, Ze and Pan, Bokai and Liu, Qi and Wang, Shijin and Chen, Enhong},
   year         = {2026},
-  howpublished = {\url{https://github.com/ustc-time-series/CastClaw}}
+  howpublished = {\url{https://github.com/ustc-time-series/CastClaw}},
+  note         = {Technical report available at \url{assets/CastClaw.pdf}}
 }</div>
   </div>
 </section>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CastClaw Documentation</title>
-  <meta name="description" content="CastClaw documentation: quick start, agent workflow, human-in-the-loop collaboration, plugin toolbox, skill system, configuration, CLI reference, and practical examples." />
+  <meta name="description" content="CastClaw documentation: quick start, forecasting workflow learning framework, human-in-the-loop collaboration, plugin toolbox, skill and experience library, configuration, CLI reference, and practical examples." />
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -781,6 +781,7 @@
         <span class="search-kbd">Ctrl K</span>
       </button>
       <a class="topbar-btn" href="./">中文</a>
+      <a class="topbar-btn" href="../assets/CastClaw.pdf" target="_blank" rel="noopener">Technical Report</a>
       <a class="topbar-btn" href="../">Back to Home</a>
     </div>
   </div>
@@ -826,9 +827,9 @@
     <div class="sidebar-group">
       <div class="sidebar-group-title">Core Concepts</div>
       <div class="sidebar-links">
-        <a class="sidebar-link" href="#architecture-overview">Architecture Overview</a>
-        <a class="sidebar-link" href="#three-agents">Multi-Agent Collaboration</a>
-        <a class="sidebar-link" href="#agentic-workflow">Agent Workflow</a>
+        <a class="sidebar-link" href="#architecture-overview">Framework Overview</a>
+        <a class="sidebar-link" href="#three-agents">Execution Roles</a>
+        <a class="sidebar-link" href="#agentic-workflow">Workflow Learning Path</a>
       </div>
     </div>
     <div class="sidebar-group">
@@ -848,7 +849,7 @@
       </div>
     </div>
     <div class="sidebar-group">
-      <div class="sidebar-group-title">Skill System</div>
+      <div class="sidebar-group-title">Skill and Experience Library</div>
       <div class="sidebar-links">
         <a class="sidebar-link" href="#skill-what">What Is a Skill</a>
         <a class="sidebar-link" href="#skill-structure">Skill File Structure</a>
@@ -967,14 +968,14 @@ forecast horizon: 96 steps, lookback length: 336. Use a 70/20/10 split and evalu
             <div class="wf-left"><div class="wf-num">4</div><div class="wf-line"></div></div>
             <div class="wf-body">
               <h4>Review the Skill draft</h4>
-              <p>Check whether the model families, search space, and risk notes are reasonable before continuing.</p>
+              <p>Check whether the candidate experience has reasonable applicability conditions, evidence sources, and risk notes before continuing.</p>
             </div>
           </div>
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">5</div><div class="wf-line"></div></div>
             <div class="wf-body">
               <h4>Watch iterations and the final report</h4>
-              <p>Forecaster runs the experiment loop, and Critic produces <code>final-report.md</code>. Watch for possible human-in-the-loop pauses.</p>
+              <p>Forecaster runs workflow adaptation, and Critic produces <code>final-report.md</code>. Watch for possible experience-review human-in-the-loop pauses.</p>
             </div>
           </div>
         </div>
@@ -1042,7 +1043,7 @@ stride = 96</code></pre></div>
             <tr>
               <td><code>Ctrl+2</code></td>
               <td>Switch to Forecaster</td>
-              <td>Watch for stagnation, improvement pace, and human-in-the-loop triggers.</td>
+              <td>Watch whether the experience chain stalls, whether candidate rules are evidence-backed, and whether human-in-the-loop review is triggered.</td>
             </tr>
             <tr>
               <td><code>Ctrl+3</code></td>
@@ -1089,20 +1090,20 @@ stride = 96</code></pre></div>
 
       <article class="doc-block" id="mode-accompaniment" data-title="Cognitive Accompaniment">
         <h3>Cognitive Accompaniment</h3>
-        <p>This mode fits iterative experimentation. The system surfaces phase transitions, Skill audits, stagnation signals, and key intermediate results so that you can observe and intervene while execution is in progress.</p>
+        <p>This mode fits experience review and correction while the workflow is running. The system surfaces phase transitions, Skill audits, candidate-experience conflicts, and key evidence so that you can intervene in experience accumulation.</p>
         <table class="doc-table">
           <thead>
             <tr><th>Focus</th><th>Description</th></tr>
           </thead>
           <tbody>
-            <tr><td>Best for</td><td>Experiment loops, collaborative tuning, and result inspection.</td></tr>
-            <tr><td>Core action</td><td>Monitor internal state, review Skills, and intervene when runs stagnate or drift.</td></tr>
-            <tr><td>Your role</td><td>Watch the budget, spot anomalies, and inject domain feedback at critical points.</td></tr>
+            <tr><td>Best for</td><td>Experience review, result explanation, and collaborative curation.</td></tr>
+            <tr><td>Core action</td><td>Inspect intermediate evidence, review Skills, and intervene when experience conflicts or applicability boundaries are unclear.</td></tr>
+            <tr><td>Your role</td><td>Add domain evidence, label abnormal cases, and confirm which conclusions should be accumulated as experience.</td></tr>
           </tbody>
         </table>
         <div class="callout">
           <strong>Typical trigger</strong>
-          <p>Use this mode when Forecaster stops improving, when metrics suddenly degrade, or when the current best result conflicts with domain common sense.</p>
+          <p>Use this mode when candidate experience adds no new information, when explanations conflict with domain common sense, or when the applicability boundary of an experience is unclear.</p>
         </div>
       </article>
 
@@ -1195,7 +1196,7 @@ stride = 96</code></pre></div>
           <tbody>
             <tr><td><code>banned_models</code></td><td>List of banned models or model families that should be excluded immediately.</td></tr>
             <tr><td><code>max_experiments</code></td><td>Maximum number of experiments, which caps the Forecaster exploration budget.</td></tr>
-            <tr><td><code>no_improve_threshold</code></td><td>Number of non-improving rounds before a human-in-the-loop pause is triggered.</td></tr>
+            <tr><td><code>no_improve_threshold</code></td><td>Pause threshold for consecutive rounds with no new experience; reaching it triggers human-in-the-loop review.</td></tr>
             <tr><td><code>eval_metric</code></td><td>Preferred evaluation metric such as MAE, MAPE, or RMSE.</td></tr>
             <tr><td><code>domain_notes</code></td><td>Domain background injected into every agent context to keep judgments aligned with business reality.</td></tr>
           </tbody>
@@ -1241,114 +1242,114 @@ stride = 96</code></pre></div>
     <section class="doc-section" id="core-concepts" data-group-title="Core Concepts">
       <h2>Core Concepts</h2>
 
-      <article class="doc-block" id="architecture-overview" data-title="Architecture Overview">
-        <h3>Architecture Overview</h3>
-        <p>CastClaw uses a four-layer collaborative architecture: <code>CastRuntime</code> handles execution and state, <code>CastSkill</code> handles strategy selection, the plugin ecosystem provides concrete capabilities, and <code>TimeEmbed</code> aligns representations and experience across tasks.</p>
+      <article class="doc-block" id="architecture-overview" data-title="Forecasting Workflow Learning Framework Overview">
+        <h3>Forecasting Workflow Learning Framework Overview</h3>
+        <p>CastClaw is not only a tool for running one forecast. It is a framework for learning reusable forecasting workflows. The full loop contains four stages: <strong>task negotiation and value-aware interaction</strong>, <strong>offline rule learning and experience accumulation</strong>, <strong>online slow-thinking reasoning and workflow adaptation</strong>, and <strong>result evaluation and workflow release</strong>.</p>
         <div class="code-block"><pre><code>User Task
   ↓
-CastRuntime (execution loop, context management)
+Value-aware interaction (task specification / constraints / feedback)
   ↓
-CastSkill (strategy retrieval and selection)
+Rule-experience learning (forecasting rules / solving experience / workflow scoring)
   ↓
-CastSense → CastFeat → CastZoo
+Online slow-thinking adaptation (context recognition / tool calls / reflection)
   ↓
-Reflection / Report</code></pre></div>
-        <img src="../assets/architecture.jpeg" alt="CastClaw system architecture" class="arch-img" onerror="this.style.display='none'" />
+Evaluation and release (metrics / case-level evidence / deployable workflow)</code></pre></div>
+        <img src="../assets/architecture-1.jpeg" alt="CastClaw forecasting workflow learning framework" class="arch-img" onerror="this.style.display='none'" />
         <table class="doc-table">
-          <thead><tr><th>Layer</th><th>Responsibility</th><th>When You Touch It</th></tr></thead>
+          <thead><tr><th>Stage</th><th>Responsibility</th><th>When You Touch It</th></tr></thead>
           <tbody>
             <tr>
-              <td><strong>CastRuntime</strong></td>
-              <td>Task context management, phase progression, agent loop control, and file-state synchronization.</td>
-              <td>When starting a task, switching phases, or resuming a paused run.</td>
+              <td><strong>Value-aware interaction</strong></td>
+              <td>Clarifies objectives, freezes task specifications, and records constraints, preferences, and human feedback.</td>
+              <td>When starting a task, filling missing requirements, or confirming high-impact decisions.</td>
             </tr>
             <tr>
-              <td><strong>CastSkill</strong></td>
-              <td>Retrieves or generates strategies from analysis results and decides model families and search spaces.</td>
-              <td>When reviewing Skill drafts, curating experience, or reusing prior strategies.</td>
+              <td><strong>Rule-experience learning</strong></td>
+              <td>Learns forecasting rules from training data and accumulates tool routes, failure causes, and workflow scores from validation.</td>
+              <td>During pre-forecast analysis, Skill review, experience reuse, and team asset curation.</td>
             </tr>
             <tr>
-              <td><strong>Plugin Ecosystem</strong></td>
-              <td>Uses CastSense, CastFeat, and CastZoo for diagnostics, representation building, and model orchestration.</td>
-              <td>When interpreting results, designing features, or choosing model paths.</td>
+              <td><strong>Online adaptation</strong></td>
+              <td>Retrieves rules, experience, and feedback, instantiates candidate workflows, invokes tools, and reflects on results.</td>
+              <td>During actual forecasting, abnormal results, or strategy adjustment.</td>
             </tr>
             <tr>
-              <td><strong>TimeEmbed</strong></td>
-              <td>The capability foundation for cross-task representations, similar-pattern retrieval, and experience alignment.</td>
-              <td>You usually do not operate it directly, but it affects Skill retrieval quality.</td>
+              <td><strong>Evaluation and release</strong></td>
+              <td>Evaluates forecast quality, validates workflow effectiveness, explains cases with evidence, and releases reusable workflows.</td>
+              <td>When reading final reports, reviewing a project, or preparing reuse/deployment.</td>
             </tr>
           </tbody>
         </table>
       </article>
 
-      <article class="doc-block" id="three-agents" data-title="Multi-Agent Collaboration">
-        <h3>Multi-Agent Collaboration (Planner / Forecaster / Critic)</h3>
-        <p>The three agents form a strict assembly line. Treat them as different roles, not interchangeable chat windows.</p>
+      <article class="doc-block" id="three-agents" data-title="Execution Roles">
+        <h3>Execution Roles (Planner / Forecaster / Critic)</h3>
+        <p>Planner, Forecaster, and Critic are the CLI execution roles that carry different stages of the workflow learning framework. Treat them as different roles, not interchangeable chat windows.</p>
         <table class="doc-table">
           <thead><tr><th>Agent</th><th>Core Responsibility</th><th>Key Behaviors</th></tr></thead>
           <tbody>
             <tr>
               <td><strong>Planner</strong></td>
-              <td>Task definition, data diagnostics, and phase orchestration.</td>
-              <td>Runs qualitative and quantitative analysis in parallel, writes the pre-forecast report, and drafts candidate Skills.</td>
+              <td>Task specification, value preference recording, and rule induction.</td>
+              <td>Runs qualitative and quantitative analysis in parallel, writes the pre-forecast report, and drafts candidate rules and Skills.</td>
             </tr>
             <tr>
               <td><strong>Forecaster</strong></td>
-              <td>Experiment loops and strategy iteration.</td>
-              <td>Reads history, selects configs, calls CastFeat and CastZoo, records reflections, and triggers Human in the Loop when needed.</td>
+              <td>Online workflow adaptation and experiment loops.</td>
+              <td>Reads experience, selects configs, calls CastFeat and CastZoo, records reflections, and triggers Human in the Loop when needed.</td>
             </tr>
             <tr>
               <td><strong>Critic</strong></td>
-              <td>Result aggregation and final reporting.</td>
-              <td>Compares model-family performance, generates visualizations and structured conclusions, and produces <code>final-report.md</code>.</td>
+              <td>Result evaluation, evidence explanation, and workflow release.</td>
+              <td>Compares performance, generates visualizations and case-level explanations, and produces <code>final-report.md</code>.</td>
             </tr>
           </tbody>
         </table>
       </article>
 
-      <article class="doc-block" id="agentic-workflow" data-title="Agentic Workflow">
-        <h3>Agentic Workflow</h3>
-        <p>CastClaw breaks forecasting into five tightly constrained phases. Phase transitions are enforced by tools and file protocols rather than LLM self-discipline, which makes the workflow traceable and auditable.</p>
+      <article class="doc-block" id="agentic-workflow" data-title="Forecasting Workflow Learning Path">
+        <h3>Forecasting Workflow Learning Path</h3>
+        <p>CastClaw turns forecasting into a reviewable learning chain: clarify the value target, learn rules and experience offline, adapt the workflow online, then evaluate, explain, and release reusable workflows. Internally, phase transitions and file protocols still keep the process traceable and auditable.</p>
         <div class="workflow">
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">1</div><div class="wf-line"></div></div>
             <div class="wf-body">
-              <h4>Initialization</h4>
-              <p>Freezes <code>task.json</code> and creates the <code>.forecast/</code> working directory. Every later experiment stays bound to the same task definition.</p>
+              <h4>Task negotiation and specification</h4>
+              <p>Freezes <code>task.json</code>, creates the <code>.forecast/</code> working directory, and records target columns, time columns, horizon, metrics, budget constraints, and human preferences.</p>
             </div>
           </div>
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">2</div><div class="wf-line"></div></div>
             <div class="wf-body">
-              <h4>Pre-forecast Analysis</h4>
-              <p>Runs two tracks in parallel: qualitative domain analysis through WebSearch and quantitative diagnostics through CastSense. The outputs merge into the pre-forecast report that drives Skill generation.</p>
+              <h4>Offline rule induction</h4>
+              <p>Runs two tracks in parallel: qualitative domain analysis through WebSearch and quantitative diagnostics through CastSense. The outputs induce candidate forecasting rules from data, context, and domain knowledge.</p>
             </div>
           </div>
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">3</div><div class="wf-line"></div></div>
             <div class="wf-body">
-              <h4>Skill Audit</h4>
-              <p>Planner pauses after drafting 2 to 4 candidate Skills, waiting for human review of model routes, risks, and search spaces before experiments begin.</p>
+              <h4>Experience accumulation and Skill audit</h4>
+              <p>Planner pauses after drafting 2 to 4 candidate Skills, waiting for human review of evidence sources, risks, failure boundaries, and applicability boundaries. Approved Skills become reusable solving experience.</p>
             </div>
           </div>
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">4</div><div class="wf-line"></div></div>
             <div class="wf-body">
-              <h4>Forecasting</h4>
-              <p>Read the best prior result → choose a config → build representations with CastFeat → train and evaluate through CastZoo → record reflections → check budget → repeat. If Generative Prediction Reasoning is enabled, candidate Skills are designed from the validation-front half and accepted only through validation-back metrics. In UserPrior mode, model search and training are skipped so the submitted prior can be optimized directly.</p>
+              <h4>Online slow-thinking adaptation</h4>
+              <p>Read prior experience → recognize the current context → choose a config → build representations with CastFeat → train and evaluate through CastZoo → record reflections → check budget → repeat. If Generative Prediction Reasoning is enabled, candidate Skills are designed from the validation-front half and accepted only through validation-back metrics. In UserPrior mode, model search and training are skipped so the submitted prior can be optimized directly.</p>
             </div>
           </div>
           <div class="workflow-item">
             <div class="wf-left"><div class="wf-num">5</div><div class="wf-line"></div></div>
             <div class="wf-body">
-              <h4>Post-forecast Report</h4>
-              <p>Critic consolidates experiment artifacts, performance breakdowns, and visual explanations into a structured <code>final-report.md</code>. When a locked reasoning Skill exists, Critic also reports raw / adjusted comparisons and adjusted artifacts.</p>
+              <h4>Evaluation, explanation, and workflow release</h4>
+              <p>Critic consolidates experiment artifacts, performance breakdowns, and visual explanations into a structured <code>final-report.md</code>. The report keeps workflow-effectiveness judgments, case-level evidence, and auditable raw / adjusted artifacts when applicable.</p>
             </div>
           </div>
         </div>
         <div class="callout">
           <strong>Design focus</strong>
-          <p>CastClaw is not differentiated by "running more models." It is differentiated by analyzing first, reviewing second, iterating third, and allowing humans to correct the path at critical points.</p>
+          <p>CastClaw is not differentiated by "running more models." It is differentiated by learning which forecasting workflow fits which context, then turning successful experience into reusable workflow assets.</p>
         </div>
       </article>
 
@@ -1360,45 +1361,45 @@ Reflection / Report</code></pre></div>
 
       <article class="doc-block" id="human-loop-pause" data-title="What Human in the Loop Means">
         <h3>What Human in the Loop Means</h3>
-        <p>When Forecaster shows no improvement across multiple rounds, produces abnormal results, or follows a strategy that clearly conflicts with domain knowledge, the system pauses at a recoverable checkpoint and waits for human feedback. This is not failure. It is a forced correction window.</p>
+        <p>When candidate experience stops adding value, result explanations become abnormal, or accumulated experience clearly conflicts with domain knowledge, the system pauses at a recoverable checkpoint and waits for human feedback. This is not failure. It is a correction window for experience accumulation.</p>
         <div class="panel-row-3">
           <div class="panel">
             <h4>Checkpoint 1: Confirm the task setup</h4>
             <p>Confirm the target column, time column, forecast horizon, evaluation metric, and resource limits so a flawed task definition does not get amplified downstream.</p>
           </div>
           <div class="panel">
-            <h4>Checkpoint 2: Review the strategy Skill</h4>
-            <p>Confirm that the model families, parameter search spaces, and risk notes are reasonable before large-scale experiments are launched in the wrong direction.</p>
+            <h4>Checkpoint 2: Review candidate experience</h4>
+            <p>Confirm that the applicability conditions, evidence sources, risk notes, and failure boundaries of a candidate Skill are reasonable before low-quality conclusions enter the experience library.</p>
           </div>
           <div class="panel">
-            <h4>Checkpoint 3: Intervene during stagnation</h4>
-            <p>Inject domain priors, block ineffective model families, or add new feature hypotheses before resuming iteration.</p>
+            <h4>Checkpoint 3: Intervene in experience accumulation</h4>
+            <p>Add domain priors, label abnormal cases, revise applicability boundaries, or add failure attribution before continuing to accumulate experience.</p>
           </div>
         </div>
         <div class="callout warn">
           <strong>Do not treat Human in the Loop as a rerun button</strong>
-          <p>Effective intervention changes the strategic assumptions: constrain model families, narrow the search space, explain anomalous dates, or add external constraints.</p>
+          <p>Effective intervention changes what gets accumulated as experience: add evidence, revise applicability conditions, explain anomalous dates, record failure boundaries, or add external constraints.</p>
         </div>
       </article>
 
       <article class="doc-block" id="skill-audit" data-title="Skill Audit: How to Intervene">
         <h3>Skill Audit: How to Intervene</h3>
-        <p>When reviewing a Skill, the key question is whether the strategy truly fits the current task, not whether the YAML looks neat. Focus on applicability, search space, and risk notes.</p>
+        <p>When reviewing a Skill, the key question is whether this experience truly fits the current task, not whether the YAML looks neat. Focus on applicability, evidence sources, failure boundaries, and risk notes.</p>
         <div class="panel-row">
           <div class="panel">
             <h4>What to review</h4>
             <ul>
               <li>Whether the applicability conditions match the data profile, such as strong seasonality, long sequences, or stable frequency.</li>
-              <li>Whether the parameter search space is too broad and likely to waste budget on low-value regions.</li>
+              <li>Whether the evidence source is strong enough to support reusing this experience.</li>
               <li>Whether the risk warnings cover known failure modes such as overfitting on small samples, distribution drift, or nighttime zeros.</li>
             </ul>
           </div>
           <div class="panel">
             <h4>Recommended interventions</h4>
             <ul>
-              <li>Remove clearly unsuitable model families directly instead of spending budget to prove they are wrong.</li>
               <li>Add known holidays, equipment changes, or policy events to the domain notes.</li>
-              <li>Narrow critical search dimensions such as learning rate, window length, or patch length.</li>
+              <li>Label which case types this experience applies to or does not apply to.</li>
+              <li>Add failure causes so similar tasks do not accumulate the same low-quality experience again.</li>
             </ul>
           </div>
         </div>
@@ -1406,17 +1407,17 @@ Reflection / Report</code></pre></div>
 
       <article class="doc-block" id="intervention-timing" data-title="When to Confirm Results and Intervene">
         <h3>When to Confirm Results and Intervene</h3>
-        <p>The most valuable moments for human review are when directional signals change, not after every single experiment round.</p>
+        <p>The most valuable moments for human review are when the question "should this be accumulated as experience?" changes, not after every single result.</p>
         <div class="tag-row">
-          <span class="tag hi">No improvement across rounds</span>
+          <span class="tag hi">No new experience</span>
           <span class="tag hi">Results conflict with domain knowledge</span>
-          <span class="tag">Best model family changes</span>
+          <span class="tag">Candidate experience conflict</span>
           <span class="tag">Anomalous dates matter materially</span>
-          <span class="tag">Budget is nearly exhausted</span>
+          <span class="tag">Applicability boundary is unclear</span>
         </div>
         <div class="callout info">
           <strong>Practical rule</strong>
-          <p>If your intervention cannot change the next strategy decision, do not step in yet. Human in the Loop creates value by changing the path, not by repeatedly confirming the current state.</p>
+          <p>If your intervention cannot change what gets accumulated in the experience library, do not step in yet. Human in the Loop creates value by changing experience accumulation, not by repeatedly confirming the current state.</p>
         </div>
       </article>
     </section>
@@ -1435,7 +1436,7 @@ Reflection / Report</code></pre></div>
           </div>
           <div class="panel">
             <h4>Anomaly and drift localization</h4>
-            <p>Finds change points, outliers, non-stationarity, and distribution drift, providing evidence for risk prompts and Human in the Loop interventions.</p>
+            <p>Finds change points, outliers, non-stationarity, and distribution drift, providing evidence for risk prompts and experience review.</p>
           </div>
           <div class="panel">
             <h4>Structured outputs</h4>
@@ -1477,32 +1478,32 @@ Reflection / Report</code></pre></div>
       </article>
     </section>
 
-    <!-- Skill System -->
-    <section class="doc-section" id="skill-system" data-group-title="Skill System">
-      <h2>Skill System</h2>
+    <!-- Skill and Experience Library -->
+    <section class="doc-section" id="skill-system" data-group-title="Skill and Experience Library">
+      <h2>Skill and Experience Library</h2>
 
       <article class="doc-block" id="skill-what" data-title="What a Skill Is">
         <h3>What a Skill Is</h3>
-        <p>A Skill is a reviewed strategy template. It describes which model families, search spaces, feature templates, and known risks fit a given class of data under specific conditions. It is the key asset layer that lets the system keep evolving.</p>
+        <p>A Skill is an analyzed, validated, and reviewed strategy template. It describes which model families, tool combinations, search spaces, feature templates, and known risks fit a given context. It is both an executable strategy and the key asset layer through which CastClaw accumulates solving experience and releases reusable workflows.</p>
         <div class="panel-row-3">
           <div class="panel">
             <h4>Carry forward proven experience</h4>
-            <p>Preserve routes that have already been validated in experiments instead of starting from scratch every time.</p>
+            <p>Preserve validated rules, tool routes, and failure boundaries instead of starting from scratch every time.</p>
           </div>
           <div class="panel">
             <h4>Guide future tasks</h4>
-            <p>Narrow the model space for new tasks so Forecaster starts from a more reasonable baseline.</p>
+            <p>Narrow both the model space and the workflow-choice space so Forecaster starts from a more reasonable baseline.</p>
           </div>
           <div class="panel">
             <h4>Keep humans in control</h4>
-            <p>Review before use so the system evolves on top of trusted strategies instead of automatically accumulating noise.</p>
+            <p>Review before use so the system evolves on top of trusted experience instead of automatically accumulating noise.</p>
           </div>
         </div>
       </article>
 
       <article class="doc-block" id="skill-structure" data-title="Skill File Structure">
         <h3>Skill File Structure</h3>
-        <p>Skills are expressed in YAML. The core fields are applicability conditions, model family, search space, feature template, and risks.</p>
+        <p>Skills are expressed in YAML. The core fields are applicability conditions, model family, search space, feature template, risks, and experience notes. You can think of a Skill as a reusable workflow fragment for a class of cases.</p>
         <div class="code-block"><pre><code>name: deep_learning_periodic
 applicable_conditions:
   - strongly seasonal data
@@ -1518,21 +1519,21 @@ risks:
 domain_notes: ""</code></pre></div>
         <div class="callout info">
           <strong>Review focus</strong>
-          <p>Start with <code>applicable_conditions</code> and <code>risks</code>. These two parts most directly determine whether the Skill should be used for the current task.</p>
+          <p>Start with <code>applicable_conditions</code> and <code>risks</code>, then check whether validation evidence supports this route. These parts most directly determine whether the Skill should be used for the current task.</p>
         </div>
       </article>
 
       <article class="doc-block" id="skill-review" data-title="How to Review and Curate Skills">
         <h3>How to Review and Curate Skills</h3>
         <ol>
-          <li>Planner drafts 2 to 4 candidate Skills from the pre-forecast analysis.</li>
+          <li>Planner drafts 2 to 4 candidate Skills from pre-forecast analysis and candidate rules.</li>
           <li>Humans review the model route, applicability conditions, and risk notes, editing them directly when needed.</li>
           <li>Approved Skills enter <code>.forecast/skills/</code> for reuse in the current and similar tasks.</li>
-          <li>The library evolves over time and gradually becomes a team-level strategy asset.</li>
+          <li>The library evolves over time and gradually becomes a team-level experience and workflow asset.</li>
         </ol>
         <div class="callout">
           <strong>Review principle</strong>
-          <p>Keep a small number of high-quality Skills rather than accumulating a large set of low-signal strategies. The value of the Skill library is trustworthiness, not size.</p>
+          <p>Keep a small number of high-quality Skills rather than accumulating a large set of low-signal strategies. The value of the Skill library is trustworthiness, validation, and reuse, not size.</p>
         </div>
       </article>
 
@@ -1555,7 +1556,7 @@ domain_notes: ""</code></pre></div>
     <!-- Examples -->
     <section class="doc-section" id="examples" data-group-title="Examples">
       <h2>Examples</h2>
-      <p style="margin-bottom:28px;color:var(--muted);font-size:0.93rem;">These three cases cover load, solar, and financial time series. The point is to build intuition for how different data shapes map to different strategies. Focus on the data profile, the recommended Skill path, and where Human in the Loop matters.</p>
+      <p style="margin-bottom:28px;color:var(--muted);font-size:0.93rem;">These three cases cover load, solar, and financial time series. The point is to build intuition for how different data shapes map to different experience patterns. Focus on the data profile, the recommended Skill path, and how Human in the Loop helps accumulate experience.</p>
 
       <article class="doc-block" id="example-load" data-title="Power Load Forecasting">
         <h3>Power Load Forecasting (<code>load.csv</code>)</h3>
@@ -1578,15 +1579,15 @@ domain_notes: ""</code></pre></div>
 
       <article class="doc-block" id="example-solar" data-title="Solar Power Forecasting">
         <h3>Solar Power Forecasting</h3>
-        <p>Solar generation combines strong daily seasonality, fixed nighttime zeros, and strong weather sensitivity. It is a canonical case where domain knowledge needs to intervene.</p>
+        <p>Solar generation combines strong daily seasonality, fixed nighttime zeros, and strong weather sensitivity. It is a canonical case where domain knowledge should participate in experience accumulation.</p>
         <div class="panel-row">
           <div class="panel">
             <h4>Data profile and diagnostic focus</h4>
             <p>This is hourly data from the GEFCom2014 Solar Track. CastSense should pay special attention to nighttime zeros, abrupt weather changes, and seasonal shifts.</p>
           </div>
           <div class="panel">
-            <h4>Recommended strategy and Human in the Loop</h4>
-            <p>Start with a statistical plus foundation path using Theta together with TimesFM or Moirai. Human intervention matters most when labeling long cloudy periods and weather-abnormal days.</p>
+            <h4>Recommended experience and Human in the Loop</h4>
+            <p>Start with a statistical plus foundation experience path using Theta together with TimesFM or Moirai. Human input matters most when labeling long cloudy periods and weather-abnormal days, because those labels define applicability boundaries.</p>
           </div>
         </div>
       </article>
@@ -1600,8 +1601,8 @@ domain_notes: ""</code></pre></div>
             <p>Use a conservative <code>statistical + foundation ensemble</code> so the full budget is not concentrated on one path.</p>
           </div>
           <div class="panel">
-            <h4>Where humans should step in</h4>
-            <p>Mark earnings releases, policy announcements, and macro shocks, then pay close attention to CastSense alerts on distribution drift and structural breaks.</p>
+            <h4>Where humans enrich experience</h4>
+            <p>Mark earnings releases, policy announcements, and macro shocks, then use CastSense alerts on distribution drift and structural breaks to decide whether these events should enter the experience library.</p>
           </div>
         </div>
       </article>
@@ -1620,7 +1621,7 @@ domain_notes: ""</code></pre></div>
           </div>
           <div class="panel">
             <h4>How do I continue after a Human-in-the-Loop pause?</h4>
-            <p>Enter feedback in the Forecaster tab and submit it. The system resumes in the current context without reinitializing from scratch.</p>
+            <p>Enter feedback about evidence, applicability boundaries, or failure causes in the Forecaster tab and submit it. The system continues accumulating experience in the current context without reinitializing from scratch.</p>
           </div>
           <div class="panel">
             <h4>Where are Skill files managed?</h4>
@@ -1661,7 +1662,7 @@ domain_notes: ""</code></pre></div>
 
     <div class="footer-note">
       This documentation is organized in the order of getting started first, understanding the system second, and checking details last.
-      For a first CastClaw demo, start with <a href="#first-forecast">your first forecasting task</a> and <a href="#agentic-workflow">Agentic Workflow</a>.
+      For a first CastClaw demo, start with <a href="#first-forecast">your first forecasting task</a> and <a href="#agentic-workflow">Forecasting Workflow Learning Path</a>.
     </div>
   </main>
 
