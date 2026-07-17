@@ -269,6 +269,183 @@
       box-shadow: 0 6px 24px rgba(0,0,0,0.08);
       background: #000;
     }
+
+    /* ── Latest news pager ──────────────────────── */
+    .latest-news-section {
+      background: linear-gradient(180deg, #fffdf9 0%, #f7f7f5 100%);
+    }
+    .latest-news-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+    .latest-news-head .section-title {
+      margin-bottom: 0;
+    }
+    .latest-news-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--ui-highlight-border);
+      background: var(--ui-highlight-bg);
+      color: var(--ui-highlight-text);
+      font-size: 0.8rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .latest-news-status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.42);
+      animation: update-pulse 1.8s ease-out infinite;
+    }
+    .latest-news-shell {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid #ead8c4;
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    }
+    .latest-news-viewport {
+      overflow: hidden;
+    }
+    .latest-news-track {
+      display: flex;
+      width: 100%;
+      transition: transform .55s cubic-bezier(.22, .61, .36, 1);
+    }
+    .news-page {
+      flex: 0 0 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      min-height: 308px;
+      padding: 22px 62px 22px;
+    }
+    .news-item {
+      display: grid;
+      grid-template-columns: 108px 1fr;
+      gap: 16px;
+      padding: 16px 18px;
+      border: 1px solid #eeeeea;
+      border-left: 4px solid #d35400;
+      border-radius: 10px;
+      background: #fffaf4;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.035);
+    }
+    .news-item-with-media {
+      grid-template-columns: 108px minmax(0, 1fr) 190px;
+      align-items: start;
+    }
+    .news-date {
+      color: #d35400;
+      font-size: 0.8rem;
+      font-weight: 800;
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+    .news-title {
+      margin: 0 0 6px;
+      color: #111;
+      font-size: 0.96rem;
+      font-weight: 800;
+      line-height: 1.55;
+    }
+    .news-text {
+      margin: 0;
+      color: #555;
+      font-size: 0.88rem;
+      line-height: 1.72;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+    .news-certificate-link {
+      display: block;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid #d9e9e4;
+      background: #fff;
+      box-shadow: 0 4px 14px rgba(16, 94, 83, 0.10);
+      transition: transform .18s, box-shadow .18s, border-color .18s;
+    }
+    .news-certificate-link:hover,
+    .news-certificate-link:focus-visible {
+      transform: translateY(-2px);
+      border-color: var(--ui-highlight-border);
+      box-shadow: 0 8px 22px rgba(16, 94, 83, 0.16);
+      outline: none;
+    }
+    .news-certificate {
+      display: block;
+      width: 100%;
+      aspect-ratio: 2525 / 1785;
+      object-fit: cover;
+    }
+    .latest-news-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 0 22px 18px;
+    }
+    .news-nav {
+      width: 34px;
+      height: 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ead8c4;
+      border-radius: 50%;
+      background: #fffaf4;
+      color: #d35400;
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      transition: transform .16s, box-shadow .16s, background .16s, border-color .16s, color .16s;
+    }
+    .news-nav:hover,
+    .news-nav:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(211, 84, 0, 0.14);
+      background: var(--ui-highlight-bg);
+      border-color: var(--ui-highlight-border);
+      color: var(--ui-highlight-text);
+      outline: none;
+    }
+    .news-dots {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .news-dot {
+      width: 9px;
+      height: 9px;
+      border: 0;
+      border-radius: 50%;
+      background: #dfc7ae;
+      cursor: pointer;
+      padding: 0;
+      transition: transform .18s, background .18s;
+    }
+    .news-dot.is-active {
+      transform: scale(1.35);
+      background: #d35400;
+    }
+    @keyframes update-pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.42); }
+      70% { box-shadow: 0 0 0 9px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
     .paper-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -500,7 +677,7 @@
 
     header, .nav-bar, .btn-row, .pill-links, .model-pills,
     .feature-grid, .agent-grid, .workflow, .highlight-head,
-    .toolbox-group-head, .team-table {
+    .toolbox-group-head, .team-table, .latest-news-head, .latest-news-shell {
       text-align: initial;
     }
 
@@ -515,11 +692,24 @@
       .toolbox-card { padding: 18px 18px 20px; }
       .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
       .header-logo-frame { width: 360px; max-width: 94%; margin-bottom: 16px; }
+      .latest-news-head { align-items: flex-start; flex-direction: column; gap: 12px; }
+      .news-page { min-height: 470px; padding: 18px 16px 20px; }
+      .news-item,
+      .news-item-with-media { grid-template-columns: 1fr; gap: 6px; padding: 15px 16px; }
+      .news-date { white-space: normal; }
+      .news-certificate-link { margin-top: 8px; }
     }
     @media (max-width: 480px) {
       .workflow-step { flex-direction: column; gap: 8px; }
       .step-left { flex-direction: row; }
       .step-line { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .latest-news-track,
+      .latest-news-status::before {
+        animation: none;
+        transition: none;
+      }
     }
   </style>
 </head>
@@ -554,6 +744,7 @@
 <nav class="nav-bar" aria-label="CastClaw 页面导航">
   <div class="container">
     <a href="../index.html" class="nav-home">首页</a>
+    <a href="#latest-news">最新动态</a>
     <a href="#demo-video">演示视频</a>
     <a href="#overview">项目概览</a>
     <a href="#interaction-modes">交互模式</a>
@@ -566,6 +757,99 @@
     <a href="#about">关于我们</a>
   </div>
 </nav>
+
+<!-- ═══════════════════ LATEST NEWS ═══════════════════ -->
+<section id="latest-news" class="latest-news-section">
+  <div class="container">
+    <div class="latest-news-head">
+      <h2 class="section-title">最新动态</h2>
+      <span class="latest-news-status">持续更新中</span>
+    </div>
+    <div class="latest-news-shell" aria-label="CastClaw 最新动态自动翻页列表">
+      <div class="latest-news-viewport">
+        <div class="latest-news-track">
+          <div class="news-page" aria-label="第 1 页，共 4 页">
+            <article class="news-item">
+            <time class="news-date" datetime="2026-07-15">2026-07-15</time>
+            <div>
+              <h3 class="news-title">CastClaw 1.3.0 版本上线</h3>
+              <p class="news-text">支持直接提交 UserPrior，充分利用已有预测先验，无需重复进行模型搜索和训练；新增 ARIMA、AutoARIMA、ETS、Holt、Holt-Winters、Theta 等统计模型；新增 stride、forecast_gap 等参数，支持更复杂的预测窗口设置。本次更新同时优化了按比例或时间戳进行数据集切分、模型权重复用机制，以及预测结果与评估指标的保存，方便后续分析、复现和可视化。</p>
+            </div>
+            </article>
+            <article class="news-item">
+            <time class="news-date" datetime="2026-07-04">2026-07-04</time>
+            <div>
+              <h3 class="news-title">新增用户自主提交预测先验功能</h3>
+              <p class="news-text">用户可以提交已有预测结果作为完整对齐 CSV，跳过模型搜索流程，并通过深度生成式预测推理对预测先验进行验证与优化。</p>
+            </div>
+            </article>
+          </div>
+          <div class="news-page" aria-label="第 2 页，共 4 页">
+            <article class="news-item">
+            <time class="news-date" datetime="2026-06-18">2026-06-18</time>
+            <div>
+              <h3 class="news-title">新增生成式预测推理能力</h3>
+              <p class="news-text">系统可在保留原始预测结果的基础上，生成经过验证的规则型 skill，对预测结果进行可审计、可复现的修正。</p>
+            </div>
+            </article>
+            <article class="news-item news-item-with-media">
+            <time class="news-date" datetime="2026-06-08">2026-06-08</time>
+            <div>
+              <h3 class="news-title">2026 智源大会海报展示</h3>
+              <p class="news-text">CastClaw 项目在 2026 智源大会「Agent for Science」大赛中完成海报展示，并获 Certificate of Poster Presentation 认证。Xiaoyu Tao、Mingyue Cheng、Tian Gao、Ze Guo、Bokai Pan、Qi Liu、Shijin Wang 团队围绕 CastClaw 展示了面向时间序列预测的智能体工作流。</p>
+            </div>
+            <a class="news-certificate-link" href="assets/BAAI.png" target="_blank" rel="noopener" aria-label="查看 CastClaw 2026 智源大会海报展示证书原图">
+              <img class="news-certificate" src="assets/BAAI.png" alt="CastClaw 2026 智源大会 Agent for Science 大赛 Certificate of Poster Presentation 证书" loading="lazy" />
+            </a>
+            </article>
+          </div>
+          <div class="news-page" aria-label="第 3 页，共 4 页">
+            <article class="news-item">
+            <time class="news-date" datetime="2026-04-30">2026-04-30</time>
+            <div>
+              <h3 class="news-title">CastClaw 1.2.1 版本更新</h3>
+              <p class="news-text">运行到 Critic Agent 时，会自动导出最佳模型文件、参数等内容，形成一个可以复用的 workflow。</p>
+            </div>
+            </article>
+            <article class="news-item">
+            <time class="news-date" datetime="2026-04-22">2026-04-22</time>
+            <div>
+              <h3 class="news-title">CastClaw 1.2.0 版本更新</h3>
+              <p class="news-text">上线 Auto 模式，可在预测前勾选，确认实验参数后自动推进整个流程直至结束；为 Hugging Face 配置镜像，Chronos 等基础模型不再因超时无法正常使用；同时更新了一部分 UI。</p>
+            </div>
+            </article>
+          </div>
+          <div class="news-page" aria-label="第 4 页，共 4 页">
+            <article class="news-item">
+            <time class="news-date" datetime="2026-04-17">2026-04-17</time>
+            <div>
+              <h3 class="news-title">录制演示视频</h3>
+              <p class="news-text">完成 CastClaw 演示视频录制，用于展示端到端预测工作流、工具调用与结果评估过程。</p>
+            </div>
+            </article>
+            <article class="news-item">
+            <time class="news-date" datetime="2026-03-31">2026-03-31</time>
+            <div>
+              <h3 class="news-title">CastClaw 正式开源</h3>
+              <p class="news-text">项目正式开源，附完整文档与多 LLM 提供商支持，方便研究者快速复现、扩展与部署。</p>
+            </div>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="latest-news-controls" aria-label="最新动态翻页控制">
+        <button class="news-nav" type="button" data-news-prev aria-label="上一页">‹</button>
+        <div class="news-dots" role="tablist" aria-label="最新动态页码">
+          <button class="news-dot is-active" type="button" data-news-dot="0" aria-label="第 1 页" aria-selected="true"></button>
+          <button class="news-dot" type="button" data-news-dot="1" aria-label="第 2 页" aria-selected="false"></button>
+          <button class="news-dot" type="button" data-news-dot="2" aria-label="第 3 页" aria-selected="false"></button>
+          <button class="news-dot" type="button" data-news-dot="3" aria-label="第 4 页" aria-selected="false"></button>
+        </div>
+        <button class="news-nav" type="button" data-news-next aria-label="下一页">›</button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ═══════════════════ DEMO VIDEO ═══════════════════ -->
 <section id="demo-video">
@@ -1437,6 +1721,69 @@ Evaluation / Explanation / Workflow Release</div>
   </div>
 </footer>
 <script>
+  (function () {
+    const newsShell = document.querySelector('.latest-news-shell');
+    if (!newsShell) return;
+
+    const track = newsShell.querySelector('.latest-news-track');
+    const pages = Array.from(newsShell.querySelectorAll('.news-page'));
+    const dots = Array.from(newsShell.querySelectorAll('.news-dot'));
+    const prevButton = newsShell.querySelector('[data-news-prev]');
+    const nextButton = newsShell.querySelector('[data-news-next]');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const interval = 6000;
+    let currentPage = 0;
+    let timer = null;
+
+    function setPage(pageIndex) {
+      currentPage = (pageIndex + pages.length) % pages.length;
+      track.style.transform = 'translateX(-' + (currentPage * 100) + '%)';
+      dots.forEach(function (dot, index) {
+        const isActive = index === currentPage;
+        dot.classList.toggle('is-active', isActive);
+        dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    }
+
+    function stopAutoPage() {
+      if (timer) {
+        clearInterval(timer);
+        timer = null;
+      }
+      newsShell.classList.add('is-paused');
+    }
+
+    function startAutoPage() {
+      if (reduceMotion || timer) return;
+      newsShell.classList.remove('is-paused');
+      timer = window.setInterval(function () {
+        setPage(currentPage + 1);
+      }, interval);
+    }
+
+    prevButton.addEventListener('click', function () {
+      setPage(currentPage - 1);
+    });
+
+    nextButton.addEventListener('click', function () {
+      setPage(currentPage + 1);
+    });
+
+    dots.forEach(function (dot, index) {
+      dot.addEventListener('click', function () {
+        setPage(index);
+      });
+    });
+
+    newsShell.addEventListener('mouseenter', stopAutoPage);
+    newsShell.addEventListener('mouseleave', startAutoPage);
+    newsShell.addEventListener('focusin', stopAutoPage);
+    newsShell.addEventListener('focusout', startAutoPage);
+
+    setPage(0);
+    startAutoPage();
+  })();
+
   (function () {
     const heroHeader = document.getElementById('heroHeader');
     if (!heroHeader) return;
