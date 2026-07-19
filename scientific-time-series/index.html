@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>科学时序数据建模 | USTC-AGI Time Series</title>
+  <meta
+    name="description"
+    content="USTC-AGI 科学时序数据建模研究方向：科学数据特点、核心问题、技术路线与应用领域。"
+  />
+  <link rel="canonical" href="https://ustc-time-series.github.io/scientific-time-series/" />
+  <meta property="og:title" content="科学时序数据建模 | USTC-AGI Time Series" />
+  <meta
+    property="og:description"
+    content="面向自然、工程与生命系统中的动态观测，融合数据驱动学习与科学机理，研究可信、可迁移的时序建模方法。"
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ustc-time-series.github.io/scientific-time-series/" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --ink: #17201f;
+      --muted: #596562;
+      --accent: #0f766e;
+      --accent-dark: #0b5e58;
+      --accent-soft: #ecfdf9;
+      --line: #dbe9e6;
+      --surface: #ffffff;
+      --canvas: #f6f8f7;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                   "PingFang SC", "Hiragino Sans GB", sans-serif;
+      background: var(--canvas);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.8;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 120;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid #e8e8e8;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .top-nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 64px;
+    }
+
+    .nav-brand {
+      flex-shrink: 0;
+      color: #111;
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+    .nav-brand span { color: var(--accent); }
+
+    .nav-links {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 10px 0;
+      overflow: visible;
+    }
+
+    .nav-links a,
+    .nav-dropdown-toggle {
+      flex-shrink: 0;
+      padding: 8px 14px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: #555;
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 500;
+      line-height: 1.2;
+      transition: color .18s, background .18s, border-color .18s, transform .18s;
+    }
+
+    .nav-dropdown { position: relative; flex-shrink: 0; }
+    .nav-dropdown-toggle { appearance: none; background: transparent; cursor: pointer; }
+    .nav-dropdown-toggle::after {
+      content: "";
+      display: inline-block;
+      margin-left: 7px;
+      vertical-align: middle;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid currentColor;
+      transition: transform .18s ease;
+    }
+    .nav-dropdown.open .nav-dropdown-toggle::after { transform: rotate(180deg); }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      z-index: 30;
+      display: none;
+      min-width: 250px;
+      padding: 8px;
+      gap: 4px;
+      border: 1px solid #d9eee9;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 12px 28px rgba(15, 118, 110, 0.10);
+    }
+    .nav-dropdown.open .nav-dropdown-menu { display: grid; }
+    .nav-dropdown-menu a {
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .nav-links a:hover,
+    .nav-dropdown-toggle:hover,
+    .nav-dropdown.open .nav-dropdown-toggle,
+    .nav-dropdown-menu a:hover {
+      color: var(--accent);
+      background: #f0fdf9;
+      border-color: #99e6d8;
+      font-weight: 700;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .nav-active {
+      color: var(--accent) !important;
+      background: #f0fdf9 !important;
+      border-color: #99e6d8 !important;
+      font-weight: 700 !important;
+    }
+
+    header {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      padding: 78px 0 64px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(45, 212, 191, 0.16), transparent 28%),
+        radial-gradient(circle at 86% 75%, rgba(14, 116, 144, 0.12), transparent 30%),
+        linear-gradient(145deg, #ffffff 35%, #effcf8 100%);
+      text-align: center;
+      cursor: pointer;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(15, 118, 110, .08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 118, 110, .08) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, #000, transparent 88%);
+    }
+    header.is-refreshing { opacity: 0.82; transform: scale(0.995); }
+    header:focus-visible { outline: 3px solid #99e6d8; outline-offset: -6px; }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+    header h1 {
+      margin-top: 10px;
+      color: #101918;
+      font-size: clamp(2.15rem, 5vw, 3.35rem);
+      font-weight: 860;
+      line-height: 1.2;
+      letter-spacing: -0.035em;
+    }
+    .header-sub {
+      max-width: 860px;
+      margin: 18px auto 0;
+      color: #4f5d5a;
+      font-size: 1rem;
+      line-height: 1.85;
+      text-align: center;
+    }
+
+    .hero-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .hero-highlights span {
+      padding: 8px 14px;
+      border: 1px solid #b9e8df;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      color: var(--accent-dark);
+      font-size: 0.84rem;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.06);
+    }
+
+    main { flex: 1; padding: 44px 0 80px; }
+    .content-stack { display: grid; gap: 22px; }
+    .section-card {
+      padding: 30px;
+      border: 1px solid #e1e9e7;
+      border-radius: 20px;
+      background: var(--surface);
+      box-shadow: 0 10px 30px rgba(34, 71, 65, 0.045);
+    }
+    .section-heading {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+    .section-kicker {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+    .section-card h2 {
+      color: #14201e;
+      font-size: 1.42rem;
+      font-weight: 820;
+      line-height: 1.35;
+    }
+    .section-lead {
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.75;
+    }
+
+    .feature-grid,
+    .process-grid,
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .route-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card,
+    .process-grid article,
+    .route-grid article,
+    .domain-grid article {
+      position: relative;
+      min-height: 182px;
+      padding: 20px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fff, #fbfefd);
+    }
+    .feature-card::after,
+    .domain-grid article::after {
+      content: "";
+      position: absolute;
+      right: -30px;
+      bottom: -38px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: rgba(45, 212, 191, 0.08);
+    }
+    .feature-card > span,
+    .process-index {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 26px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+    .feature-card h3,
+    .route-grid h3,
+    .domain-grid h3 {
+      margin-top: 13px;
+      color: #17221f;
+      font-size: 1.02rem;
+      font-weight: 800;
+      line-height: 1.45;
+    }
+    .feature-card p,
+    .process-grid p,
+    .route-grid p,
+    .domain-grid p {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.72;
+    }
+
+    .process-grid article { min-height: 164px; }
+    .process-grid strong {
+      display: block;
+      margin-top: 13px;
+      color: var(--accent-dark);
+      font-size: 1.08rem;
+      font-weight: 820;
+    }
+    .process-grid article:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -13px;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 26px;
+      height: 26px;
+      border: 1px solid #cce7e1;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--accent);
+      font-weight: 800;
+      transform: translateY(-50%);
+    }
+
+    .route-grid article {
+      min-height: 205px;
+      padding-top: 62px;
+    }
+    .route-icon {
+      position: absolute;
+      top: 19px;
+      left: 20px;
+      color: var(--accent);
+      font-size: 1.38rem;
+      line-height: 1;
+    }
+
+    .research-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+      padding: 18px;
+      border: 1px solid #cde9e3;
+      border-radius: 16px;
+      background: linear-gradient(90deg, #f5fffc, #fbfefd);
+    }
+    .research-flow span {
+      padding: 7px 11px;
+      border-radius: 10px;
+      background: #fff;
+      color: #35514c;
+      font-size: 0.82rem;
+      font-weight: 700;
+      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.06);
+    }
+    .research-flow b { color: var(--accent); font-size: 1rem; }
+
+    .domain-label {
+      display: inline-block;
+      color: var(--accent);
+      font-size: 1.3rem;
+      line-height: 1;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+    .page-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 9px 16px;
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 750;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+    .page-btn:hover { text-decoration: none; transform: translateY(-1px); }
+    .page-btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(15, 118, 110, 0.16);
+    }
+    .page-btn-primary:hover { background: var(--accent-dark); }
+    .page-btn-secondary { background: #fff; color: var(--accent); }
+
+    footer {
+      margin-top: auto;
+      padding: 28px 0;
+      border-top: 1px solid #e5ecea;
+      background: #fff;
+      color: #737d7a;
+      font-size: 0.81rem;
+      text-align: center;
+    }
+    .footer-funding { margin-top: 4px; }
+
+    @media (max-width: 960px) {
+      .top-nav .container { align-items: flex-start; flex-direction: column; gap: 0; padding-top: 12px; }
+      .nav-links { justify-content: flex-start; flex-wrap: wrap; padding-top: 2px; }
+      .feature-grid,
+      .process-grid,
+      .domain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .process-grid article:nth-child(2)::after { display: none; }
+    }
+
+    @media (max-width: 720px) {
+      .container { width: min(100% - 32px, 1180px); }
+      .nav-brand { white-space: normal; }
+      .nav-links a,
+      .nav-dropdown-toggle { padding: 7px 11px; font-size: 0.79rem; }
+      .nav-dropdown-menu { left: 0; min-width: 230px; }
+      header { padding: 60px 0 48px; }
+      header h1 { font-size: 2rem; }
+      .header-sub { font-size: 0.94rem; }
+      main { padding: 32px 0 60px; }
+      .section-card { padding: 22px 18px; }
+      .section-heading { display: block; }
+      .section-lead { margin-top: 8px; }
+      .feature-grid,
+      .process-grid,
+      .route-grid,
+      .domain-grid { grid-template-columns: 1fr; }
+      .feature-card,
+      .process-grid article,
+      .route-grid article,
+      .domain-grid article { min-height: auto; }
+      .process-grid article::after { display: none !important; }
+      .research-flow { flex-direction: column; align-items: stretch; text-align: center; }
+      .research-flow b { transform: rotate(90deg); }
+      .btn-row { flex-direction: column; }
+      .page-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="top-nav" aria-label="首页顶部导航">
+  <div class="container">
+    <a class="nav-brand" href="../index.html">USTC-AGI <span>Time Series</span></a>
+    <div class="nav-links">
+      <a href="../index.html#hero-header">首页</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle nav-active" type="button" aria-expanded="false">研究方向</button>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="../forecasting/" role="menuitem">时间序列预测</a>
+          <a href="../classification-anomaly/" role="menuitem">时间序列分类与异常检测</a>
+          <a class="nav-active" href="../scientific-time-series/" role="menuitem" aria-current="page">科学时序数据建模</a>
+        </div>
+      </div>
+      <a href="../papers/">论文列表</a>
+      <a href="../applications/">应用研究</a>
+      <a href="../star-cast/">逐星方舟</a>
+      <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">
+        GitHub
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:12px;height:12px;margin-left:4px;vertical-align:-1px">
+          <path d="M6 3H13V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M13 3L3 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
+  <div class="container">
+    <p class="eyebrow">Scientific Time Series Modeling</p>
+    <h1>科学时序数据建模</h1>
+    <p class="header-sub">
+      面向自然、工程与生命系统中的动态观测，融合数据驱动学习、结构归纳偏置与科学机理，
+      形成可预测、可解释、可迁移的时序模型。
+    </p>
+    <div class="hero-highlights" aria-label="研究方向概览">
+      <span>复杂科学观测</span>
+      <span>机理与数据融合</span>
+      <span>预测反演与发现</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+    <div class="content-stack">
+      <section class="section-card" id="data-characteristics">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Data Characteristics</span>
+            <h2>科学时序数据的特点</h2>
+          </div>
+          <p class="section-lead">科学观测不仅记录数值变化，还承载系统结构、实验条件与领域规律；其建模难点来自数据形态与科学机制的共同复杂性。</p>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span>01</span>
+            <h3>多尺度与非平稳</h3>
+            <p>动态过程跨越不同时间尺度，并随环境、阶段或实验条件发生分布变化。</p>
+          </article>
+          <article class="feature-card">
+            <span>02</span>
+            <h3>多变量与强耦合</h3>
+            <p>多个物理量、生物量或系统状态通过复杂依赖共同演化。</p>
+          </article>
+          <article class="feature-card">
+            <span>03</span>
+            <h3>稀疏与不规则观测</h3>
+            <p>采样频率、传感器覆盖和观测质量受实验与设备条件限制。</p>
+          </article>
+          <article class="feature-card">
+            <span>04</span>
+            <h3>机理与约束并存</h3>
+            <p>守恒律、边界条件、因果结构和领域规律限制可能的演化路径。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card" id="core-problems">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Core Problems</span>
+            <h2>核心科学问题</h2>
+          </div>
+          <p class="section-lead">从观测理解走向规律发现，科学时序建模需要贯通表征、预测、反演与发现四类相互关联的研究任务。</p>
+        </div>
+        <div class="process-grid">
+          <article>
+            <span class="process-index">01</span>
+            <strong>表征</strong>
+            <p>统一编码异构变量、不同采样粒度与多源观测。</p>
+          </article>
+          <article>
+            <span class="process-index">02</span>
+            <strong>预测</strong>
+            <p>刻画长期演化、突变事件与预测不确定性。</p>
+          </article>
+          <article>
+            <span class="process-index">03</span>
+            <strong>反演</strong>
+            <p>从观测序列估计隐状态、未知参数与驱动因素。</p>
+          </article>
+          <article>
+            <span class="process-index">04</span>
+            <strong>发现</strong>
+            <p>识别稳定规律、关键机制与可验证的科学假设。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card" id="technical-routes">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Technical Routes</span>
+            <h2>技术路线</h2>
+          </div>
+          <p class="section-lead">以数据学习为基础，以科学机理为约束，以可信迁移为目标，构建能够跨场景理解复杂动态系统的统一模型。</p>
+        </div>
+        <div class="route-grid">
+          <article>
+            <span class="route-icon" aria-hidden="true">◫</span>
+            <h3>数据驱动时序学习</h3>
+            <p>研究自监督表征、时空依赖建模、多任务学习与基础模型，充分利用大规模科学观测中的共性动态模式。</p>
+          </article>
+          <article>
+            <span class="route-icon" aria-hidden="true">⌁</span>
+            <h3>科学机理融合</h3>
+            <p>将物理约束、结构先验、微分方程与模拟数据融入学习过程，压缩解空间并提升科学一致性。</p>
+          </article>
+          <article>
+            <span class="route-icon" aria-hidden="true">◇</span>
+            <h3>可信与可迁移建模</h3>
+            <p>面向不确定性量化、分布外泛化、跨系统迁移与可解释分析，支撑稳健的科学判断。</p>
+          </article>
+        </div>
+        <div class="research-flow" aria-label="科学时序数据建模研究链路">
+          <span>科学观测</span><b>→</b>
+          <span>多源时序表征</span><b>→</b>
+          <span>动态规律建模</span><b>→</b>
+          <span>可信预测与反演</span><b>→</b>
+          <span>科学发现与决策</span>
+        </div>
+      </section>
+
+      <section class="section-card" id="domains">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Application Domains</span>
+            <h2>应用领域</h2>
+          </div>
+          <p class="section-lead">科学时序方法连接多学科观测与动态规律，可在自然系统、工程设施、生命过程与实验研究中形成可复用的建模能力。</p>
+        </div>
+        <div class="domain-grid">
+          <article>
+            <span class="domain-label" aria-hidden="true">◉</span>
+            <h3>气象与地球系统</h3>
+            <p>天气、气候、海洋、水文与生态观测中的多尺度演化建模。</p>
+          </article>
+          <article>
+            <span class="domain-label" aria-hidden="true">⌁</span>
+            <h3>能源与工程系统</h3>
+            <p>能源供需、设备状态与复杂工程过程的预测、诊断和控制。</p>
+          </article>
+          <article>
+            <span class="domain-label" aria-hidden="true">✦</span>
+            <h3>生命与健康科学</h3>
+            <p>生理信号、疾病进展与实验观测中的个体化动态建模。</p>
+          </article>
+          <article>
+            <span class="domain-label" aria-hidden="true">⬡</span>
+            <h3>材料与实验科学</h3>
+            <p>材料表征、反应过程与实验序列中的规律识别和参数反演。</p>
+          </article>
+        </div>
+        <div class="btn-row">
+          <a class="page-btn page-btn-primary" href="../index.html#research-tracks">返回首页研究方向</a>
+          <a class="page-btn page-btn-secondary" href="../papers/">查看论文列表</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p>
+      &copy; 2024–2026 Time Series Analysis Group &middot;
+      <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
+      &middot; State Key Laboratory of Cognitive Intelligence, USTC
+    </p>
+    <p class="footer-funding">本项目研究资助来源：国家双一流建设经费、国家自然科学基金委</p>
+  </div>
+</footer>
+
+<script>
+  (() => {
+    const dropdowns = document.querySelectorAll('.nav-dropdown');
+    const closeAll = () => {
+      dropdowns.forEach((dropdown) => {
+        dropdown.classList.remove('open');
+        const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      });
+    };
+
+    dropdowns.forEach((dropdown) => {
+      const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+      const menuLinks = dropdown.querySelectorAll('.nav-dropdown-menu a');
+      if (!toggle) return;
+      toggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const willOpen = !dropdown.classList.contains('open');
+        closeAll();
+        dropdown.classList.toggle('open', willOpen);
+        toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      });
+      menuLinks.forEach((link) => link.addEventListener('click', closeAll));
+    });
+
+    document.addEventListener('click', closeAll);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeAll();
+    });
+
+    const heroHeader = document.querySelector('#hero-header');
+    const refreshPage = () => {
+      if (!heroHeader || heroHeader.classList.contains('is-refreshing')) return;
+      heroHeader.classList.add('is-refreshing');
+      window.setTimeout(() => window.location.reload(), 160);
+    };
+    heroHeader?.addEventListener('click', (event) => {
+      if (!event.target.closest('a, button')) refreshPage();
+    });
+    heroHeader?.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      refreshPage();
+    });
+  })();
+</script>
+
+</body>
+</html>
