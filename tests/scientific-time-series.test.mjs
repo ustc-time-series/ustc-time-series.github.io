@@ -37,6 +37,16 @@ test('homepage links the scientific time series research card and dropdown', () 
   assert.ok(homepage.includes('href="scientific-time-series/"'));
 });
 
+test('homepage mobile research dropdown is not clipped by the navigation row', () => {
+  const mobileNavRule = homepage.match(
+    /@media \(max-width: 640px\) \{[\s\S]*?\.nav-links \{([\s\S]*?)\n      \}/,
+  )?.[1] ?? '';
+
+  assert.ok(mobileNavRule.includes('flex-wrap: wrap;'));
+  assert.ok(mobileNavRule.includes('overflow-x: visible;'));
+  assert.ok(!mobileNavRule.includes('overflow-x: auto;'));
+});
+
 test('all one-level pages expose the scientific time series dropdown entry', async () => {
   for (const path of siblingNavigationPages) {
     const page = await readFile(new URL(path, root), 'utf8');
