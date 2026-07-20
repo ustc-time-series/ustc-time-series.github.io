@@ -6,13 +6,13 @@
   <title>科学时序数据建模 | USTC-AGI Time Series</title>
   <meta
     name="description"
-    content="USTC-AGI 科学时序数据建模研究方向：科学数据特点、核心问题、技术路线与应用领域。"
+    content="USTC-AGI 科学时序数据建模研究方向：跨系统动力学、跨尺度科学建模与科学时序基础模型迁移评测。"
   />
   <link rel="canonical" href="https://ustc-time-series.github.io/scientific-time-series/" />
   <meta property="og:title" content="科学时序数据建模 | USTC-AGI Time Series" />
   <meta
     property="og:description"
-    content="面向自然、工程与生命系统中的动态观测，融合数据驱动学习与科学机理，研究可信、可迁移的时序建模方法。"
+    content="面向复杂科学动力系统，研究科学时序基础模型的跨系统、跨尺度表征、预测、重建与适配能力。"
   />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://ustc-time-series.github.io/scientific-time-series/" />
@@ -236,6 +236,28 @@
       box-shadow: 0 8px 20px rgba(15, 118, 110, 0.06);
     }
 
+    .planning-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      max-width: 860px;
+      margin: 18px auto 0;
+      padding: 11px 16px;
+      border: 1px solid rgba(15, 118, 110, 0.20);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.72);
+      color: #53615e;
+      font-size: 0.79rem;
+      line-height: 1.55;
+      text-align: left;
+    }
+    .planning-note strong {
+      flex-shrink: 0;
+      color: var(--accent-dark);
+      font-weight: 800;
+    }
+
     main { flex: 1; padding: 44px 0 80px; }
     .content-stack { display: grid; gap: 22px; }
     .section-card {
@@ -412,6 +434,261 @@
       line-height: 1;
     }
 
+    .research-position {
+      margin-bottom: 22px;
+      padding: 22px 24px;
+      border: 1px solid #bee5dc;
+      border-radius: 16px;
+      background: linear-gradient(120deg, #effcf8, #fbfefd);
+      color: #264641;
+      font-size: 1rem;
+      font-weight: 650;
+      line-height: 1.8;
+    }
+    .research-position strong { color: var(--accent-dark); }
+
+    .definition-principles,
+    .axis-grid,
+    .evaluation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .boundary-grid,
+    .system-grid,
+    .track-split {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .definition-principles article,
+    .axis-card,
+    .track-split article,
+    .system-card,
+    .task-grid article,
+    .evaluation-grid article {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fff, #fbfefd);
+    }
+
+    .definition-principles article {
+      min-height: 150px;
+      padding: 19px;
+    }
+    .definition-principles strong {
+      display: block;
+      color: var(--accent-dark);
+      font-size: 1rem;
+      font-weight: 820;
+    }
+    .definition-principles p,
+    .boundary-card p,
+    .axis-card p,
+    .track-split p,
+    .system-card > p,
+    .evaluation-grid p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 0.87rem;
+      line-height: 1.72;
+    }
+
+    .boundary-grid { margin-top: 16px; }
+    .boundary-card {
+      position: relative;
+      padding: 20px 20px 20px 54px;
+      border-radius: 16px;
+    }
+    .boundary-card::before {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 0.76rem;
+      font-weight: 900;
+    }
+    .boundary-yes { border: 1px solid #b8e7dc; background: #f3fdf9; }
+    .boundary-yes::before { content: "✓"; background: #d7f7ee; color: #087466; }
+    .boundary-no { border: 1px solid #eadfd3; background: #fffaf5; }
+    .boundary-no::before { content: "—"; background: #f5eade; color: #9a5d24; }
+    .boundary-card h3 { color: #243b37; font-size: 1rem; font-weight: 800; }
+
+    .axis-card {
+      position: relative;
+      min-height: 180px;
+      padding: 22px;
+      overflow: hidden;
+    }
+    .axis-card::after {
+      content: "";
+      position: absolute;
+      right: -28px;
+      bottom: -36px;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: rgba(45, 212, 191, 0.08);
+    }
+    .axis-card > span {
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 820;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .axis-card h3 {
+      margin-top: 10px;
+      color: #1d3531;
+      font-size: 1.07rem;
+      font-weight: 830;
+    }
+
+    .scale-strip {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 18px;
+      padding: 12px;
+      border: 1px solid #cae7e1;
+      border-radius: 16px;
+      background: #f6fffc;
+    }
+    .scale-strip span {
+      position: relative;
+      padding: 12px 10px;
+      border-radius: 11px;
+      background: #fff;
+      color: #3d5651;
+      font-size: 0.79rem;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 3px 12px rgba(15, 118, 110, 0.05);
+    }
+    .scale-strip span:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -8px;
+      z-index: 2;
+      color: var(--accent);
+      transform: translate(50%, -50%);
+    }
+
+    .track-split { margin-top: 16px; }
+    .track-split article { padding: 18px 20px; }
+    .track-split strong { color: #25433e; font-size: 0.95rem; font-weight: 820; }
+    .track-split article:first-child { border-color: #a8ddd2; background: #f2fcf8; }
+    .track-split article:last-child { border-style: dashed; background: #fbfcfc; }
+
+    .system-card {
+      position: relative;
+      min-height: 228px;
+      padding: 22px;
+    }
+    .system-card > span {
+      display: inline-flex;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.73rem;
+      font-weight: 850;
+    }
+    .system-card h3 {
+      margin-top: 12px;
+      color: #1e3934;
+      font-size: 1.08rem;
+      font-weight: 830;
+    }
+    .package-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .package-list span,
+    .migration-types span {
+      padding: 6px 10px;
+      border: 1px solid #cce8e2;
+      border-radius: 999px;
+      background: #f5fdfa;
+      color: #315a53;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .task-grid article {
+      min-height: 128px;
+      padding: 18px;
+    }
+    .task-grid article:last-child { grid-column: span 2; }
+    .task-grid article > span {
+      color: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+    }
+    .task-grid h3 {
+      margin-top: 10px;
+      color: #294640;
+      font-size: 0.94rem;
+      font-weight: 800;
+      line-height: 1.5;
+    }
+    .task-grid p {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 0.81rem;
+      line-height: 1.62;
+    }
+
+    .adaptation-curve,
+    .migration-types {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .adaptation-curve {
+      padding: 18px;
+      border: 1px solid #b9e2da;
+      border-radius: 16px;
+      background: linear-gradient(90deg, #f2fcf8, #fbfefd);
+    }
+    .adaptation-curve span {
+      min-width: 94px;
+      padding: 9px 13px;
+      border-radius: 11px;
+      background: #fff;
+      color: #28544c;
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(15, 118, 110, 0.06);
+    }
+    .adaptation-curve b { color: var(--accent); }
+    .entity-note {
+      margin: 12px 0 18px;
+      color: #65716f;
+      font-size: 0.82rem;
+      text-align: center;
+    }
+    .evaluation-grid article { min-height: 150px; padding: 20px; }
+    .evaluation-grid h3 { color: #294640; font-size: 1rem; font-weight: 820; }
+    .migration-types { margin-top: 16px; }
+
     .btn-row {
       display: flex;
       flex-wrap: wrap;
@@ -456,7 +733,13 @@
       .feature-grid,
       .process-grid,
       .domain-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .definition-principles,
+      .axis-grid,
+      .evaluation-grid,
+      .task-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .process-grid article:nth-child(2)::after { display: none; }
+      .scale-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .scale-strip span::after { display: none; }
     }
 
     @media (max-width: 720px) {
@@ -468,6 +751,7 @@
       header { padding: 60px 0 48px; }
       header h1 { font-size: 2rem; }
       .header-sub { font-size: 0.94rem; }
+      .planning-note { align-items: flex-start; flex-direction: column; }
       main { padding: 32px 0 60px; }
       .section-card { padding: 22px 18px; }
       .section-heading { display: block; }
@@ -475,7 +759,15 @@
       .feature-grid,
       .process-grid,
       .route-grid,
-      .domain-grid { grid-template-columns: 1fr; }
+      .domain-grid,
+      .definition-principles,
+      .boundary-grid,
+      .axis-grid,
+      .system-grid,
+      .task-grid,
+      .evaluation-grid,
+      .scale-strip,
+      .track-split { grid-template-columns: 1fr; }
       .feature-card,
       .process-grid article,
       .route-grid article,
@@ -483,6 +775,9 @@
       .process-grid article::after { display: none !important; }
       .research-flow { flex-direction: column; align-items: stretch; text-align: center; }
       .research-flow b { transform: rotate(90deg); }
+      .task-grid article:last-child { grid-column: auto; }
+      .adaptation-curve { flex-direction: column; align-items: stretch; text-align: center; }
+      .adaptation-curve b { transform: rotate(90deg); }
       .btn-row { flex-direction: column; }
       .page-btn { width: 100%; }
     }
@@ -522,13 +817,17 @@
     <p class="eyebrow">Scientific Time Series Modeling</p>
     <h1>科学时序数据建模</h1>
     <p class="header-sub">
-      面向自然、工程与生命系统中的动态观测，融合数据驱动学习、结构归纳偏置与科学机理，
-      形成可预测、可解释、可迁移的时序模型。
+      面向复杂科学动力系统，研究科学时序基础模型如何跨系统、跨尺度学习动态规律，
+      并以零样本、少样本或全量数据适配新的科学对象。
     </p>
     <div class="hero-highlights" aria-label="研究方向概览">
-      <span>复杂科学观测</span>
-      <span>机理与数据融合</span>
-      <span>预测反演与发现</span>
+      <span>跨系统动力学</span>
+      <span>跨尺度科学建模</span>
+      <span>零样本到全量适配</span>
+    </div>
+    <div class="planning-note">
+      <strong>研究规划 · Benchmark Framework</strong>
+      <span>当前页面展示研究方向与评测框架；任务包与数据清单仍处于规划阶段，尚未冻结。</span>
     </div>
   </div>
 </header>
@@ -536,133 +835,187 @@
 <main>
   <div class="container">
     <div class="content-stack">
-      <section class="section-card" id="data-characteristics">
+      <section class="section-card" id="definition">
         <div class="section-heading">
           <div>
-            <span class="section-kicker">Data Characteristics</span>
-            <h2>科学时序数据的特点</h2>
+            <span class="section-kicker">Definition</span>
+            <h2>什么是科学时序数据</h2>
           </div>
-          <p class="section-lead">科学观测不仅记录数值变化，还承载系统结构、实验条件与领域规律；其建模难点来自数据形态与科学机制的共同复杂性。</p>
+          <p class="section-lead">科学时序不是任意排列的数值向量，而是科学系统在特定尺度下，经由观测过程形成的动态记录。</p>
         </div>
-        <div class="feature-grid">
-          <article class="feature-card">
+        <div class="research-position">
+          <strong>研究定位：</strong>
+          以科学动力系统和物理描述尺度的多样性为组织原则，评测科学时序基础模型的跨系统、跨尺度表征与适配能力。
+        </div>
+        <div class="definition-principles">
+          <article>
+            <strong>真实过程语义</strong>
+            <p>时间轴对应物理、生物、化学、材料状态或实验循环的真实演化，而不是样本的任意排序。</p>
+          </article>
+          <article>
+            <strong>有效描述尺度</strong>
+            <p>每条序列需要声明目标状态所在尺度、被忽略的自由度，以及支撑分析的有效模型。</p>
+          </article>
+          <article>
+            <strong>观测过程可追溯</strong>
+            <p>记录仪器、传感器或观测算子如何将目标状态映射为真实数据，并保留采样与校准信息。</p>
+          </article>
+        </div>
+        <div class="boundary-grid">
+          <article class="boundary-card boundary-yes">
+            <h3>典型科学时序</h3>
+            <p>多变量传感器、三分量或多通道波形、空间场、时序光谱、带控制输入的轨迹，以及充放电或实验 shot 等分层循环。</p>
+          </article>
+          <article class="boundary-card boundary-no">
+            <h3>不能仅凭一维横轴认定</h3>
+            <p>单张静态谱图、静态成分—性质表、任意排序样本，以及只有最终标签而没有过程记录的数据。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card" id="benchmark-framework">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Benchmark Cube</span>
+            <h2>三维研究与评测框架</h2>
+          </div>
+          <p class="section-lead">用“科学系统 × 物理描述尺度 × 适配预算”组织跨领域、跨尺度的科学时序研究。</p>
+        </div>
+        <div class="axis-grid">
+          <article class="axis-card">
+            <span>Axis 01</span>
+            <h3>科学系统维度</h3>
+            <p>物理与宇宙 · 地球 · 生命 · 分子与材料，覆盖互补的动力学和观测范式。</p>
+          </article>
+          <article class="axis-card">
+            <span>Axis 02</span>
+            <h3>物理描述尺度维度</h3>
+            <p>从电子与分子过程，到连续场和整体系统动力学的有效描述层级。</p>
+          </article>
+          <article class="axis-card">
+            <span>Axis 03</span>
+            <h3>适配预算维度</h3>
+            <p>零样本、少样本与全量微调共同构成完整迁移曲线。</p>
+          </article>
+        </div>
+        <div class="scale-strip" aria-label="物理描述尺度">
+          <span data-scale="L0 电子/量子">L0 · 电子/量子</span>
+          <span data-scale="L1 原子/分子">L1 · 原子/分子</span>
+          <span data-scale="L2 介观/动理学">L2 · 介观/动理学</span>
+          <span data-scale="L3 连续介质/场">L3 · 连续介质/场</span>
+          <span data-scale="L4 系统/工程动力学">L4 · 系统/工程动力学</span>
+        </div>
+        <div class="track-split">
+          <article>
+            <strong>真实观测与实验主赛道</strong>
+            <p>跨系统主结果必须建立在真实科学数据上，体现实际观测过程、缺失模式与仪器差异。</p>
+          </article>
+          <article>
+            <strong>计算模拟辅助赛道</strong>
+            <p>服务跨尺度与模拟到真实迁移研究，但不能替代真实数据上的主要结果。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card" id="scientific-systems">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Scientific Systems</span>
+            <h2>四类科学系统与八个任务包</h2>
+          </div>
+          <p class="section-lead">以最小但互补的任务包，覆盖不同控制方式、演化机制、观测拓扑和迁移边界，而不是简单枚举学科。</p>
+        </div>
+        <div class="system-grid">
+          <article class="system-card">
             <span>01</span>
-            <h3>多尺度与非平稳</h3>
-            <p>动态过程跨越不同时间尺度，并随环境、阶段或实验条件发生分布变化。</p>
+            <h3>物理与宇宙系统</h3>
+            <p>覆盖受控强非线性、多速率临界失稳，以及完全被动、稀疏和弱信号观测。</p>
+            <div class="package-list"><span>受控等离子体与核聚变</span><span>时域天文观测</span></div>
           </article>
-          <article class="feature-card">
+          <article class="system-card">
             <span>02</span>
-            <h3>多变量与强耦合</h3>
-            <p>多个物理量、生物量或系统状态通过复杂依赖共同演化。</p>
+            <h3>地球系统</h3>
+            <p>覆盖开放时空场、输运—反应耦合、流域长记忆、极端事件与介质波传播。</p>
+            <div class="package-list"><span>大气—环境耦合</span><span>水文与水循环</span><span>地震与固体地球事件</span></div>
           </article>
-          <article class="feature-card">
+          <article class="system-card">
             <span>03</span>
-            <h3>稀疏与不规则观测</h3>
-            <p>采样频率、传感器覆盖和观测质量受实验与设备条件限制。</p>
+            <h3>生命系统</h3>
+            <p>覆盖稳态调节、自适应、状态切换、个体差异以及跨设备和缺失通道鲁棒性。</p>
+            <div class="package-list"><span>生理—神经调节</span></div>
           </article>
-          <article class="feature-card">
+          <article class="system-card">
             <span>04</span>
-            <h3>机理与约束并存</h3>
-            <p>守恒律、边界条件、因果结构和领域规律限制可能的演化路径。</p>
+            <h3>分子与材料系统</h3>
+            <p>覆盖反应动力学、分子状态转化、加工历史、结构演化与不可逆服役退化。</p>
+            <div class="package-list"><span>化学反应与分子动力</span><span>材料演化与服役退化</span></div>
           </article>
         </div>
       </section>
 
-      <section class="section-card" id="core-problems">
+      <section class="section-card" id="task-system">
         <div class="section-heading">
           <div>
-            <span class="section-kicker">Core Problems</span>
-            <h2>核心科学问题</h2>
+            <span class="section-kicker">Task System</span>
+            <h2>统一任务体系</h2>
           </div>
-          <p class="section-lead">从观测理解走向规律发现，科学时序建模需要贯通表征、预测、反演与发现四类相互关联的研究任务。</p>
+          <p class="section-lead">统一的是任务接口、尺度元数据、适配预算与评测逻辑，而不是强行把所有原始数据转换成相同形状。</p>
         </div>
-        <div class="process-grid">
+        <div class="task-grid">
           <article>
-            <span class="process-index">01</span>
-            <strong>表征</strong>
-            <p>统一编码异构变量、不同采样粒度与多源观测。</p>
+            <span>01</span><h3>动力学预测</h3><p>多变量、空间场、控制输入与长时间滚动预测。</p>
           </article>
           <article>
-            <span class="process-index">02</span>
-            <strong>预测</strong>
-            <p>刻画长期演化、突变事件与预测不确定性。</p>
+            <span>02</span><h3>状态重建与逆问题</h3><p>从间接或稀疏观测恢复科学状态、参数和隐变量。</p>
           </article>
           <article>
-            <span class="process-index">03</span>
-            <strong>反演</strong>
-            <p>从观测序列估计隐状态、未知参数与驱动因素。</p>
+            <span>03</span><h3>事件与变化检测</h3><p>识别极端、瞬变、失稳、断裂、相变与异常事件。</p>
           </article>
           <article>
-            <span class="process-index">04</span>
-            <strong>发现</strong>
-            <p>识别稳定规律、关键机制与可验证的科学假设。</p>
+            <span>04</span><h3>缺失与传感器鲁棒性</h3><p>处理时间段、通道、设备缺失，以及漂移与校准变化。</p>
+          </article>
+          <article>
+            <span>05</span><h3>退化与剩余寿命</h3><p>建模容量衰减、疲劳、腐蚀、老化与失效风险。</p>
+          </article>
+          <article>
+            <span>06</span><h3>表征学习与跨领域适配</h3><p>评测冻结表征、零样本迁移与参数高效适配。</p>
+          </article>
+          <article>
+            <span>07</span><h3>跨尺度桥接与闭合学习</h3><p>学习势能面、本构关系、输运系数、观测算子及高低保真映射。</p>
           </article>
         </div>
       </section>
 
-      <section class="section-card" id="technical-routes">
+      <section class="section-card" id="evaluation">
         <div class="section-heading">
           <div>
-            <span class="section-kicker">Technical Routes</span>
-            <h2>技术路线</h2>
+            <span class="section-kicker">Transfer &amp; Reliability</span>
+            <h2>迁移与科学有效性评测</h2>
           </div>
-          <p class="section-lead">以数据学习为基础，以科学机理为约束，以可信迁移为目标，构建能够跨场景理解复杂动态系统的统一模型。</p>
+          <p class="section-lead">最终结果不是一个孤立平均误差，而是目标领域标注数据量—模型性能迁移曲线，并明确模型在哪些动力学与尺度上失效。</p>
         </div>
-        <div class="route-grid">
+        <div class="adaptation-curve" aria-label="适配预算">
+          <span>零样本</span><b>→</b><span>1%</span><b>→</b><span>5%</span><b>→</b><span>10%</span><b>→</b><span>全量微调</span>
+        </div>
+        <p class="entity-note">少样本预算按受试者、流域、shot、台站、天体、事件或材料批次等独立科学实体计算，而不是按高度重叠的时间窗口计算。</p>
+        <div class="evaluation-grid">
           <article>
-            <span class="route-icon" aria-hidden="true">◫</span>
-            <h3>数据驱动时序学习</h3>
-            <p>研究自监督表征、时空依赖建模、多任务学习与基础模型，充分利用大规模科学观测中的共性动态模式。</p>
+            <h3>任务性能</h3>
+            <p>连续与概率预测、事件检测、状态重建和寿命任务采用各自合适的指标，而非强行统一误差。</p>
           </article>
           <article>
-            <span class="route-icon" aria-hidden="true">⌁</span>
-            <h3>科学机理融合</h3>
-            <p>将物理约束、结构先验、微分方程与模拟数据融入学习过程，压缩解空间并提升科学一致性。</p>
+            <h3>科学有效性</h3>
+            <p>评估物理一致性、守恒与边界违反率、不确定性校准、极端事件表现和长期滚动稳定性。</p>
           </article>
           <article>
-            <span class="route-icon" aria-hidden="true">◇</span>
-            <h3>可信与可迁移建模</h3>
-            <p>面向不确定性量化、分布外泛化、跨系统迁移与可解释分析，支撑稳健的科学判断。</p>
+            <h3>迁移与效率</h3>
+            <p>报告数据效率、负迁移、跨领域平均与最差领域表现，以及适配时间和计算成本。</p>
           </article>
         </div>
-        <div class="research-flow" aria-label="科学时序数据建模研究链路">
-          <span>科学观测</span><b>→</b>
-          <span>多源时序表征</span><b>→</b>
-          <span>动态规律建模</span><b>→</b>
-          <span>可信预测与反演</span><b>→</b>
-          <span>科学发现与决策</span>
-        </div>
-      </section>
-
-      <section class="section-card" id="domains">
-        <div class="section-heading">
-          <div>
-            <span class="section-kicker">Application Domains</span>
-            <h2>应用领域</h2>
-          </div>
-          <p class="section-lead">科学时序方法连接多学科观测与动态规律，可在自然系统、工程设施、生命过程与实验研究中形成可复用的建模能力。</p>
-        </div>
-        <div class="domain-grid">
-          <article>
-            <span class="domain-label" aria-hidden="true">◉</span>
-            <h3>气象与地球系统</h3>
-            <p>天气、气候、海洋、水文与生态观测中的多尺度演化建模。</p>
-          </article>
-          <article>
-            <span class="domain-label" aria-hidden="true">⌁</span>
-            <h3>能源与工程系统</h3>
-            <p>能源供需、设备状态与复杂工程过程的预测、诊断和控制。</p>
-          </article>
-          <article>
-            <span class="domain-label" aria-hidden="true">✦</span>
-            <h3>生命与健康科学</h3>
-            <p>生理信号、疾病进展与实验观测中的个体化动态建模。</p>
-          </article>
-          <article>
-            <span class="domain-label" aria-hidden="true">⬡</span>
-            <h3>材料与实验科学</h3>
-            <p>材料表征、反应过程与实验序列中的规律识别和参数反演。</p>
-          </article>
+        <div class="migration-types" aria-label="迁移方向">
+          <span>同尺度跨系统</span>
+          <span>同系统跨尺度</span>
+          <span>跨系统且跨尺度</span>
         </div>
         <div class="btn-row">
           <a class="page-btn page-btn-primary" href="../index.html#research-tracks">返回首页研究方向</a>
