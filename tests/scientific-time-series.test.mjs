@@ -17,19 +17,19 @@ const siblingNavigationPages = [
   'systems/index.html',
 ];
 
-test('scientific time series detail page exists and exposes the four-part research story', async () => {
+test('scientific time series detail page exists and exposes the benchmark-grounded research story', async () => {
   await access(detailUrl);
   for (const heading of [
-    '科学时序数据的特点',
-    '核心科学问题',
-    '技术路线',
-    '应用领域',
+    '什么是科学时序数据',
+    '三维研究与评测框架',
+    '四类科学系统与八个任务包',
+    '统一任务体系',
+    '迁移与科学有效性评测',
   ]) {
     assert.ok(detail.includes(heading), `Missing section: ${heading}`);
   }
   assert.ok(detail.includes('Scientific Time Series Modeling'));
-  assert.ok(detail.includes('科学观测'));
-  assert.ok(detail.includes('科学发现与决策'));
+  assert.ok(detail.includes('科学时序基础模型'));
 });
 
 test('detail page states the scientific foundation-model transfer goal without claiming release', () => {
