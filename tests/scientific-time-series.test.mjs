@@ -53,6 +53,9 @@ test('detail page presents the three-dimensional benchmark framework', () => {
   }
   assert.ok(detail.includes('真实观测与实验主赛道'));
   assert.ok(detail.includes('计算模拟辅助赛道'));
+  assert.ok(detail.includes('模拟到真实迁移作为独立挑战单独评测'));
+  assert.ok(detail.includes('有效描述层级，并非所有领域必须依次经过的单向阶梯'));
+  assert.ok(!detail.includes('.scale-strip span:not(:last-child)::after'));
 });
 
 test('detail page covers four systems and eight complementary task packages', () => {
@@ -68,6 +71,13 @@ test('detail page covers four systems and eight complementary task packages', ()
   ]) {
     assert.ok(detail.includes(taskPackage), `Missing task package: ${taskPackage}`);
   }
+  assert.equal(detail.match(/<article class="system-card">/g)?.length, 4);
+  assert.equal(detail.match(/<div class="package-list">/g)?.length, 4);
+  assert.equal(
+    [...detail.matchAll(/<div class="package-list">([\s\S]*?)<\/div>/g)]
+      .flatMap(([, packages]) => packages.match(/<span>/g) ?? []).length,
+    8,
+  );
 });
 
 test('detail page exposes seven task families and the entity-counted transfer curve', () => {
@@ -88,6 +98,10 @@ test('detail page exposes seven task families and the entity-counted transfer cu
   assert.ok(detail.includes('独立科学实体'));
   assert.ok(detail.includes('负迁移'));
   assert.ok(detail.includes('物理一致性'));
+  const taskGrid = detail.match(/<div class="task-grid">([\s\S]*?)<\/div>/)?.[1] ?? '';
+  const evaluationGrid = detail.match(/<div class="evaluation-grid">([\s\S]*?)<\/div>/)?.[1] ?? '';
+  assert.equal(taskGrid.match(/<article>/g)?.length, 7);
+  assert.equal(evaluationGrid.match(/<article>/g)?.length, 3);
 });
 
 test('homepage links the scientific time series research card and dropdown', () => {

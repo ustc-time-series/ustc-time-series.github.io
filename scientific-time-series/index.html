@@ -575,14 +575,12 @@
       text-align: center;
       box-shadow: 0 3px 12px rgba(15, 118, 110, 0.05);
     }
-    .scale-strip span:not(:last-child)::after {
-      content: "→";
-      position: absolute;
-      top: 50%;
-      right: -8px;
-      z-index: 2;
-      color: var(--accent);
-      transform: translate(50%, -50%);
+    .scale-note {
+      margin: 10px 4px 0;
+      color: #65716f;
+      font-size: 0.8rem;
+      line-height: 1.65;
+      text-align: center;
     }
 
     .track-split { margin-top: 16px; }
@@ -739,7 +737,6 @@
       .task-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .process-grid article:nth-child(2)::after { display: none; }
       .scale-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-      .scale-strip span::after { display: none; }
     }
 
     @media (max-width: 720px) {
@@ -905,6 +902,7 @@
           <span data-scale="L3 连续介质/场">L3 · 连续介质/场</span>
           <span data-scale="L4 系统/工程动力学">L4 · 系统/工程动力学</span>
         </div>
+        <p class="scale-note">L0–L4 是可跨越、可并存的有效描述层级，并非所有领域必须依次经过的单向阶梯；同一科学系统也可能同时涉及多个层级。</p>
         <div class="track-split">
           <article>
             <strong>真实观测与实验主赛道</strong>
@@ -912,7 +910,7 @@
           </article>
           <article>
             <strong>计算模拟辅助赛道</strong>
-            <p>服务跨尺度与模拟到真实迁移研究，但不能替代真实数据上的主要结果。</p>
+            <p>服务跨尺度研究，但不能替代真实数据上的主要结果；模拟到真实迁移作为独立挑战单独评测。</p>
           </article>
         </div>
       </section>
