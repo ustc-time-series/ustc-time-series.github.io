@@ -389,3 +389,288 @@ Set a 390 × 844 viewport and verify:
 Run: `git status --short`
 
 Expected: `cast-claw/assets/logo2_副本.png` remains untracked and is not staged; feature files are clean after commits.
+
+---
+
+## Enhancement Phase: Ground the Page in the Time Series for Science Discipline Plan
+
+The following tasks refine the existing page using `时序数据分析驱动的学科规划.md` v0.3. They supersede the original page-body content in Task 2 while preserving the page path, navigation, footer, dependency-free architecture, and responsive requirements.
+
+### Task 5: Define discipline-plan content contracts
+
+**Files:**
+- Modify: `tests/scientific-time-series.test.mjs`
+
+- [ ] **Step 1: Add failing tests for the research framework**
+
+```js
+test('detail page states the scientific foundation-model transfer goal without claiming release', () => {
+  assert.ok(detail.includes('跨系统、跨尺度表征与适配能力'));
+  assert.ok(detail.includes('研究规划 · Benchmark Framework'));
+  assert.ok(detail.includes('尚未冻结的数据产品'));
+});
+
+test('detail page presents the three-dimensional benchmark framework', () => {
+  for (const axis of ['科学系统维度', '物理描述尺度维度', '适配预算维度']) {
+    assert.ok(detail.includes(axis), `Missing benchmark axis: ${axis}`);
+  }
+  for (const scale of ['L0 电子/量子', 'L1 原子/分子', 'L2 介观/动理学', 'L3 连续介质/场', 'L4 系统/工程动力学']) {
+    assert.ok(detail.includes(scale), `Missing physical scale: ${scale}`);
+  }
+  assert.ok(detail.includes('真实观测与实验主赛道'));
+  assert.ok(detail.includes('计算模拟辅助赛道'));
+});
+
+test('detail page covers four systems and eight complementary task packages', () => {
+  for (const taskPackage of [
+    '受控等离子体与核聚变',
+    '时域天文观测',
+    '大气—环境耦合',
+    '水文与水循环',
+    '地震与固体地球事件',
+    '生理—神经调节',
+    '化学反应与分子动力',
+    '材料演化与服役退化',
+  ]) {
+    assert.ok(detail.includes(taskPackage), `Missing task package: ${taskPackage}`);
+  }
+});
+
+test('detail page exposes seven task families and the entity-counted transfer curve', () => {
+  for (const taskFamily of [
+    '动力学预测',
+    '状态重建与逆问题',
+    '事件与变化检测',
+    '缺失与传感器鲁棒性',
+    '退化与剩余寿命',
+    '表征学习与跨领域适配',
+    '跨尺度桥接与闭合学习',
+  ]) {
+    assert.ok(detail.includes(taskFamily), `Missing task family: ${taskFamily}`);
+  }
+  for (const budget of ['零样本', '1%', '5%', '10%', '全量微调']) {
+    assert.ok(detail.includes(budget), `Missing adaptation budget: ${budget}`);
+  }
+  assert.ok(detail.includes('独立科学实体'));
+  assert.ok(detail.includes('负迁移'));
+  assert.ok(detail.includes('物理一致性'));
+});
+
+test('homepage card reflects the cross-system and cross-scale research direction', () => {
+  const card = homepage.match(/id="track-scientific-time-series"[\s\S]*?<\/div>\n      <\/div>\n    <\/div>/)?.[0] ?? '';
+  assert.ok(card.includes('科学时序基础模型'));
+  assert.ok(card.includes('跨系统'));
+  assert.ok(card.includes('跨尺度'));
+});
+```
+
+- [ ] **Step 2: Run the focused tests and verify RED**
+
+Run: `node --test tests/scientific-time-series.test.mjs`
+
+Expected: the original navigation and responsive tests pass; the five new discipline-plan tests fail because the page still contains the initial generic four-section story.
+
+- [ ] **Step 3: Commit the red tests**
+
+```bash
+git add tests/scientific-time-series.test.mjs
+git commit -m "test: define scientific time series benchmark content"
+```
+
+### Task 6: Rebuild the page body around the benchmark framework
+
+**Files:**
+- Modify: `scientific-time-series/index.html`
+- Test: `tests/scientific-time-series.test.mjs`
+
+- [ ] **Step 1: Refine the hero and add the planning boundary**
+
+Use this content contract in the existing hero:
+
+```html
+<p class="eyebrow">Scientific Time Series Modeling</p>
+<h1>科学时序数据建模</h1>
+<p class="header-sub">面向复杂科学动力系统，研究科学时序基础模型如何跨系统、跨尺度学习动态规律，并以零样本、少样本或全量数据适配新的科学对象。</p>
+<div class="hero-highlights" aria-label="研究方向概览">
+  <span>跨系统动力学</span>
+  <span>跨尺度科学建模</span>
+  <span>零样本到全量适配</span>
+</div>
+<div class="planning-note">
+  <strong>研究规划 · Benchmark Framework</strong>
+  <span>当前页面展示研究方向与评测框架，不代表已经正式发布或尚未冻结的数据产品。</span>
+</div>
+```
+
+- [ ] **Step 2: Replace the generic definition section**
+
+```html
+<section class="section-card" id="definition">
+  <div class="section-heading">
+    <div><span class="section-kicker">Definition</span><h2>什么是科学时序数据</h2></div>
+    <p class="section-lead">科学时序不是任意排列的数值向量，而是科学系统在特定尺度下，经由观测过程形成的动态记录。</p>
+  </div>
+  <div class="definition-principles">
+    <article><strong>真实过程语义</strong><p>时间轴对应物理、生物、化学、材料状态或实验循环的真实演化。</p></article>
+    <article><strong>有效描述尺度</strong><p>每条序列声明目标状态所在尺度、被忽略的自由度及其有效模型。</p></article>
+    <article><strong>观测过程可追溯</strong><p>记录仪器、传感器或观测算子如何把目标状态映射为实际观测。</p></article>
+  </div>
+  <div class="boundary-grid">
+    <article class="boundary-card boundary-yes"><h3>典型科学时序</h3><p>多变量传感器、波形、空间场、时序光谱、控制轨迹与实验循环。</p></article>
+    <article class="boundary-card boundary-no"><h3>不能仅凭一维横轴认定</h3><p>静态谱图、静态性质表、任意排序样本，以及只有最终标签而无过程记录的数据。</p></article>
+  </div>
+</section>
+```
+
+- [ ] **Step 3: Add the three-axis benchmark framework**
+
+```html
+<section class="section-card" id="benchmark-framework">
+  <div class="section-heading">
+    <div><span class="section-kicker">Benchmark Cube</span><h2>三维研究与评测框架</h2></div>
+    <p class="section-lead">用“科学系统 × 物理描述尺度 × 适配预算”组织跨领域和跨尺度研究。</p>
+  </div>
+  <div class="axis-grid">
+    <article class="axis-card"><span>Axis 01</span><h3>科学系统维度</h3><p>物理与宇宙 · 地球 · 生命 · 分子与材料</p></article>
+    <article class="axis-card"><span>Axis 02</span><h3>物理描述尺度维度</h3><p>从电子/量子到系统/工程动力学的有效描述层级</p></article>
+    <article class="axis-card"><span>Axis 03</span><h3>适配预算维度</h3><p>零样本 · 少样本 · 全量微调</p></article>
+  </div>
+  <div class="scale-strip" aria-label="物理描述尺度">
+    <span><b>L0</b>电子/量子</span><span><b>L1</b>原子/分子</span><span><b>L2</b>介观/动理学</span><span><b>L3</b>连续介质/场</span><span><b>L4</b>系统/工程动力学</span>
+  </div>
+  <div class="track-split">
+    <article><strong>真实观测与实验主赛道</strong><p>跨系统主结果必须建立在真实科学数据上。</p></article>
+    <article><strong>计算模拟辅助赛道</strong><p>服务跨尺度与模拟到真实迁移，但不替代真实数据主结果。</p></article>
+  </div>
+</section>
+```
+
+- [ ] **Step 4: Add the four-system, eight-package map**
+
+```html
+<section class="section-card" id="scientific-systems">
+  <div class="section-heading">
+    <div><span class="section-kicker">Scientific Systems</span><h2>四类科学系统与八个任务包</h2></div>
+    <p class="section-lead">以最小但互补的任务包覆盖不同控制方式、动力学机制、观测拓扑和迁移边界。</p>
+  </div>
+  <div class="system-grid">
+    <article class="system-card"><span>01</span><h3>物理与宇宙系统</h3><p>强非线性控制、被动稀疏观测与瞬变动力学。</p><div class="package-list"><span>受控等离子体与核聚变</span><span>时域天文观测</span></div></article>
+    <article class="system-card"><span>02</span><h3>地球系统</h3><p>开放时空场、外部驱动、长记忆与波传播。</p><div class="package-list"><span>大气—环境耦合</span><span>水文与水循环</span><span>地震与固体地球事件</span></div></article>
+    <article class="system-card"><span>03</span><h3>生命系统</h3><p>稳态调节、个体差异、状态切换与强非平稳性。</p><div class="package-list"><span>生理—神经调节</span></div></article>
+    <article class="system-card"><span>04</span><h3>分子与材料系统</h3><p>反应、状态转化、结构演化与不可逆退化。</p><div class="package-list"><span>化学反应与分子动力</span><span>材料演化与服役退化</span></div></article>
+  </div>
+</section>
+```
+
+- [ ] **Step 5: Add the seven task families and evaluation protocol**
+
+```html
+<section class="section-card" id="task-system">
+  <div class="section-heading"><div><span class="section-kicker">Task System</span><h2>统一任务体系</h2></div></div>
+  <div class="task-grid">
+    <article><span>01</span><h3>动力学预测</h3></article>
+    <article><span>02</span><h3>状态重建与逆问题</h3></article>
+    <article><span>03</span><h3>事件与变化检测</h3></article>
+    <article><span>04</span><h3>缺失与传感器鲁棒性</h3></article>
+    <article><span>05</span><h3>退化与剩余寿命</h3></article>
+    <article><span>06</span><h3>表征学习与跨领域适配</h3></article>
+    <article><span>07</span><h3>跨尺度桥接与闭合学习</h3></article>
+  </div>
+</section>
+
+<section class="section-card" id="evaluation">
+  <div class="section-heading">
+    <div><span class="section-kicker">Transfer & Reliability</span><h2>迁移与科学有效性评测</h2></div>
+    <p class="section-lead">结果不是一个孤立平均误差，而是目标领域数据量—模型性能迁移曲线。</p>
+  </div>
+  <div class="adaptation-curve" aria-label="适配预算">
+    <span>零样本</span><b>→</b><span>1%</span><b>→</b><span>5%</span><b>→</b><span>10%</span><b>→</b><span>全量微调</span>
+  </div>
+  <p class="entity-note">少样本预算按独立科学实体计算，而不是按高度重叠的时间窗口计算。</p>
+  <div class="evaluation-grid">
+    <article><h3>任务性能</h3><p>预测、概率、事件、重建与寿命任务指标。</p></article>
+    <article><h3>科学有效性</h3><p>物理一致性、不确定性校准、极端事件与长期稳定性。</p></article>
+    <article><h3>迁移与效率</h3><p>数据效率、负迁移、最差领域表现与计算成本。</p></article>
+  </div>
+  <div class="migration-types"><span>同尺度跨系统</span><span>同系统跨尺度</span><span>跨系统且跨尺度</span></div>
+</section>
+```
+
+- [ ] **Step 6: Add responsive component styles**
+
+Define desktop grids and collapse every new multi-column component at the existing breakpoints:
+
+```css
+.definition-principles, .axis-grid, .evaluation-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
+.boundary-grid, .system-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.task-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; }
+.scale-strip, .adaptation-curve, .migration-types { display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:10px; }
+@media (max-width: 960px) {
+  .definition-principles, .axis-grid, .evaluation-grid, .task-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 720px) {
+  .definition-principles, .boundary-grid, .axis-grid, .system-grid, .task-grid, .evaluation-grid { grid-template-columns:1fr; }
+  .scale-strip, .adaptation-curve { flex-direction:column; align-items:stretch; text-align:center; }
+  .adaptation-curve b { transform:rotate(90deg); }
+}
+```
+
+- [ ] **Step 7: Run focused tests and commit the page**
+
+Run: `node --test tests/scientific-time-series.test.mjs`
+
+Expected: all scientific-time-series tests PASS.
+
+```bash
+git add scientific-time-series/index.html
+git commit -m "feat: ground scientific time series page in benchmark plan"
+```
+
+### Task 7: Align the homepage summary and verify the enhancement
+
+**Files:**
+- Modify: `index.html`
+- Test: `tests/scientific-time-series.test.mjs`
+
+- [ ] **Step 1: Refine the homepage card copy**
+
+Use the following research-direction summary while preserving the existing card structure and link:
+
+```html
+<p class="card-desc">
+  面向物理、地球、生命、分子与材料等科学动力系统，研究科学时序基础模型的跨系统、跨尺度表征、预测、重建与适配能力。
+</p>
+<div class="card-meta">
+  <div class="meta-row"><span class="meta-icon">🔭</span><span>科学系统：四类科学系统 · 八个互补领域任务包</span></div>
+  <div class="meta-row"><span class="meta-icon">🧭</span><span>描述尺度：L0 电子/量子 → L4 系统/工程动力学</span></div>
+  <div class="meta-row"><span class="meta-icon">⚙️</span><span>核心任务：动力学预测 · 状态重建 · 事件检测 · 跨尺度桥接</span></div>
+  <div class="meta-row"><span class="meta-icon">📈</span><span>迁移评测：零样本 · 少样本 · 全量微调 · 物理一致性</span></div>
+</div>
+```
+
+- [ ] **Step 2: Run the complete test suite**
+
+Run: `node --test tests/*.test.mjs`
+
+Expected: all homepage, StarCast, and scientific-time-series tests PASS.
+
+- [ ] **Step 3: Commit the homepage alignment and tests**
+
+```bash
+git add index.html tests/scientific-time-series.test.mjs
+git commit -m "feat: align homepage with scientific benchmark framework"
+```
+
+- [ ] **Step 4: Verify browser behavior**
+
+At desktop width, verify the five core sections appear in order and the page console contains no errors. At 390 × 844, verify all new grids collapse to one column, the transfer curve remains readable, and `document.documentElement.scrollWidth <= document.documentElement.clientWidth`.
+
+- [ ] **Step 5: Verify repository scope**
+
+Run: `git diff --check`
+
+Expected: no output.
+
+Run: `git status --short`
+
+Expected in the isolated worktree: no output. After merging back to the main worktree, `cast-claw/assets/logo2_副本.png` remains untracked and untouched.
