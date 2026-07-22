@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 720" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 770" role="img" aria-labelledby="title desc">
   <title id="title">NeoResearch system architecture</title>
-  <desc id="desc">Seven layer NeoResearch architecture and closed research loop for time series forecasting model discovery</desc>
+  <desc id="desc">Seven-layer NeoResearch architecture with three evidence sources and five auditable research actions</desc>
   <defs>
     <linearGradient id="layerA" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#fff7f5"/>
@@ -20,54 +20,64 @@
     </filter>
   </defs>
 
-  <rect width="1160" height="720" rx="26" fill="#fbfaf7"/>
+  <rect width="1160" height="770" rx="26" fill="#fbfaf7"/>
 
   <g filter="url(#shadow)">
-    <rect x="72" y="44" width="1016" height="136" rx="20" fill="#ffffff" stroke="#ead9d4"/>
-    <text x="102" y="92" font-size="30" font-weight="800" font-family="Arial, Helvetica, sans-serif" fill="#111">Closed Research Loop</text>
-    <text x="102" y="126" font-size="17" font-family="Arial, Helvetica, sans-serif" fill="#666">Fixed protocols keep each</text>
-    <text x="102" y="150" font-size="17" font-family="Arial, Helvetica, sans-serif" fill="#666">improvement reproducible.</text>
-    <path d="M464 132 H816" fill="none" stroke="url(#loopGrad)" stroke-width="8" stroke-linecap="round"/>
-    <path d="M818 132 l-22 -15 m22 15 l-22 15" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="72" y="44" width="1016" height="158" rx="20" fill="#ffffff" stroke="#ead9d4"/>
+    <text x="102" y="86" font-size="28" font-weight="800" font-family="Arial, Helvetica, sans-serif" fill="#111">Evidence-Grounded Action Cycle</text>
+    <text x="102" y="118" font-size="16" font-family="Arial, Helvetica, sans-serif" fill="#666">Five auditable research actions</text>
+    <text x="102" y="145" font-size="16" font-weight="700" font-family="Arial, Helvetica, sans-serif" fill="#c0392b">Literature + Data + Experiment</text>
+    <text x="102" y="173" font-size="14" font-family="Arial, Helvetica, sans-serif" fill="#0f766e">Traceable evidence in every research step</text>
+    <path d="M462 126 H944" fill="none" stroke="url(#loopGrad)" stroke-width="8" stroke-linecap="round"/>
+    <path d="M946 126 l-22 -15 m22 15 l-22 15" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="research-loop-return" d="M910 160 C910 190 430 190 430 160" fill="none" stroke="#8b6f66" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M430 160 l-8 12 m8 -12 l8 12" fill="none" stroke="#8b6f66" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
-      <circle cx="430" cy="132" r="34" fill="#fff7f5" stroke="#f0c8be" stroke-width="2"/>
-      <text x="430" y="126" font-size="13" font-weight="800" fill="#c0392b">Hypothesis</text>
-      <text x="430" y="145" font-size="12" fill="#555">问题归因</text>
-      <circle cx="570" cy="132" r="34" fill="#fffaf2" stroke="#f3d39b" stroke-width="2"/>
-      <text x="570" y="126" font-size="13" font-weight="800" fill="#b9770e">Recipe</text>
-      <text x="570" y="145" font-size="12" fill="#555">候选配方</text>
-      <circle cx="710" cy="132" r="34" fill="#f2fbff" stroke="#b9d9ee" stroke-width="2"/>
-      <text x="710" y="126" font-size="13" font-weight="800" fill="#2471a3">Experiment</text>
-      <text x="710" y="145" font-size="12" fill="#555">受控实验</text>
-      <circle cx="850" cy="132" r="34" fill="#f0fdf9" stroke="#a9e2d9" stroke-width="2"/>
-      <text x="850" y="126" font-size="13" font-weight="800" fill="#0f766e">Memory</text>
-      <text x="850" y="145" font-size="12" fill="#555">经验沉淀</text>
+      <circle cx="430" cy="126" r="32" fill="#fff7f5" stroke="#f0c8be" stroke-width="2"/>
+      <text x="430" y="122" font-size="12" font-weight="800" fill="#c0392b">Hypothesis</text>
+      <text x="430" y="142" font-size="11" fill="#555">研究假设</text>
+      <circle cx="550" cy="126" r="32" fill="#fffaf2" stroke="#f3d39b" stroke-width="2"/>
+      <text x="550" y="122" font-size="11" font-weight="800" fill="#b9770e">Model Design</text>
+      <text x="550" y="142" font-size="11" fill="#555">模型设计</text>
+      <circle cx="670" cy="126" r="32" fill="#f2fbff" stroke="#b9d9ee" stroke-width="2"/>
+      <text x="670" y="122" font-size="12" font-weight="800" fill="#2471a3">Experiment</text>
+      <text x="670" y="142" font-size="11" fill="#555">受控实验</text>
+      <circle cx="790" cy="126" r="32" fill="#f8f5ff" stroke="#d6c7ef" stroke-width="2"/>
+      <text x="790" y="122" font-size="12" font-weight="800" fill="#6c4aa1">Reflection</text>
+      <text x="790" y="142" font-size="11" fill="#555">诊断反思</text>
+      <circle cx="910" cy="126" r="32" fill="#f0fdf9" stroke="#a9e2d9" stroke-width="2"/>
+      <text x="910" y="122" font-size="10.5" font-weight="800" fill="#0f766e">Model Evolution</text>
+      <text x="910" y="142" font-size="11" fill="#555">模型演化</text>
     </g>
   </g>
 
   <g filter="url(#shadow)" font-family="Arial, Helvetica, sans-serif">
-    <rect x="72" y="220" width="1016" height="58" rx="14" fill="url(#layerA)" stroke="#ead9d4"/>
-    <text x="100" y="256" font-size="21" font-weight="800" fill="#c0392b">Human Control Layer</text>
-    <text x="392" y="256" font-size="17" fill="#555">定义任务 · 批准搜索空间 · 审核晋级 · 冻结测试集 · 回滚终止</text>
+    <rect x="72" y="236" width="1016" height="58" rx="14" fill="url(#layerA)" stroke="#ead9d4"/>
+    <text x="100" y="272" font-size="21" font-weight="800" fill="#c0392b">Human Control Layer</text>
+    <text x="440" y="272" font-size="15" fill="#555">研究问题 · 证据范围 · 预算协议 · 晋级审批 · 回滚终止</text>
 
-    <rect x="72" y="292" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
-    <text x="100" y="328" font-size="21" font-weight="800" fill="#2471a3">Agent Orchestration Layer</text>
-    <text x="392" y="328" font-size="17" fill="#555">Research Manager · Diagnostic · Design · Coder · Runner · Analyst · Librarian</text>
+    <rect x="72" y="308" width="1016" height="58" rx="14" fill="url(#layerB)" stroke="#cdeae4"/>
+    <text x="100" y="344" font-size="21" font-weight="800" fill="#0f766e">Evidence &amp; Cognition Layer</text>
+    <text x="440" y="344" font-size="15" fill="#555">literature corpus · dataset profile · experimental lineage · research context</text>
 
-    <rect x="72" y="364" width="1016" height="58" rx="14" fill="url(#layerB)" stroke="#cdeae4"/>
-    <text x="100" y="400" font-size="21" font-weight="800" fill="#0f766e">Search Space Layer</text>
-    <text x="392" y="400" font-size="17" fill="#555">CandidateRecipe DSL · action registry · loss DSL · trainer DSL</text>
+    <rect x="72" y="380" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
+    <text x="100" y="416" font-size="21" font-weight="800" fill="#2471a3">Agent Orchestration Layer</text>
+    <text x="440" y="416" font-size="15" fill="#555">Research Manager · Retriever · Diagnostic · Designer · Runner · Analyst · Librarian</text>
 
-    <rect x="72" y="436" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
-    <text x="100" y="472" font-size="21" font-weight="800" fill="#b9770e">Protocol Layer</text>
-    <text x="392" y="472" font-size="17" fill="#555">TaskSpec · split boundary · metric · budget · leakage prevention</text>
+    <rect x="72" y="452" width="1016" height="58" rx="14" fill="url(#layerA)" stroke="#ead9d4"/>
+    <text x="100" y="488" font-size="21" font-weight="800" fill="#b9770e">Research Design Layer</text>
+    <text x="440" y="488" font-size="15" fill="#555">hypothesis · CandidateRecipe DSL · action registry · loss DSL · trainer DSL</text>
 
-    <rect x="72" y="508" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
-    <text x="100" y="544" font-size="21" font-weight="800" fill="#5d6d7e">Execution Layer</text>
-    <text x="392" y="544" font-size="17" fill="#555">Sandbox · static validator · training runner · artifact store</text>
+    <rect x="72" y="524" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
+    <text x="100" y="560" font-size="21" font-weight="800" fill="#6c4aa1">Protocol &amp; Governance Layer</text>
+    <text x="440" y="560" font-size="15" fill="#555">TaskSpec · split boundary · metric · budget · leakage prevention · audit</text>
 
-    <rect x="72" y="580" width="1016" height="58" rx="14" fill="url(#layerB)" stroke="#cdeae4"/>
-    <text x="100" y="616" font-size="21" font-weight="800" fill="#0f766e">Evaluation &amp; Memory Layers</text>
-    <text x="392" y="616" font-size="17" fill="#555">multi-stage evaluation · champion/challenger · lineage · reusable heuristics</text>
+    <rect x="72" y="596" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
+    <text x="100" y="632" font-size="21" font-weight="800" fill="#5d6d7e">Execution &amp; Evaluation Layer</text>
+    <text x="440" y="632" font-size="15" fill="#555">sandbox · static validator · training runner · ablation · multi-stage evaluation</text>
+
+    <rect x="72" y="668" width="1016" height="58" rx="14" fill="url(#layerB)" stroke="#cdeae4"/>
+    <text x="100" y="704" font-size="21" font-weight="800" fill="#0f766e">Memory &amp; Evolution Layer</text>
+    <text x="440" y="704" font-size="15" fill="#555">reflection · evidence chain · failure patterns · model lineage · reusable heuristics</text>
   </g>
 </svg>

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NeoResearch · 智多星 — Forecast Research Operating System</title>
-  <meta name="description" content="NeoResearch（智多星）是面向时间序列预测小模型研发的自主研究智能体系统，将研究假设、模型配方、受控实验、评估归因与研究记忆串成可复现闭环。" />
+  <title>NeoResearch · 智多星 — Autonomous Data Science Research Agent</title>
+  <meta name="description" content="NeoResearch（智多星）是面向 AI for AI 的自主数据科学智能体，以文献、数据和实验证据驱动双层自主研究闭环，并首先在时序预测中验证模型与研究能力的持续演化。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -129,41 +129,11 @@
     .affiliation {
       margin-top: 10px;
       font-size: 0.88rem;
-      color: #999;
+      color: #6f6f6f;
       letter-spacing: 0.02em;
       text-align: center;
       text-justify: auto;
     }
-    .btn-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 28px;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 9px 20px;
-      border-radius: 7px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      border: 1.5px solid transparent;
-      cursor: pointer;
-      transition: transform .18s, box-shadow .18s, background .18s, border-color .18s;
-      text-decoration: none;
-    }
-    .btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.13);
-      text-decoration: none;
-      opacity: 1;
-    }
-    .btn-secondary { background: #fff; color: #222; border-color: #d0d0d0; }
-    .btn-secondary:hover { background: #f8f8f8; border-color: #aaa; }
-    .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
-
     section { padding: 64px 0; scroll-margin-top: 46px; }
     section.alt { background: #fff; }
     section + section { border-top: 1px solid #e8e8e8; }
@@ -182,7 +152,6 @@
       color: #222;
       margin: 32px 0 10px;
     }
-    h3.sub-title:first-of-type { margin-top: 0; }
     p { margin-bottom: 14px; }
     p:last-child { margin-bottom: 0; }
 
@@ -286,6 +255,103 @@
     .card-accent-blue { border-left: 4px solid var(--blue); }
     .card-accent-amber { border-left: 4px solid var(--amber); }
 
+    .evidence-formula {
+      margin: 22px 0;
+      padding: 18px 20px;
+      border: 1px solid #d9d9d5;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #fff 0%, #fff8f7 55%, #f0fdf9 100%);
+      color: #111;
+      font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+      font-size: clamp(1.1rem, 2.6vw, 1.55rem);
+      line-height: 1.45;
+      text-align: center;
+      text-justify: auto;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .evidence-formula span {
+      color: var(--accent);
+      font-weight: 800;
+      padding: 0 0.2em;
+    }
+    .pipeline.inner-experiment-cycle { grid-template-columns: repeat(5, 1fr); }
+
+    .workflow-diagram-link {
+      display: block;
+      border-radius: 10px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .workflow-diagram-link:hover {
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .workflow-diagram-link:focus-visible {
+      outline: 3px solid rgba(36, 113, 163, 0.35);
+      outline-offset: 4px;
+    }
+    .workflow-figure img { display: block; width: 100%; }
+
+    .outer-research-loop {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      list-style: none;
+      margin: 20px 0 28px;
+      padding: 0;
+    }
+    .research-stage {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-height: 116px;
+      padding: 18px 20px;
+      border: 1px solid #dfe5ee;
+      border-left: 4px solid var(--blue);
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+    .research-stage:nth-child(3n + 1) { border-left-color: #4934a3; }
+    .research-stage:nth-child(3n + 2) { border-left-color: var(--blue); }
+    .research-stage:nth-child(3n) { border-left-color: var(--teal); }
+    .research-stage:last-child { grid-column: 1 / -1; }
+    .research-stage strong { font-size: 0.96rem; color: #111; }
+    .research-stage span { font-size: 0.87rem; color: #555; line-height: 1.65; }
+
+    .inner-experiment-cycle .pipeline-step { position: relative; }
+    .inner-experiment-cycle .pipeline-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -11px;
+      top: 50%;
+      z-index: 2;
+      color: var(--blue);
+      font-size: 1rem;
+      font-weight: 800;
+      transform: translate(50%, -50%);
+    }
+
+    .support-output-grid { align-items: stretch; }
+    .infra-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      list-style: none;
+      margin-top: 12px;
+      padding: 0;
+    }
+    .infra-chip {
+      padding: 9px 10px;
+      border: 1px solid #d8e2ef;
+      border-radius: 7px;
+      background: #f7faff;
+      color: #294766;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      text-align: left;
+      text-justify: auto;
+    }
+
     .pillar-list {
       list-style: none;
       margin-top: 20px;
@@ -379,6 +445,8 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       margin: 22px 0;
+      list-style: none;
+      padding: 0;
     }
     .pipeline-step {
       min-height: 96px;
@@ -419,6 +487,11 @@
     footer a { color: #e87b6e; }
     footer p + p { margin-top: 6px; }
 
+    .footer-note {
+      color: #aaa;
+      font-size: 0.78rem;
+    }
+
     body.page-refreshing header {
       opacity: 0.72;
       transform: scale(0.992);
@@ -435,18 +508,20 @@
       .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
       h2.section-title { font-size: 1.25rem; }
       .pipeline { grid-template-columns: 1fr 1fr; }
+      .outer-research-loop { grid-template-columns: 1fr; }
+      .research-stage:last-child { grid-column: auto; }
+      .pipeline.inner-experiment-cycle { grid-template-columns: 1fr; }
+      .inner-experiment-cycle .pipeline-step:not(:last-child)::after {
+        display: block;
+        content: "↓";
+        right: auto;
+        left: 50%;
+        top: auto;
+        bottom: -11px;
+        transform: translate(-50%, 50%);
+      }
+      .infra-grid { grid-template-columns: 1fr; }
       .hero-logo { width: min(100%, 260px); }
-      .btn-row {
-        align-items: stretch;
-        flex-direction: column;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 280px;
-      }
-      .btn {
-        justify-content: center;
-        width: 100%;
-      }
       .table-wrap {
         border: none;
         border-radius: 0;
@@ -491,36 +566,10 @@
     </div>
     <h1>NeoResearch<span class="highlight">（智多星）</span></h1>
     <p class="subtitle">
-      将“研究假设 → 模型配方 → 受控实验 → 结果归因 → 研究记忆”串成闭环，
-      面向时间序列预测构建可复现、可审计、可持续积累的 Forecast Research Operating System。
+      NeoResearch 是一个面向数据科学研究的自主智能体，通过对研究任务、数据、模型、实验结果和历史经验进行持续认知，自主完成假设提出、数据分析、模型设计、实验执行、结果诊断和方案迭代，从而实现 AI 系统对 AI 模型的自主研究与能力增强。
     </p>
     <p class="affiliation">中国科学技术大学 · 认知智能全国重点实验室</p>
 
-    <div class="btn-row">
-      <a class="btn btn-secondary" href="#architecture">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-          <rect x="3" y="3" width="7" height="7" rx="1"/>
-          <rect x="14" y="3" width="7" height="7" rx="1"/>
-          <rect x="3" y="14" width="7" height="7" rx="1"/>
-          <rect x="14" y="14" width="7" height="7" rx="1"/>
-        </svg>
-        系统架构
-      </a>
-      <a class="btn btn-secondary" href="#recipe">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 4h16v16H4z"/>
-          <path d="M8 8h8M8 12h8M8 16h5"/>
-        </svg>
-        CandidateRecipe
-      </a>
-      <a class="btn btn-secondary" href="#roadmap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 19c4-8 12-6 16-14"/>
-          <path d="M14 5h6v6"/>
-        </svg>
-        研发路线
-      </a>
-    </div>
   </div>
 </header>
 
@@ -529,10 +578,10 @@
     <a href="../" class="nav-home">首页</a>
     <a href="#intro">简介</a>
     <a href="#news">News / Updates</a>
-    <a href="#problem">核心问题</a>
+    <a href="#problem">核心思想</a>
     <a href="#architecture">系统架构</a>
     <a href="#loop">研究闭环</a>
-    <a href="#recipe">配方搜索</a>
+    <a href="#recipe">时序验证</a>
     <a href="#protocol">评估治理</a>
     <a href="#roadmap">路线图</a>
     <a href="#source">规划来源</a>
@@ -543,38 +592,36 @@
   <div class="container">
     <div class="tldr">
       <strong>TL;DR：</strong>
-      NeoResearch 不是“会聊天的时序助手”，也不是无边界 AutoML。
-      它把时间序列预测小模型研发变成一个<strong>受控自主研究闭环</strong>：
-      Agent 在固定数据、评估、预算和代码协议内提出候选结构与训练配方，自动实验、归因、保留有效增量，并把成功与失败沉淀为可迁移研究记忆。
+      NeoResearch 不是为了让 AI 直接发现自然科学规律，而是让 AI 像数据科学家一样自主理解数据、设计模型、开展实验并改进 AI，从而在时序预测中验证 AI for AI 的可行性。
     </div>
 
     <h2 class="section-title">项目简介</h2>
     <p>
-      时间序列预测领域已经形成高度碎片化的模型生态：Autoformer、PatchTST、iTransformer、DLinear、FITS、TimeMixer 等方法分别从分解、patching、变量 token、频域与 mixing 等角度切入。
-      但每一个“小模型”的诞生，仍然需要研究员反复设计结构、调 loss、跑 ablation、记录经验。
+      NeoResearch 的研究认知同时来自三类可追溯证据：已有文献提供方法与先验，当前数据揭示任务结构，受控实验检验假设并产生新的经验。
+      系统不是只根据单次指标自动搜索配置，而是围绕证据形成可验证的研究问题与模型设计。
     </p>
     <p>
-      NeoResearch 的目标是把这类重复而高频的研究动作系统化：人定义任务边界、预算和研究方向，
-      Agent 在可审计的实验环境中完成候选生成、代码变更、训练评估、结果归因与记忆更新。
-      产物不是单次回答，而是可复现的模型、recipe、实验记录、报告和跨任务经验。
+      研究过程采用双层闭环：外循环从人机意图对齐开始，依次完成问题理解、文献研究、数据认知、假设生成、自主实验与诊断演化；
+      内循环则围绕模型设计、代码实现、训练执行、评估和修正快速迭代。
+      时间序列预测具有清晰指标、丰富数据和高度碎片化的模型生态，因此被选为首个验证场景，而不是 NeoResearch 的能力边界。
     </p>
 
     <div class="stat-row">
       <div class="stat-box">
-        <div class="stat-num">7</div>
-        <div class="stat-label">系统层级<br>从 Human Control 到 Memory</div>
-      </div>
-      <div class="stat-box">
-        <div class="stat-num">12</div>
-        <div class="stat-label">核心服务模块<br>Task / Runner / Evaluator 等</div>
-      </div>
-      <div class="stat-box">
         <div class="stat-num">3</div>
-        <div class="stat-label">评估层级<br>Dev / Reference / Blind</div>
+        <div class="stat-label">认知证据源<br>Literature / Data / Experiment</div>
       </div>
       <div class="stat-box">
-        <div class="stat-num">10 min</div>
-        <div class="stat-label">MVP 单轮预算<br>快速 keep / discard</div>
+        <div class="stat-num">7</div>
+        <div class="stat-label">外循环阶段<br>Intent Alignment 到 Evolution</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5</div>
+        <div class="stat-label">内循环环节<br>Design / Code / Train / Eval / Revise</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">TSF</div>
+        <div class="stat-label">首个验证场景<br>从时序预测验证 AI for AI</div>
       </div>
     </div>
   </div>
@@ -587,7 +634,7 @@
       <li>
         <p class="update-copy">
           <span class="update-date">[Jul. 2026]</span>
-          NeoResearch project page released with the first public overview of the controlled autonomous research loop for time-series forecasting model research.
+          NeoResearch project page released with the first public overview of an evidence-grounded autonomous data-science research agent, initially validated in time-series forecasting.
         </p>
       </li>
     </ul>
@@ -596,39 +643,83 @@
 
 <section id="problem">
   <div class="container">
-    <h2 class="section-title">核心问题</h2>
+    <h2 class="section-title">核心思想</h2>
     <p>
-      时间序列小模型研发不是简单的模型选择问题。真正困难的部分在于：模型结构、预处理、变量交互方式、预测头、训练目标和数据属性之间存在强耦合，而这些经验很难靠一次性搜索或自由代码生成稳定积累。
+      NeoResearch 的自主研究必须同时回答三个问题：已有研究告诉了我们什么，当前数据呈现了什么，以及实验结果真正证明了什么。
+      只有把三类证据放入同一认知上下文，Agent 才能提出有依据、可证伪、可迭代的研究假设。
+    </p>
+
+    <div class="evidence-formula" aria-label="Three evidence sources">
+      Literature Evidence <span>+</span> Data Evidence <span>+</span> Experimental Evidence
+    </div>
+
+    <div class="card-grid">
+      <div class="card card-accent-red">
+        <div class="card-icon">📚</div>
+        <h4>Literature Evidence · 文献证据</h4>
+        <p>从论文、技术报告和已有方法中提取问题定义、机制假设、有效模块与失败边界，为新研究建立可追溯先验。</p>
+      </div>
+      <div class="card card-accent-blue">
+        <div class="card-icon">🔎</div>
+        <h4>Data Evidence · 数据证据</h4>
+        <p>分析分布、趋势、周期、变量关系、缺失与异常，形成 TaskFingerprint，让模型设计回应当前数据而不是套用固定模板。</p>
+      </div>
+      <div class="card card-accent-teal">
+        <div class="card-icon">🧪</div>
+        <h4>Experimental Evidence · 实验证据</h4>
+        <p>通过受控实验、消融、复现和多层评估检验假设，区分可靠改进、偶然波动与失败模式，并写回研究记忆。</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">证据如何进入双层闭环</h3>
+    <p>
+      三类证据共同进入同一 Research Context：外循环负责决定“研究什么、为什么研究、结论如何推动模型演化”，内循环负责把当前假设快速转化为可运行、可比较、可修正的实验。
+    </p>
+    <div class="card-grid-2">
+      <div class="card card-accent-blue">
+        <h4>外循环 · 自主研究闭环</h4>
+        <p>覆盖意图对齐、问题理解、文献态势、数据画像、假设生成、实验评估和诊断演化，保证研究方向与证据链持续更新。</p>
+      </div>
+      <div class="card card-accent-teal">
+        <h4>内循环 · 快速实验闭环</h4>
+        <p>围绕模型设计、代码实现、训练执行、评估与修正进行紧凑迭代，为外循环提供新的实验证据。</p>
+      </div>
+    </div>
+
+    <h3 class="sub-title">为什么不能只靠自动搜索</h3>
+    <p>
+      在时序预测验证场景中，模型结构、预处理、变量交互、预测头、训练目标和数据属性存在强耦合。
+      AutoML 可以高效比较配置，但 NeoResearch 还需要理解证据、解释实验并把结论转化为下一轮模型演化依据。
     </p>
     <div class="card-grid">
       <div class="card card-accent-red">
-        <div class="card-icon">🔁</div>
-        <h4>研究过程高度重复</h4>
-        <p>同一类改动会在不同数据集、horizon 和变量设置下反复试验，人工记录与复盘成本高。</p>
+        <div class="card-icon">🔗</div>
+        <h4>知识、数据与实验相互割裂</h4>
+        <p>如果文献先验、数据特征和实验结论不能共同推理，Agent 只能重复已有配方或盲目试错。</p>
       </div>
       <div class="card card-accent-amber">
         <div class="card-icon">🧩</div>
-        <h4>模型生态碎片化</h4>
-        <p>不同论文模型往往绑定一整套设计，难以拆解成可组合、可审计的模块级 action。</p>
+        <h4>模型设计高度耦合</h4>
+        <p>不同论文模型往往绑定整套设计，需要拆解成可组合、可审计且能映射研究假设的模块级 action。</p>
       </div>
       <div class="card card-accent-blue">
         <div class="card-icon">📏</div>
-        <h4>评估容易被污染</h4>
-        <p>如果 Agent 能频繁读取 test 或修改数据切分，就会把研究系统变成隐性调参器。</p>
+        <h4>实验结论容易失真</h4>
+        <p>如果 Agent 能频繁读取 test、修改数据切分或忽略消融与复现，研究系统就会退化为隐性调参器。</p>
       </div>
       <div class="card card-accent-teal">
         <div class="card-icon">🧠</div>
-        <h4>经验难以迁移</h4>
-        <p>“强季节性适合什么结构”“变量相关高时如何融合”这类经验需要跨任务沉淀。</p>
+        <h4>经验难以形成认知</h4>
+        <p>单次 keep / discard 不能解释“何时、为何有效”，成功与失败都需要沉淀为可复用、可迁移的研究记忆。</p>
       </div>
     </div>
 
     <h3 class="sub-title">系统边界</h3>
     <ul class="feature-list">
-      <li>第一阶段聚焦 forecasting，不做开放式文献综述 Agent，不接管生产部署。</li>
-      <li>优先研究小模型：同时关注精度、参数量、延迟、稳定性与复现性。</li>
+      <li>NeoResearch 面向 AI for AI：自主研究和改进 AI 模型，不宣称直接发现自然科学规律，也不接管生产部署。</li>
+      <li>第一阶段以 curated literature corpus 提供可追溯文献证据，以时序预测和紧凑模型作为首个可验证场景，不进行无边界开放网络研究。</li>
       <li>先协议后智能：先冻结数据协议、评估协议、预算协议和代码边界，再让 Agent 在边界内创新。</li>
-      <li>明确区分预设组件与设计对象：<strong>Dataset Loader</strong>、数据切分、<strong>Evaluation</strong> 与指标计算采用预设协议；<strong>Model Network Design</strong>、模块组合、损失函数和训练策略才是自主设计与搜索对象。</li>
+      <li>明确区分预设组件与研究对象：<strong>Dataset Loader</strong>、数据切分、<strong>Evaluation</strong> 与指标计算采用预设协议；文献检索、数据诊断、假设提出、<strong>Model Design</strong>、损失函数和训练策略属于 Agent 的认知与设计空间。</li>
     </ul>
   </div>
 </section>
@@ -637,32 +728,33 @@
   <div class="container">
     <h2 class="section-title">系统架构</h2>
     <p>
-      NeoResearch 的完整形态由七层组成：人类控制层负责边界和审批，Agent 编排层负责研究任务分解，
-      搜索空间层提供 CandidateRecipe DSL 与 action registry，协议层固定数据与评估规则，执行层运行隔离实验，评估层判断晋级，记忆层沉淀经验。
+      NeoResearch 的完整形态由七层组成：Human Control 定义边界与审批；Evidence &amp; Cognition 汇聚文献、数据和实验认知；
+      Agent Orchestration 分解研究任务；Research Design 把假设转化为模型方案；Protocol &amp; Governance 固定规则；
+      Execution &amp; Evaluation 运行并检验实验；Memory &amp; Evolution 反思结果、沉淀经验并驱动下一轮演化。
     </p>
 
     <figure>
-      <img src="assets/framework.svg" alt="NeoResearch system architecture" />
-      <figcaption>NeoResearch 将自主研究限制在固定协议和可审计闭环中，避免 Agent 自由修改全仓或反复窥探测试集。</figcaption>
+      <img src="assets/framework.svg?v=20260722-evidence-v4" alt="NeoResearch evidence-grounded autonomous research architecture" />
+      <figcaption>七层工程视图承载证据组织、研究编排、协议治理、实验执行与记忆演化；下方双层闭环进一步展开完整研究生命周期和快速实验过程。</figcaption>
     </figure>
 
     <h3 class="sub-title">核心服务模块</h3>
     <div class="card-grid">
       <div class="card">
-        <h4>Task / Preset Dataset Loader / Diagnostic</h4>
-        <p>创建 TaskSpec，绑定数据版本，Dataset Loader 采用预设协议，只抽取趋势、季节性、变量相关、缺失率等 TaskFingerprint。</p>
+        <h4>Literature / Dataset / Experiment Cognition</h4>
+        <p>从 curated literature、TaskFingerprint 与实验谱系中抽取可追溯证据，形成统一 Research Context，而不是把检索、数据分析和实验日志彼此隔离。</p>
       </div>
       <div class="card">
-        <h4>Proposal / Model Network Design / Validator</h4>
-        <p>基于任务指纹和记忆生成 CandidateRecipe，把自主设计集中在 Model Network Design、模块组合、loss 与 training strategy，并检查越权、预算和接口兼容性。</p>
+        <h4>Hypothesis / Model Design / Validator</h4>
+        <p>基于 Research Context 提出可证伪假设并生成 CandidateRecipe，把证据映射到网络结构、模块组合、loss 与 training strategy，同时检查预算和接口兼容性。</p>
       </div>
       <div class="card">
-        <h4>Runner / Preset Evaluation</h4>
-        <p>在隔离执行环境中运行训练、收集 artifact，Evaluation 和指标计算采用预设协议，用统一晋级规则比较 challenger 与 champion。</p>
+        <h4>Runner / Preset Evaluation / Analyst</h4>
+        <p>在隔离环境中运行训练、消融与复现，按预设 Evaluation 收集指标和 artifact，再由 Analyst 判断结果是否真正支持原始假设。</p>
       </div>
       <div class="card">
-        <h4>Memory / Governance</h4>
-        <p>保存实验谱系、失败模式、相似任务经验，同时保护 reference test 和 blind test 的访问权限。</p>
+        <h4>Reflection / Memory / Model Evolution</h4>
+        <p>保存证据链、实验谱系和失败模式，将“何时、为何有效”压缩成可迁移研究记忆，并生成下一轮假设与模型演化方向。</p>
       </div>
     </div>
   </div>
@@ -670,42 +762,95 @@
 
 <section id="loop">
   <div class="container">
-    <h2 class="section-title">研究闭环</h2>
+    <h2 class="section-title">双层自主研究闭环</h2>
     <p>
-      MVP 阶段采用 autoresearch 同构的最小文件结构：冻结的 <code>prepare_tsf.py</code> 负责预设 Dataset Loader、数据切分与 Evaluation，
-      <code>train.py</code> 是 Agent 唯一可编辑实验层，主要承载 Model Network Design、loss 和 training strategy，<code>program.md</code> 则承载人类制定的研究策略与行为协议。
+      NeoResearch 通过外循环管理完整研究生命周期，通过内循环加速单个假设的工程验证。
+      外循环保证研究目标、文献态势、数据认知、假设与结论彼此一致；内循环在固定协议与预算内完成模型设计、实现、训练、评估和修正。
     </p>
 
-    <ul class="pillar-list">
-      <li>
-        <div class="pillar-num">1</div>
-        <div class="pillar-text">
-          <strong>Round 0：建立基线</strong>
-          <span>先跑固定 baseline，例如 NLinear CI、MLP、PatchTST / iTransformer 参照，形成初始 champion 和结果记录。</span>
-        </div>
+    <figure class="workflow-figure">
+      <a class="workflow-diagram-link" href="assets/neoresearch-ai-for-ai-workflow.png?v=20260722-loop-v1" target="_blank" rel="noopener">
+        <img src="assets/neoresearch-ai-for-ai-workflow.png?v=20260722-loop-v1" width="1672" height="941" alt="NeoResearch 面向 AI for AI 的双层自主数据科学研究闭环" loading="lazy" decoding="async" />
+      </a>
+      <figcaption>NeoResearch 总体研究流程：外循环覆盖完整自主研究生命周期，内循环负责快速实验；点击图片可查看原始尺寸。</figcaption>
+    </figure>
+
+    <h3 class="sub-title">外循环：自主研究闭环（7 个阶段）</h3>
+    <p>
+      外循环从用户目标出发，并在诊断、反思和模型演化后回到目标与意图对齐，使每一轮研究都能重新校准问题、证据和方向。
+      为与总览图保持一致，编号沿用 <strong>0、1/A、2/B、3/C、4/D、6/F、7/G</strong>；其中 5/E 被展开为下方快速实验内循环，而不是重复列作外循环阶段。
+    </p>
+    <ol class="outer-research-loop" aria-label="Seven-stage autonomous research outer loop">
+      <li class="research-stage">
+        <strong>0. 人机交互与意图对齐</strong>
+        <span>通过交互式需求澄清明确目标、偏好、约束和反馈机制，避免系统在错误问题上自主优化。</span>
       </li>
-      <li>
-        <div class="pillar-num">2</div>
-        <div class="pillar-text">
-          <strong>提出假设与候选配方</strong>
-          <span>Research Manager 读取 TaskFingerprint 和历史记忆，生成少量候选 recipe，而不是无限制搜索。</span>
-        </div>
+      <li class="research-stage">
+        <strong>1/A. 研究问题理解</strong>
+        <span>把用户目标转化为可执行的研究任务，定义任务边界、约束条件、预算、评估指标与终止准则。</span>
       </li>
-      <li>
-        <div class="pillar-num">3</div>
-        <div class="pillar-text">
-          <strong>验证、实验与晋级</strong>
-          <span>候选先经静态检查、smoke run、低保真实验，再进入 full validation；MVP 可退化为 full run 后 keep / discard。</span>
-        </div>
+      <li class="research-stage">
+        <strong>2/B. 文献调研与研究态势建模</strong>
+        <span>检索、阅读、比较和综合已有研究，识别已验证机制、失败边界、争议与值得检验的研究空白。</span>
       </li>
-      <li>
-        <div class="pillar-num">4</div>
-        <div class="pillar-text">
-          <strong>归因与记忆沉淀</strong>
-          <span>Analyst 判断提升是否可靠，Librarian 把成功/失败压缩成可复用经验，供下一轮 candidate 排序。</span>
-        </div>
+      <li class="research-stage">
+        <strong>3/C. 数据认知与任务画像</strong>
+        <span>分析模式、漂移、质量、可预测性与未来情境，形成可被模型设计直接使用的 TaskFingerprint。</span>
       </li>
-    </ul>
+      <li class="research-stage">
+        <strong>4/D. 假设生成</strong>
+        <span>联合文献证据、数据证据和实验记忆提出可证伪假设，并明确预期机制、适用条件与反例。</span>
+      </li>
+      <li class="research-stage">
+        <strong>6/F. 自主实验与评估</strong>
+        <span>启动快速实验内循环，在冻结协议、沙箱和预算边界内完成候选设计、实现、训练、评估与修正。</span>
+      </li>
+      <li class="research-stage">
+        <strong>7/G. 诊断、反思与模型演化</strong>
+        <span>结合误差分析、消融、复现和文献对照判断假设是否成立，沉淀研究记忆并生成下一轮方向。</span>
+      </li>
+    </ol>
+
+    <h3 class="sub-title">内循环（5/E）：快速实验闭环</h3>
+    <p>每个候选假设进入紧凑的工程循环；评估结果既可以触发局部修正，也可以返回外循环重新审视假设和研究问题。</p>
+    <ol class="pipeline inner-experiment-cycle" aria-label="Rapid experiment inner loop">
+      <li class="pipeline-step"><strong>模型设计</strong><span>把假设映射为结构、模块、损失与训练策略</span></li>
+      <li class="pipeline-step"><strong>代码实现</strong><span>生成受限 patch，并完成接口和静态检查</span></li>
+      <li class="pipeline-step"><strong>训练执行</strong><span>按预算运行 smoke、低保真与正式训练</span></li>
+      <li class="pipeline-step"><strong>评估</strong><span>收集指标、误差切片、消融和复现证据</span></li>
+      <li class="pipeline-step"><strong>修正</strong><span>修复实现或调整设计，并决定是否进入下一轮</span></li>
+    </ol>
+
+    <div class="card-grid-2 support-output-grid">
+      <div class="card card-accent-blue">
+        <h4>研究基础设施</h4>
+        <p>双层闭环依赖统一、可审计的研究底座：</p>
+        <ul class="infra-grid" aria-label="Research infrastructure">
+          <li class="infra-chip">科学文献语料库</li>
+          <li class="infra-chip">数据集与特征工具</li>
+          <li class="infra-chip">模型与代码库</li>
+          <li class="infra-chip">训练与评测环境</li>
+          <li class="infra-chip">研究记忆</li>
+          <li class="infra-chip">计算资源</li>
+        </ul>
+      </div>
+      <div class="card card-accent-teal">
+        <h4>AI for AI 的研究输出</h4>
+        <p>系统不只交付一次指标，而是持续形成：</p>
+        <ul class="feature-list">
+          <li>更优模型</li>
+          <li>新算法</li>
+          <li>可靠发现</li>
+          <li>可复用研究经验</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="sub-title">时序预测 MVP 映射</h3>
+    <p>
+      为让上述方法先在可度量环境中落地，MVP 采用与 autoresearch 同构的最小文件结构：冻结的 <code>prepare_tsf.py</code> 负责预设 Dataset Loader、数据切分与 Evaluation；
+      <code>train.py</code> 是 Agent 可编辑的模型实验层；<code>program.md</code> 承载人类制定的研究策略、证据使用规则与行为协议。
+    </p>
 
     <div class="table-wrap">
       <table>
@@ -745,10 +890,10 @@
 
 <section id="recipe" class="alt">
   <div class="container">
-    <h2 class="section-title">CandidateRecipe 配方搜索</h2>
+    <h2 class="section-title">时序预测验证：CandidateRecipe 配方搜索</h2>
     <p>
-      NeoResearch 的关键升级是从“选择完整模型族”转向 TimeRecipe 风格的模块级配方搜索。
-      Agent 不再直接问“用 PatchTST 还是 iTransformer”，而是在受限 registry 中选择 preprocessing、embedding、backbone、fusion、head、loss function 与 training strategy。
+      在首个时序预测验证场景中，Model Design 被实现为 TimeRecipe 风格的模块级 CandidateRecipe。
+      关键升级不是从更多配置中选出最优项，而是让 Agent 结合文献先验、数据特征和历史实验，解释为什么选择某种 preprocessing、embedding、backbone、fusion、head、loss function 与 training strategy。
     </p>
 
     <div class="pipeline" aria-label="CandidateRecipe pipeline">
@@ -804,7 +949,7 @@
 
     <h3 class="sub-title">Recipe Prior</h3>
     <p>
-      Dataset profiler 只在 train split 上计算任务指纹，再用 rule-based prior 或 rank predictor 给候选排序。
+      Literature Evidence 提供可追溯的设计先验，Dataset profiler 只在 train split 上计算任务指纹，Experimental Evidence 则记录相似方案的成功条件和失败模式；三者共同通过 rule-based prior 或 rank predictor 给候选排序。
       例如，长 horizon 且 trend 强时优先尝试 <code>series_decomposition + patch + temporal fusion + linear/mlp</code>；
       变量相关性高时优先尝试 <code>invert embedding + feature fusion</code>。
     </p>
@@ -815,7 +960,7 @@
   <div class="container">
     <h2 class="section-title">评估协议与治理</h2>
     <p>
-      NeoResearch 的第一原则是“先协议，后智能”。所有归一化、缺失填补和统计特征拟合只允许在 train fold 上完成；
+      NeoResearch 的第一原则是“先协议，后智能”。在时序预测验证中，所有归一化、缺失填补和统计特征拟合只允许在 train fold 上完成；
       <code>val_avg_mse</code> 是 Agent 日常 keep / discard 的唯一决策信号，reference test 和 blind test 则由 Runner / Human Gate 保护。
     </p>
 
@@ -866,8 +1011,8 @@
 
     <h3 class="sub-title">人机分工</h3>
     <p>
-      人类负责定义任务、冻结协议、批准搜索空间扩展和审核最终 champion；
-      Agent 负责高频试验、候选生成、受限 patch、结果归因和研究记忆更新。
+      人类负责定义研究问题、证据范围、预算与评估协议，批准设计空间扩展并审核最终 champion；
+      Agent 负责检索并组织文献证据、理解数据、提出假设、生成候选、执行受限 patch 与实验、反思归因并更新研究记忆。
       这种分工让系统既能持续探索，又保留科研级审计、回滚与权限边界。
     </p>
   </div>
@@ -877,45 +1022,44 @@
   <div class="container">
     <h2 class="section-title">研发路线图</h2>
     <p>
-      NeoResearch 的实现路线从最小闭环开始，而不是一开始就构建全功能平台。
-      第一阶段先验证 Agent 能否在单任务、单文件、固定协议下形成有效 keep / discard 循环；
-      随后再逐步引入 DSL、registry、低保真筛选、多 seed、研究记忆与 blind test 治理。
+      NeoResearch 从一个证据可追溯、结果可度量的最小研究闭环开始，而不是一开始就构建全功能平台。
+      时序预测用于验证 Agent 能否联合文献、数据和实验形成有效假设，并在固定协议下完成模型设计、实验、反思与演化；随后再扩展研究任务与领域。
     </p>
 
     <ul class="pillar-list">
       <li>
         <div class="pillar-num">0</div>
         <div class="pillar-text">
-          <strong>基础底座</strong>
-          <span>实现 <code>prepare_tsf.py</code>、NLinear CI baseline、<code>program.md</code> 与 Phase 0a 闭环。</span>
+          <strong>证据与协议底座</strong>
+          <span>建立 curated literature corpus、TaskSpec、Dataset profiler、<code>prepare_tsf.py</code>、可复现 baseline 与证据谱系。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num">1</div>
         <div class="pillar-text">
-          <strong>Recipe 化受限研究闭环</strong>
-          <span>引入 action registry、CandidateRecipe DSL、Static Validator、Dataset profiler 和低保真筛选。</span>
+          <strong>双层最小研究闭环</strong>
+          <span>打通外循环的意图对齐、问题理解、文献与数据认知、假设、实验和反思演化，以及内循环的设计、实现、训练、评估与修正。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num">2</div>
         <div class="pillar-text">
-          <strong>模块组合搜索</strong>
-          <span>扩展 preprocessing / embedding / backbone / fusion / head / loss grammar，形成 recipe 谱系树。</span>
+          <strong>模型设计与演化</strong>
+          <span>引入 action registry 与 CandidateRecipe DSL，扩展 preprocessing / embedding / backbone / fusion / head / loss grammar，形成设计谱系树。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num">3</div>
         <div class="pillar-text">
-          <strong>统计验证与研究记忆</strong>
-          <span>支持多 seed、Pareto front、Shadow Holdout、Memory Service 和相似任务召回。</span>
+          <strong>反思与研究记忆</strong>
+          <span>支持误差切片、消融、多 seed、Pareto front、Shadow Holdout、Memory Service 和相似任务证据召回。</span>
         </div>
       </li>
       <li>
         <div class="pillar-num">4</div>
         <div class="pillar-text">
-          <strong>治理与盲测</strong>
-          <span>提供 blind test 服务、审批流、审计日志和完整研究报告生成。</span>
+          <strong>治理与跨任务迁移</strong>
+          <span>提供 blind test、审批流、审计日志和研究报告，并验证证据与模型演化经验能否迁移到新的数据科学任务。</span>
         </div>
       </li>
     </ul>
@@ -923,20 +1067,20 @@
     <h3 class="sub-title">成功指标</h3>
     <div class="card-grid">
       <div class="card">
-        <h4>研究效果</h4>
-        <p>相对 baseline 的 val_avg_mse 改进、Pareto 改进覆盖数据集数、top-k recipe 命中率。</p>
+        <h4>证据与假设质量</h4>
+        <p>证据来源可追溯率、假设可证伪率、实验与假设对齐率，以及反思结论的人工审核一致性。</p>
+      </div>
+      <div class="card">
+        <h4>模型演化效果（时序验证）</h4>
+        <p>在首个时序预测验证场景中，相对 baseline 的 <code>val_avg_mse</code> 与 Pareto 改进、覆盖数据集数，以及有效机制能否在复现中保持。</p>
       </div>
       <div class="card">
         <h4>研究效率</h4>
-        <p>每次有效改进所需实验轮数、GPU 小时、候选到晋级的转化率。</p>
+        <p>每次有效结论所需实验轮数、GPU 小时、候选到晋级的转化率，以及无效搜索的减少比例。</p>
       </div>
       <div class="card">
-        <h4>工程可靠性</h4>
-        <p>实验复现通过率、训练失败率、patch 回滚率、blind test 泄漏事件数。</p>
-      </div>
-      <div class="card">
-        <h4>知识积累</h4>
-        <p>可复用 heuristic 数量、相似任务迁移成功率、失败模式覆盖率。</p>
+        <h4>可靠性与迁移</h4>
+        <p>实验复现通过率、数据泄漏事件数、失败模式覆盖率，以及研究记忆在相似任务上的迁移成功率。</p>
       </div>
     </div>
   </div>
@@ -946,12 +1090,15 @@
   <div class="container">
     <h2 class="section-title">规划来源</h2>
     <p>
-      本页面根据 NeoResearch（智多星）规划文档整理而成，聚焦对外介绍系统定位、架构分层、研究闭环、CandidateRecipe 搜索空间与研发路线。
+      本页面根据 NeoResearch（智多星）规划文档与核心思想说明整理而成，聚焦介绍三类认知证据、双层自主研究闭环、七层工程架构，以及在时序预测中的首个验证实现。
       当前内容作为项目介绍页使用，后续可在代码仓库、论文、benchmark 结果明确后补充 GitHub、技术报告和 citation。
     </p>
-    <div class="citation-box">NeoResearch / 智多星 for TSF
-Forecast Research Operating System for autonomous time-series forecasting model research
-Core loop: hypothesis -> CandidateRecipe -> controlled experiment -> attribution -> memory</div>
+    <div class="citation-box">NeoResearch / 智多星
+Autonomous Data Science Research Agent for AI-for-AI
+Evidence: literature + data + experiment
+Outer loop: intent alignment -> question -> literature -> data -> hypothesis -> experiment -> reflection &amp; evolution
+Inner loop: model design -> code -> train -> evaluate -> revise
+First validation: time-series forecasting</div>
   </div>
 </section>
 
@@ -960,8 +1107,8 @@ Core loop: hypothesis -> CandidateRecipe -> controlled experiment -> attribution
     <p>
       &copy; 2026 NeoResearch Team &middot; AGI Group · State Key Laboratory of Cognitive Intelligence, USTC
     </p>
-    <p style="font-size: 0.78rem; color: #555; margin-top: 6px;">
-      Built for controlled autonomous research in time-series forecasting
+    <p class="footer-note">
+      Built for evidence-grounded autonomous data science research · first validated in time-series forecasting
     </p>
   </div>
 </footer>
