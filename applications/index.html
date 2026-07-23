@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f9" />
   <title>应用研究 | USTC-AGI Time Series</title>
   <meta
     name="description"
@@ -12,12 +13,32 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+    :root {
+      --accent: #0b5fc6;
+      --accent-dark: #083f7f;
+      --accent-soft: #edf7fc;
+      --accent-border: #b7d9ec;
+      --blue: #0b78c4;
+      --blue-muted: #5a7fa6;
+      --text-strong: #061f45;
+      --text: #17324d;
+      --text-muted: #4c6176;
+      --text-faint: #5b7187;
+      --line: #d5e3eb;
+      --line-soft: #e6f0f5;
+      --bg: #f4f7f9;
+      --card: #ffffff;
+      --surface-soft: #f8fbfd;
+      --footer-text: #a9c7db;
+      --footer-faint: #8eb4cc;
+      --footer-link: #8fd9ff;
+    }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
                    "PingFang SC", "Hiragino Sans GB", sans-serif;
-      background: #f7f7f5;
-      color: #1a1a1a;
+      background: #f4f7f9;
+      color: #17324d;
       line-height: 1.8;
       font-size: 16px;
       text-align: justify;
@@ -27,7 +48,7 @@
       flex-direction: column;
     }
 
-    a { color: #0f766e; text-decoration: none; }
+    a { color: #0b5fc6; text-decoration: none; }
     a:hover { text-decoration: underline; }
 
     .container {
@@ -43,7 +64,7 @@
       background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid #e8e8e8;
+      border-bottom: 1px solid #d5e3eb;
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
     }
     .top-nav .container {
@@ -57,11 +78,11 @@
       flex-shrink: 0;
       font-size: 0.92rem;
       font-weight: 800;
-      color: #111;
+      color: #061f45;
       letter-spacing: 0.01em;
       white-space: nowrap;
     }
-    .nav-brand span { color: #0f766e; }
+    .nav-brand span { color: #0b5fc6; }
     .nav-links {
       display: flex;
       align-items: center;
@@ -80,7 +101,7 @@
       border: 1px solid transparent;
       font-size: 0.84rem;
       font-weight: 500;
-      color: #555;
+      color: #4c6176;
       transition: color .18s, background .18s, border-color .18s, transform .18s;
     }
     .nav-dropdown {
@@ -114,9 +135,9 @@
       min-width: 220px;
       padding: 8px;
       border-radius: 16px;
-      border: 1px solid #d9eee9;
+      border: 1px solid #d5e3eb;
       background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 12px 28px rgba(15, 118, 110, 0.10);
+      box-shadow: 0 12px 28px rgba(6, 31, 69, 0.10);
       display: none;
       gap: 4px;
       z-index: 30;
@@ -130,7 +151,7 @@
       border: 1px solid transparent;
       font-size: 0.84rem;
       font-weight: 600;
-      color: #555;
+      color: #4c6176;
       line-height: 1.4;
     }
     .nav-links a:hover,
@@ -140,17 +161,17 @@
     .nav-dropdown.open .nav-dropdown-toggle,
     .nav-dropdown-menu a:hover,
     .nav-dropdown-menu a:active {
-      color: #0f766e;
-      background: #f0fdf9;
-      border-color: #99e6d8;
+      color: #0b5fc6;
+      background: #edf7fc;
+      border-color: #b7d9ec;
       font-weight: 700;
       text-decoration: none;
       transform: translateY(-1px);
     }
     .nav-active {
-      color: #0f766e !important;
-      background: #f0fdf9 !important;
-      border-color: #99e6d8 !important;
+      color: #0b5fc6 !important;
+      background: #edf7fc !important;
+      border-color: #b7d9ec !important;
       font-weight: 700 !important;
     }
 
@@ -158,35 +179,35 @@
       position: relative;
       overflow: hidden;
       isolation: isolate;
-      background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
-      border-bottom: 1px solid #e8e8e8;
+      background: linear-gradient(160deg, #ffffff 50%, #edf7fc 100%);
+      border-bottom: 1px solid #d5e3eb;
       padding: 72px 0 56px;
       text-align: center;
       cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
     }
     header:hover {
-      background: linear-gradient(160deg, #fdffff 50%, #e6fbf8 100%);
+      background: linear-gradient(160deg, #f8fbfd 50%, #edf7fc 100%);
     }
     header.is-refreshing {
       transform: scale(0.995);
       opacity: 0.82;
     }
     header:focus-visible {
-      outline: 3px solid #99e6d8;
+      outline: 3px solid #b7d9ec;
       outline-offset: -6px;
     }
     header h1 {
       font-size: 2.3rem;
       font-weight: 800;
       line-height: 1.25;
-      color: #111;
+      color: #061f45;
     }
-    header h1 .highlight { color: #0f766e; }
+    header h1 .highlight { color: #0b5fc6; }
     header .header-sub {
       margin-top: 14px;
       font-size: 0.97rem;
-      color: #666;
+      color: #5b7187;
       line-height: 1.75;
     }
 
@@ -202,21 +223,21 @@
       min-height: 92px;
       padding: 16px 18px;
       border-radius: 16px;
-      border: 1px solid #d9eee9;
+      border: 1px solid #d5e3eb;
       background: rgba(255, 255, 255, 0.78);
-      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.06);
+      box-shadow: 0 10px 24px rgba(6, 31, 69, 0.06);
     }
     .hero-highlight strong {
       display: block;
       margin-bottom: 6px;
-      color: #0f766e;
+      color: #0b5fc6;
       font-size: 1.04rem;
       font-weight: 800;
       line-height: 1.3;
     }
     .hero-highlight span {
       display: block;
-      color: #555;
+      color: #4c6176;
       font-size: 0.84rem;
       line-height: 1.65;
     }
@@ -233,12 +254,12 @@
     .section-intro h2 {
       font-size: 1.3rem;
       font-weight: 700;
-      color: #111;
+      color: #061f45;
       margin-bottom: 10px;
     }
     .section-intro p {
       font-size: 0.97rem;
-      color: #555;
+      color: #4c6176;
     }
 
     .content-stack {
@@ -253,9 +274,9 @@
       margin-top: 18px;
     }
     .overview-item {
-      border: 1px solid #e8e8e8;
+      border: 1px solid #d5e3eb;
       border-radius: 14px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
       padding: 18px;
     }
     .overview-item .label {
@@ -264,9 +285,9 @@
       min-height: 26px;
       padding: 0 10px;
       border-radius: 999px;
-      border: 1px solid #99e6d8;
-      background: #e6fbf7;
-      color: #0f766e;
+      border: 1px solid #b7d9ec;
+      background: #edf7fc;
+      color: #0b5fc6;
       font-size: 0.74rem;
       font-weight: 800;
       margin-bottom: 12px;
@@ -284,13 +305,13 @@
       margin-top: 28px;
       padding: 24px;
       border-radius: 24px;
-      border: 1px solid #d9eee9;
+      border: 1px solid #d5e3eb;
       background:
-        linear-gradient(rgba(15, 118, 110, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 118, 110, 0.04) 1px, transparent 1px),
-        linear-gradient(135deg, #ffffff 0%, #f2fcfa 100%);
+        linear-gradient(rgba(6, 31, 69, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 31, 69, 0.04) 1px, transparent 1px),
+        linear-gradient(135deg, #ffffff 0%, #f8fbfd 100%);
       background-size: 36px 36px, 36px 36px, auto;
-      box-shadow: 0 18px 48px rgba(15, 118, 110, 0.08);
+      box-shadow: 0 18px 48px rgba(6, 31, 69, 0.08);
       text-align: left;
     }
 
@@ -306,12 +327,12 @@
     .hero-workflow-head h2 {
       font-size: 1.18rem;
       line-height: 1.35;
-      color: #111;
+      color: #061f45;
     }
 
     .hero-workflow-head p {
       max-width: 460px;
-      color: #5c706c;
+      color: #4c6176;
       font-size: 0.86rem;
       line-height: 1.7;
       text-align: left;
@@ -329,9 +350,9 @@
       min-height: 168px;
       padding: 16px 14px;
       border-radius: 18px;
-      border: 1px solid #d9eee9;
+      border: 1px solid #d5e3eb;
       background: rgba(255, 255, 255, 0.88);
-      box-shadow: 0 10px 24px rgba(15, 118, 110, 0.06);
+      box-shadow: 0 10px 24px rgba(6, 31, 69, 0.06);
     }
 
     .hero-workflow-step::before {
@@ -344,8 +365,8 @@
       height: 26px;
       margin-bottom: 14px;
       border-radius: 999px;
-      background: #e6fbf7;
-      color: #0f766e;
+      background: #edf7fc;
+      color: #0b5fc6;
       font-size: 0.72rem;
       font-weight: 900;
       letter-spacing: 0.04em;
@@ -358,8 +379,8 @@
       right: -11px;
       width: 10px;
       height: 10px;
-      border-top: 2px solid #42c6b7;
-      border-right: 2px solid #42c6b7;
+      border-top: 2px solid #0b78c4;
+      border-right: 2px solid #0b78c4;
       transform: rotate(45deg);
       background: transparent;
       z-index: 1;
@@ -373,11 +394,11 @@
       margin-bottom: 8px;
       font-size: 0.98rem;
       line-height: 1.35;
-      color: #111;
+      color: #061f45;
     }
 
     .hero-workflow-step p {
-      color: #52615e;
+      color: #4c6176;
       font-size: 0.82rem;
       line-height: 1.65;
       text-align: left;
@@ -385,7 +406,7 @@
 
     .section-card {
       background: #fff;
-      border: 1px solid #e8e8e8;
+      border: 1px solid #d5e3eb;
       border-radius: 16px;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
       padding: 26px 26px 24px;
@@ -395,11 +416,11 @@
       font-size: 1.2rem;
       font-weight: 800;
       margin-bottom: 12px;
-      color: #111;
+      color: #061f45;
     }
 
     .section-card p {
-      color: #555;
+      color: #4c6176;
       font-size: 0.97rem;
     }
 
@@ -421,9 +442,9 @@
 
     .scenario-card,
     .focus-card {
-      border: 1px solid #e8e8e8;
+      border: 1px solid #d5e3eb;
       border-radius: 14px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
       padding: 18px;
     }
 
@@ -432,8 +453,8 @@
       position: relative;
       overflow: hidden;
       border-radius: 14px;
-      border: 1px solid #dfeee9;
-      background: linear-gradient(180deg, #f5fffc 0%, #eefaf7 100%);
+      border: 1px solid #d5e3eb;
+      background: linear-gradient(180deg, #f8fbfd 0%, #edf7fc 100%);
       box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
     }
 
@@ -451,7 +472,7 @@
     .figure-caption {
       padding: 10px 14px 12px;
       font-size: 0.8rem;
-      color: #55706b;
+      color: #4c6176;
       line-height: 1.6;
     }
 
@@ -465,23 +486,23 @@
       font-weight: 700;
       letter-spacing: 0.04em;
       margin-bottom: 12px;
-      border: 1px solid #99e6d8;
-      background: #e6fbf7;
-      color: #0f766e;
+      border: 1px solid #b7d9ec;
+      background: #edf7fc;
+      color: #0b5fc6;
     }
 
     .scenario-card h4,
     .focus-card h4 {
       font-size: 1rem;
       font-weight: 800;
-      color: #111;
+      color: #061f45;
       margin-bottom: 10px;
     }
 
     .scenario-card p,
     .focus-card p {
       font-size: 0.92rem;
-      color: #555;
+      color: #4c6176;
       line-height: 1.75;
     }
 
@@ -497,9 +518,9 @@
       min-height: 28px;
       padding: 0 10px;
       border-radius: 999px;
-      background: #f6f6f4;
+      background: #f8fbfd;
       border: 1px solid #ecece8;
-      color: #555;
+      color: #4c6176;
       font-size: 0.8rem;
       font-weight: 600;
     }
@@ -518,10 +539,10 @@
       align-items: start;
       font-size: 0.84rem;
       line-height: 1.65;
-      color: #555;
+      color: #4c6176;
     }
     .scenario-detail strong {
-      color: #111;
+      color: #061f45;
       font-weight: 800;
     }
 
@@ -535,9 +556,9 @@
       position: relative;
       min-height: 178px;
       padding: 18px;
-      border: 1px solid #e8e8e8;
+      border: 1px solid #d5e3eb;
       border-radius: 14px;
-      background: linear-gradient(180deg, #ffffff 0%, #fbfbfa 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
     }
     .workflow-step::before {
       content: attr(data-step);
@@ -548,7 +569,7 @@
       height: 34px;
       margin-bottom: 14px;
       border-radius: 50%;
-      background: #0f766e;
+      background: #0b5fc6;
       color: #fff;
       font-size: 0.82rem;
       font-weight: 800;
@@ -557,12 +578,12 @@
       margin-bottom: 8px;
       font-size: 0.98rem;
       font-weight: 800;
-      color: #111;
+      color: #061f45;
     }
     .workflow-step p {
       font-size: 0.88rem;
       line-height: 1.75;
-      color: #555;
+      color: #4c6176;
     }
 
     .focus-figure {
@@ -570,17 +591,17 @@
     }
 
     footer {
-      background: #1c1c1c;
-      color: #999;
+      background: var(--text-strong);
+      color: var(--footer-text);
       text-align: center;
       padding: 28px 24px;
       font-size: 0.84rem;
     }
-    footer a { color: #5ecfc6; }
+    footer a { color: var(--footer-link); }
     footer .footer-funding {
       margin-top: 12px;
       font-size: 0.82rem;
-      color: #888;
+      color: var(--footer-faint);
       line-height: 1.6;
     }
 
@@ -670,16 +691,9 @@
           <a href="../scientific-time-series/" role="menuitem">科学时序数据建模</a>
         </div>
       </div>
-      <a href="../papers/">论文列表</a>
       <a class="nav-active" href="../applications/" aria-current="page">应用研究</a>
+      <a href="../papers/">论文列表</a>
       <a href="../star-cast/">逐星方舟</a>
-      <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">
-        GitHub
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:12px;height:12px;margin-left:4px;vertical-align:-1px">
-          <path d="M6 3H13V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M13 3L3 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
     </div>
   </div>
 </nav>

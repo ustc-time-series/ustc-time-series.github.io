@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f9" />
   <title>CastFactory（铸星坊）— LLM-based Multimodal Time Series 训练框架</title>
   <meta name="description" content="CastFactory（铸星坊）是面向科研人员的 LLM-based Multimodal Time Series 模型训练工厂，以统一数据契约串联多模态样本构建、CPT-SFT-ReasoningRL/AgenticRL 训练、评测、消融与 recipe 复现。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
@@ -11,20 +12,32 @@
     html { scroll-behavior: smooth; }
 
     :root {
-      --navy:       #1e3a5f;
-      --navy-dark:  #152c48;
-      --teal:       #0f766e;
-      --teal-light: #14b8a6;
+      --navy:       #061f45;
+      --navy-dark:  #083f7f;
+      --teal:       #0b5fc6;
+      --teal-light: #0b78c4;
       --amber:      #b45309;
-      --accent:     #0f766e;
-      --accent-dark:#0b5f59;
-      --text:       #1a1a1a;
-      --muted:      #555;
-      --faint:      #888;
-      --line:       #e4e4e0;
-      --bg:         #f7f7f5;
-      --card:       #ffffff;
+      --accent: #0b5fc6;
+      --accent-dark: #083f7f;
+      --text: #17324d;
+      --muted:      #4c6176;
+      --faint:      #5b7187;
+      --line: #d5e3eb;
+      --bg: #f4f7f9;
+      --card: #ffffff;
       --card-hover: #f0f7ff;
+      --accent-soft: #edf7fc;
+      --accent-border: #b7d9ec;
+      --blue: #0b78c4;
+      --blue-muted: #5a7fa6;
+      --text-strong: #061f45;
+      --text-muted: #4c6176;
+      --text-faint: #5b7187;
+      --line-soft: #e6f0f5;
+      --surface-soft: #f8fbfd;
+      --footer-text: #a9c7db;
+      --footer-faint: #8eb4cc;
+      --footer-link: #8fd9ff;
     }
 
     body {
@@ -55,7 +68,7 @@
       padding: 18px 20px;
       font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
       font-size: 0.84rem;
-      color: #2c3e50;
+      color: #17324d;
       white-space: pre;
       overflow-x: auto;
       line-height: 1.65;
@@ -95,7 +108,7 @@
       padding: 13px 18px;
       font-size: 0.87rem;
       font-weight: 500;
-      color: #555;
+      color: #4c6176;
       border-bottom: 2px solid transparent;
       transition: color .2s, border-color .2s;
       white-space: nowrap;
@@ -108,13 +121,13 @@
     .nav-home {
       font-weight: 700;
       color: var(--teal) !important;
-      border-right: 1px solid #e8e8e8;
+      border-right: 1px solid #d5e3eb;
     }
 
     /* ── Hero ──────────────────────────────────────── */
     header {
-      background: linear-gradient(160deg, #ffffff 52%, #eff8ff 82%, #eefbf8 100%);
-      border-bottom: 1px solid #e8e8e8;
+      background: linear-gradient(160deg, #ffffff 52%, #eff8ff 82%, #edf7fc 100%);
+      border-bottom: 1px solid #d5e3eb;
       padding: 60px 0 48px;
       text-align: center;
       position: relative;
@@ -145,8 +158,8 @@
       width: 20px;
       height: 20px;
       border-radius: 999px;
-      border: 2px solid rgba(15, 118, 110, 0.20);
-      background: rgba(20, 184, 166, 0.16);
+      border: 2px solid rgba(6, 31, 69, 0.20);
+      background: rgba(11, 95, 198, 0.16);
       transform: translate(-50%, -50%) scale(0.2);
       pointer-events: none;
       z-index: 1;
@@ -188,7 +201,7 @@
       font-size: 1.95rem;
       font-weight: 800;
       line-height: 1.35;
-      color: #111;
+      color: #061f45;
       max-width: 1180px;
       margin-left: auto;
       margin-right: auto;
@@ -205,7 +218,7 @@
     .subtitle {
       margin: 14px auto 0;
       font-size: 1.02rem;
-      color: #555;
+      color: #4c6176;
       max-width: 690px;
       line-height: 1.7;
       text-align: center;
@@ -244,7 +257,7 @@
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.13);
       text-decoration: none;
     }
-    .btn-secondary { background: #fff; color: #222; border-color: #d0d0d0; }
+    .btn-secondary { background: #fff; color: #17324d; border-color: #d0d0d0; }
     .btn-secondary:hover { background: #f8f8f8; border-color: #aaa; }
     .btn svg { width: 15px; height: 15px; flex-shrink: 0; }
 
@@ -268,7 +281,7 @@
     h3.sub-title {
       font-size: 1.05rem;
       font-weight: 700;
-      color: #222;
+      color: #17324d;
       margin: 32px 0 10px;
     }
     h3.sub-title:first-of-type { margin-top: 0; }
@@ -282,7 +295,7 @@
       border-radius: 0 8px 8px 0;
       padding: 16px 22px;
       font-size: 1.01rem;
-      color: #1a1a1a;
+      color: #17324d;
       margin-bottom: 32px;
       line-height: 1.75;
     }
@@ -313,7 +326,7 @@
     }
     .stat-box .stat-label {
       font-size: 0.8rem;
-      color: #666;
+      color: #5b7187;
       margin-top: 6px;
       line-height: 1.45;
     }
@@ -344,8 +357,8 @@
       box-shadow: 0 8px 24px rgba(0,0,0,0.09);
     }
     .card .card-icon { font-size: 1.6rem; margin-bottom: 10px; line-height: 1; }
-    .card h4 { font-size: 0.93rem; font-weight: 700; margin-bottom: 7px; color: #111; }
-    .card p  { font-size: 0.87rem; color: #555; margin: 0; line-height: 1.65; }
+    .card h4 { font-size: 0.93rem; font-weight: 700; margin-bottom: 7px; color: #061f45; }
+    .card p  { font-size: 0.87rem; color: #4c6176; margin: 0; line-height: 1.65; }
 
     .contract-grid,
     .workflow-grid {
@@ -372,7 +385,7 @@
     .contract-card p,
     .workflow-card p {
       font-size: 0.84rem;
-      color: #555;
+      color: #4c6176;
       line-height: 1.62;
       margin: 0;
     }
@@ -380,9 +393,9 @@
       margin-top: 16px;
       padding: 14px 16px;
       border-radius: 8px;
-      border: 1px solid #cde8e4;
-      background: #f6fffd;
-      color: #25413e;
+      border: 1px solid var(--accent-border);
+      background: var(--accent-soft);
+      color: var(--text);
       font-size: 0.88rem;
       line-height: 1.65;
     }
@@ -421,7 +434,7 @@
     }
     .pillar-text { flex: 1; }
     .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; color: var(--navy); }
-    .pillar-text span  { font-size: 0.88rem; color: #555; }
+    .pillar-text span  { font-size: 0.88rem; color: #4c6176; }
 
     /* ── Feature list ──────────────────────────────── */
     .feature-list {
@@ -435,7 +448,7 @@
       padding-left: 20px;
       position: relative;
       font-size: 0.95rem;
-      color: #333;
+      color: #17324d;
     }
     .feature-list li::before {
       content: "▸";
@@ -479,7 +492,7 @@
     .badge-sft { background: #f0fdf4; color: #15803d; }
     .badge-rl  { background: #fef9c3; color: #854d0e; }
     .stage-card h4 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-    .stage-card .stage-input  { font-size: 0.83rem; color: #666; margin-bottom: 6px; }
+    .stage-card .stage-input  { font-size: 0.83rem; color: #5b7187; margin-bottom: 6px; }
     .stage-card .stage-output {
       margin-top: 14px;
       background: #f0fdf4;
@@ -490,7 +503,7 @@
       font-weight: 600;
       color: #15803d;
     }
-    .stage-card p { font-size: 0.87rem; color: #555; line-height: 1.6; margin: 0; }
+    .stage-card p { font-size: 0.87rem; color: #4c6176; line-height: 1.6; margin: 0; }
 
     .rl-mode-grid {
       display: grid;
@@ -514,7 +527,7 @@
     }
     .rl-mode-card p {
       margin: 0;
-      color: #555;
+      color: #4c6176;
       font-size: 0.88rem;
       line-height: 1.65;
     }
@@ -579,7 +592,7 @@
     }
     .module-card p {
       font-size: 0.83rem;
-      color: #555;
+      color: #4c6176;
       margin: 0;
       line-height: 1.55;
     }
@@ -613,12 +626,12 @@
       white-space: nowrap;
       margin-top: 3px;
     }
-    .roadmap-text strong { display: block; font-size: 0.93rem; margin-bottom: 3px; color: #111; }
-    .roadmap-text span { font-size: 0.87rem; color: #555; }
+    .roadmap-text strong { display: block; font-size: 0.93rem; margin-bottom: 3px; color: #061f45; }
+    .roadmap-text span { font-size: 0.87rem; color: #4c6176; }
 
     /* ── Claim box ─────────────────────────────────── */
     .claim-box {
-      background: linear-gradient(135deg, #0f1f3d 0%, #1e3a5f 60%, #0c4a44 100%);
+      background: linear-gradient(135deg, #061f45 0%, #061f45 60%, #083f7f 100%);
       border-radius: 12px;
       padding: 32px 32px;
       color: #fff;
@@ -649,17 +662,17 @@
 
     /* ── Footer ────────────────────────────────────── */
     footer {
-      background: #1c1c1c;
-      color: #999;
+      background: var(--text-strong);
+      color: var(--footer-text);
       text-align: center;
       padding: 28px 24px;
       font-size: 0.84rem;
     }
-    footer a { color: #5ecfc6; }
+    footer a { color: var(--footer-link); }
     footer .footer-funding {
       margin-top: 12px;
       font-size: 0.82rem;
-      color: #888;
+      color: var(--footer-faint);
       line-height: 1.6;
     }
     footer .footer-citation {
@@ -668,7 +681,7 @@
       color: #aaa;
       line-height: 1.65;
     }
-    footer .footer-citation strong { color: #d8f3ef; }
+    footer .footer-citation strong { color: var(--footer-link); }
 
     /* ── Responsive ────────────────────────────────── */
     @media (max-width: 680px) {
@@ -1302,7 +1315,7 @@ evaluation:
       </p>
     </div>
 
-    <p style="margin-top: 24px; color: #666; font-size: 0.9rem;">
+    <p style="margin-top: 24px; color: #5b7187; font-size: 0.9rem;">
       <strong>项目边界声明：</strong>
       CastFactory（铸星坊） 第一阶段专注于训练框架本身，不做自动科研智能体、模型结构搜索或复杂多智能体预测平台。
       它首先是一个训练框架，一个面向 LLM-based Multimodal Time Series Model 的模型工厂，

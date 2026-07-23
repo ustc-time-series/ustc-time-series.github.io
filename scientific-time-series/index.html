@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f9" />
   <title>科学时序数据建模 | USTC-AGI Time Series</title>
   <meta
     name="description"
@@ -23,14 +24,28 @@
     html { scroll-behavior: smooth; }
 
     :root {
-      --ink: #17201f;
-      --muted: #596562;
-      --accent: #0f766e;
-      --accent-dark: #0b5e58;
-      --accent-soft: #ecfdf9;
-      --line: #dbe9e6;
+      --ink: #061f45;
+      --muted: #4c6176;
+      --accent: #0b5fc6;
+      --accent-dark: #083f7f;
+      --accent-soft: #edf7fc;
+      --line: #d5e3eb;
       --surface: #ffffff;
-      --canvas: #f6f8f7;
+      --canvas: #f4f7f9;
+      --accent-border: #b7d9ec;
+      --blue: #0b78c4;
+      --blue-muted: #5a7fa6;
+      --text-strong: #061f45;
+      --text: #17324d;
+      --text-muted: #4c6176;
+      --text-faint: #5b7187;
+      --line-soft: #e6f0f5;
+      --bg: #f4f7f9;
+      --card: #ffffff;
+      --surface-soft: #f8fbfd;
+      --footer-text: #a9c7db;
+      --footer-faint: #8eb4cc;
+      --footer-link: #8fd9ff;
     }
 
     body {
@@ -62,7 +77,7 @@
       background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid #e8e8e8;
+      border-bottom: 1px solid #d5e3eb;
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
     }
 
@@ -76,7 +91,7 @@
 
     .nav-brand {
       flex-shrink: 0;
-      color: #111;
+      color: #061f45;
       font-size: 0.92rem;
       font-weight: 800;
       letter-spacing: 0.01em;
@@ -100,7 +115,7 @@
       padding: 8px 14px;
       border: 1px solid transparent;
       border-radius: 999px;
-      color: #555;
+      color: #4c6176;
       font: inherit;
       font-size: 0.84rem;
       font-weight: 500;
@@ -131,10 +146,10 @@
       min-width: 250px;
       padding: 8px;
       gap: 4px;
-      border: 1px solid #d9eee9;
+      border: 1px solid #d5e3eb;
       border-radius: 16px;
       background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 12px 28px rgba(15, 118, 110, 0.10);
+      box-shadow: 0 12px 28px rgba(6, 31, 69, 0.10);
     }
     .nav-dropdown.open .nav-dropdown-menu { display: grid; }
     .nav-dropdown-menu a {
@@ -151,8 +166,8 @@
     .nav-dropdown.open .nav-dropdown-toggle,
     .nav-dropdown-menu a:hover {
       color: var(--accent);
-      background: #f0fdf9;
-      border-color: #99e6d8;
+      background: #edf7fc;
+      border-color: #b7d9ec;
       font-weight: 700;
       text-decoration: none;
       transform: translateY(-1px);
@@ -160,8 +175,8 @@
 
     .nav-active {
       color: var(--accent) !important;
-      background: #f0fdf9 !important;
-      border-color: #99e6d8 !important;
+      background: #edf7fc !important;
+      border-color: #b7d9ec !important;
       font-weight: 700 !important;
     }
 
@@ -172,9 +187,9 @@
       padding: 78px 0 64px;
       border-bottom: 1px solid var(--line);
       background:
-        radial-gradient(circle at 15% 20%, rgba(45, 212, 191, 0.16), transparent 28%),
+        radial-gradient(circle at 15% 20%, rgba(11, 120, 196, 0.16), transparent 28%),
         radial-gradient(circle at 86% 75%, rgba(14, 116, 144, 0.12), transparent 30%),
-        linear-gradient(145deg, #ffffff 35%, #effcf8 100%);
+        linear-gradient(145deg, #ffffff 35%, #edf7fc 100%);
       text-align: center;
       cursor: pointer;
       transition: opacity .2s ease, transform .2s ease;
@@ -186,13 +201,13 @@
       z-index: -1;
       opacity: 0.22;
       background-image:
-        linear-gradient(rgba(15, 118, 110, .08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 118, 110, .08) 1px, transparent 1px);
+        linear-gradient(rgba(6, 31, 69, .08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(6, 31, 69, .08) 1px, transparent 1px);
       background-size: 42px 42px;
       mask-image: linear-gradient(to bottom, #000, transparent 88%);
     }
     header.is-refreshing { opacity: 0.82; transform: scale(0.995); }
-    header:focus-visible { outline: 3px solid #99e6d8; outline-offset: -6px; }
+    header:focus-visible { outline: 3px solid #b7d9ec; outline-offset: -6px; }
 
     .eyebrow {
       color: var(--accent);
@@ -203,7 +218,7 @@
     }
     header h1 {
       margin-top: 10px;
-      color: #101918;
+      color: #061f45;
       font-size: clamp(2.15rem, 5vw, 3.35rem);
       font-weight: 860;
       line-height: 1.2;
@@ -212,7 +227,7 @@
     .header-sub {
       max-width: 860px;
       margin: 18px auto 0;
-      color: #4f5d5a;
+      color: #4c6176;
       font-size: 1rem;
       line-height: 1.85;
       text-align: center;
@@ -227,13 +242,13 @@
     }
     .hero-highlights span {
       padding: 8px 14px;
-      border: 1px solid #b9e8df;
+      border: 1px solid #b7d9ec;
       border-radius: 999px;
       background: rgba(255, 255, 255, 0.82);
       color: var(--accent-dark);
       font-size: 0.84rem;
       font-weight: 700;
-      box-shadow: 0 8px 20px rgba(15, 118, 110, 0.06);
+      box-shadow: 0 8px 20px rgba(6, 31, 69, 0.06);
     }
 
     .planning-note {
@@ -244,10 +259,10 @@
       max-width: 860px;
       margin: 18px auto 0;
       padding: 11px 16px;
-      border: 1px solid rgba(15, 118, 110, 0.20);
+      border: 1px solid rgba(6, 31, 69, 0.20);
       border-radius: 14px;
       background: rgba(255, 255, 255, 0.72);
-      color: #53615e;
+      color: #4c6176;
       font-size: 0.79rem;
       line-height: 1.55;
       text-align: left;
@@ -262,10 +277,10 @@
     .content-stack { display: grid; gap: 22px; }
     .section-card {
       padding: 30px;
-      border: 1px solid #e1e9e7;
+      border: 1px solid var(--line);
       border-radius: 20px;
       background: var(--surface);
-      box-shadow: 0 10px 30px rgba(34, 71, 65, 0.045);
+      box-shadow: 0 10px 30px rgba(6, 31, 69, 0.045);
     }
     .section-heading {
       display: flex;
@@ -284,7 +299,7 @@
       text-transform: uppercase;
     }
     .section-card h2 {
-      color: #14201e;
+      color: #061f45;
       font-size: 1.42rem;
       font-weight: 820;
       line-height: 1.35;
@@ -330,7 +345,7 @@
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      background: rgba(45, 212, 191, 0.08);
+      background: rgba(11, 120, 196, 0.08);
     }
     .feature-card > span,
     .process-index {
@@ -350,7 +365,7 @@
     .route-grid h3,
     .domain-grid h3 {
       margin-top: 13px;
-      color: #17221f;
+      color: #061f45;
       font-size: 1.02rem;
       font-weight: 800;
       line-height: 1.45;
@@ -383,7 +398,7 @@
       place-items: center;
       width: 26px;
       height: 26px;
-      border: 1px solid #cce7e1;
+      border: 1px solid #d5e3eb;
       border-radius: 50%;
       background: #fff;
       color: var(--accent);
@@ -412,18 +427,18 @@
       gap: 10px;
       margin-top: 20px;
       padding: 18px;
-      border: 1px solid #cde9e3;
+      border: 1px solid #d5e3eb;
       border-radius: 16px;
-      background: linear-gradient(90deg, #f5fffc, #fbfefd);
+      background: linear-gradient(90deg, #f8fbfd, #fbfefd);
     }
     .research-flow span {
       padding: 7px 11px;
       border-radius: 10px;
       background: #fff;
-      color: #35514c;
+      color: #17324d;
       font-size: 0.82rem;
       font-weight: 700;
-      box-shadow: 0 4px 12px rgba(15, 118, 110, 0.06);
+      box-shadow: 0 4px 12px rgba(6, 31, 69, 0.06);
     }
     .research-flow b { color: var(--accent); font-size: 1rem; }
 
@@ -437,10 +452,10 @@
     .research-position {
       margin-bottom: 22px;
       padding: 22px 24px;
-      border: 1px solid #bee5dc;
+      border: 1px solid #b7d9ec;
       border-radius: 16px;
-      background: linear-gradient(120deg, #effcf8, #fbfefd);
-      color: #264641;
+      background: linear-gradient(120deg, #edf7fc, #fbfefd);
+      color: #17324d;
       font-size: 1rem;
       font-weight: 650;
       line-height: 1.8;
@@ -518,11 +533,11 @@
       font-size: 0.76rem;
       font-weight: 900;
     }
-    .boundary-yes { border: 1px solid #b8e7dc; background: #f3fdf9; }
-    .boundary-yes::before { content: "✓"; background: #d7f7ee; color: #087466; }
+    .boundary-yes { border: 1px solid #b7d9ec; background: #f8fbfd; }
+    .boundary-yes::before { content: "✓"; background: #d5e3eb; color: #083f7f; }
     .boundary-no { border: 1px solid #eadfd3; background: #fffaf5; }
     .boundary-no::before { content: "—"; background: #f5eade; color: #9a5d24; }
-    .boundary-card h3 { color: #243b37; font-size: 1rem; font-weight: 800; }
+    .boundary-card h3 { color: #17324d; font-size: 1rem; font-weight: 800; }
 
     .axis-card {
       position: relative;
@@ -538,7 +553,7 @@
       width: 110px;
       height: 110px;
       border-radius: 50%;
-      background: rgba(45, 212, 191, 0.08);
+      background: rgba(11, 120, 196, 0.08);
     }
     .axis-card > span {
       color: var(--accent);
@@ -549,7 +564,7 @@
     }
     .axis-card h3 {
       margin-top: 10px;
-      color: #1d3531;
+      color: #17324d;
       font-size: 1.07rem;
       font-weight: 830;
     }
@@ -560,24 +575,24 @@
       gap: 8px;
       margin-top: 18px;
       padding: 12px;
-      border: 1px solid #cae7e1;
+      border: 1px solid #d5e3eb;
       border-radius: 16px;
-      background: #f6fffc;
+      background: #f8fbfd;
     }
     .scale-strip span {
       position: relative;
       padding: 12px 10px;
       border-radius: 11px;
       background: #fff;
-      color: #3d5651;
+      color: #4c6176;
       font-size: 0.79rem;
       font-weight: 700;
       text-align: center;
-      box-shadow: 0 3px 12px rgba(15, 118, 110, 0.05);
+      box-shadow: 0 3px 12px rgba(6, 31, 69, 0.05);
     }
     .scale-note {
       margin: 10px 4px 0;
-      color: #65716f;
+      color: #5b7187;
       font-size: 0.8rem;
       line-height: 1.65;
       text-align: center;
@@ -585,8 +600,8 @@
 
     .track-split { margin-top: 16px; }
     .track-split article { padding: 18px 20px; }
-    .track-split strong { color: #25433e; font-size: 0.95rem; font-weight: 820; }
-    .track-split article:first-child { border-color: #a8ddd2; background: #f2fcf8; }
+    .track-split strong { color: #17324d; font-size: 0.95rem; font-weight: 820; }
+    .track-split article:first-child { border-color: var(--accent-border); background: var(--surface-soft); }
     .track-split article:last-child { border-style: dashed; background: #fbfcfc; }
 
     .system-card {
@@ -605,7 +620,7 @@
     }
     .system-card h3 {
       margin-top: 12px;
-      color: #1e3934;
+      color: #17324d;
       font-size: 1.08rem;
       font-weight: 830;
     }
@@ -618,10 +633,10 @@
     .package-list span,
     .migration-types span {
       padding: 6px 10px;
-      border: 1px solid #cce8e2;
+      border: 1px solid #d5e3eb;
       border-radius: 999px;
-      background: #f5fdfa;
-      color: #315a53;
+      background: #f8fbfd;
+      color: #17324d;
       font-size: 0.78rem;
       font-weight: 700;
     }
@@ -639,7 +654,7 @@
     }
     .task-grid h3 {
       margin-top: 10px;
-      color: #294640;
+      color: #17324d;
       font-size: 0.94rem;
       font-weight: 800;
       line-height: 1.5;
@@ -661,30 +676,30 @@
     }
     .adaptation-curve {
       padding: 18px;
-      border: 1px solid #b9e2da;
+      border: 1px solid var(--accent-border);
       border-radius: 16px;
-      background: linear-gradient(90deg, #f2fcf8, #fbfefd);
+      background: linear-gradient(90deg, var(--surface-soft), var(--accent-soft));
     }
     .adaptation-curve span {
       min-width: 94px;
       padding: 9px 13px;
       border-radius: 11px;
       background: #fff;
-      color: #28544c;
+      color: #17324d;
       font-size: 0.84rem;
       font-weight: 800;
       text-align: center;
-      box-shadow: 0 4px 14px rgba(15, 118, 110, 0.06);
+      box-shadow: 0 4px 14px rgba(6, 31, 69, 0.06);
     }
     .adaptation-curve b { color: var(--accent); }
     .entity-note {
       margin: 12px 0 18px;
-      color: #65716f;
+      color: #5b7187;
       font-size: 0.82rem;
       text-align: center;
     }
     .evaluation-grid article { min-height: 150px; padding: 20px; }
-    .evaluation-grid h3 { color: #294640; font-size: 1rem; font-weight: 820; }
+    .evaluation-grid h3 { color: #17324d; font-size: 1rem; font-weight: 820; }
     .migration-types { margin-top: 16px; }
 
     .btn-row {
@@ -709,7 +724,7 @@
     .page-btn-primary {
       background: var(--accent);
       color: #fff;
-      box-shadow: 0 8px 18px rgba(15, 118, 110, 0.16);
+      box-shadow: 0 8px 18px rgba(6, 31, 69, 0.16);
     }
     .page-btn-primary:hover { background: var(--accent-dark); }
     .page-btn-secondary { background: #fff; color: var(--accent); }
@@ -717,9 +732,9 @@
     footer {
       margin-top: auto;
       padding: 28px 0;
-      border-top: 1px solid #e5ecea;
-      background: #fff;
-      color: #737d7a;
+      border-top: 1px solid var(--line);
+      background: var(--text-strong);
+      color: var(--footer-text);
       font-size: 0.81rem;
       text-align: center;
     }
@@ -795,16 +810,9 @@
           <a class="nav-active" href="../scientific-time-series/" role="menuitem" aria-current="page">科学时序数据建模</a>
         </div>
       </div>
-      <a href="../papers/">论文列表</a>
       <a href="../applications/">应用研究</a>
+      <a href="../papers/">论文列表</a>
       <a href="../star-cast/">逐星方舟</a>
-      <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">
-        GitHub
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:12px;height:12px;margin-left:4px;vertical-align:-1px">
-          <path d="M6 3H13V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M13 3L3 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
     </div>
   </div>
 </nav>

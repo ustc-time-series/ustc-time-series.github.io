@@ -3,31 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f9" />
   <title>论文列表 | Time Series Analysis</title>
   <meta name="description" content="USTC-AGI Time Series 方向论文列表，仅保留时间序列相关工作。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     :root {
-      --accent: #0f766e;
-      --accent-dark: #0b5f59;
-      --accent-light: #e6fbf7;
-      --text: #1a1a1a;
-      --text-muted: #5b5b5b;
-      --border: #e6e6e2;
-      --bg: #f7f7f5;
+      --accent: #0b5fc6;
+      --accent-dark: #083f7f;
+      --accent-light: #edf7fc;
+      --text: #17324d;
+      --text-muted: #4c6176;
+      --border: #d5e3eb;
+      --bg: #f4f7f9;
       --card: #ffffff;
-      --card-alt: #fbfbf9;
+      --card-alt: #f8fbfd;
       --radius: 16px;
-      --shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+      --shadow: 0 10px 28px rgba(6, 31, 69, 0.08);
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
               "PingFang SC", "Hiragino Sans GB", sans-serif;
+      --accent-soft: #edf7fc;
+      --accent-border: #b7d9ec;
+      --blue: #0b78c4;
+      --blue-muted: #5a7fa6;
+      --text-strong: #061f45;
+      --text-faint: #5b7187;
+      --line: #d5e3eb;
+      --line-soft: #e6f0f5;
+      --surface-soft: #f8fbfd;
+      --footer-text: #a9c7db;
+      --footer-faint: #8eb4cc;
+      --footer-link: #8fd9ff;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
       font-family: var(--font);
-      background: #f7f7f5;
+      background: #f4f7f9;
       color: var(--text);
       line-height: 1.8;
       font-size: 16px;
@@ -53,7 +66,7 @@
       background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid #e8e8e8;
+      border-bottom: 1px solid #d5e3eb;
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
     }
     .top-nav .container {
@@ -67,11 +80,11 @@
       flex-shrink: 0;
       font-size: 0.92rem;
       font-weight: 800;
-      color: #111;
+      color: #061f45;
       letter-spacing: 0.01em;
       white-space: nowrap;
     }
-    .nav-brand span { color: #0f766e; }
+    .nav-brand span { color: #0b5fc6; }
     .nav-links {
       display: flex;
       align-items: center;
@@ -90,7 +103,7 @@
       border: 1px solid transparent;
       font-size: 0.84rem;
       font-weight: 500;
-      color: #555;
+      color: #4c6176;
       transition: color .18s, background .18s, border-color .18s, transform .18s;
     }
     .nav-dropdown {
@@ -124,9 +137,9 @@
       min-width: 220px;
       padding: 8px;
       border-radius: 16px;
-      border: 1px solid #d9eee9;
+      border: 1px solid #d5e3eb;
       background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 12px 28px rgba(15, 118, 110, 0.10);
+      box-shadow: 0 12px 28px rgba(6, 31, 69, 0.10);
       display: none;
       gap: 4px;
       z-index: 30;
@@ -140,7 +153,7 @@
       border: 1px solid transparent;
       font-size: 0.84rem;
       font-weight: 600;
-      color: #555;
+      color: #4c6176;
       line-height: 1.4;
     }
     .nav-links a:hover,
@@ -150,17 +163,17 @@
     .nav-dropdown.open .nav-dropdown-toggle,
     .nav-dropdown-menu a:hover,
     .nav-dropdown-menu a:active {
-      color: #0f766e;
-      background: #f0fdf9;
-      border-color: #99e6d8;
+      color: #0b5fc6;
+      background: #edf7fc;
+      border-color: #b7d9ec;
       font-weight: 700;
       text-decoration: none;
       transform: translateY(-1px);
     }
     .nav-active {
-      color: #0f766e !important;
-      background: #f0fdf9 !important;
-      border-color: #99e6d8 !important;
+      color: #0b5fc6 !important;
+      background: #edf7fc !important;
+      border-color: #b7d9ec !important;
       font-weight: 700 !important;
     }
 
@@ -168,35 +181,35 @@
       position: relative;
       overflow: hidden;
       isolation: isolate;
-      background: linear-gradient(160deg, #ffffff 50%, #f0fdfb 100%);
-      border-bottom: 1px solid #e8e8e8;
+      background: linear-gradient(160deg, #ffffff 50%, #edf7fc 100%);
+      border-bottom: 1px solid #d5e3eb;
       padding: 72px 0 56px;
       text-align: center;
       cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
     }
     header:hover {
-      background: linear-gradient(160deg, #fdffff 50%, #e6fbf8 100%);
+      background: linear-gradient(160deg, #f8fbfd 50%, #edf7fc 100%);
     }
     header.is-refreshing {
       transform: scale(0.995);
       opacity: 0.82;
     }
     header:focus-visible {
-      outline: 3px solid #99e6d8;
+      outline: 3px solid #b7d9ec;
       outline-offset: -6px;
     }
     header h1 {
       font-size: 2.3rem;
       font-weight: 800;
       line-height: 1.25;
-      color: #111;
+      color: #061f45;
     }
-    header h1 .highlight { color: #0f766e; }
+    header h1 .highlight { color: #0b5fc6; }
     header .header-sub {
       margin-top: 14px;
       font-size: 0.97rem;
-      color: #666;
+      color: #5b7187;
       line-height: 1.75;
     }
 
@@ -217,12 +230,12 @@
     .publication-header {
       padding: 28px 28px 18px;
       border-bottom: 1px solid var(--border);
-      background: linear-gradient(180deg, #ffffff 0%, #fafdfa 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
     }
     .publication-header h2 {
       font-size: 1.5rem;
       font-weight: 800;
-      color: #111;
+      color: #061f45;
       margin-bottom: 8px;
     }
     .publication-header p {
@@ -232,7 +245,7 @@
     .pub-note {
       margin-top: 10px;
       font-size: 0.9rem;
-      color: #666;
+      color: #5b7187;
     }
     .publication-body {
       padding: 8px 28px 30px;
@@ -270,10 +283,10 @@
       font-style: normal;
     }
     .pub-list em {
-      color: #666;
+      color: #5b7187;
     }
     .sktime-note {
-      color: #666;
+      color: #5b7187;
     }
     .pub-link-disabled {
       display: inline-flex;
@@ -281,7 +294,7 @@
       padding: 1px 7px;
       border-radius: 999px;
       border: 1px solid #e9e9e6;
-      background: #f6f6f4;
+      background: #f8fbfd;
       color: #8a8a8a;
       font-size: 0.78rem;
       font-weight: 600;
@@ -289,17 +302,17 @@
     }
 
     footer {
-      background: #1c1c1c;
-      color: #999;
+      background: var(--text-strong);
+      color: var(--footer-text);
       text-align: center;
       padding: 28px 24px;
       font-size: 0.84rem;
     }
-    footer a { color: #5ecfc6; }
+    footer a { color: var(--footer-link); }
     footer .footer-funding {
       margin-top: 12px;
       font-size: 0.82rem;
-      color: #888;
+      color: var(--footer-faint);
       line-height: 1.6;
     }
 
@@ -355,16 +368,9 @@
           <a href="../scientific-time-series/" role="menuitem">科学时序数据建模</a>
         </div>
       </div>
-      <a class="nav-active" href="../papers/" aria-current="page">论文列表</a>
       <a href="../applications/">应用研究</a>
+      <a class="nav-active" href="../papers/" aria-current="page">论文列表</a>
       <a href="../star-cast/">逐星方舟</a>
-      <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">
-        GitHub
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:12px;height:12px;margin-left:4px;vertical-align:-1px">
-          <path d="M6 3H13V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M13 3L3 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
     </div>
   </div>
 </nav>

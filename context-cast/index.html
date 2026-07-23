@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f9" />
   <title>情境感知的时间序列分析 — 从模式拟合到认知推理</title>
   <meta name="description" content="情境感知的时间序列分析研究方向，探索多源情境表示、情境推理与动态自适应，推动时间序列建模从模式拟合走向认知推理范式。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
@@ -11,20 +12,32 @@
     html { scroll-behavior: smooth; }
 
     :root {
-      --navy:       #1e3a5f;
-      --navy-dark:  #152c48;
-      --teal:       #0f766e;
-      --teal-light: #14b8a6;
+      --navy:       #061f45;
+      --navy-dark:  #083f7f;
+      --teal:       #0b5fc6;
+      --teal-light: #0b78c4;
       --amber:      #b45309;
-      --accent:     #0f766e;
-      --accent-dark:#0b5f59;
-      --text:       #1a1a1a;
-      --muted:      #555;
-      --faint:      #888;
-      --line:       #e4e4e0;
-      --bg:         #f7f7f5;
-      --card:       #ffffff;
+      --accent: #0b5fc6;
+      --accent-dark: #083f7f;
+      --text: #17324d;
+      --muted:      #4c6176;
+      --faint:      #5b7187;
+      --line: #d5e3eb;
+      --bg: #f4f7f9;
+      --card: #ffffff;
       --card-hover: #f0f7ff;
+      --accent-soft: #edf7fc;
+      --accent-border: #b7d9ec;
+      --blue: #0b78c4;
+      --blue-muted: #5a7fa6;
+      --text-strong: #061f45;
+      --text-muted: #4c6176;
+      --text-faint: #5b7187;
+      --line-soft: #e6f0f5;
+      --surface-soft: #f8fbfd;
+      --footer-text: #a9c7db;
+      --footer-faint: #8eb4cc;
+      --footer-link: #8fd9ff;
     }
 
     body {
@@ -82,7 +95,7 @@
       padding: 13px 18px;
       font-size: 0.87rem;
       font-weight: 500;
-      color: #555;
+      color: #4c6176;
       border-bottom: 2px solid transparent;
       transition: color .2s, border-color .2s;
       white-space: nowrap;
@@ -95,13 +108,13 @@
     .nav-home {
       font-weight: 700;
       color: var(--teal) !important;
-      border-right: 1px solid #e8e8e8;
+      border-right: 1px solid #d5e3eb;
     }
 
     /* ── Hero ──────────────────────────────────────── */
     header {
-      background: linear-gradient(160deg, #ffffff 52%, #eff8ff 82%, #eefbf8 100%);
-      border-bottom: 1px solid #e8e8e8;
+      background: linear-gradient(160deg, #ffffff 52%, #eff8ff 82%, #edf7fc 100%);
+      border-bottom: 1px solid #d5e3eb;
       padding: 60px 0 48px;
       text-align: center;
       position: relative;
@@ -132,8 +145,8 @@
       width: 20px;
       height: 20px;
       border-radius: 999px;
-      border: 2px solid rgba(15, 118, 110, 0.20);
-      background: rgba(20, 184, 166, 0.16);
+      border: 2px solid rgba(6, 31, 69, 0.20);
+      background: rgba(11, 95, 198, 0.16);
       transform: translate(-50%, -50%) scale(0.2);
       pointer-events: none;
       z-index: 1;
@@ -174,7 +187,7 @@
       font-size: 1.95rem;
       font-weight: 800;
       line-height: 1.35;
-      color: #111;
+      color: #061f45;
       max-width: 1180px;
       margin-left: auto;
       margin-right: auto;
@@ -188,7 +201,7 @@
     .subtitle {
       margin: 14px auto 0;
       font-size: 1.02rem;
-      color: #555;
+      color: #4c6176;
       max-width: 690px;
       line-height: 1.7;
       text-align: center;
@@ -214,7 +227,7 @@
     h3.sub-title {
       font-size: 1.05rem;
       font-weight: 700;
-      color: #222;
+      color: #17324d;
       margin: 32px 0 10px;
     }
     h3.sub-title:first-of-type { margin-top: 0; }
@@ -228,7 +241,7 @@
       border-radius: 0 8px 8px 0;
       padding: 16px 22px;
       font-size: 1.01rem;
-      color: #1a1a1a;
+      color: #17324d;
       margin-bottom: 32px;
       line-height: 1.75;
     }
@@ -258,7 +271,7 @@
     }
     .direction-card .dir-icon { font-size: 1.6rem; margin-bottom: 10px; line-height: 1; }
     .direction-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 7px; color: var(--navy); }
-    .direction-card p  { font-size: 0.85rem; color: #555; margin: 0; line-height: 1.65; }
+    .direction-card p  { font-size: 0.85rem; color: #4c6176; margin: 0; line-height: 1.65; }
     .direction-card .dir-papers { margin-top: 10px; font-size: 0.8rem; color: var(--teal); font-weight: 600; }
 
     /* ── Paper cards ───────────────────────────────── */
@@ -290,14 +303,14 @@
       border-radius: 20px;
       margin-bottom: 10px;
     }
-    .badge-wsdm     { background: #dbeafe; color: #1d4ed8; }
+    .badge-wsdm     { background: #dbeafe; color: #0b5fc6; }
     .badge-tist     { background: #dcfce7; color: #15803d; }
     .badge-ijcai    { background: #ede9fe; color: #7c3aed; }
     .badge-icml     { background: #ffedd5; color: #c2410c; }
     .badge-preprint { background: #f3f4f6; color: #6b7280; }
     .badge-position { background: #fef9c3; color: #854d0e; }
-    .paper-card h4 { font-size: 0.96rem; font-weight: 700; margin-bottom: 8px; color: #111; }
-    .paper-card p  { font-size: 0.87rem; color: #555; margin: 0; line-height: 1.65; }
+    .paper-card h4 { font-size: 0.96rem; font-weight: 700; margin-bottom: 8px; color: #061f45; }
+    .paper-card p  { font-size: 0.87rem; color: #4c6176; margin: 0; line-height: 1.65; }
 
     /* ── Pillar (numbered) list ────────────────────── */
     .pillar-list {
@@ -333,7 +346,7 @@
     }
     .pillar-text { flex: 1; }
     .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; color: var(--navy); }
-    .pillar-text span  { font-size: 0.88rem; color: #555; }
+    .pillar-text span  { font-size: 0.88rem; color: #4c6176; }
 
     /* ── Feature list ──────────────────────────────── */
     .feature-list {
@@ -347,7 +360,7 @@
       padding-left: 20px;
       position: relative;
       font-size: 0.95rem;
-      color: #333;
+      color: #17324d;
     }
     .feature-list li::before {
       content: "▸";
@@ -391,14 +404,14 @@
     .status-open     { background: #dcfce7; color: #15803d; }
     .module-card p {
       font-size: 0.84rem;
-      color: #555;
+      color: #4c6176;
       margin: 0;
       line-height: 1.6;
     }
 
     /* ── Claim box ─────────────────────────────────── */
     .claim-box {
-      background: linear-gradient(135deg, #0f1f3d 0%, #1e3a5f 60%, #0c4a44 100%);
+      background: linear-gradient(135deg, #061f45 0%, #061f45 60%, #083f7f 100%);
       border-radius: 12px;
       padding: 32px 32px;
       color: #fff;
@@ -419,7 +432,7 @@
 
     /* ── Section direction banner ──────────────────── */
     .dir-banner {
-      background: linear-gradient(90deg, #eff8ff 0%, #f7fffc 100%);
+      background: linear-gradient(90deg, #eff8ff 0%, #f8fbfd 100%);
       border: 1px solid #d0e8ff;
       border-radius: 10px;
       padding: 16px 22px;
@@ -439,24 +452,24 @@
       white-space: nowrap;
       margin-top: 2px;
     }
-    .dl-1 { background: #dbeafe; color: #1d4ed8; }
+    .dl-1 { background: #dbeafe; color: #0b5fc6; }
     .dl-2 { background: #ede9fe; color: #6d28d9; }
     .dl-3 { background: #fde8d8; color: #c2410c; }
-    .dir-banner p { font-size: 0.92rem; color: #333; margin: 0; line-height: 1.7; }
+    .dir-banner p { font-size: 0.92rem; color: #17324d; margin: 0; line-height: 1.7; }
 
     /* ── Footer ────────────────────────────────────── */
     footer {
-      background: #1c1c1c;
-      color: #999;
+      background: var(--text-strong);
+      color: var(--footer-text);
       text-align: center;
       padding: 28px 24px;
       font-size: 0.84rem;
     }
-    footer a { color: #5ecfc6; }
+    footer a { color: var(--footer-link); }
     footer .footer-funding {
       margin-top: 12px;
       font-size: 0.82rem;
-      color: #888;
+      color: var(--footer-faint);
       line-height: 1.6;
     }
 

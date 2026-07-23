@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f9" />
   <title>StarCast（逐星方舟） | USTC-AGI Time Series</title>
   <meta name="description" content="StarCast（逐星方舟）以“星”为共同意象，围绕情境感知时间序列预测与自主研究智能体，构建从模型训练、自主研究、交互预测到基准评测的开源生态。" />
   <link rel="canonical" href="https://ustc-time-series.github.io/star-cast/" />
@@ -17,23 +18,35 @@
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     :root {
-      --accent: #0f766e;
-      --accent-dark: #0b5f59;
-      --accent-light: #e6fbf7;
-      --ink: #101010;
-      --green-soft: #f0fdf9;
-      --green-line: #b9e8df;
-      --green-tint: rgba(15, 118, 110, 0.10);
-      --text: #1a1a1a;
-      --text-muted: #5b5b5b;
-      --border: #e6e6e2;
-      --bg: #f7f7f5;
+      --accent: #0b5fc6;
+      --accent-dark: #083f7f;
+      --accent-light: #edf7fc;
+      --ink: #061f45;
+      --green-soft: #edf7fc;
+      --green-line: #b7d9ec;
+      --green-tint: rgba(6, 31, 69, 0.10);
+      --text: #17324d;
+      --text-muted: #4c6176;
+      --border: #d5e3eb;
+      --bg: #f4f7f9;
       --card: #ffffff;
-      --card-alt: #fbfbf9;
+      --card-alt: #f8fbfd;
       --radius: 16px;
-      --shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+      --shadow: 0 10px 28px rgba(6, 31, 69, 0.08);
       --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
               "PingFang SC", "Hiragino Sans GB", sans-serif;
+      --accent-soft: #edf7fc;
+      --accent-border: #b7d9ec;
+      --blue: #0b78c4;
+      --blue-muted: #5a7fa6;
+      --text-strong: #061f45;
+      --text-faint: #5b7187;
+      --line: #d5e3eb;
+      --line-soft: #e6f0f5;
+      --surface-soft: #f8fbfd;
+      --footer-text: #a9c7db;
+      --footer-faint: #8eb4cc;
+      --footer-link: #8fd9ff;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -66,7 +79,7 @@
       background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid #e8e8e8;
+      border-bottom: 1px solid #d5e3eb;
       box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
     }
     .top-nav .container {
@@ -80,7 +93,7 @@
       flex-shrink: 0;
       font-size: 0.92rem;
       font-weight: 800;
-      color: #111;
+      color: #061f45;
       letter-spacing: 0.01em;
       white-space: nowrap;
     }
@@ -103,7 +116,7 @@
       border: 1px solid transparent;
       font-size: 0.84rem;
       font-weight: 500;
-      color: #555;
+      color: #4c6176;
       transition: color .18s, background .18s, border-color .18s, transform .18s;
     }
     .nav-dropdown {
@@ -137,9 +150,9 @@
       min-width: 220px;
       padding: 8px;
       border-radius: 16px;
-      border: 1px solid #d9eee9;
+      border: 1px solid #d5e3eb;
       background: rgba(255, 255, 255, 0.98);
-      box-shadow: 0 12px 28px rgba(15, 118, 110, 0.10);
+      box-shadow: 0 12px 28px rgba(6, 31, 69, 0.10);
       display: none;
       gap: 4px;
       z-index: 30;
@@ -153,7 +166,7 @@
       border: 1px solid transparent;
       font-size: 0.84rem;
       font-weight: 600;
-      color: #555;
+      color: #4c6176;
       line-height: 1.4;
     }
     .nav-links a:hover,
@@ -164,16 +177,16 @@
     .nav-dropdown-menu a:hover,
     .nav-dropdown-menu a:active {
       color: var(--accent);
-      background: #f0fdf9;
-      border-color: #99e6d8;
+      background: #edf7fc;
+      border-color: #b7d9ec;
       font-weight: 700;
       text-decoration: none;
       transform: translateY(-1px);
     }
     .nav-active {
       color: var(--accent) !important;
-      background: #f0fdf9 !important;
-      border-color: #99e6d8 !important;
+      background: #edf7fc !important;
+      border-color: #b7d9ec !important;
       font-weight: 700 !important;
     }
     .mobile-menu-toggle {
@@ -181,9 +194,9 @@
       align-items: center;
       gap: 6px;
       padding: 8px 12px;
-      border: 1px solid #b9e8df;
+      border: 1px solid #b7d9ec;
       border-radius: 999px;
-      background: #f0fdf9;
+      background: #edf7fc;
       color: var(--accent-dark);
       font: inherit;
       font-size: 0.82rem;
@@ -196,16 +209,16 @@
       overflow: hidden;
       isolation: isolate;
       background:
-        linear-gradient(90deg, rgba(15, 118, 110, 0.045) 1px, transparent 1px) 0 0 / 44px 44px,
-        linear-gradient(180deg, rgba(15, 118, 110, 0.035) 1px, transparent 1px) 0 0 / 44px 44px,
-        linear-gradient(160deg, #ffffff 44%, #f6fffc 76%, #f1faf7 100%);
-      border-bottom: 1px solid #e8e8e8;
+        linear-gradient(90deg, rgba(6, 31, 69, 0.045) 1px, transparent 1px) 0 0 / 44px 44px,
+        linear-gradient(180deg, rgba(6, 31, 69, 0.035) 1px, transparent 1px) 0 0 / 44px 44px,
+        linear-gradient(160deg, #ffffff 44%, #f8fbfd 76%, #edf7fc 100%);
+      border-bottom: 1px solid #d5e3eb;
       padding: 74px 0 58px;
       text-align: center;
       transition: opacity 0.2s ease;
     }
     header:focus-visible {
-      outline: 3px solid #99e6d8;
+      outline: 3px solid #b7d9ec;
       outline-offset: -6px;
     }
     header h1 {
@@ -220,7 +233,7 @@
       max-width: 820px;
       margin: 18px auto 0;
       font-size: 1rem;
-      color: #666;
+      color: #5b7187;
       line-height: 1.85;
       text-align: center;
     }
@@ -262,11 +275,11 @@
       position: relative;
       min-height: 172px;
       padding: 18px 16px;
-      border: 1px solid #dcebe6;
+      border: 1px solid #d5e3eb;
       border-top: 4px solid var(--accent);
       border-radius: 14px;
       background: #fff;
-      box-shadow: 0 6px 18px rgba(15, 118, 110, 0.045);
+      box-shadow: 0 6px 18px rgba(6, 31, 69, 0.045);
     }
     .flow-stage:not(:last-child)::after {
       content: "→";
@@ -312,7 +325,7 @@
     .flow-projects {
       margin-top: 12px;
       padding-top: 10px;
-      border-top: 1px solid #edf3f0;
+      border-top: 1px solid #edf7fc;
       color: var(--accent-dark);
       font-size: 0.76rem;
       font-weight: 900;
@@ -323,10 +336,10 @@
     .ecosystem-feedback {
       margin: 14px 0 0;
       padding: 12px 14px;
-      border: 1px solid #d8eee9;
+      border: 1px solid #d5e3eb;
       border-radius: 14px;
-      background: #f8fffd;
-      color: #365c56;
+      background: #f8fbfd;
+      color: #4c6176;
       font-size: 0.86rem;
       font-weight: 700;
       line-height: 1.65;
@@ -335,9 +348,9 @@
     }
     .systems-shell {
       background: rgba(255, 255, 255, 0.92);
-      border: 1px solid #dcebe6;
+      border: 1px solid #d5e3eb;
       border-radius: 20px;
-      box-shadow: 0 10px 28px rgba(15, 118, 110, 0.055);
+      box-shadow: 0 10px 28px rgba(6, 31, 69, 0.055);
       overflow: hidden;
     }
     .systems-intro {
@@ -346,7 +359,7 @@
       gap: 26px;
       padding: 34px;
       border-bottom: 1px solid var(--border);
-      background: linear-gradient(180deg, #ffffff 0%, #fbfdfc 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
     }
     .intro-copy h2 {
       font-size: 1.58rem;
@@ -375,10 +388,10 @@
       align-items: center;
       gap: 12px;
       padding: 14px;
-      border: 1px solid #d8eee9;
+      border: 1px solid #d5e3eb;
       border-radius: 14px;
-      background: #f8fffd;
-      color: #24524d;
+      background: #f8fbfd;
+      color: #17324d;
       font-weight: 800;
     }
     .pipeline-step span:first-child {
@@ -402,10 +415,10 @@
       position: relative;
       min-height: 340px;
       padding: 26px;
-      border: 1px solid #e0ebe7;
+      border: 1px solid #e6f0f5;
       border-radius: 18px;
       background: var(--card);
-      box-shadow: 0 8px 18px rgba(15, 118, 110, 0.04);
+      box-shadow: 0 8px 18px rgba(6, 31, 69, 0.04);
       overflow: hidden;
     }
     .project-card::before {
@@ -413,7 +426,7 @@
       position: absolute;
       inset: 0 0 auto 0;
       height: 5px;
-      background: var(--card-accent, linear-gradient(90deg, #101010, #0f766e));
+      background: var(--card-accent, linear-gradient(90deg, #061f45, #0b5fc6));
     }
     .project-card h3 {
       margin-top: 8px;
@@ -433,7 +446,7 @@
       align-items: center;
       padding: 6px 11px;
       border-radius: 999px;
-      border: 1px solid #d8eee9;
+      border: 1px solid #d5e3eb;
       background: var(--green-soft);
       color: var(--accent-dark);
       font-size: 0.78rem;
@@ -453,9 +466,9 @@
       gap: 6px;
       padding: 6px 11px;
       border-radius: 999px;
-      border: 1px solid #d8eee9;
+      border: 1px solid #d5e3eb;
       background: #fff;
-      color: #4d5f5c;
+      color: #4c6176;
       font-size: 0.78rem;
       font-weight: 800;
       line-height: 1.3;
@@ -480,9 +493,9 @@
     }
     .feature-list li {
       padding: 11px 12px;
-      border: 1px solid #e3ebe7;
+      border: 1px solid #e6f0f5;
       border-radius: 12px;
-      background: #fbfdfb;
+      background: #f8fbfd;
       color: #4e4e4e;
       font-size: 0.88rem;
       font-weight: 700;
@@ -500,7 +513,7 @@
       margin-top: 20px;
       padding: 10px 14px;
       border-radius: 999px;
-      border: 1px solid #b9e8df;
+      border: 1px solid #b7d9ec;
       background: var(--green-soft);
       color: var(--accent-dark);
       font-size: 0.86rem;
@@ -511,14 +524,14 @@
     .project-link:hover {
       text-decoration: none;
       transform: translateY(-1px);
-      box-shadow: 0 8px 18px rgba(15, 118, 110, 0.10);
-      background: #ecfdf7;
-      border-color: #99e6d8;
+      box-shadow: 0 8px 18px rgba(6, 31, 69, 0.10);
+      background: #edf7fc;
+      border-color: #b7d9ec;
     }
     .project-link.disabled {
       pointer-events: none;
       color: #777;
-      background: #f6f6f4;
+      background: #f8fbfd;
       border-color: #ddddda;
     }
     .project-resources {
@@ -535,17 +548,17 @@
       align-items: center;
       min-height: 36px;
       padding: 8px 11px;
-      border: 1px solid #dcebe6;
+      border: 1px solid #d5e3eb;
       border-radius: 999px;
       background: #fff;
-      color: #49635e;
+      color: #4c6176;
       font-size: 0.8rem;
       font-weight: 800;
       line-height: 1.2;
     }
     .resource-link:hover {
-      border-color: #99e6d8;
-      background: #f0fdf9;
+      border-color: #b7d9ec;
+      background: #edf7fc;
       color: var(--accent-dark);
       text-decoration: none;
     }
@@ -556,7 +569,7 @@
       align-items: center;
       gap: 8px 14px;
       margin-top: 16px;
-      color: #5f6f6c;
+      color: #4c6176;
       font-size: 0.82rem;
       font-weight: 700;
     }
@@ -567,11 +580,11 @@
     .project-card.eval,
     .project-card.castmind,
     .project-card.caststar {
-      --card-accent: linear-gradient(90deg, #101010, #0f766e);
+      --card-accent: linear-gradient(90deg, #061f45, #0b5fc6);
     }
     .project-card.full-width { grid-column: 1 / -1; min-height: auto; }
     .project-tag.violet {
-      border-color: #d8eee9;
+      border-color: #d5e3eb;
       background: var(--green-soft);
       color: var(--accent-dark);
     }
@@ -590,10 +603,10 @@
       align-items: center;
       gap: 8px;
       padding: 10px 14px;
-      border: 1px solid #dcebe6;
+      border: 1px solid #d5e3eb;
       border-radius: 999px;
-      background: #fbfdfb;
-      color: #465b57;
+      background: #f8fbfd;
+      color: #4c6176;
       font-size: 0.86rem;
       font-weight: 700;
     }
@@ -606,17 +619,17 @@
     }
 
     footer {
-      background: #1c1c1c;
-      color: #999;
+      background: var(--text-strong);
+      color: var(--footer-text);
       text-align: center;
       padding: 28px 24px;
       font-size: 0.84rem;
     }
-    footer a { color: #5ecfc6; }
+    footer a { color: var(--footer-link); }
     footer .footer-funding {
       margin-top: 12px;
       font-size: 0.82rem;
-      color: #888;
+      color: var(--footer-faint);
       line-height: 1.6;
     }
 
@@ -702,16 +715,9 @@
           <a href="../scientific-time-series/" role="menuitem">科学时序数据建模</a>
         </div>
       </div>
-      <a href="../papers/">论文列表</a>
       <a href="../applications/">应用研究</a>
+      <a href="../papers/">论文列表</a>
       <a class="nav-active" href="../star-cast/" aria-current="page">逐星方舟</a>
-      <a href="https://github.com/ustc-time-series/" target="_blank" rel="noopener">
-        GitHub
-        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="width:12px;height:12px;margin-left:4px;vertical-align:-1px">
-          <path d="M6 3H13V10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M13 3L3 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
     </div>
   </div>
 </nav>

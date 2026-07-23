@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f9" />
   <title>CastStar — Agentic Time Series Forecasting Model</title>
   <meta name="description" content="CastStar 是一个经过强化学习训练得到的 Agentic Time Series Forecasting Model，具备慢思考、工具调用、情境理解和反思修正能力。" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
@@ -11,22 +12,35 @@
     html { scroll-behavior: smooth; }
 
     :root {
-      --navy:        #1e3a5f;
-      --navy-dark:   #152c48;
-      --teal:        #0f766e;
-      --teal-light:  #14b8a6;
-      --accent:      #0f766e;
+      --navy:        #061f45;
+      --navy-dark:   #083f7f;
+      --teal:        #0b5fc6;
+      --teal-light:  #0b78c4;
+      --accent: #0b5fc6;
       --violet:      #5b21b6;
       --violet-mid:  #7c3aed;
       --violet-soft: #ede9fe;
       --amber:       #b45309;
       --amber-mid:   #d97706;
       --amber-soft:  #fef3c7;
-      --text:        #1a1a1a;
-      --muted:       #555;
-      --line:        #e4e4e0;
-      --bg:          #f7f7f5;
-      --card:        #ffffff;
+      --text: #17324d;
+      --muted:       #4c6176;
+      --line: #d5e3eb;
+      --bg: #f4f7f9;
+      --card: #ffffff;
+      --accent-dark: #083f7f;
+      --accent-soft: #edf7fc;
+      --accent-border: #b7d9ec;
+      --blue: #0b78c4;
+      --blue-muted: #5a7fa6;
+      --text-strong: #061f45;
+      --text-muted: #4c6176;
+      --text-faint: #5b7187;
+      --line-soft: #e6f0f5;
+      --surface-soft: #f8fbfd;
+      --footer-text: #a9c7db;
+      --footer-faint: #8eb4cc;
+      --footer-link: #8fd9ff;
     }
 
     body {
@@ -84,7 +98,7 @@
       padding: 13px 18px;
       font-size: 0.87rem;
       font-weight: 500;
-      color: #555;
+      color: #4c6176;
       border-bottom: 2px solid transparent;
       transition: color .2s, border-color .2s;
       white-space: nowrap;
@@ -97,13 +111,13 @@
     .nav-home {
       font-weight: 700;
       color: var(--teal) !important;
-      border-right: 1px solid #e8e8e8;
+      border-right: 1px solid #d5e3eb;
     }
 
     /* ── Hero ──────────────────────────────────────── */
     header {
-      background: linear-gradient(160deg, #ffffff 48%, #fffbeb 76%, #f0fdf9 100%);
-      border-bottom: 1px solid #e8e8e8;
+      background: linear-gradient(160deg, #ffffff 48%, #fffbeb 76%, #edf7fc 100%);
+      border-bottom: 1px solid #d5e3eb;
       padding: 60px 0 48px;
       text-align: center;
       position: relative;
@@ -159,7 +173,7 @@
       font-size: 1.95rem;
       font-weight: 800;
       line-height: 1.35;
-      color: #111;
+      color: #061f45;
       max-width: 1180px;
       margin-left: auto;
       margin-right: auto;
@@ -172,7 +186,7 @@
     .subtitle {
       margin: 10px auto 0;
       font-size: 1.01rem;
-      color: #555;
+      color: #4c6176;
       max-width: 700px;
       line-height: 1.72;
       text-align: center;
@@ -227,7 +241,7 @@
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.13);
       text-decoration: none;
     }
-    .btn-secondary { background: #fff; color: #222; border-color: #d0d0d0; }
+    .btn-secondary { background: #fff; color: #17324d; border-color: #d0d0d0; }
     .btn-secondary:hover { background: #f8f8f8; border-color: #aaa; }
     .btn-primary {
       background: var(--navy);
@@ -257,13 +271,13 @@
     h3.sub-title {
       font-size: 1.05rem;
       font-weight: 700;
-      color: #222;
+      color: #17324d;
       margin: 32px 0 10px;
     }
     h3.sub-title:first-of-type { margin-top: 0; }
     .section-lead {
       font-size: 0.98rem;
-      color: #555;
+      color: #4c6176;
       max-width: 840px;
       line-height: 1.76;
       margin-bottom: 18px;
@@ -278,7 +292,7 @@
       border-radius: 0 8px 8px 0;
       padding: 16px 22px;
       font-size: 1.01rem;
-      color: #1a1a1a;
+      color: #17324d;
       margin-bottom: 32px;
       line-height: 1.75;
     }
@@ -301,7 +315,7 @@
     }
     .news-copy {
       margin: 0;
-      color: #26384d;
+      color: #17324d;
       line-height: 1.7;
       text-align: left;
       text-justify: auto;
@@ -341,7 +355,7 @@
     }
     .stat-box .stat-label {
       font-size: 0.8rem;
-      color: #666;
+      color: #5b7187;
       margin-top: 6px;
       line-height: 1.45;
     }
@@ -370,7 +384,7 @@
       font-size: 0.78rem; font-weight: 600;
       color: var(--violet-mid); margin-bottom: 10px; letter-spacing: 0.01em;
     }
-    .cap-card p { font-size: 0.87rem; color: #555; line-height: 1.65; margin: 0; }
+    .cap-card p { font-size: 0.87rem; color: #4c6176; line-height: 1.65; margin: 0; }
 
     /* ── Module grid (Harness 工具) ─────────────────── */
     .module-grid {
@@ -400,7 +414,7 @@
     }
     .module-card p {
       font-size: 0.83rem;
-      color: #555;
+      color: #4c6176;
       margin: 0;
       line-height: 1.55;
     }
@@ -431,8 +445,8 @@
     .badge-rrl  { background: #f5f3ff; color: var(--violet); }
     .badge-arl  { background: var(--amber-soft); color: var(--amber); }
     .stage-card h4 { font-size: 1rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-    .stage-card .stage-input { font-size: 0.83rem; color: #666; margin-bottom: 8px; }
-    .stage-card p { font-size: 0.87rem; color: #555; line-height: 1.6; margin: 0; }
+    .stage-card .stage-input { font-size: 0.83rem; color: #5b7187; margin-bottom: 8px; }
+    .stage-card p { font-size: 0.87rem; color: #4c6176; line-height: 1.6; margin: 0; }
     .stage-card .stage-output {
       margin-top: 14px;
       background: #f0fdf4;
@@ -525,7 +539,7 @@
     .pillar-num.violet { background: var(--violet); }
     .pillar-text { flex: 1; }
     .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; color: var(--navy); }
-    .pillar-text span  { font-size: 0.88rem; color: #555; }
+    .pillar-text span  { font-size: 0.88rem; color: #4c6176; }
 
     /* ── Feature list ──────────────────────────────── */
     .feature-list {
@@ -539,7 +553,7 @@
       padding-left: 20px;
       position: relative;
       font-size: 0.95rem;
-      color: #333;
+      color: #17324d;
     }
     .feature-list li::before {
       content: "▸";
@@ -592,12 +606,12 @@
       padding: 16px 20px;
       font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
       font-size: 0.83rem;
-      color: #2c3e50;
+      color: #17324d;
       line-height: 1.7;
       margin: 16px 0;
     }
     .instance-box .ib-key   { color: var(--navy); font-weight: 700; }
-    .instance-box .ib-val   { color: #555; }
+    .instance-box .ib-val   { color: #4c6176; }
     .instance-box .ib-arrow { color: var(--teal); }
 
     /* ── Claim box ─────────────────────────────────── */
@@ -613,7 +627,7 @@
     }
     .claim-box p {
       font-size: 0.97rem;
-      color: #26384d;
+      color: #17324d;
       line-height: 1.8;
       margin: 0;
     }
@@ -641,7 +655,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .badge-in { background: #e8f1fa; color: var(--navy); }
+    .badge-in { background: #edf7fc; color: var(--navy); }
     .badge-out { background: #f0fdf4; color: #15803d; }
     .eval-half h4 {
       font-size: 1rem;
@@ -653,7 +667,7 @@
       padding-top: 10px;
       border-top: 1px solid var(--line);
       font-size: 0.84rem;
-      color: #666;
+      color: #5b7187;
     }
     .table-wrap {
       width: 100%;
@@ -684,17 +698,17 @@
 
     /* ── Footer ────────────────────────────────────── */
     footer {
-      background: #1c1c1c;
-      color: #999;
+      background: var(--text-strong);
+      color: var(--footer-text);
       text-align: center;
       padding: 28px 24px;
       font-size: 0.84rem;
     }
-    footer a { color: #5ecfc6; }
+    footer a { color: var(--footer-link); }
     footer .footer-funding {
       margin-top: 12px;
       font-size: 0.82rem;
-      color: #888;
+      color: var(--footer-faint);
       line-height: 1.6;
     }
 

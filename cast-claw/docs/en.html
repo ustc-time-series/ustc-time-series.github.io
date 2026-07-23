@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f9" />
   <title>CastClaw Documentation</title>
   <meta name="description" content="CastClaw documentation: quick start, forecasting workflow learning framework, human-in-the-loop collaboration, plugin toolbox, skill and experience library, configuration, CLI reference, and practical examples." />
   <style>
@@ -13,13 +14,13 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
                    "PingFang SC", "Hiragino Sans GB", sans-serif;
       background: #fff;
-      color: #1a1a1a;
+      color: #17324d;
       line-height: 1.8;
       font-size: 15px;
       text-align: justify;
       text-justify: inter-ideograph;
     }
-    a { color: #d35400; text-decoration: none; }
+    a { color: #0b5fc6; text-decoration: none; }
     a:hover { text-decoration: underline; }
     img { max-width: 100%; display: block; }
     code {
@@ -29,22 +30,39 @@
       border: 1px solid #e5e5e5;
       border-radius: 4px;
       padding: 1px 5px;
-      color: #d35400;
+      color: #0b5fc6;
     }
     pre { margin: 0; white-space: pre; overflow-x: auto; }
 
     :root {
       --topbar: 50px;
       --sidebar: 210px;
-      --accent: #d35400;
-      --border: #e5e5e5;
-      --muted: #666;
+      --accent: #0b5fc6;
+      --border: #d5e3eb;
+      --muted: #4c6176;
       --mono: "SF Mono", "Fira Mono", "Consolas", monospace;
-      --ui-highlight-bg: #f0fdf9;
-      --ui-highlight-bg-strong: #e6fbf8;
-      --ui-highlight-border: #99e6d8;
-      --ui-highlight-text: #0f766e;
-      --ui-highlight-shadow: rgba(15, 118, 110, 0.10);
+      --ui-highlight-bg: #edf7fc;
+      --ui-highlight-bg-strong: #edf7fc;
+      --ui-highlight-border: #b7d9ec;
+      --ui-highlight-text: #0b5fc6;
+      --ui-highlight-shadow: rgba(6, 31, 69, 0.10);
+      --accent-dark: #083f7f;
+      --accent-soft: #edf7fc;
+      --accent-border: #b7d9ec;
+      --blue: #0b78c4;
+      --blue-muted: #5a7fa6;
+      --text-strong: #061f45;
+      --text: #17324d;
+      --text-muted: #4c6176;
+      --text-faint: #5b7187;
+      --line: #d5e3eb;
+      --line-soft: #e6f0f5;
+      --bg: #f4f7f9;
+      --card: #ffffff;
+      --surface-soft: #f8fbfd;
+      --footer-text: #a9c7db;
+      --footer-faint: #8eb4cc;
+      --footer-link: #8fd9ff;
     }
 
     /* ── Topbar ── */
@@ -56,9 +74,9 @@
       overflow: hidden;
       isolation: isolate;
       background:
-        radial-gradient(circle at 20% 50%, rgba(211, 84, 0, 0.045), transparent 20%),
-        radial-gradient(circle at 78% 38%, rgba(211, 84, 0, 0.03), transparent 18%),
-        linear-gradient(180deg, #ffffff 0%, #fffdfb 100%);
+        radial-gradient(circle at 20% 50%, rgba(11, 95, 198, 0.045), transparent 20%),
+        radial-gradient(circle at 78% 38%, rgba(11, 95, 198, 0.03), transparent 18%),
+        linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
       border-bottom: 1px solid var(--border);
     }
     .topbar-visual {
@@ -100,7 +118,7 @@
       align-items: center;
       font-weight: 700;
       font-size: 0.95rem;
-      color: #111;
+      color: #061f45;
       padding: 3px 8px;
       border-radius: 5px;
       cursor: pointer;
@@ -115,7 +133,7 @@
       border-radius: 50%;
       transform: scale(0);
       animation: brand-ripple-anim 0.55s ease-out forwards;
-      background: rgba(15, 118, 110, 0.18);
+      background: rgba(6, 31, 69, 0.18);
       pointer-events: none;
     }
     @keyframes brand-ripple-anim {
@@ -126,30 +144,30 @@
     .topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .topbar-grid-major {
       fill: none;
-      stroke: rgba(211, 84, 0, 0.08);
+      stroke: rgba(11, 95, 198, 0.08);
       stroke-width: 0.8;
     }
     .topbar-grid-minor {
       fill: none;
-      stroke: rgba(211, 84, 0, 0.04);
+      stroke: rgba(11, 95, 198, 0.04);
       stroke-width: 0.7;
     }
     .topbar-ecg-guide {
       fill: none;
-      stroke: rgba(211, 84, 0, 0.08);
+      stroke: rgba(11, 95, 198, 0.08);
       stroke-width: 0.75;
       stroke-dasharray: 2 10;
     }
     .topbar-ecg-base {
       fill: none;
-      stroke: rgba(211, 84, 0, 0.16);
+      stroke: rgba(11, 95, 198, 0.16);
       stroke-width: 0.9;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
     .topbar-ecg-glow {
       fill: none;
-      stroke: rgba(211, 84, 0, 0.12);
+      stroke: rgba(11, 95, 198, 0.12);
       stroke-width: 2.6;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -159,20 +177,20 @@
     }
     .topbar-ecg-trace {
       fill: none;
-      stroke: #cf6b16;
+      stroke: #0b78c4;
       stroke-width: 1.1;
       stroke-linecap: round;
       stroke-linejoin: round;
       stroke-dasharray: 118 882;
       animation: ecg-scan 12.5s linear infinite;
-      filter: drop-shadow(0 0 2px rgba(211, 84, 0, 0.22));
+      filter: drop-shadow(0 0 2px rgba(11, 95, 198, 0.22));
     }
     .topbar-ecg-dot {
-      fill: #f09a4a;
-      filter: drop-shadow(0 0 4px rgba(240, 154, 74, 0.45));
+      fill: #5a7fa6;
+      filter: drop-shadow(0 0 4px rgba(90, 127, 166, 0.45));
     }
     .topbar-ecg-dot-glow {
-      fill: rgba(240, 154, 74, 0.14);
+      fill: rgba(90, 127, 166, 0.14);
       filter: blur(2.2px);
     }
     @keyframes ecg-scan {
@@ -192,7 +210,7 @@
       align-items: center;
       justify-content: center;
       padding: 0 8px;
-      color: #9a4200;
+      color: var(--accent-dark);
       font-size: 0.84rem;
       font-weight: 600;
       letter-spacing: 0.01em;
@@ -213,7 +231,7 @@
       padding: 0 10px;
       font-size: 0.84rem;
       font-weight: 500;
-      color: #444;
+      color: #17324d;
       border: 1px solid var(--border);
       border-radius: 5px;
       background: #fff;
@@ -258,8 +276,8 @@
       font-weight: 800;
       letter-spacing: 0.02em;
       color: var(--accent);
-      background: #fff5ef;
-      border: 1px solid #f2ddcc;
+      background: #edf7fc;
+      border: 1px solid #d5e3eb;
       border-radius: 6px;
       margin: 0 0 8px;
       padding: 6px 8px;
@@ -269,7 +287,7 @@
       display: block;
       padding: 5px 8px;
       font-size: 0.875rem;
-      color: #555;
+      color: #4c6176;
       border-radius: 4px;
       transition: color 0.12s, background 0.12s;
     }
@@ -288,7 +306,7 @@
       margin: 0 0 10px;
       font-size: 1.55rem;
       line-height: 1.3;
-      color: #111;
+      color: #061f45;
     }
     .hero p {
       margin: 0 0 18px;
@@ -311,7 +329,7 @@
     .hero-btn:hover,
     .hero-btn:active { opacity: 1; background: var(--ui-highlight-bg); border-color: var(--ui-highlight-border); color: var(--ui-highlight-text); box-shadow: 0 6px 14px var(--ui-highlight-shadow); text-decoration: none; }
     .hero-btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
-    .hero-btn.secondary { background: #fff; color: #333; border-color: var(--border); }
+    .hero-btn.secondary { background: #fff; color: #17324d; border-color: var(--border); }
 
     /* ── Sections ── */
     .doc-section {
@@ -321,7 +339,7 @@
     .doc-section > h2 {
       margin: 0 0 24px;
       font-size: 1.25rem;
-      color: #111;
+      color: #061f45;
       padding-bottom: 8px;
       border-bottom: 2px solid var(--accent);
       display: inline-block;
@@ -337,7 +355,7 @@
       padding-top: 28px;
       border-top: 1px solid var(--border);
     }
-    .doc-block h3 { margin: 0 0 10px; font-size: 1.02rem; color: #111; }
+    .doc-block h3 { margin: 0 0 10px; font-size: 1.02rem; color: #061f45; }
     .doc-block p { margin: 0 0 12px; color: #3a3a3a; font-size: 0.93rem; }
     .doc-block p:last-child { margin-bottom: 0; }
     .doc-block ul, .doc-block ol {
@@ -374,13 +392,13 @@
       margin: 14px 0;
       padding: 11px 14px;
       border-left: 3px solid var(--accent);
-      background: #fffbf7;
+      background: #f8fbfd;
       border-radius: 0 4px 4px 0;
       font-size: 0.9rem;
     }
-    .callout strong { display: block; margin-bottom: 3px; color: #111; }
-    .callout p { margin: 0; color: #555; font-size: inherit; }
-    .callout.warn { border-color: #c0392b; background: #fff8f7; }
+    .callout strong { display: block; margin-bottom: 3px; color: #061f45; }
+    .callout p { margin: 0; color: #4c6176; font-size: inherit; }
+    .callout.warn { border-color: #c0392b; background: #f8fbfd; }
     .callout.info { border-color: #888; background: #fafafa; }
 
     /* ── Table ── */
@@ -397,7 +415,7 @@
       vertical-align: top;
       line-height: 1.65;
     }
-    .doc-table th { background: #fafafa; font-weight: 700; color: #333; }
+    .doc-table th { background: #fafafa; font-weight: 700; color: #17324d; }
     .inline-tag { margin-left: 8px; vertical-align: middle; }
 
     /* ── Panel ── */
@@ -408,9 +426,9 @@
       background: #fff;
       margin-top: 10px;
     }
-    .panel h4 { margin: 0 0 5px; font-size: 0.93rem; color: #111; }
+    .panel h4 { margin: 0 0 5px; font-size: 0.93rem; color: #061f45; }
     .panel p { margin: 0; color: var(--muted); font-size: 0.9rem; line-height: 1.65; }
-    .panel ul { margin: 5px 0 0 18px; padding: 0; font-size: 0.9rem; color: #555; }
+    .panel ul { margin: 5px 0 0 18px; padding: 0; font-size: 0.9rem; color: #4c6176; }
     .panel li { margin-bottom: 4px; }
     .panel + .panel { margin-top: 6px; }
     .panel-row {
@@ -433,12 +451,12 @@
       align-items: center;
       border: 1px solid var(--border);
       background: #fafafa;
-      color: #444;
+      color: #17324d;
       padding: 3px 9px;
       font-size: 0.81rem;
       border-radius: 4px;
     }
-    .tag.hi { background: #fff5ef; border-color: #f0d4b3; color: var(--accent); }
+    .tag.hi { background: #edf7fc; border-color: #b7d9ec; color: var(--accent); }
 
     /* ── Workflow ── */
     .workflow { display: flex; flex-direction: column; margin-top: 14px; }
@@ -461,8 +479,8 @@
     .wf-line { width: 1px; background: #ddd; flex: 1; margin-top: 4px; }
     .workflow-item:last-child .wf-line { display: none; }
     .wf-body { padding-top: 2px; }
-    .wf-body h4 { margin: 0 0 3px; font-size: 0.93rem; color: #111; }
-    .wf-body p { margin: 0; font-size: 0.88rem; color: #555; line-height: 1.65; }
+    .wf-body h4 { margin: 0 0 3px; font-size: 0.93rem; color: #061f45; }
+    .wf-body p { margin: 0; font-size: 0.88rem; color: #4c6176; line-height: 1.65; }
 
     /* ── Arch image ── */
     .arch-img { margin-top: 14px; border: 1px solid var(--border); border-radius: 5px; }
@@ -486,7 +504,7 @@
     .aside-link {
       display: block;
       padding: 4px 6px;
-      color: #666;
+      color: #5b7187;
       border-radius: 4px;
       font-size: 0.82rem;
       transition: color 0.12s, background 0.12s;
@@ -537,7 +555,7 @@
       background: transparent;
       font-size: 0.95rem;
       font-family: inherit;
-      color: #111;
+      color: #061f45;
     }
     .search-body { max-height: 55vh; overflow-y: auto; padding: 8px; }
     .search-result {
@@ -556,8 +574,8 @@
       display: block;
       margin-bottom: 2px;
     }
-    .search-result strong { display: block; color: #111; font-size: 0.9rem; margin-bottom: 2px; }
-    .search-result span { display: block; color: #666; font-size: 0.83rem; line-height: 1.5; }
+    .search-result strong { display: block; color: #061f45; font-size: 0.9rem; margin-bottom: 2px; }
+    .search-result span { display: block; color: #5b7187; font-size: 0.83rem; line-height: 1.5; }
     .search-empty { padding: 24px; color: #888; text-align: center; font-size: 0.9rem; }
 
     /* ── Mobile ── */
@@ -1144,7 +1162,7 @@ stride = 96</code></pre></div>
             <tr><td><code>Ctrl+3</code></td><td>Switch to Critic</td></tr>
           </tbody>
         </table>
-        <p style="margin-top:10px;font-size:0.9rem;color:#555;">Once these three shortcuts become muscle memory, the workflow feels natural: define and review in Planner, observe convergence in Forecaster, and judge evidence in Critic.</p>
+        <p style="margin-top:10px;font-size:0.9rem;color:#4c6176;">Once these three shortcuts become muscle memory, the workflow feels natural: define and review in Planner, observe convergence in Forecaster, and judge evidence in Critic.</p>
       </article>
 
       <article class="doc-block" id="forecast-tools" data-title="forecast toolchain">
