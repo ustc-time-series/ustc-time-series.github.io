@@ -109,7 +109,7 @@ test('NeoResearch distinguishes the double-loop lifecycle from the five-action e
     page,
     /<meta name="description" content="[^"]*双层自主研究闭环[^"]*"/,
   );
-  assert.ok(page.includes('src="assets/framework.svg?v=20260722-evidence-v4"'));
+  assert.ok(page.includes('src="assets/framework.svg?v=20260723-blue-v1"'));
   assert.ok(framework.includes('Evidence-Grounded Action Cycle'));
   assert.ok(framework.includes('Five auditable research actions'));
   assert.ok(!framework.includes('five-stage autonomous data-science research loop'));
@@ -117,7 +117,7 @@ test('NeoResearch distinguishes the double-loop lifecycle from the five-action e
 
 test('NeoResearch architecture keeps layer titles separate from their detail column', () => {
   assert.equal(
-    framework.match(/x="440" y="\d+" font-size="15" fill="#555"/g)?.length,
+    framework.match(/x="440" y="\d+" font-size="15" fill="#4c6176"/g)?.length,
     7,
     'All seven layer descriptions should use the dedicated detail column and compact type size',
   );
@@ -125,8 +125,8 @@ test('NeoResearch architecture keeps layer titles separate from their detail col
 });
 
 test('NeoResearch uses readable secondary text colors in the hero and footer', () => {
-  assert.ok(page.includes('color: #6f6f6f;\n      letter-spacing: 0.02em;'));
-  assert.match(page, /\.footer-note\s*\{[^}]*color:\s*#aaa;/);
+  assert.ok(page.includes('color: var(--text-faint);\n      letter-spacing: 0.02em;'));
+  assert.match(page, /\.footer-note\s*\{[^}]*color:\s*var\(--footer-faint\);/);
   assert.ok(page.includes('<p class="footer-note">'));
 });
 
@@ -135,4 +135,42 @@ test('NeoResearch hero omits the redundant shortcut button group', () => {
   assert.ok(!page.includes('.btn-row {'));
   assert.ok(!page.includes('.btn-secondary'));
   assert.ok(page.includes('<nav class="nav-bar">'), 'The primary navigation must remain available');
+});
+
+test('NeoResearch follows the USTC AGI blue-gray visual system', () => {
+  for (const token of [
+    '--accent: #0b5fc6;',
+    '--accent-dark: #083f7f;',
+    '--accent-soft: #edf7fc;',
+    '--text-strong: #061f45;',
+    '--text: #17324d;',
+    '--text-muted: #4c6176;',
+    '--text-faint: #5b7187;',
+    '--line: #d5e3eb;',
+    '--line-soft: #e6f0f5;',
+    '--bg: #f4f7f9;',
+    '--surface-soft: #f8fbfd;',
+    '--footer-text: #a9c7db;',
+    '--footer-faint: #8eb4cc;',
+    '--footer-link: #8fd9ff;',
+  ]) {
+    assert.ok(page.includes(token), `Missing design token: ${token}`);
+  }
+
+  for (const staleColor of [
+    '#c0392b',
+    '#a93226',
+    '#fff8f7',
+    '#fdf9f9',
+    '#e87b6e',
+    'background: #1c1c1c',
+  ]) {
+    assert.ok(!page.includes(staleColor), `Warm legacy theme color remains: ${staleColor}`);
+  }
+
+  for (const staleDiagramColor of ['#c0392b', '#b9770e', '#e67e22', '#6c4aa1']) {
+    assert.ok(!framework.includes(staleDiagramColor), `Legacy diagram color remains: ${staleDiagramColor}`);
+  }
+  assert.ok(framework.includes('#0b5fc6'), 'The framework diagram should share the page accent');
+  assert.ok(framework.includes('#061f45'), 'The framework diagram should share the page title color');
 });

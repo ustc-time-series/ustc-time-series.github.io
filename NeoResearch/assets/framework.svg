@@ -3,81 +3,81 @@
   <desc id="desc">Seven-layer NeoResearch architecture with three evidence sources and five auditable research actions</desc>
   <defs>
     <linearGradient id="layerA" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fff7f5"/>
+      <stop offset="0" stop-color="#edf7fc"/>
       <stop offset="1" stop-color="#ffffff"/>
     </linearGradient>
     <linearGradient id="layerB" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#f0fdf9"/>
+      <stop offset="0" stop-color="#f8fbfd"/>
       <stop offset="1" stop-color="#ffffff"/>
     </linearGradient>
     <linearGradient id="loopGrad" x1="420" y1="132" x2="900" y2="132" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#c0392b"/>
-      <stop offset="0.5" stop-color="#e67e22"/>
-      <stop offset="1" stop-color="#0f766e"/>
+      <stop offset="0" stop-color="#083f7f"/>
+      <stop offset="0.5" stop-color="#0b5fc6"/>
+      <stop offset="1" stop-color="#0b78c4"/>
     </linearGradient>
     <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#1a1a1a" flood-opacity="0.11"/>
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#061f45" flood-opacity="0.11"/>
     </filter>
   </defs>
 
-  <rect width="1160" height="770" rx="26" fill="#fbfaf7"/>
+  <rect width="1160" height="770" rx="26" fill="#f4f7f9"/>
 
   <g filter="url(#shadow)">
-    <rect x="72" y="44" width="1016" height="158" rx="20" fill="#ffffff" stroke="#ead9d4"/>
-    <text x="102" y="86" font-size="28" font-weight="800" font-family="Arial, Helvetica, sans-serif" fill="#111">Evidence-Grounded Action Cycle</text>
-    <text x="102" y="118" font-size="16" font-family="Arial, Helvetica, sans-serif" fill="#666">Five auditable research actions</text>
-    <text x="102" y="145" font-size="16" font-weight="700" font-family="Arial, Helvetica, sans-serif" fill="#c0392b">Literature + Data + Experiment</text>
-    <text x="102" y="173" font-size="14" font-family="Arial, Helvetica, sans-serif" fill="#0f766e">Traceable evidence in every research step</text>
+    <rect x="72" y="44" width="1016" height="158" rx="20" fill="#ffffff" stroke="#d5e3eb"/>
+    <text x="102" y="86" font-size="28" font-weight="800" font-family="Arial, Helvetica, sans-serif" fill="#061f45">Evidence-Grounded Action Cycle</text>
+    <text x="102" y="118" font-size="16" font-family="Arial, Helvetica, sans-serif" fill="#4c6176">Five auditable research actions</text>
+    <text x="102" y="145" font-size="16" font-weight="700" font-family="Arial, Helvetica, sans-serif" fill="#0b5fc6">Literature + Data + Experiment</text>
+    <text x="102" y="173" font-size="14" font-family="Arial, Helvetica, sans-serif" fill="#0b78c4">Traceable evidence in every research step</text>
     <path d="M462 126 H944" fill="none" stroke="url(#loopGrad)" stroke-width="8" stroke-linecap="round"/>
-    <path d="M946 126 l-22 -15 m22 15 l-22 15" fill="none" stroke="#0f766e" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-    <path id="research-loop-return" d="M910 160 C910 190 430 190 430 160" fill="none" stroke="#8b6f66" stroke-width="2.5" stroke-linecap="round"/>
-    <path d="M430 160 l-8 12 m8 -12 l8 12" fill="none" stroke="#8b6f66" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M946 126 l-22 -15 m22 15 l-22 15" fill="none" stroke="#0b78c4" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="research-loop-return" d="M910 160 C910 190 430 190 430 160" fill="none" stroke="#5b7187" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M430 160 l-8 12 m8 -12 l8 12" fill="none" stroke="#5b7187" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     <g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
-      <circle cx="430" cy="126" r="32" fill="#fff7f5" stroke="#f0c8be" stroke-width="2"/>
-      <text x="430" y="122" font-size="12" font-weight="800" fill="#c0392b">Hypothesis</text>
-      <text x="430" y="142" font-size="11" fill="#555">研究假设</text>
-      <circle cx="550" cy="126" r="32" fill="#fffaf2" stroke="#f3d39b" stroke-width="2"/>
-      <text x="550" y="122" font-size="11" font-weight="800" fill="#b9770e">Model Design</text>
-      <text x="550" y="142" font-size="11" fill="#555">模型设计</text>
-      <circle cx="670" cy="126" r="32" fill="#f2fbff" stroke="#b9d9ee" stroke-width="2"/>
-      <text x="670" y="122" font-size="12" font-weight="800" fill="#2471a3">Experiment</text>
-      <text x="670" y="142" font-size="11" fill="#555">受控实验</text>
-      <circle cx="790" cy="126" r="32" fill="#f8f5ff" stroke="#d6c7ef" stroke-width="2"/>
-      <text x="790" y="122" font-size="12" font-weight="800" fill="#6c4aa1">Reflection</text>
-      <text x="790" y="142" font-size="11" fill="#555">诊断反思</text>
-      <circle cx="910" cy="126" r="32" fill="#f0fdf9" stroke="#a9e2d9" stroke-width="2"/>
-      <text x="910" y="122" font-size="10.5" font-weight="800" fill="#0f766e">Model Evolution</text>
-      <text x="910" y="142" font-size="11" fill="#555">模型演化</text>
+      <circle cx="430" cy="126" r="32" fill="#edf7fc" stroke="#b7d9ec" stroke-width="2"/>
+      <text x="430" y="122" font-size="12" font-weight="800" fill="#0b5fc6">Hypothesis</text>
+      <text x="430" y="142" font-size="11" fill="#4c6176">研究假设</text>
+      <circle cx="550" cy="126" r="32" fill="#f8fbfd" stroke="#d5e3eb" stroke-width="2"/>
+      <text x="550" y="122" font-size="11" font-weight="800" fill="#083f7f">Model Design</text>
+      <text x="550" y="142" font-size="11" fill="#4c6176">模型设计</text>
+      <circle cx="670" cy="126" r="32" fill="#edf7fc" stroke="#b7d9ec" stroke-width="2"/>
+      <text x="670" y="122" font-size="12" font-weight="800" fill="#0b78c4">Experiment</text>
+      <text x="670" y="142" font-size="11" fill="#4c6176">受控实验</text>
+      <circle cx="790" cy="126" r="32" fill="#f8fbfd" stroke="#d5e3eb" stroke-width="2"/>
+      <text x="790" y="122" font-size="12" font-weight="800" fill="#5a7fa6">Reflection</text>
+      <text x="790" y="142" font-size="11" fill="#4c6176">诊断反思</text>
+      <circle cx="910" cy="126" r="32" fill="#edf7fc" stroke="#b7d9ec" stroke-width="2"/>
+      <text x="910" y="122" font-size="10.5" font-weight="800" fill="#0b5fc6">Model Evolution</text>
+      <text x="910" y="142" font-size="11" fill="#4c6176">模型演化</text>
     </g>
   </g>
 
   <g filter="url(#shadow)" font-family="Arial, Helvetica, sans-serif">
-    <rect x="72" y="236" width="1016" height="58" rx="14" fill="url(#layerA)" stroke="#ead9d4"/>
-    <text x="100" y="272" font-size="21" font-weight="800" fill="#c0392b">Human Control Layer</text>
-    <text x="440" y="272" font-size="15" fill="#555">研究问题 · 证据范围 · 预算协议 · 晋级审批 · 回滚终止</text>
+    <rect x="72" y="236" width="1016" height="58" rx="14" fill="url(#layerA)" stroke="#b7d9ec"/>
+    <text x="100" y="272" font-size="21" font-weight="800" fill="#0b5fc6">Human Control Layer</text>
+    <text x="440" y="272" font-size="15" fill="#4c6176">研究问题 · 证据范围 · 预算协议 · 晋级审批 · 回滚终止</text>
 
-    <rect x="72" y="308" width="1016" height="58" rx="14" fill="url(#layerB)" stroke="#cdeae4"/>
-    <text x="100" y="344" font-size="21" font-weight="800" fill="#0f766e">Evidence &amp; Cognition Layer</text>
-    <text x="440" y="344" font-size="15" fill="#555">literature corpus · dataset profile · experimental lineage · research context</text>
+    <rect x="72" y="308" width="1016" height="58" rx="14" fill="url(#layerB)" stroke="#d5e3eb"/>
+    <text x="100" y="344" font-size="21" font-weight="800" fill="#0b78c4">Evidence &amp; Cognition Layer</text>
+    <text x="440" y="344" font-size="15" fill="#4c6176">literature corpus · dataset profile · experimental lineage · research context</text>
 
-    <rect x="72" y="380" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
-    <text x="100" y="416" font-size="21" font-weight="800" fill="#2471a3">Agent Orchestration Layer</text>
-    <text x="440" y="416" font-size="15" fill="#555">Research Manager · Retriever · Diagnostic · Designer · Runner · Analyst · Librarian</text>
+    <rect x="72" y="380" width="1016" height="58" rx="14" fill="#ffffff" stroke="#d5e3eb"/>
+    <text x="100" y="416" font-size="21" font-weight="800" fill="#083f7f">Agent Orchestration Layer</text>
+    <text x="440" y="416" font-size="15" fill="#4c6176">Research Manager · Retriever · Diagnostic · Designer · Runner · Analyst · Librarian</text>
 
-    <rect x="72" y="452" width="1016" height="58" rx="14" fill="url(#layerA)" stroke="#ead9d4"/>
-    <text x="100" y="488" font-size="21" font-weight="800" fill="#b9770e">Research Design Layer</text>
-    <text x="440" y="488" font-size="15" fill="#555">hypothesis · CandidateRecipe DSL · action registry · loss DSL · trainer DSL</text>
+    <rect x="72" y="452" width="1016" height="58" rx="14" fill="url(#layerA)" stroke="#b7d9ec"/>
+    <text x="100" y="488" font-size="21" font-weight="800" fill="#0b5fc6">Research Design Layer</text>
+    <text x="440" y="488" font-size="15" fill="#4c6176">hypothesis · CandidateRecipe DSL · action registry · loss DSL · trainer DSL</text>
 
-    <rect x="72" y="524" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
-    <text x="100" y="560" font-size="21" font-weight="800" fill="#6c4aa1">Protocol &amp; Governance Layer</text>
-    <text x="440" y="560" font-size="15" fill="#555">TaskSpec · split boundary · metric · budget · leakage prevention · audit</text>
+    <rect x="72" y="524" width="1016" height="58" rx="14" fill="#ffffff" stroke="#d5e3eb"/>
+    <text x="100" y="560" font-size="21" font-weight="800" fill="#5a7fa6">Protocol &amp; Governance Layer</text>
+    <text x="440" y="560" font-size="15" fill="#4c6176">TaskSpec · split boundary · metric · budget · leakage prevention · audit</text>
 
-    <rect x="72" y="596" width="1016" height="58" rx="14" fill="#ffffff" stroke="#e4e4e4"/>
-    <text x="100" y="632" font-size="21" font-weight="800" fill="#5d6d7e">Execution &amp; Evaluation Layer</text>
-    <text x="440" y="632" font-size="15" fill="#555">sandbox · static validator · training runner · ablation · multi-stage evaluation</text>
+    <rect x="72" y="596" width="1016" height="58" rx="14" fill="#ffffff" stroke="#d5e3eb"/>
+    <text x="100" y="632" font-size="21" font-weight="800" fill="#17324d">Execution &amp; Evaluation Layer</text>
+    <text x="440" y="632" font-size="15" fill="#4c6176">sandbox · static validator · training runner · ablation · multi-stage evaluation</text>
 
-    <rect x="72" y="668" width="1016" height="58" rx="14" fill="url(#layerB)" stroke="#cdeae4"/>
-    <text x="100" y="704" font-size="21" font-weight="800" fill="#0f766e">Memory &amp; Evolution Layer</text>
-    <text x="440" y="704" font-size="15" fill="#555">reflection · evidence chain · failure patterns · model lineage · reusable heuristics</text>
+    <rect x="72" y="668" width="1016" height="58" rx="14" fill="url(#layerB)" stroke="#d5e3eb"/>
+    <text x="100" y="704" font-size="21" font-weight="800" fill="#0b78c4">Memory &amp; Evolution Layer</text>
+    <text x="440" y="704" font-size="15" fill="#4c6176">reflection · evidence chain · failure patterns · model lineage · reusable heuristics</text>
   </g>
 </svg>
