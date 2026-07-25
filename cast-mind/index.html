@@ -12,10 +12,11 @@
     html { scroll-behavior: smooth; }
 
     :root {
-      --navy:       #061f45;
-      --navy-dark:  #083f7f;
-      --primary:    #0b5fc6;
-      --primary-mid:#0b78c4;
+      --navy:       #091f44;
+      --navy-dark:  #06162e;
+      --primary:    #091f44;
+      --hero-title: #091f44;
+      --primary-mid:#163d70;
       --primary-soft:#edf7fc;
       --primary-line:#b7d9ec;
       --text: #17324d;
@@ -23,13 +24,13 @@
       --line: #d5e3eb;
       --bg: #f4f7f9;
       --card: #ffffff;
-      --accent: #0b5fc6;
-      --accent-dark: #083f7f;
+      --accent: #091f44;
+      --accent-dark: #06162e;
       --accent-soft: #edf7fc;
       --accent-border: #b7d9ec;
-      --blue: #0b78c4;
+      --blue: #163d70;
       --blue-muted: #5a7fa6;
-      --text-strong: #061f45;
+      --text-strong: #091f44;
       --text-muted: #4c6176;
       --text-faint: #5b7187;
       --line-soft: #e6f0f5;
@@ -170,16 +171,16 @@
       font-size: 2.18rem;
       font-weight: 800;
       line-height: 1.35;
-      color: #061f45;
+      color: #091f44;
       max-width: 1180px;
       margin-left: auto;
       margin-right: auto;
       text-wrap: balance;
     }
-    header h1 .cm { color: var(--primary); }
+    header h1 .cm { color: var(--hero-title); }
     .hero-title-main,
     .hero-title-sub { display: inline; white-space: nowrap; }
-    .hero-title-sub { color: var(--primary); }
+    .hero-title-sub { color: var(--hero-title); }
     .hero-kicker {
       display: inline-flex;
       align-items: center;
@@ -272,6 +273,14 @@
       line-height: 1.82;
       margin-bottom: 20px;
     }
+    .eval-intro {
+      max-width: none;
+      width: 100%;
+      text-align: justify;
+      text-justify: inter-ideograph;
+      text-align-last: left;
+      overflow-wrap: break-word;
+    }
 
     /* ── TL;DR banner ──────────────────────────────── */
     .tldr {
@@ -357,6 +366,29 @@
       font-size: 0.91rem;
       line-height: 1.72;
     }
+    .intro-step-outcome {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      align-items: center;
+      margin-top: 9px;
+      padding-top: 8px;
+      color: #4c6176;
+      border-top: 1px solid #e1ebf2;
+      font-size: 0.78rem;
+      font-weight: 600;
+      line-height: 1.55;
+    }
+    .intro-step-outcome span {
+      padding: 2px 7px;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border: 1px solid var(--primary-line);
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
     /* ── Card grid ─────────────────────────────────── */
     .card-grid {
       display: grid;
@@ -374,43 +406,8 @@
     }
     .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.09); }
     .card .card-icon { font-size: 1.6rem; margin-bottom: 10px; line-height: 1; }
-    .card h4 { font-size: 0.93rem; font-weight: 700; margin-bottom: 7px; color: #061f45; }
+    .card h4 { font-size: 0.93rem; font-weight: 700; margin-bottom: 7px; color: #091f44; }
     .card p  { font-size: 0.87rem; color: #4c6176; margin: 0; line-height: 1.65; }
-
-    /* ── Pillar list ───────────────────────────────── */
-    .pillar-list {
-      list-style: none;
-      margin-top: 20px;
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .pillar-list li {
-      display: block;
-      align-items: flex-start;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 18px 18px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-    }
-    .pillar-num {
-      flex-shrink: 0;
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: var(--navy);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.88rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 0 12px;
-    }
-    .pillar-num.primary { background: var(--primary); }
-    .pillar-text { flex: 1; }
-    .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 7px; color: var(--navy); line-height: 1.45; }
-    .pillar-text span  { font-size: 0.86rem; color: #4c6176; line-height: 1.68; }
 
     /* ── Feature list ──────────────────────────────── */
     .feature-list {
@@ -476,7 +473,7 @@
       padding: 10px 14px;
       max-width: 760px;
       text-align: center;
-      color: #061f45;
+      color: #091f44;
       background: #f8fafc;
       border: 1px solid var(--line);
       border-radius: 8px;
@@ -631,50 +628,6 @@
       color: var(--navy);
     }
 
-    /* ── Model version cards ───────────────────────── */
-    .version-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 22px;
-    }
-    .version-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 24px 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: transform .22s, box-shadow .22s;
-      text-align: left;
-    }
-    .version-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.09); }
-    .version-card .ver-badge {
-      display: inline-block;
-      font-size: 0.82rem; font-weight: 800;
-      padding: 4px 14px; border-radius: 20px; margin-bottom: 10px;
-      letter-spacing: 0.03em;
-    }
-    .ver-base    { background: var(--primary-soft); color: var(--primary); }
-    .ver-sft{ background: var(--primary-soft); color: var(--primary); }
-    .ver-cot{ background: var(--primary-soft); color: var(--primary); }
-    .ver-agentic { background: var(--primary-soft); color: var(--primary); }
-    .version-card h4 { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
-    .version-card .ver-stage {
-      font-size: 0.77rem; color: var(--muted);
-      margin-bottom: 10px; line-height: 1.4;
-    }
-    .version-card p { font-size: 0.86rem; color: #4c6176; line-height: 1.6; margin: 0; text-align: left; }
-    .route-summary {
-      margin-top: 20px;
-      padding: 14px 16px;
-      border-left: 4px solid var(--primary);
-      background: #f8fbfd;
-      border-radius: 0 8px 8px 0;
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.75;
-    }
-
     /* ── Eval split ────────────────────────────────── */
     .eval-split {
       display: grid;
@@ -727,7 +680,7 @@
 
     /* ── Claim box ─────────────────────────────────── */
     .claim-box {
-      background: linear-gradient(135deg, #083f7f 0%, #061f45 50%, #0b78c4 100%);
+      background: linear-gradient(135deg, #06162e 0%, #091f44 50%, #163d70 100%);
       border-radius: 12px;
       padding: 32px 32px;
       color: #fff;
@@ -756,21 +709,477 @@
     tr:nth-child(even) td { background: #f9fafc; }
     tr:last-child td { border-bottom: none; }
 
-    /* ── Closing statement ────────────────────────────── */
-    .closing-section {
-      padding: 48px 0;
-      background: linear-gradient(135deg, #f8fbff 0%, #eef5fc 100%);
+    /* ── Forecast evolution ─────────────────────────── */
+    .evolution-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 8% 8%, rgba(9, 31, 68, 0.08), transparent 32%),
+        linear-gradient(180deg, #f8fbfd 0%, #edf7fc 100%);
     }
-    .closing-statement {
-      max-width: 960px;
+    .evolution-section::after {
+      content: "";
+      position: absolute;
+      right: -120px;
+      bottom: -150px;
+      width: 360px;
+      height: 360px;
+      border: 1px solid rgba(9, 31, 68, 0.1);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 52px rgba(9, 31, 68, 0.025),
+        0 0 0 104px rgba(9, 31, 68, 0.018);
+      pointer-events: none;
+    }
+    .evolution-section .container {
+      position: relative;
+      z-index: 1;
+    }
+    .evolution-intro {
+      max-width: 940px;
+      margin-bottom: 26px;
+    }
+    .evolution-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .evolution-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      padding: 24px 22px 22px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--primary-line);
+      border-top: 4px solid var(--primary);
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(6, 31, 69, 0.07);
+    }
+    .evolution-card::before {
+      content: "";
+      position: absolute;
+      top: -42px;
+      right: -36px;
+      width: 126px;
+      height: 126px;
+      border-radius: 50%;
+      background: rgba(9, 31, 68, 0.055);
+      pointer-events: none;
+    }
+    .evolution-stage {
+      position: relative;
+      margin-bottom: 14px;
+      color: var(--primary);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+    .evolution-card h3 {
+      position: relative;
       margin: 0;
-      padding: 18px 22px;
-      border-left: 4px solid var(--primary);
       color: var(--navy);
-      font-size: 1.02rem;
+      font-size: 1.18rem;
+      line-height: 1.35;
+    }
+    .evolution-role {
+      margin: 7px 0 18px;
+      color: #5a7087;
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+    .evolution-spec {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+    }
+    .evolution-row {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      padding-top: 10px;
+      border-top: 1px solid #e5eef6;
+    }
+    .evolution-row dt {
+      color: #6a7d91;
+      font-size: 0.78rem;
       font-weight: 700;
-      line-height: 1.82;
+    }
+    .evolution-row dd {
+      margin: 0;
+      color: var(--text);
+      font-size: 0.86rem;
+      font-weight: 600;
+      line-height: 1.55;
+    }
+    .evolution-question {
+      margin: auto 0 0;
+      padding-top: 20px;
+      color: var(--primary);
+      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.55;
+    }
+    .evolution-path {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 18px;
+      align-items: center;
+      margin-top: 20px;
+      padding: 18px 20px;
+      color: #fff;
+      background: linear-gradient(110deg, var(--navy) 0%, #0a4e98 58%, #163d70 100%);
+      border-radius: 12px;
+      box-shadow: 0 10px 26px rgba(6, 31, 69, 0.14);
+    }
+    .evolution-path-label {
+      padding: 5px 10px;
+      color: var(--navy);
+      background: #fff;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+    .evolution-path-flow {
+      font-size: 0.94rem;
+      font-weight: 700;
+      line-height: 1.65;
+      text-align: center;
+    }
+    .evolution-positioning {
+      margin: 16px 0 0;
+      padding: 18px 20px;
+      color: var(--text);
+      font-size: 0.94rem;
+      line-height: 1.8;
       background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(183, 217, 236, 0.9);
+      border-left: 4px solid var(--primary);
+      border-radius: 10px;
+    }
+    .evolution-positioning strong { color: var(--navy); }
+    .evolution-example {
+      margin-top: 28px;
+      padding: 26px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--primary-line);
+      border-radius: 16px;
+      box-shadow: 0 14px 34px rgba(6, 31, 69, 0.08);
+    }
+    .example-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 28px;
+      align-items: end;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #dce9f2;
+    }
+    .example-kicker {
+      display: inline-flex;
+      margin-bottom: 9px;
+      padding: 4px 9px;
+      color: var(--primary);
+      background: var(--primary-soft);
+      border: 1px solid var(--primary-line);
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+    .example-heading h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 1.22rem;
+      line-height: 1.45;
+    }
+    .example-scenario {
+      margin: 0;
+      padding-left: 14px;
+      color: #4c6176;
+      border-left: 3px solid var(--primary);
+      font-size: 0.88rem;
+      line-height: 1.72;
+    }
+    .example-load-visual {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.55fr);
+      gap: 18px;
+      margin-top: 20px;
+      padding: 18px;
+      background:
+        linear-gradient(rgba(9, 31, 68, 0.035) 1px, transparent 1px) 0 0 / 100% 32px,
+        linear-gradient(135deg, #f8fbfd 0%, #eef7fb 100%);
+      border: 1px solid #d7e6ef;
+      border-radius: 13px;
+    }
+    .load-chart-wrap {
+      min-width: 0;
+    }
+    .load-visual-title {
+      display: block;
+      margin-bottom: 9px;
+      color: var(--navy);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .load-chart {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      height: 122px;
+      padding: 28px 12px 10px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid #d4e4ee;
+      border-radius: 10px;
+    }
+    .load-chart::before,
+    .load-chart::after {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      height: 1px;
+      background: #dce9f2;
+      pointer-events: none;
+    }
+    .load-chart::before { top: 48%; }
+    .load-chart::after { bottom: 10px; }
+    .load-bar {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      min-width: 3px;
+      height: var(--load);
+      min-height: 12px;
+      background: linear-gradient(180deg, #4f83b9 0%, var(--primary) 100%);
+      border-radius: 4px 4px 1px 1px;
+      box-shadow: 0 2px 5px rgba(9, 31, 68, 0.12);
+    }
+    .load-bar.is-peak {
+      background: linear-gradient(180deg, #2a86d1 0%, #0a4e98 100%);
+      box-shadow: 0 0 0 3px rgba(42, 134, 209, 0.12);
+    }
+    .load-peak-label {
+      position: absolute;
+      z-index: 2;
+      top: 8px;
+      right: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 7px;
+      color: var(--navy);
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid #cbdde9;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      font-weight: 800;
+    }
+    .load-peak-label::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: #2a86d1;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(42, 134, 209, 0.12);
+    }
+    .load-axis {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 5px;
+      padding: 0 4px;
+      color: #718497;
+      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
+      font-size: 0.62rem;
+    }
+    .load-context-panel {
+      min-width: 0;
+    }
+    .load-context-grid {
+      display: grid;
+      gap: 7px;
+    }
+    .context-chip {
+      display: grid;
+      grid-template-columns: 30px minmax(0, 1fr);
+      gap: 9px;
+      align-items: center;
+      min-width: 0;
+      padding: 8px 9px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid #d4e4ee;
+      border-radius: 9px;
+    }
+    .context-chip i {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      color: #fff;
+      background: var(--primary);
+      border-radius: 9px;
+      font-size: 0.72rem;
+      font-style: normal;
+      font-weight: 800;
+    }
+    .context-chip strong,
+    .context-chip small {
+      display: block;
+      overflow-wrap: anywhere;
+    }
+    .context-chip strong {
+      color: var(--navy);
+      font-size: 0.75rem;
+      line-height: 1.35;
+    }
+    .context-chip small {
+      margin-top: 2px;
+      color: #6a7d91;
+      font-size: 0.66rem;
+      line-height: 1.35;
+    }
+    .example-steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .example-step {
+      position: relative;
+      min-width: 0;
+      padding: 18px;
+      background: linear-gradient(180deg, #ffffff 0%, #f7fbfd 100%);
+      border: 1px solid #d7e6ef;
+      border-radius: 12px;
+    }
+    .example-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      top: 29px;
+      right: -10px;
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border-top: 2px solid var(--primary);
+      border-right: 2px solid var(--primary);
+      transform: rotate(45deg);
+    }
+    .example-step-head {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 12px;
+    }
+    .example-step-icon {
+      display: grid;
+      place-items: center;
+      flex: 0 0 34px;
+      width: 34px;
+      height: 34px;
+      color: #fff;
+      background: var(--primary);
+      border-radius: 10px;
+      font-size: 0.73rem;
+      font-weight: 900;
+      box-shadow: 0 6px 14px rgba(9, 31, 68, 0.18);
+    }
+    .example-step-label {
+      display: block;
+      margin: 0;
+      color: var(--primary);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .example-step h4 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-size: 0.96rem;
+      line-height: 1.45;
+    }
+    .example-step p {
+      margin: 0;
+      color: #4c6176;
+      font-size: 0.83rem;
+      line-height: 1.72;
+    }
+    .example-scenarios {
+      display: grid;
+      gap: 7px;
+      margin-top: 10px;
+    }
+    .example-scenarios span {
+      display: grid;
+      grid-template-columns: 8px minmax(0, 1fr);
+      gap: 7px;
+      align-items: start;
+      padding: 7px 9px;
+      color: var(--text);
+      background: #edf7fc;
+      border-radius: 7px;
+      font-size: 0.77rem;
+      font-weight: 600;
+      line-height: 1.55;
+    }
+    .example-scenarios span::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      margin-top: 4px;
+      border-radius: 50%;
+    }
+    .example-scenarios .is-risk {
+      background: #fff7df;
+    }
+    .example-scenarios .is-risk::before {
+      background: #b7791f;
+      box-shadow: 0 0 0 3px rgba(183, 121, 31, 0.12);
+    }
+    .example-scenarios .is-action::before {
+      background: #2a86d1;
+      box-shadow: 0 0 0 3px rgba(42, 134, 209, 0.12);
+    }
+    .example-decision {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 16px;
+      align-items: center;
+      margin-top: 14px;
+      padding: 14px 16px;
+      color: #fff;
+      background: var(--navy);
+      border-radius: 10px;
+    }
+    .example-decision strong {
+      padding: 4px 9px;
+      color: var(--navy);
+      background: #fff;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      white-space: nowrap;
+    }
+    .example-decision span {
+      font-size: 0.86rem;
+      font-weight: 600;
+      line-height: 1.65;
+    }
+    .example-note {
+      margin: 10px 0 0;
+      color: #6a7d91;
+      font-size: 0.75rem;
+      line-height: 1.6;
     }
 
     /* ── Footer ────────────────────────────────────── */
@@ -790,12 +1199,36 @@
     }
 
     /* ── Responsive ────────────────────────────────── */
+    @media (max-width: 860px) {
+      .evolution-grid {
+        grid-template-columns: 1fr;
+      }
+      .evolution-path {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .evolution-path-label {
+        justify-self: start;
+      }
+      .evolution-path-flow {
+        text-align: left;
+      }
+      .example-heading,
+      .example-load-visual,
+      .example-steps {
+        grid-template-columns: 1fr;
+      }
+      .example-step:not(:last-child)::after {
+        display: none;
+      }
+    }
+
     @media (max-width: 680px) {
       header { padding: 40px 0 40px; }
       header h1 { font-size: 1.5rem; }
       .hero-title-main,
       .hero-title-sub { white-space: normal; }
-      .tech-grid, .stage-row, .version-grid, .pillar-list, .route-line { grid-template-columns: 1fr; }
+      .tech-grid, .stage-row, .route-line { grid-template-columns: 1fr; }
       .intro-step { grid-template-columns: 1fr; gap: 9px; }
       .eval-split  { grid-template-columns: 1fr; }
       .route-step::after { display: none; }
@@ -806,8 +1239,24 @@
       .path-card { padding: 20px 18px; }
       .path-formula,
       .path-flow { font-size: 0.94rem; overflow-x: auto; }
+      .evolution-card { padding: 21px 18px 19px; }
+      .evolution-path,
+      .evolution-positioning { padding: 17px 16px; }
+      .evolution-example { padding: 21px 18px; }
+      .example-decision {
+        grid-template-columns: 1fr;
+        gap: 9px;
+      }
+      .example-decision strong { justify-self: start; }
+      .load-chart {
+        gap: 3px;
+        height: 112px;
+        padding-left: 9px;
+        padding-right: 9px;
+      }
     }
   </style>
+  <link rel="stylesheet" href="../asset/site-responsive.css" />
 </head>
 <body>
 
@@ -817,7 +1266,7 @@
   <div class="container">
     <h1 class="hero-clickable">
       <span class="hero-title-main"><span class="cm">CastMind（星思）</span></span>
-      <span class="hero-title-sub">情境推理驱动的时间序列推演大模型</span>
+      <span class="hero-title-sub">情境推演驱动的时间序列基础大模型</span>
     </h1>
     <p class="subtitle hero-clickable">
       CastMind 是一个面向复杂系统的情境推理驱动时间序列推演大模型，通过融合历史序列、外部情境与领域知识，推演未来趋势在特定条件下的延续、增强、削弱、偏移或反转，并实现预测修正与机制解释。
@@ -830,10 +1279,9 @@
   <div class="container">
     <a href="../" class="nav-home">首页</a>
     <a href="#intro">简介</a>
-    <a href="#features">关键技术路径</a>
     <a href="#tech">核心技术</a>
+    <a href="#features">关键技术路径</a>
     <a href="#training">训练范式</a>
-    <a href="#versions">能力路线</a>
     <a href="#eval">评估体系</a>
   </div>
 </nav>
@@ -843,7 +1291,12 @@
   <div class="container">
     <div class="tldr">
       <div class="brief-main">
-        CastMind 是一个面向复杂系统的情境推理驱动时间序列推演大模型，旨在突破传统预测仅依赖历史数值外推的局限。模型首先基于历史序列挖掘趋势、周期、波动和变量依赖，形成基础未来轨迹；随后融合天气、事件、政策、文本、领域知识和系统状态等多源情境，理解系统运行条件；进一步通过大模型的知识推理与机制分析，判断历史趋势在特定情境下是否延续、增强、削弱、偏移或反转，并完成未来趋势的条件化推演与预测修正。
+        <p>
+          <strong>“时序预测推演大模型（Time Series Forecasting Foundation Model / Time Series Reasoning Model）”</strong>是一类面向复杂动态系统、基于大规模时序数据预训练，并具备预测、推理、解释、交互和决策辅助能力的新一代智能模型。其目标不再只是“根据过去预测未来”，而是进一步实现：<strong>理解系统演化规律 → 结合外部情境知识 → 推演未来可能状态 → 评估不确定性 → 辅助决策。</strong>
+        </p>
+        <p>
+          CastMind 是这一范式下的情境推理驱动时间序列推演大模型。它首先从历史序列中挖掘趋势、周期、波动和变量依赖，形成基础未来轨迹；随后融合天气、事件、政策、文本、领域知识和系统状态等多源情境，理解系统运行条件；进一步通过大模型的知识推理与机制分析，判断历史趋势在特定情境下是否延续、增强、削弱、偏移或反转，完成未来状态推演、预测修正、不确定性评估与机制解释，为后续决策提供依据。
+        </p>
       </div>
     </div>
 
@@ -857,33 +1310,107 @@
           <div class="intro-step">
             <div class="intro-step-index">01</div>
             <div>
-              <div class="intro-step-title">历史序列理解与基础轨迹外推</div>
-              <p>模型通过时间序列编码器或时序 Tokenizer 对历史序列进行表征学习，挖掘趋势、周期、波动、局部形态和多变量依赖，形成基于历史数值模式的基础未来轨迹。</p>
+              <div class="intro-step-title">理解规律</div>
+              <p>
+                基于历史序列学习长期趋势、周期节律、局部波动、突变点与多变量依赖，
+                区分稳定结构、短期扰动与异常噪声，建立不含外部情境的基础未来轨迹。
+              </p>
+              <div class="intro-step-outcome"><span>核心产出</span>系统演化规律与基础预测轨迹</div>
             </div>
           </div>
           <div class="intro-step">
             <div class="intro-step-index">02</div>
             <div>
-              <div class="intro-step-title">多源情境获取与可信质量评估</div>
-              <p>模型引入天气、节假日、事件、政策、新闻文本、领域知识和系统状态等多源情境信息，并通过跨模态对齐机制将数值时序与语义情境统一到可推理的表示空间中。</p>
+              <div class="intro-step-title">结合情境</div>
+              <p>
+                检索并对齐天气、事件、政策、文本、领域知识和系统状态，评估证据的相关性、
+                时效性与可信度，判断不同条件对基础趋势的增强、削弱、偏移或反转作用。
+              </p>
+              <div class="intro-step-outcome"><span>核心产出</span>可信情境约束与条件影响判断</div>
             </div>
           </div>
           <div class="intro-step">
             <div class="intro-step-index">03</div>
             <div>
-              <div class="intro-step-title">时序—情境协同推理与趋势推演</div>
-              <p>CastMind 借助大模型的情境理解、知识调用、机制分析和结构化推理能力，判断历史趋势在特定情境下是否延续、增强、削弱、偏移或反转。</p>
+              <div class="intro-step-title">推演状态</div>
+              <p>
+                围绕关键变量与机制假设，分别推演趋势延续、增强、削弱、偏移或反转等可能路径，
+                形成条件化的多情景未来状态空间，而不是给出唯一答案。
+              </p>
+              <div class="intro-step-outcome"><span>核心产出</span>未来状态集合、触发条件与演化路径</div>
             </div>
           </div>
           <div class="intro-step">
             <div class="intro-step-index">04</div>
             <div>
-              <div class="intro-step-title">推演驱动的预测修正与解释生成</div>
-              <p>模型将推演结果转化为对基础预测的修正量，输出最终预测结果、趋势变化解释和不确定性判断，并通过监督微调、强化学习、工具调用反馈和案例记忆不断提升情境推理与趋势推演能力。</p>
+              <div class="intro-step-title">评估不确定性</div>
+              <p>
+                同时报告点预测误差、概率分布或预测区间，并通过敏感性和反事实分析，
+                识别风险来源、敏感因素和模型适用边界，说明结论在何种条件下可信。
+              </p>
+              <div class="intro-step-outcome"><span>核心产出</span>置信区间、风险清单与适用边界</div>
+            </div>
+          </div>
+          <div class="intro-step">
+            <div class="intro-step-index">05</div>
+            <div>
+              <div class="intro-step-title">辅助决策</div>
+              <p>
+                把不同情景下的预测结果和风险评估转化为预警、调度、资源配置或行动建议，
+                比较不同干预方案的影响与代价，并根据反馈持续修正预测。
+              </p>
+              <div class="intro-step-outcome"><span>核心产出</span>可执行建议、干预优先级与反馈闭环</div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ TECH ═══════════════════ -->
+<section id="tech" class="alt">
+  <div class="container">
+    <h2 class="section-title">时序推演输入</h2>
+    <p class="section-lead">
+      CastMind（星思）的推演输入由<strong>历史序列</strong>与<strong>情境特征</strong>两个模块构成：
+      前者提供数值轨迹基础，后者提供条件约束与机制解释。
+    </p>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <div class="tech-layer">Sequence Module</div>
+        <h4>历史序列</h4>
+        <p>
+          历史序列是 CastMind 进行趋势推演的基础观测信号，负责刻画连续变化、局部波动、
+          周期结构、异常点、转折点和多变量依赖，形成可被后续情境推理修正的基础未来轨迹。
+        </p>
+        <div class="tech-highlight">Trend · Seasonality · Volatility · Turning Point · Multivariate Dependency</div>
+      </div>
+      <div class="tech-card">
+        <div class="tech-layer">Context Module</div>
+        <h4>情境特征</h4>
+        <p>
+          情境特征为预测提供外部条件和领域约束，包括天气、节假日、事件、政策、文本、
+          领域知识和系统状态等信息，用于判断历史趋势在特定情境下是否延续、增强、削弱、
+          偏移或反转。
+        </p>
+        <div class="tech-highlight">Weather · Events · Policy · Text · Domain Knowledge · System State</div>
+      </div>
+    </div>
+
+    <h3 class="sub-title">训练 Instance 结构</h3>
+    <p>一个典型的 CastMind（星思）训练样本包含以下八类信息：</p>
+    <div class="instance-box">
+      Instance = {<br>
+      &nbsp;&nbsp;<span class="ib-key">dynamic_numeric_sequence</span> <span class="ib-arrow">←</span> <span class="ib-val">Feature Encoder 原生建模的动态数值序列</span><br>
+      &nbsp;&nbsp;<span class="ib-key">context_aware_features</span>   <span class="ib-arrow">←</span> <span class="ib-val">外部情境证据（天气、事件、日历、空间、环境状态…）</span><br>
+      &nbsp;&nbsp;<span class="ib-key">domain_metadata</span>         <span class="ib-arrow">←</span> <span class="ib-val">领域、频率、变量、单位信息</span><br>
+      &nbsp;&nbsp;<span class="ib-key">forecasting_instruction</span> <span class="ib-arrow">←</span> <span class="ib-val">预测任务定义</span><br>
+      &nbsp;&nbsp;<span class="ib-key">future_target</span>           <span class="ib-arrow">←</span> <span class="ib-val">未来真实值（监督信号）</span><br>
+      &nbsp;&nbsp;<span class="ib-key">reasoning_trace</span>         <span class="ib-arrow">←</span> <span class="ib-val">结构化上下文推理过程（SFT / Reasoning 阶段学习）</span><br>
+      &nbsp;&nbsp;<span class="ib-key">agentic_interaction_trace</span><span class="ib-arrow">←</span> <span class="ib-val">环境交互、证据获取与预测修正轨迹</span><br>
+      &nbsp;&nbsp;<span class="ib-key">reward_signals</span>          <span class="ib-arrow">←</span> <span class="ib-val">结果奖励 + 推理过程奖励 + Agentic 交互反馈</span><br>
+      }
     </div>
   </div>
 </section>
@@ -893,7 +1420,8 @@
   <div class="container">
     <h2 class="section-title">关键技术路径</h2>
     <p class="section-lead">
-      预训练语言大模型作为 Backbone Network，SFT / RLVR / OPD 作为能力优化算法，数据质量评估与调度优化作为训练与泛化的基础支撑。
+      预训练语言大模型作为 Backbone Network，SFT / RLVR 作为能力优化算法，
+      构成从通用认知主干、监督适配到可验证推演强化的关键技术路径。
     </p>
     <div class="path-stack">
       <article class="path-card">
@@ -957,98 +1485,6 @@
         <div class="path-quote">推演过程能够真正带来预测性能提升，并且推理结论可以被结果验证。</div>
       </article>
 
-      <article class="path-card">
-        <h3>4. OPD：面向轻量化与稳定部署的策略蒸馏</h3>
-        <p>OPD 可以作为 CastMind 后期的重要优化算法，即 <strong>On-policy Distillation</strong>。</p>
-        <p>它的思路是：先用强大的 CastMind-Agent 或大模型进行多轮情境推理、工具调用和预测修正，再把这些高质量推演轨迹蒸馏到更小、更快、更稳定的模型中。</p>
-        <p>OPD 蒸馏的不只是最终答案，而是整个推演策略：</p>
-        <div class="path-flow">历史理解 → 情境选择 → 推理路径 → 修正决策</div>
-        <p>这样可以得到：</p>
-        <ul class="path-list">
-          <li>更低推理成本；</li>
-          <li>更快响应速度；</li>
-          <li>更适合行业部署；</li>
-          <li>更稳定的预测修正能力；</li>
-          <li>保留强模型的情境推演策略。</li>
-        </ul>
-        <p>所以 OPD 可以定位为：</p>
-        <div class="path-quote">将大模型/智能体的复杂推演能力压缩到轻量模型中的关键算法。</div>
-      </article>
-
-      <article class="path-card">
-        <h3>5. 数据质量评估与调度优化：决定模型能否真正学会推演</h3>
-        <p>这是 CastMind 很关键的一层。因为情境感知预测不是数据越多越好，而是要求数据具有：</p>
-        <ul class="path-list">
-          <li>高情境相关性；</li>
-          <li>高机制多样性；</li>
-          <li>高趋势变化覆盖；</li>
-          <li>高信息密度；</li>
-          <li>低冗余；</li>
-          <li>低噪声；</li>
-          <li>无未来泄漏。</li>
-        </ul>
-        <p>可以为每个训练样本设计质量评分：</p>
-        <div class="path-formula">Q<sub>i</sub> = αR<sub>i</sub> + βD<sub>i</sub> + γM<sub>i</sub> + ηI<sub>i</sub> − λN<sub>i</sub> − μL<sub>i</sub></div>
-        <p>其中：</p>
-        <ul class="path-list">
-          <li>R<sub>i</sub>：情境相关性；</li>
-          <li>D<sub>i</sub>：领域覆盖度；</li>
-          <li>M<sub>i</sub>：机制多样性；</li>
-          <li>I<sub>i</sub>：信息密度；</li>
-          <li>N<sub>i</sub>：噪声程度；</li>
-          <li>L<sub>i</sub>：信息泄漏风险。</li>
-        </ul>
-        <p>然后通过调度优化控制训练数据采样：</p>
-        <div class="path-formula">p<sub>i</sub> ∝ exp(Q<sub>i</sub> / τ)</div>
-        <p>也就是优先训练高质量、高信息密度、高情境覆盖的数据，同时动态加入困难样本、失败案例和不同领域样本。</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════ TECH ═══════════════════ -->
-<section id="tech" class="alt">
-  <div class="container">
-    <h2 class="section-title">核心技术体系</h2>
-    <p class="section-lead">
-      CastMind（星思）的推演输入由<strong>历史序列</strong>与<strong>情境特征</strong>两个模块构成：
-      前者提供数值轨迹基础，后者提供条件约束与机制解释。
-    </p>
-    <div class="tech-grid">
-      <div class="tech-card">
-        <div class="tech-layer">Sequence Module</div>
-        <h4>历史序列</h4>
-        <p>
-          历史序列是 CastMind 进行趋势推演的基础观测信号，负责刻画连续变化、局部波动、
-          周期结构、异常点、转折点和多变量依赖，形成可被后续情境推理修正的基础未来轨迹。
-        </p>
-        <div class="tech-highlight">Trend · Seasonality · Volatility · Turning Point · Multivariate Dependency</div>
-      </div>
-      <div class="tech-card">
-        <div class="tech-layer">Context Module</div>
-        <h4>情境特征</h4>
-        <p>
-          情境特征为预测提供外部条件和领域约束，包括天气、节假日、事件、政策、文本、
-          领域知识和系统状态等信息，用于判断历史趋势在特定情境下是否延续、增强、削弱、
-          偏移或反转。
-        </p>
-        <div class="tech-highlight">Weather · Events · Policy · Text · Domain Knowledge · System State</div>
-      </div>
-    </div>
-
-    <h3 class="sub-title">训练 Instance 结构</h3>
-    <p>一个典型的 CastMind（星思）训练样本包含以下八类信息：</p>
-    <div class="instance-box">
-      Instance = {<br>
-      &nbsp;&nbsp;<span class="ib-key">dynamic_numeric_sequence</span> <span class="ib-arrow">←</span> <span class="ib-val">Feature Encoder 原生建模的动态数值序列</span><br>
-      &nbsp;&nbsp;<span class="ib-key">context_aware_features</span>   <span class="ib-arrow">←</span> <span class="ib-val">外部情境证据（天气、事件、日历、空间、环境状态…）</span><br>
-      &nbsp;&nbsp;<span class="ib-key">domain_metadata</span>         <span class="ib-arrow">←</span> <span class="ib-val">领域、频率、变量、单位信息</span><br>
-      &nbsp;&nbsp;<span class="ib-key">forecasting_instruction</span> <span class="ib-arrow">←</span> <span class="ib-val">预测任务定义</span><br>
-      &nbsp;&nbsp;<span class="ib-key">future_target</span>           <span class="ib-arrow">←</span> <span class="ib-val">未来真实值（监督信号）</span><br>
-      &nbsp;&nbsp;<span class="ib-key">reasoning_trace</span>         <span class="ib-arrow">←</span> <span class="ib-val">结构化上下文推理过程（SFT / Reasoning 阶段学习）</span><br>
-      &nbsp;&nbsp;<span class="ib-key">agentic_interaction_trace</span><span class="ib-arrow">←</span> <span class="ib-val">环境交互、证据获取与预测修正轨迹</span><br>
-      &nbsp;&nbsp;<span class="ib-key">reward_signals</span>          <span class="ib-arrow">←</span> <span class="ib-val">结果奖励 + 推理过程奖励 + Agentic 交互反馈</span><br>
-      }
     </div>
   </div>
 </section>
@@ -1122,91 +1558,6 @@
         <div class="stage-output">输出：CastMind-Agentic Reasoning</div>
       </div>
     </div>
-
-    <h3 class="sub-title">CastMind-Agentic Reasoning 的三类策略优化</h3>
-    <ul class="pillar-list">
-      <li>
-        <div class="pillar-num primary">1</div>
-        <div class="pillar-text">
-          <strong>Interaction Seeking Policy · 交互触发策略</strong>
-          <span>模型学习何时需要与环境交互，以及应该访问哪类环境：Memory、检索器、上下文工具、外部变量服务或任务状态。关键不是"有没有工具"，而是模型能否在推理中动态识别证据缺口。</span>
-        </div>
-      </li>
-      <li>
-        <div class="pillar-num primary">2</div>
-        <div class="pillar-text">
-          <strong>Context Grounding Policy · 上下文证据利用策略</strong>
-          <span>模型获得环境反馈后，需要判断哪些证据有用、哪些证据会误导预测，并将证据合理融入上下文推理，而不是简单拼接到输入中。这能减少检索噪声，也让预测依据更可解释。</span>
-        </div>
-      </li>
-      <li>
-        <div class="pillar-num primary">3</div>
-        <div class="pillar-text">
-          <strong>Forecast Revision Policy · 预测修正策略</strong>
-          <span>模型在获得新证据后学习更新中间判断和最终预测。例如初始判断未来负荷会上升，但环境反馈显示相似天气条件下历史负荷反而下降时，模型需要重新评估原始假设并形成新的预测路径。</span>
-        </div>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- ═══════════════════ VERSIONS ═══════════════════ -->
-<section id="versions" class="alt">
-  <div class="container">
-    <h2 class="section-title">四阶段能力路线</h2>
-    <p class="section-lead">
-      CastMind（星思）的四个阶段不是简单的 Base / SFT / RL 分段，
-      而是明确对应四类能力跃迁：
-    </p>
-    <div class="version-grid">
-      <div class="version-card">
-        <div class="ver-badge ver-base">CastMind-Base</div>
-        <h4>接入时间序列</h4>
-        <div class="ver-stage">基础模型阶段</div>
-        <p>
-          建立 Feature Encoder + LLM Backbone 的模型底座。
-          原始动态数值序列被编码为 temporal embeddings 后输入语言模型，
-          让模型具备跨域时序表征、基础预测、上下文融合和多模态情境对齐能力。
-        </p>
-      </div>
-      <div class="version-card">
-        <div class="ver-badge ver-sft">CastMind-SFT</div>
-        <h4>完成时序任务</h4>
-        <div class="ver-stage">任务适配阶段</div>
-        <p>
-          通过监督微调学习趋势分析、预测生成、异常解释、外生变量理解、
-          Meta Data 融合、领域描述理解和 Context-aware Feature 对齐，
-          解决指令跟随、任务格式、预测输出和基础解释能力。
-        </p>
-      </div>
-      <div class="version-card">
-        <div class="ver-badge ver-cot">CastMind-Structured Reasoning</div>
-        <h4>上下文推理预测</h4>
-        <div class="ver-stage">结构化推理阶段</div>
-        <p>
-          强化结构化上下文推理能力，围绕趋势变化、周期波动、异常扰动、
-          事件影响、情境变化和未来演化路径展开分步分析，
-          将预测从模式外推推进到推理式预测。
-        </p>
-      </div>
-      <div class="version-card">
-        <div class="ver-badge ver-agentic">CastMind-Agentic Reasoning</div>
-        <h4>自主获取证据并修正判断</h4>
-        <div class="ver-stage">自主交互推理阶段</div>
-        <p>
-          在预测过程中主动发现证据缺口，与 Memory、检索器、上下文工具、
-          外部变量服务和任务环境自主多轮交互，检索历史相似模式、领域知识、
-          失败经验、数据分析结论和过往预测轨迹，并基于新证据持续修正中间判断和最终预测。
-        </p>
-      </div>
-    </div>
-
-    <p class="route-summary">
-      这一路线可以概括为：
-      Base 阶段解决"如何以 Feature Encoder 接入动态数值序列"；SFT 阶段解决"如何融合 Context-aware Feature 完成时序任务"；
-      Structured Reasoning 阶段解决"如何进行上下文推理预测"；Agentic Reasoning 阶段解决
-      "如何与环境自主多轮交互、获取证据并修正判断"。
-    </p>
   </div>
 </section>
 
@@ -1214,31 +1565,36 @@
 <section id="eval">
   <div class="container">
     <h2 class="section-title">评估体系</h2>
-    <p class="section-lead">
-      CastMind（星思）的评估同时覆盖 <strong>in-domain 能力</strong>和 <strong>out-of-domain 泛化能力</strong>，
-      全面验证 Feature Encoder、Context-aware Feature 与 Agentic Reasoning 的综合增益：
+    <p class="section-lead eval-intro">
+      CastMind（星思）的时序预测评估首先遵循两大类指标体系：
+      <strong>确定性点预测评估</strong>衡量单一预测值或预测轨迹与真实值之间的误差，
+      <strong>概率性预测评估</strong>衡量预测分布、分位数和预测区间的质量、校准性与锐度。
+      在此基础上，评估同时覆盖 <strong>in-domain 能力</strong>和 <strong>out-of-domain 泛化能力</strong>，
+      并进一步验证 Feature Encoder、Context-aware Feature 与 Agentic Reasoning 的综合增益。
     </p>
     <div class="eval-split">
       <div class="eval-half">
         <div class="eval-badge badge-in">In-domain 评估</div>
-        <h4>已见领域基础预测能力</h4>
-        <p>使用现有数据集测试集，检验 CastMind（星思）在已见领域和数据分布下的性能。</p>
+        <h4>已见领域的两类预测评估</h4>
+        <p>使用现有数据集测试集，分别检验 CastMind（星思）在已见领域和数据分布下的点预测精度与概率预测质量。</p>
         <ul class="feature-list">
-          <li><strong>点预测指标：</strong>MAE · MSE · RMSE · sMAPE · MASE</li>
-          <li><strong>概率预测指标：</strong>CRPS · Pinball Loss · Prediction Interval Coverage</li>
+          <li><strong>确定性点预测评估：</strong>MAE · MSE · RMSE · sMAPE · MASE，用于衡量点预测误差与跨尺度表现</li>
+          <li><strong>概率性预测评估：</strong>CRPS · Pinball Loss · Prediction Interval Coverage · Mean Prediction Interval Width，用于衡量分布质量、分位数误差、区间校准性与锐度</li>
           <li><strong>Encoder 指标：</strong>动态数值序列表示质量 · 关键变化点捕获 · 趋势方向一致性</li>
           <li><strong>Context 指标：</strong>Context Attribution · 情境归因一致性 · 可见上下文利用率</li>
           <li><strong>Agentic 指标：</strong>交互触发准确性 · 环境证据利用率 · 预测修正有效性</li>
         </ul>
         <p class="eval-note">
-          在四个阶段（Base / SFT / Structured Reasoning / Agentic Reasoning）间进行对比，展示各阶段对预测、上下文推理与环境交互能力的增益。
+          在四个阶段（Base / SFT / Structured Reasoning / Agentic Reasoning）间进行对比，展示各阶段对预测、上下文推理与环境交互能力的增益。概率区间的覆盖率与区间宽度必须联合报告，避免以过宽区间换取表面上的高覆盖率。
         </p>
       </div>
       <div class="eval-half">
         <div class="eval-badge badge-out">Out-of-domain 评估</div>
         <h4>跨领域情境感知泛化能力</h4>
-        <p>以 <strong>FutureCast（天星台）</strong> 为核心评测集，构造未见领域、未见上下文类型和复杂情境变化下的预测任务。</p>
+        <p>以 <strong>FutureCast（天星台）</strong> 为核心评测集，在未见领域、未见上下文类型和复杂情境变化下，同时评估确定性点预测与概率性预测的泛化能力。</p>
         <ul class="feature-list">
+          <li><strong>确定性点预测泛化：</strong>报告 MAE、RMSE、sMAPE、MASE 及其相对 in-domain 性能退化</li>
+          <li><strong>概率性预测泛化：</strong>报告 CRPS、Pinball Loss、区间覆盖率与区间宽度的变化</li>
           <li>能否适应新的领域和采样频率</li>
           <li>能否理解未见的 Context-aware Feature 类型</li>
           <li>能否在外部事件、分布漂移、非平稳变化和信息不完整下给出稳健预测</li>
@@ -1256,26 +1612,210 @@
           <tr><th>评估维度</th><th>指标</th><th>适用阶段</th></tr>
         </thead>
         <tbody>
-          <tr><td>数值预测准确性</td><td>MAE · MSE · RMSE · sMAPE · MASE</td><td>全部阶段</td></tr>
-          <tr><td>概率预测质量</td><td>CRPS · Pinball Loss · PI Coverage</td><td>SFT / Structured Reasoning / Agentic Reasoning</td></tr>
+          <tr><td>确定性点预测评估</td><td>MAE · MSE · RMSE · sMAPE · MASE</td><td>全部阶段</td></tr>
+          <tr><td>概率性预测评估</td><td>CRPS · Pinball Loss · PI Coverage · Mean Prediction Interval Width</td><td>SFT / Structured Reasoning / Agentic Reasoning</td></tr>
           <tr><td>趋势判断能力</td><td>Direction Accuracy · Turning-point F1</td><td>全部阶段</td></tr>
           <tr><td>Feature Encoder 表示质量</td><td>Dynamic Pattern Coverage · Turning-point Capture · Temporal Embedding Separability</td><td>全部阶段</td></tr>
           <tr><td>情境融入能力</td><td>Contextual Integration · Context Attribution · Context Utilization</td><td>SFT / Structured Reasoning / Agentic Reasoning</td></tr>
           <tr><td>预测—推理一致性</td><td>Prediction-Reasoning Consistency Score</td><td>Structured Reasoning / Agentic Reasoning</td></tr>
           <tr><td>环境交互质量</td><td>Interaction Seeking · Evidence Grounding · Forecast Revision · Environment Feedback Use</td><td>Agentic Reasoning</td></tr>
-          <tr><td>跨域泛化能力</td><td>Zero-shot / Few-shot 指标（FutureCast（天星台））</td><td>全部阶段</td></tr>
+          <tr><td>跨域泛化能力</td><td>确定性与概率性指标的 Zero-shot / Few-shot 表现及相对性能退化（FutureCast（天星台））</td><td>全部阶段</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════ CLOSING STATEMENT ═══════════════════ -->
-<section class="closing-section" aria-label="CastMind 总结">
+<!-- ═══════════════════ FORECAST EVOLUTION ═══════════════════ -->
+<section id="forecast-evolution" class="evolution-section">
   <div class="container">
-    <p class="closing-statement">
-      CastMind 借鉴大模型慢思考推理范式，构建面向时间序列推演的长链路认知推理机制，通过多步情境分析、知识调用、机制判断和反思修正，实现对复杂系统未来趋势的可解释、可验证预测。
+    <h2 class="section-title">从时间序列预测到时序预测推演</h2>
+    <p class="section-lead evolution-intro">
+      <strong>预测是推演的数值基础</strong>。推演是在预测之上对未来进行情境化、机制化和多情景扩展，而不是对预测的简单替代。
     </p>
+
+    <div class="evolution-grid" aria-label="时间序列智能三阶段演进">
+      <article class="evolution-card">
+        <div class="evolution-stage">Stage 01 · Forecasting</div>
+        <h3>数据拟合智能</h3>
+        <p class="evolution-role">传统时间序列预测</p>
+        <dl class="evolution-spec">
+          <div class="evolution-row">
+            <dt>输入</dt>
+            <dd>历史序列</dd>
+          </div>
+          <div class="evolution-row">
+            <dt>方法</dt>
+            <dd>模式匹配 · 统计学习</dd>
+          </div>
+          <div class="evolution-row">
+            <dt>输出</dt>
+            <dd>点预测 · 概率预测</dd>
+          </div>
+        </dl>
+        <p class="evolution-question">What will happen?</p>
+      </article>
+
+      <article class="evolution-card">
+        <div class="evolution-stage">Stage 02 · Context</div>
+        <h3>情境理解智能</h3>
+        <p class="evolution-role">情境感知时间序列预测</p>
+        <dl class="evolution-spec">
+          <div class="evolution-row">
+            <dt>输入</dt>
+            <dd>历史序列 + 外部情境</dd>
+          </div>
+          <div class="evolution-row">
+            <dt>方法</dt>
+            <dd>情境对齐 · 条件关联分析</dd>
+          </div>
+          <div class="evolution-row">
+            <dt>输出</dt>
+            <dd>特定情境下的条件预测</dd>
+          </div>
+        </dl>
+        <p class="evolution-question">What will happen under this context?</p>
+      </article>
+
+      <article class="evolution-card">
+        <div class="evolution-stage">Stage 03 · Reasoning</div>
+        <h3>认知推演智能</h3>
+        <p class="evolution-role">机制推理与多情景推演</p>
+        <dl class="evolution-spec">
+          <div class="evolution-row">
+            <dt>输入</dt>
+            <dd>序列 + 情境 + 知识 + 系统状态</dd>
+          </div>
+          <div class="evolution-row">
+            <dt>方法</dt>
+            <dd>机制分析 · 假设推理 · 情景模拟</dd>
+          </div>
+          <div class="evolution-row">
+            <dt>输出</dt>
+            <dd>多种未来状态 · 不确定性 · 决策依据</dd>
+          </div>
+        </dl>
+        <p class="evolution-question">Why? What if? What should we do?</p>
+      </article>
+    </div>
+
+    <div class="evolution-path" aria-label="CastMind 能力演进链路">
+      <span class="evolution-path-label">能力演进链路</span>
+      <div class="evolution-path-flow">历史序列预测 → 情境条件预测 → 机制推理与多情景推演 → 不确定性评估 → 决策辅助</div>
+    </div>
+
+    <p class="evolution-positioning">
+      <strong>CastMind 以数值预测为基础锚点</strong>，引入外部情境和领域知识理解系统运行条件，通过机制分析、假设推理与多情景模拟，推演不同条件下的未来状态，评估其不确定性与风险，并为决策提供依据。
+    </p>
+
+    <aside class="evolution-example" aria-labelledby="load-example-title">
+      <div class="example-heading">
+        <div>
+          <span class="example-kicker">Illustrative Case · 方法示意</span>
+          <h3 id="load-example-title">示例：电力负荷预测如何走向时序预测推演</h3>
+        </div>
+        <p class="example-scenario">
+          假设某城市需要预测次日负荷，同时面临持续高温、工作日用电与大型活动叠加等外部条件。
+        </p>
+      </div>
+
+      <div class="example-load-visual">
+        <div class="load-chart-wrap">
+          <span class="load-visual-title">24H Load Profile · 示意负荷曲线</span>
+          <div class="load-chart" role="img" aria-label="示意的二十四小时电力负荷曲线，晚间负荷达到高峰">
+            <span class="load-bar" style="--load: 30%;"></span>
+            <span class="load-bar" style="--load: 25%;"></span>
+            <span class="load-bar" style="--load: 22%;"></span>
+            <span class="load-bar" style="--load: 26%;"></span>
+            <span class="load-bar" style="--load: 34%;"></span>
+            <span class="load-bar" style="--load: 46%;"></span>
+            <span class="load-bar" style="--load: 58%;"></span>
+            <span class="load-bar" style="--load: 65%;"></span>
+            <span class="load-bar" style="--load: 61%;"></span>
+            <span class="load-bar" style="--load: 56%;"></span>
+            <span class="load-bar" style="--load: 59%;"></span>
+            <span class="load-bar" style="--load: 68%;"></span>
+            <span class="load-bar" style="--load: 77%;"></span>
+            <span class="load-bar is-peak" style="--load: 91%;"></span>
+            <span class="load-bar is-peak" style="--load: 96%;"></span>
+            <span class="load-bar" style="--load: 82%;"></span>
+            <span class="load-bar" style="--load: 63%;"></span>
+            <span class="load-bar" style="--load: 45%;"></span>
+            <span class="load-bar" style="--load: 38%;"></span>
+            <span class="load-bar" style="--load: 34%;"></span>
+            <span class="load-bar" style="--load: 31%;"></span>
+            <span class="load-bar" style="--load: 28%;"></span>
+            <span class="load-bar" style="--load: 25%;"></span>
+            <span class="load-bar" style="--load: 29%;"></span>
+            <span class="load-peak-label">晚高峰关注</span>
+          </div>
+          <div class="load-axis" aria-hidden="true">
+            <span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span>
+          </div>
+        </div>
+
+        <div class="load-context-panel">
+          <span class="load-visual-title">Context Signals · 外部情境</span>
+          <div class="load-context-grid">
+            <div class="context-chip">
+              <i aria-hidden="true">温</i>
+              <span><strong>持续高温</strong><small>制冷需求增强</small></span>
+            </div>
+            <div class="context-chip">
+              <i aria-hidden="true">工</i>
+              <span><strong>工作日</strong><small>生产用电稳定</small></span>
+            </div>
+            <div class="context-chip">
+              <i aria-hidden="true">事</i>
+              <span><strong>大型活动</strong><small>局部负荷集中</small></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-steps" aria-label="电力负荷预测推演三阶段">
+        <div class="example-step">
+          <div class="example-step-head">
+            <span class="example-step-icon" aria-hidden="true">01</span>
+            <span class="example-step-label">Forecasting · 基线预测</span>
+          </div>
+          <h4>先回答“负荷会怎样变化”</h4>
+          <p>
+            基于历史负荷曲线学习日周期、周周期、峰谷形态和变化趋势，形成次日基础负荷曲线，并判断可能的峰值时段。
+          </p>
+        </div>
+
+        <div class="example-step">
+          <div class="example-step-head">
+            <span class="example-step-icon" aria-hidden="true">02</span>
+            <span class="example-step-label">Context · 情境修正</span>
+          </div>
+          <h4>再判断“这些条件会带来什么影响”</h4>
+          <p>
+            引入气温、工作日、节假日和大型活动等情境，分析制冷需求与集中用电对基线预测的增强、偏移及不确定性影响。
+          </p>
+        </div>
+
+        <div class="example-step">
+          <div class="example-step-head">
+            <span class="example-step-icon" aria-hidden="true">03</span>
+            <span class="example-step-label">Reasoning · 多情景推演</span>
+          </div>
+          <h4>进一步分析“如果条件改变会怎样”</h4>
+          <p>围绕关键条件构造未来状态，并比较不同干预策略的结果：</p>
+          <div class="example-scenarios">
+            <span class="is-risk">情景 A：高温持续且活动如期举行 → 峰值风险进一步上升</span>
+            <span class="is-action">情景 B：启动需求响应与储能调度 → 峰值压力得到缓解</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="example-decision">
+        <strong>决策辅助</strong>
+        <span>将推演结果转化为峰值预警、备用容量安排、需求响应与储能调度建议。</span>
+      </div>
+      <p class="example-note">方法示意：该案例用于说明能力演进关系，不代表某一真实电网的预测结果。</p>
+    </aside>
   </div>
 </section>
 
