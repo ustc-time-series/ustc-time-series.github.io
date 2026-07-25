@@ -6,8 +6,21 @@ const page = await readFile(new URL('../index.html', import.meta.url), 'utf8');
 
 test('homepage labels the context-aware forecasting research track', () => {
   assert.ok(
-    page.includes('<h2>情境感知的时间序列分析（Context-aware Time Series Forecasting）</h2>'),
-    'Context-aware research heading should include its English label',
+    page.includes('<h2>情境感知的时间序列预测（Context-Aware Time Series Forecasting）</h2>'),
+    'Context-aware forecasting heading should include its English label',
+  );
+});
+
+test('homepage foundation-model card links to the CastMind homepage', () => {
+  const card = page.match(
+    /<!-- Foundation Models -->([\s\S]*?)<!-- Scientific Time Series Modeling -->/,
+  )?.[1] ?? '';
+
+  assert.ok(card.includes('<h3>时间序列基础模型</h3>'));
+  assert.ok(
+    card.includes(
+      '<a class="card-btn btn-enter-foundation" href="https://ustc-time-series.github.io/cast-mind/" target="_blank" rel="noopener">查看主页 →</a>',
+    ),
   );
 });
 

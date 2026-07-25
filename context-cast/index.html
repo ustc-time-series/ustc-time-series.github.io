@@ -4,813 +4,1321 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#f4f7f9" />
-  <title>情境感知的时间序列分析 — 从模式拟合到认知推理</title>
-  <meta name="description" content="情境感知的时间序列分析研究方向，探索多源情境表示、情境推理与动态自适应，推动时间序列建模从模式拟合走向认知推理范式。" />
+  <title>情境感知的时间序列预测 | USTC-AGI Time Series</title>
+  <meta
+    name="description"
+    content="USTC-AGI 情境感知的时间序列预测研究方向：围绕情境理解、情境推理、情境自主获取与情境推演，研究多源上下文驱动的可靠未来判断。"
+  />
+  <link rel="canonical" href="https://ustc-time-series.github.io/context-cast/" />
+  <meta property="og:title" content="情境感知的时间序列预测 | USTC-AGI Time Series" />
+  <meta
+    property="og:description"
+    content="从多源情境理解、影响机制推理和主动证据获取，到多情景未来推演，构建可靠、可解释、可更新的时间序列预测闭环。"
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ustc-time-series.github.io/context-cast/" />
+  <meta name="twitter:card" content="summary" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     :root {
-      --navy:       #061f45;
-      --navy-dark:  #083f7f;
-      --teal:       #0b5fc6;
-      --teal-light: #0b78c4;
-      --amber:      #b45309;
       --accent: #0b5fc6;
       --accent-dark: #083f7f;
-      --text: #17324d;
-      --muted:      #4c6176;
-      --faint:      #5b7187;
-      --line: #d5e3eb;
-      --bg: #f4f7f9;
-      --card: #ffffff;
-      --card-hover: #f0f7ff;
       --accent-soft: #edf7fc;
       --accent-border: #b7d9ec;
-      --blue: #0b78c4;
-      --blue-muted: #5a7fa6;
       --text-strong: #061f45;
+      --text: #17324d;
       --text-muted: #4c6176;
       --text-faint: #5b7187;
+      --line: #d5e3eb;
       --line-soft: #e6f0f5;
+      --bg: #f4f7f9;
+      --card: #ffffff;
       --surface-soft: #f8fbfd;
+      --signal: #2f648d;
+      --signal-soft: #dcecf5;
       --footer-text: #a9c7db;
       --footer-faint: #8eb4cc;
       --footer-link: #8fd9ff;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
-                   "PingFang SC", "Hiragino Sans GB", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                   "PingFang SC", "Hiragino Sans GB", sans-serif;
       font-size: 16px;
+      line-height: 1.8;
       text-align: justify;
       text-justify: inter-ideograph;
     }
-    a { color: var(--teal); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    code {
-      background: #f0f0ee;
-      border: 1px solid #e0e0de;
-      border-radius: 4px;
-      padding: 2px 6px;
-      font-family: "SF Mono", "Fira Mono", "Consolas", monospace;
-      font-size: 0.85em;
-      color: var(--navy);
-    }
 
-    /* ── Container ─────────────────────────────────── */
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* ── Sticky nav ────────────────────────────────── */
-    .nav-bar {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.97);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--line);
-      box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
-    }
-    .nav-bar .container {
-      display: flex;
-      align-items: center;
-      overflow-x: auto;
-      scrollbar-width: none;
-      gap: 0;
-      padding-top: 0;
-      padding-bottom: 0;
-    }
-    .nav-bar .container::-webkit-scrollbar { display: none; }
-    .nav-bar a {
-      flex-shrink: 0;
-      padding: 13px 18px;
-      font-size: 0.87rem;
-      font-weight: 500;
-      color: #4c6176;
-      border-bottom: 2px solid transparent;
-      transition: color .2s, border-color .2s;
-      white-space: nowrap;
-    }
-    .nav-bar a:hover {
-      color: var(--teal);
-      border-bottom-color: var(--teal);
+    a {
+      color: var(--accent);
       text-decoration: none;
     }
-    .nav-home {
-      font-weight: 700;
-      color: var(--teal) !important;
-      border-right: 1px solid #d5e3eb;
+
+    a:hover {
+      text-decoration: underline;
     }
 
-    /* ── Hero ──────────────────────────────────────── */
-    header {
-      background: linear-gradient(160deg, #ffffff 52%, #eff8ff 82%, #edf7fc 100%);
-      border-bottom: 1px solid #d5e3eb;
-      padding: 60px 0 48px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      transition: transform .16s ease, opacity .16s ease, filter .16s ease;
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 300;
+      padding: 9px 14px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 750;
+      transform: translateY(-160%);
+      transition: transform .18s ease;
     }
-    header .container {
-      position: relative;
-      z-index: 2;
+
+    .skip-link:focus {
+      transform: translateY(0);
     }
-    header:hover { filter: saturate(1.02); }
-    header:active { transform: scale(0.995); }
-    .hero-refresh-sheen {
-      position: absolute;
-      top: -20%;
-      bottom: -20%;
-      left: -30%;
-      width: 26%;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 1;
-      background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.78) 48%, rgba(255,255,255,0) 100%);
-      transform: skewX(-24deg) translateX(0);
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
     }
-    .hero-clickable { cursor: pointer; }
-    .hero-refresh-wave {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      border: 2px solid rgba(6, 31, 69, 0.20);
-      background: rgba(11, 95, 198, 0.16);
-      transform: translate(-50%, -50%) scale(0.2);
-      pointer-events: none;
-      z-index: 1;
-      animation: hero-wave 0.85s ease-out forwards;
+
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 120;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 2px 12px rgba(9, 31, 68, 0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
     }
-    header.hero-refreshing .hero-refresh-sheen {
-      animation: hero-sheen 0.9s ease;
+
+    .top-nav .container {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
     }
-    header.hero-refreshing h1 {
-      animation: hero-title-refresh 0.75s ease;
-    }
-    header.hero-refreshing .subtitle,
-    header.hero-refreshing .btn-row {
-      animation: hero-copy-refresh 0.75s ease;
-    }
-    @keyframes hero-sheen {
-      0% { opacity: 0; transform: skewX(-24deg) translateX(0); }
-      12% { opacity: 1; }
-      100% { opacity: 0; transform: skewX(-24deg) translateX(560%); }
-    }
-    @keyframes hero-wave {
-      0% { opacity: 0.9; transform: translate(-50%, -50%) scale(0.2); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(11); }
-    }
-    @keyframes hero-title-refresh {
-      0% { transform: translateY(0); opacity: 1; }
-      25% { transform: translateY(3px); opacity: 0.84; }
-      62% { transform: translateY(-2px); opacity: 1; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-    @keyframes hero-copy-refresh {
-      0% { transform: translateY(0); opacity: 1; }
-      30% { transform: translateY(4px); opacity: 0.76; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-    header h1 {
-      margin-top: 12px;
-      font-size: 1.95rem;
+
+    .nav-brand {
+      flex-shrink: 0;
+      color: var(--text-strong);
+      font-size: 0.92rem;
       font-weight: 800;
-      line-height: 1.35;
-      color: #061f45;
-      max-width: 1180px;
-      margin-left: auto;
-      margin-right: auto;
-      text-wrap: balance;
-    }
-    header h1 .cf { color: var(--accent); }
-    .hero-title-main {
-      display: inline;
+      letter-spacing: 0.01em;
       white-space: nowrap;
     }
-    .subtitle {
-      margin: 14px auto 0;
+
+    .nav-brand span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 10px 0;
+      overflow: visible;
+    }
+
+    .nav-links a,
+    .nav-dropdown-toggle {
+      flex-shrink: 0;
+      padding: 8px 14px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 500;
+      line-height: 1.2;
+      transition: color .18s ease, background .18s ease, border-color .18s ease,
+                  transform .18s ease;
+    }
+
+    .nav-dropdown {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .nav-dropdown-toggle {
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .nav-dropdown-toggle::after {
+      content: "";
+      display: inline-block;
+      margin-left: 7px;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid currentColor;
+      vertical-align: middle;
+      transition: transform .18s ease;
+    }
+
+    .nav-dropdown.open .nav-dropdown-toggle::after {
+      transform: rotate(180deg);
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      z-index: 30;
+      display: none;
+      min-width: 268px;
+      padding: 8px;
+      gap: 4px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 12px 28px rgba(9, 31, 68, 0.10);
+    }
+
+    .nav-dropdown.open .nav-dropdown-menu {
+      display: grid;
+    }
+
+    .nav-dropdown-menu a {
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    .nav-links a:hover,
+    .nav-dropdown-toggle:hover,
+    .nav-dropdown.open .nav-dropdown-toggle,
+    .nav-dropdown-menu a:hover {
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .nav-active {
+      border-color: var(--accent-border) !important;
+      background: var(--accent-soft) !important;
+      color: var(--accent) !important;
+      font-weight: 700 !important;
+    }
+
+    header {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      padding: 78px 0 64px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 16% 18%, rgba(47, 100, 141, 0.18), transparent 29%),
+        radial-gradient(circle at 85% 78%, rgba(84, 124, 155, 0.13), transparent 31%),
+        linear-gradient(145deg, #ffffff 34%, var(--accent-soft) 100%);
+      text-align: center;
+      cursor: pointer;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.21;
+      background-image:
+        linear-gradient(rgba(9, 31, 68, .09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(9, 31, 68, .09) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, #000, transparent 90%);
+    }
+
+    header.is-refreshing {
+      opacity: 0.82;
+      transform: scale(0.995);
+    }
+
+    header:focus-visible {
+      outline: 3px solid var(--accent-border);
+      outline-offset: -6px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    header h1 {
+      margin-top: 10px;
+      color: var(--text-strong);
+      font-size: clamp(2.1rem, 5vw, 3.35rem);
+      font-weight: 850;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      text-align: center;
+      text-wrap: balance;
+    }
+
+    .header-sub {
+      max-width: 850px;
+      margin: 20px auto 0;
+      color: var(--text-muted);
       font-size: 1.02rem;
-      color: #4c6176;
-      max-width: 690px;
-      line-height: 1.7;
+      line-height: 1.85;
       text-align: center;
       text-justify: auto;
     }
-    /* ── Sections ──────────────────────────────────── */
-    section {
-      padding: 64px 0;
-      scroll-margin-top: 50px;
-    }
-    section.alt { background: #fff; }
-    section + section { border-top: 1px solid var(--line); }
 
-    h2.section-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 22px;
-      padding-bottom: 10px;
-      border-bottom: 3px solid var(--teal);
-      display: inline-block;
-    }
-    h3.sub-title {
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #17324d;
-      margin: 32px 0 10px;
-    }
-    h3.sub-title:first-of-type { margin-top: 0; }
-    p { margin-bottom: 14px; }
-    p:last-child { margin-bottom: 0; }
-
-    /* ── TL;DR banner ──────────────────────────────── */
-    .tldr {
-      background: #eff8ff;
-      border-left: 4px solid var(--navy);
-      border-radius: 0 8px 8px 0;
-      padding: 16px 22px;
-      font-size: 1.01rem;
-      color: #17324d;
-      margin-bottom: 32px;
-      line-height: 1.75;
-    }
-    .tldr strong { color: var(--navy); }
-
-    /* ── Direction intro cards ─────────────────────── */
-    .direction-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 22px;
-    }
-    .direction-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 22px 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: transform .22s, box-shadow .22s;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .direction-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.09);
-      text-decoration: none;
-    }
-    .direction-card .dir-icon { font-size: 1.6rem; margin-bottom: 10px; line-height: 1; }
-    .direction-card h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 7px; color: var(--navy); }
-    .direction-card p  { font-size: 0.85rem; color: #4c6176; margin: 0; line-height: 1.65; }
-    .direction-card .dir-papers { margin-top: 10px; font-size: 0.8rem; color: var(--teal); font-weight: 600; }
-
-    /* ── Paper cards ───────────────────────────────── */
-    .paper-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 16px;
-      margin-top: 22px;
-    }
-    .paper-card {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 22px 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-      transition: transform .22s, box-shadow .22s;
-    }
-    .paper-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.09);
-    }
-    .paper-venue {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 3px 10px;
-      border-radius: 20px;
-      margin-bottom: 10px;
-    }
-    .badge-wsdm     { background: #dbeafe; color: #0b5fc6; }
-    .badge-tist     { background: #dcfce7; color: #15803d; }
-    .badge-ijcai    { background: #ede9fe; color: #7c3aed; }
-    .badge-icml     { background: #ffedd5; color: #c2410c; }
-    .badge-preprint { background: #f3f4f6; color: #6b7280; }
-    .badge-position { background: #fef9c3; color: #854d0e; }
-    .paper-card h4 { font-size: 0.96rem; font-weight: 700; margin-bottom: 8px; color: #061f45; }
-    .paper-card p  { font-size: 0.87rem; color: #4c6176; margin: 0; line-height: 1.65; }
-
-    /* ── Pillar (numbered) list ────────────────────── */
-    .pillar-list {
-      list-style: none;
-      margin-top: 20px;
+    .hero-highlights {
       display: flex;
-      flex-direction: column;
-      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 25px;
     }
-    .pillar-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 9px;
-      padding: 16px 20px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+
+    .hero-highlights span {
+      padding: 7px 13px;
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--accent);
+      font-size: 0.82rem;
+      font-weight: 750;
     }
-    .pillar-num {
-      flex-shrink: 0;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: var(--navy);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.88rem;
+
+    .research-note {
+      max-width: 880px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-top: 2px;
-    }
-    .pillar-text { flex: 1; }
-    .pillar-text strong { display: block; font-size: 0.95rem; margin-bottom: 3px; color: var(--navy); }
-    .pillar-text span  { font-size: 0.88rem; color: #4c6176; }
-
-    /* ── Feature list ──────────────────────────────── */
-    .feature-list {
-      list-style: none;
-      margin-top: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-    }
-    .feature-list li {
-      padding-left: 20px;
-      position: relative;
-      font-size: 0.95rem;
-      color: #17324d;
-    }
-    .feature-list li::before {
-      content: "▸";
-      color: var(--teal);
-      position: absolute;
-      left: 0;
-      top: 1px;
-    }
-
-    /* ── Module grid ───────────────────────────────── */
-    .module-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 14px;
-      margin-top: 22px;
-    }
-    .module-card {
-      background: var(--card);
+      gap: 12px;
+      margin: 25px auto 0;
+      padding: 12px 16px;
       border: 1px solid var(--line);
-      border-left: 4px solid var(--navy);
-      border-radius: 0 8px 8px 0;
-      padding: 18px 18px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-    }
-    .module-card h5 {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 6px;
-    }
-    .module-card .mod-status {
-      display: inline-block;
-      font-size: 0.71rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 20px;
-      margin-bottom: 8px;
-      letter-spacing: 0.06em;
-    }
-    .status-progress { background: #fef9c3; color: #854d0e; }
-    .status-open     { background: #dcfce7; color: #15803d; }
-    .module-card p {
-      font-size: 0.84rem;
-      color: #4c6176;
-      margin: 0;
-      line-height: 1.6;
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      text-align: left;
     }
 
-    /* ── Claim box ─────────────────────────────────── */
-    .claim-box {
-      background: linear-gradient(135deg, #061f45 0%, #061f45 60%, #083f7f 100%);
-      border-radius: 12px;
-      padding: 32px 32px;
-      color: #fff;
-      margin-top: 24px;
+    .research-note strong {
+      flex-shrink: 0;
+      color: var(--accent);
     }
-    .claim-box p {
-      font-size: 0.97rem;
-      color: rgba(255,255,255,0.88);
-      line-height: 1.8;
-      margin: 0;
+
+    main {
+      flex: 1;
+      padding: 50px 0 78px;
     }
-    .claim-box .claim-sub {
-      font-size: 0.9rem;
-      color: rgba(255,255,255,0.6);
+
+    .content-stack {
+      display: grid;
+      gap: 26px;
+    }
+
+    .section-card {
+      scroll-margin-top: 86px;
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--card);
+      box-shadow: 0 14px 34px rgba(9, 31, 68, 0.055);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 0.78fr) minmax(300px, 1.22fr);
+      align-items: end;
+      gap: 34px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .section-kicker {
+      color: var(--signal);
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+      margin-top: 5px;
+      color: var(--text-strong);
+      font-size: clamp(1.42rem, 3vw, 2rem);
+      line-height: 1.32;
+      text-align: left;
+    }
+
+    .section-lead {
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      line-height: 1.78;
+    }
+
+    .research-position {
+      padding: 17px 19px;
+      border-left: 4px solid var(--accent);
+      border-radius: 0 12px 12px 0;
+      background: var(--accent-soft);
+      color: var(--text);
+      font-size: 0.94rem;
+    }
+
+    .research-position strong {
+      color: var(--text-strong);
+    }
+
+    .definition-grid,
+    .boundary-grid,
+    .capability-grid,
+    .task-grid,
+    .domain-grid,
+    .setting-grid,
+    .metric-grid {
+      display: grid;
+      gap: 14px;
       margin-top: 18px;
+    }
+
+    .definition-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .definition-grid article,
+    .boundary-card,
+    .task-card,
+    .domain-card,
+    .setting-card,
+    .metric-card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--surface-soft);
+    }
+
+    .definition-grid strong,
+    .boundary-card h3,
+    .task-card h3,
+    .domain-card h3,
+    .setting-card h3,
+    .metric-card h3 {
+      color: var(--text-strong);
+      font-size: 0.98rem;
+      text-align: left;
+    }
+
+    .definition-grid p,
+    .boundary-card p,
+    .task-card p,
+    .domain-card p,
+    .setting-card p,
+    .metric-card p {
+      margin-top: 7px;
+      color: var(--text-muted);
+      font-size: 0.87rem;
+      line-height: 1.72;
+    }
+
+    .context-source-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .context-source-list span {
+      padding: 7px 11px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 680;
+    }
+
+    .boundary-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .boundary-card {
+      border-top: 3px solid var(--signal);
+    }
+
+    .boundary-card:last-child {
+      border-top-color: var(--text-faint);
+    }
+
+    .capability-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .capability-card {
+      position: relative;
+      min-height: 235px;
+      overflow: hidden;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background:
+        linear-gradient(145deg, #fff 0%, var(--surface-soft) 100%);
+    }
+
+    .capability-card::after {
+      content: attr(data-step);
+      position: absolute;
+      right: 16px;
+      bottom: -18px;
+      color: rgba(9, 31, 68, 0.055);
+      font-size: 5.5rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .capability-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .capability-card .capability-label {
+      color: var(--signal);
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .capability-card h3 {
+      margin-top: 5px;
+      color: var(--text-strong);
+      font-size: 1.22rem;
+      text-align: left;
+    }
+
+    .capability-card > p {
+      margin-top: 10px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
       line-height: 1.75;
     }
 
-    /* ── Section direction banner ──────────────────── */
-    .dir-banner {
-      background: linear-gradient(90deg, #eff8ff 0%, #f8fbfd 100%);
-      border: 1px solid #d0e8ff;
-      border-radius: 10px;
-      padding: 16px 22px;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-    }
-    .dir-banner .dir-label {
-      flex-shrink: 0;
-      padding: 4px 14px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      margin-top: 2px;
-    }
-    .dl-1 { background: #dbeafe; color: #0b5fc6; }
-    .dl-2 { background: #ede9fe; color: #6d28d9; }
-    .dl-3 { background: #fde8d8; color: #c2410c; }
-    .dir-banner p { font-size: 0.92rem; color: #17324d; margin: 0; line-height: 1.7; }
-
-    /* ── Footer ────────────────────────────────────── */
-    footer {
-      background: var(--text-strong);
-      color: var(--footer-text);
-      text-align: center;
-      padding: 28px 24px;
+    .capability-card ul {
+      display: grid;
+      gap: 5px;
+      margin-top: 13px;
+      padding-left: 18px;
+      color: var(--text);
       font-size: 0.84rem;
     }
-    footer a { color: var(--footer-link); }
-    footer .footer-funding {
-      margin-top: 12px;
-      font-size: 0.82rem;
-      color: var(--footer-faint);
-      line-height: 1.6;
+
+    .capability-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 17px;
+      border: 1px solid var(--accent-border);
+      border-radius: 15px;
+      background: var(--accent-soft);
+      text-align: center;
     }
 
-    /* ── Responsive ────────────────────────────────── */
-    @media (max-width: 680px) {
-      header { padding: 40px 0 46px; }
-      header h1 { font-size: 1.65rem; }
-      .direction-grid { grid-template-columns: 1fr; }
-      .paper-grid { grid-template-columns: 1fr; }
-      section { padding: 48px 0; }
-      .nav-bar a { padding: 11px 14px; font-size: 0.82rem; }
-      h2.section-title { font-size: 1.25rem; }
-      .claim-box { padding: 24px 20px; }
-      .hero-title-main { white-space: normal; }
+    .capability-flow span {
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      color: var(--text-strong);
+      font-size: 0.82rem;
+      font-weight: 760;
+    }
+
+    .capability-flow b {
+      color: var(--signal);
+    }
+
+    .flow-caption {
+      margin-top: 9px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      text-align: center;
+      text-justify: auto;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .process-card {
+      position: relative;
+      min-height: 190px;
+      padding: 18px 16px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: var(--surface-soft);
+    }
+
+    .process-card:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -11px;
+      z-index: 2;
+      width: 20px;
+      color: var(--signal);
+      font-weight: 850;
+      text-align: center;
+      transform: translateY(-50%);
+    }
+
+    .process-index,
+    .task-index {
+      display: inline-grid;
+      width: 31px;
+      height: 31px;
+      place-items: center;
+      border-radius: 9px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 850;
+    }
+
+    .process-card h3 {
+      margin-top: 12px;
+      color: var(--text-strong);
+      font-size: 0.95rem;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .process-card p {
+      margin-top: 7px;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      line-height: 1.68;
+    }
+
+    .architecture-band {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 15px;
+      margin-top: 20px;
+      padding: 17px 19px;
+      border: 1px solid var(--accent-border);
+      border-radius: 15px;
+      background: var(--accent-soft);
+    }
+
+    .architecture-band strong {
+      color: var(--text-strong);
+      font-size: 0.85rem;
+    }
+
+    .architecture-band p {
+      color: var(--text-muted);
+      font-size: 0.84rem;
+    }
+
+    .architecture-band span {
+      color: var(--signal);
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    .task-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .task-card {
+      min-height: 175px;
+    }
+
+    .task-card h3 {
+      display: inline;
+      margin-left: 9px;
+    }
+
+    .domain-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .domain-card {
+      min-height: 180px;
+      border-top: 3px solid var(--signal);
+    }
+
+    .domain-contexts {
+      display: block;
+      margin-top: 9px;
+      color: var(--signal);
+      font-size: 0.76rem;
+      font-weight: 750;
+      line-height: 1.55;
+    }
+
+    .protocol-note {
+      padding: 18px 20px;
+      border: 1px solid var(--accent-border);
+      border-radius: 15px;
+      background: var(--accent-soft);
+    }
+
+    .protocol-note strong {
+      color: var(--text-strong);
+    }
+
+    .protocol-note p {
+      margin-top: 5px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .setting-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .setting-card {
+      background: #fff;
+    }
+
+    .setting-card span {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--signal);
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .metric-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .metric-card {
+      min-height: 160px;
+      padding: 16px;
+      background: var(--surface-soft);
+    }
+
+    .metric-card h3 {
+      font-size: 0.91rem;
+    }
+
+    .metric-card p {
+      font-size: 0.8rem;
+    }
+
+    .failure-report {
+      margin-top: 18px;
+      padding: 16px 18px;
+      border-left: 4px solid var(--text-faint);
+      border-radius: 0 12px 12px 0;
+      background: #f5f8fa;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 22px;
+    }
+
+    .page-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 43px;
+      padding: 10px 17px;
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      font-size: 0.86rem;
+      font-weight: 760;
+      transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+    }
+
+    .page-btn:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .page-btn-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(9, 31, 68, 0.16);
+    }
+
+    .page-btn-primary:hover {
+      background: var(--accent-dark);
+    }
+
+    .page-btn-secondary {
+      background: #fff;
+      color: var(--accent);
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      background: var(--text-strong);
+      color: var(--footer-text);
+      font-size: 0.81rem;
+      text-align: center;
+      text-justify: auto;
+    }
+
+    footer a {
+      color: var(--footer-link);
+    }
+
+    .footer-funding {
+      margin-top: 4px;
+      color: var(--footer-faint);
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent-border);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 960px) {
+      .top-nav .container {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0;
+        padding-top: 12px;
+      }
+
+      .nav-links {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        padding-top: 2px;
+      }
+
+      .section-heading {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+
+      .definition-grid,
+      .task-grid,
+      .domain-grid,
+      .metric-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .process-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .process-card:nth-child(2)::after,
+      .process-card:nth-child(4)::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container {
+        width: min(100% - 32px, 1180px);
+      }
+
+      .nav-brand {
+        white-space: normal;
+      }
+
+      .nav-links a,
+      .nav-dropdown-toggle {
+        padding: 7px 11px;
+        font-size: 0.79rem;
+      }
+
+      .nav-dropdown-menu {
+        left: 0;
+        min-width: 245px;
+      }
+
+      header {
+        padding: 60px 0 48px;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .header-sub {
+        font-size: 0.94rem;
+      }
+
+      .research-note {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      main {
+        padding: 32px 0 60px;
+      }
+
+      .section-card {
+        padding: 22px 18px;
+      }
+
+      .capability-grid,
+      .definition-grid,
+      .boundary-grid,
+      .process-grid,
+      .task-grid,
+      .domain-grid,
+      .setting-grid,
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .capability-card,
+      .task-card,
+      .domain-card,
+      .metric-card {
+        min-height: auto;
+      }
+
+      .capability-flow {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .capability-flow b {
+        transform: rotate(90deg);
+      }
+
+      .process-card::after {
+        display: none !important;
+      }
+
+      .architecture-band {
+        grid-template-columns: 1fr;
+      }
+
+      .architecture-band span {
+        transform: rotate(90deg);
+        text-align: center;
+      }
+
+      .btn-row {
+        flex-direction: column;
+      }
+
+      .page-btn {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
+  <link rel="stylesheet" href="../asset/site-responsive.css" />
 </head>
 <body>
 
-<!-- ═══════════════════ HEADER ═══════════════════ -->
-<header id="heroHeader">
-  <div class="hero-refresh-sheen" aria-hidden="true"></div>
-  <div class="container">
-    <h1 class="hero-clickable">
-      <span class="hero-title-main"><span class="cf">情境感知的时间序列分析</span>—从模式拟合到认知推理</span>
-    </h1>
-    <p class="subtitle hero-clickable">
-      探索多源情境的表示与融合、情境驱动的趋势推理，
-      以及支持主动感知与动态修正的时间序列智能体系统，
-      推动时间序列建模从历史数值拟合走向情境认知分析新范式。
-    </p>
-  </div>
-</header>
+<a class="skip-link" href="#main-content">跳到主要内容</a>
 
-<!-- ═══════════════════ STICKY NAV ═══════════════════ -->
-<nav class="nav-bar">
+<nav class="top-nav" aria-label="首页顶部导航">
   <div class="container">
-    <a href="../" class="nav-home">首页</a>
-    <a href="#overview">概述</a>
-    <a href="#alignment">语义对齐</a>
-    <a href="#reasoning">情境推理</a>
-    <a href="#adaptation">动态适应</a>
-    <a href="#resources">资源平台</a>
-    <a href="#vision">研究愿景</a>
+    <a class="nav-brand" href="../index.html">USTC-AGI <span>Time Series</span></a>
+    <div class="nav-links">
+      <a href="../index.html#hero-header">首页</a>
+      <div class="nav-dropdown">
+        <button class="nav-dropdown-toggle nav-active" type="button" aria-expanded="false">研究方向</button>
+        <div class="nav-dropdown-menu" role="menu">
+          <a href="../forecasting/" role="menuitem">时间序列预测</a>
+          <a href="../classification-anomaly/" role="menuitem">时间序列分类与异常检测</a>
+          <a class="nav-active" href="../context-cast/" role="menuitem" aria-current="page">情境感知的时间序列预测</a>
+          <a href="../scientific-time-series/" role="menuitem">科学时序数据建模</a>
+        </div>
+      </div>
+      <a href="../applications/">应用研究</a>
+      <a href="../papers/">论文列表</a>
+      <a href="../star-cast/">逐星方舟</a>
+    </div>
   </div>
 </nav>
 
-<!-- ═══════════════════ OVERVIEW ═══════════════════ -->
-<section id="overview" class="alt">
+<header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
   <div class="container">
-    <div class="tldr">
-      <strong>一句话定位：</strong>
-      真实世界的时间序列受外部事件、领域知识、文本描述和专家经验等多源情境影响——
-      <strong>情境感知的时间序列分析</strong>系统探索如何表示与融合多源上下文、
-      如何推理情境对趋势的影响，以及如何构建主动感知与动态修正的时间序列智能体。
-    </div>
-
-    <h2 class="section-title">研究概述</h2>
-    <p>
-      传统时间序列方法主要依赖历史数值进行模式拟合与趋势外推，但真实世界中的时间序列往往受到
-      多源情境因素的深刻影响，例如外部事件、领域知识、文本描述、环境变量和专家经验。
-      单纯的数值预测无法捕捉这些情境因素，更难以解释"为什么未来会这样变化"。
+    <p class="eyebrow">Context-Aware Time Series Forecasting</p>
+    <h1>情境感知的时间序列预测</h1>
+    <p class="header-sub">
+      真实世界的未来不仅由历史数值决定，也由事件、环境、知识、干预与系统状态共同塑造。
+      本研究方向探索模型如何理解情境、推理其影响、主动补充证据，并在不同条件下推演可靠的未来轨迹。
     </p>
-    <p>
-      本研究方向围绕<strong>情境感知的时间序列分析</strong>开展系统研究，
-      核心路径包括：通过多模态语义理解实现<strong>情境融入</strong>，
-      通过慢思考认知推理刻画<strong>情境影响机制</strong>，
-      并通过智能体自主交互支持<strong>动态环境下的持续感知与自适应决策</strong>。
-    </p>
-
-    <h3 class="sub-title">三大核心研究方向</h3>
-    <div class="direction-grid">
-      <a class="direction-card" href="#alignment">
-        <div class="dir-icon">🔗</div>
-        <h4>情境语义对齐与融合</h4>
-        <p>多源异构上下文如何有效表示、对齐并融入预测模型，让外部情境与目标序列在语义与时间上实现对齐。</p>
-        <div class="dir-papers">▸ InstructTime · InstructTime++ · TokenCast</div>
-      </a>
-      <a class="direction-card" href="#reasoning">
-        <div class="dir-icon">🧠</div>
-        <h4>情境上下文时序推理</h4>
-        <p>情境因素如何影响未来趋势，模型如何进行原因分析、假设探索和证据验证，不只预测"是多少"而是解释"为何如此"。</p>
-        <div class="dir-papers">▸ TimeReasoner · MemCast · Time-R1</div>
-      </a>
-      <a class="direction-card" href="#adaptation">
-        <div class="dir-icon">🤖</div>
-        <h4>动态情境自适应</h4>
-        <p>情境变化或信息不完整时，模型如何主动获取新证据并动态更新预测，推动预测模型向时间序列智能体演进。</p>
-        <div class="dir-papers">▸ AlphaCast · Cast-R1 · CastFlow</div>
-      </a>
+    <div class="hero-highlights" aria-label="研究方向概览">
+      <span>情境理解</span>
+      <span>情境推理</span>
+      <span>情境自主获取</span>
+      <span>情境推演</span>
+    </div>
+    <div class="research-note">
+      <strong>研究框架 · Context-to-Future Loop</strong>
+      <span>从“根据过去外推未来”走向“在给定情境与可验证证据下，判断未来如何演化以及为何演化”。</span>
     </div>
   </div>
-</section>
+</header>
 
-<!-- ═══════════════════ ALIGNMENT ═══════════════════ -->
-<section id="alignment">
+<main id="main-content">
   <div class="container">
-    <h2 class="section-title">情境语义对齐与融合</h2>
-
-    <div class="dir-banner">
-      <span class="dir-label dl-1">Direction 1</span>
-      <p>
-        该方向关注多源异构上下文情境如何有效表示、对齐并融入预测模型。
-        我们认为，情境融合的关键不只是加入更多协变量，
-        而是让外部上下文与目标序列在<strong>语义、时间和预测目标</strong>上实现有效对齐。
-        相关工作从指令增强建模、上下文融合和时序 Token 表示等角度，
-        探索时间序列模型从数值输入驱动走向语义情境驱动的建模范式。
-      </p>
-    </div>
-
-    <div class="paper-grid">
-      <div class="paper-card">
-        <div class="paper-venue badge-wsdm">WSDM 2026</div>
-        <h4>InstructTime</h4>
-        <p>
-          通过自然语言指令增强时间序列预测建模，将文本描述的情境信息与数值序列统一编码，
-          实现指令驱动的情境感知预测，探索语义指令对时序模型预测行为的有效引导。
-        </p>
-      </div>
-      <div class="paper-card">
-        <div class="paper-venue badge-tist">ACM TIST</div>
-        <h4>InstructTime++</h4>
-        <p>
-          在 InstructTime 基础上深化上下文融合机制，进一步探索多粒度文本情境
-          与时序信号的对齐方式，提升模型在复杂情境下的预测泛化能力与指令跟随稳定性。
-        </p>
-      </div>
-      <div class="paper-card">
-        <div class="paper-venue badge-ijcai">IJCAI 2026</div>
-        <h4>TokenCast</h4>
-        <p>
-          从时序 Token 表示角度出发，探索将连续数值序列与情境语义统一嵌入到共享 Token 空间，
-          支持跨模态对齐，推动时间序列模型从数值输入驱动走向语义情境驱动的表示范式。
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════ REASONING ═══════════════════ -->
-<section id="reasoning" class="alt">
-  <div class="container">
-    <h2 class="section-title">情境上下文时序推理</h2>
-
-    <div class="dir-banner">
-      <span class="dir-label dl-2">Direction 2</span>
-      <p>
-        该方向关注情境因素如何影响未来趋势，以及模型如何开展
-        <strong>原因分析、假设探索与证据验证</strong>。
-        我们希望时间序列模型不仅能够预测"未来是多少"，
-        还能够解释"为什么会这样变化"。
-        相关工作从慢思考推理、记忆增强预测和强化学习训练等角度，
-        探索具备趋势理解、情境推理和证据验证能力的时间序列模型。
-      </p>
-    </div>
-
-    <div class="paper-grid">
-      <div class="paper-card">
-        <div class="paper-venue badge-wsdm">WSDM 2026</div>
-        <h4>TimeReasoner</h4>
-        <p>
-          引入慢思考推理机制，让时间序列模型在做出预测前先生成推理链条，
-          显式刻画情境因素对趋势变化的影响路径，
-          提升模型在复杂情境变化场景下的可解释性与预测精度。
-        </p>
-      </div>
-      <div class="paper-card">
-        <div class="paper-venue badge-icml">ICML 2026</div>
-        <h4>MemCast</h4>
-        <p>
-          通过记忆增强预测机制，让模型能够检索与当前情境相关的历史案例，
-          结合情境记忆和长期规律进行预测，
-          实现跨时间步的情境知识积累与动态利用。
-        </p>
-      </div>
-      <div class="paper-card">
-        <div class="paper-venue badge-preprint">Preprint</div>
-        <h4>Time-R1</h4>
-        <p>
-          将强化学习训练引入时间序列推理，以可验证预测奖励引导模型
-          学习更优的情境推理策略，使推理过程与预测指标直接对齐，
-          超越传统 token-level 交叉熵优化目标。
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════ ADAPTATION ═══════════════════ -->
-<section id="adaptation">
-  <div class="container">
-    <h2 class="section-title">动态情境自适应</h2>
-
-    <div class="dir-banner">
-      <span class="dir-label dl-3">Direction 3</span>
-      <p>
-        该方向关注当情境变化或信息不完整时，模型如何<strong>主动获取新证据并动态更新预测</strong>。
-        我们将时间序列预测进一步理解为一个包含感知、推理、行动和反思的闭环过程，
-        推动预测模型向时间序列智能体演进，支持人机协同、工具增强与强化学习驱动的预测策略优化。
-      </p>
-    </div>
-
-    <div class="paper-grid">
-      <div class="paper-card">
-        <div class="paper-venue badge-preprint">Preprint</div>
-        <h4>AlphaCast</h4>
-        <p>
-          探索人机协同预测框架，让智能体能够主动向领域专家寻求反馈，
-          将专家知识动态融入预测过程，实现开放环境下的持续学习与预测修正。
-        </p>
-      </div>
-      <div class="paper-card">
-        <div class="paper-venue badge-preprint">Preprint</div>
-        <h4>Cast-R1</h4>
-        <p>
-          以强化学习优化时间序列智能体的预测策略，
-          通过与环境的持续交互学习何时主动获取信息、
-          如何权衡推理与行动代价，提升动态情境下的自适应决策能力。
-        </p>
-      </div>
-      <div class="paper-card">
-        <div class="paper-venue badge-preprint">Preprint</div>
-        <h4>CastFlow</h4>
-        <p>
-          通过智能体工作流学习，让模型能够自动规划数据获取、情境推理与预测生成的完整流程，
-          构建可复用的时间序列分析智能体工作流执行框架。
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════ RESOURCES ═══════════════════ -->
-<section id="resources" class="alt">
-  <div class="container">
-    <h2 class="section-title">资源与平台</h2>
-    <p>
-      除方法研究外，我们也在建设该研究方向的基础资源与开源生态，
-      为社区提供系统性的文献梳理、统一的训练框架与标准的评测基准。
-    </p>
-
-    <div class="module-grid">
-      <div class="module-card">
-        <h5>Agentic Time Series Forecasting</h5>
-        <div class="mod-status status-progress">Position Paper</div>
-        <p>
-          系统阐述智能体视角下的时间序列预测研究框架，
-          提出将感知、规划、行动和反思引入时序预测闭环，
-          为该方向的理论框架与研究议题提供方向性定位。
-        </p>
-      </div>
-      <div class="module-card">
-        <h5>LLM-Driven / Context-Aware TSF Survey</h5>
-        <div class="mod-status status-progress">撰写中</div>
-        <p>
-          系统梳理多模态语义理解、慢思考时序推理和智能体自主交互三个方向的发展脉络，
-          覆盖代表性工作、方法分类、实验设置与开放挑战，
-          为研究者提供该方向的全景综述与学术地图。
-        </p>
-      </div>
-      <div class="module-card">
-        <h5>CastFactory（铸星坊） 开源训练框架</h5>
-        <div class="mod-status status-progress">开发中</div>
-        <p>
-          面向时间序列大模型的 CPT-SFT-RL 多阶段统一训练框架，
-          标准化数据构建、时序适应、指令预测与可验证奖励优化的完整训练闭环，
-          支持情境感知模型的系统性构建与可复现实验管理。
-          <a href="../cast-factory/" target="_blank">了解更多 →</a>
-        </p>
-      </div>
-      <div class="module-card">
-        <h5>FutureCast（天星台） Benchmark</h5>
-        <div class="mod-status status-progress">构建中</div>
-        <p>
-          评估情境感知时间序列模型在跨领域、开放情境和复杂趋势变化场景下泛化能力的标准评测基准，
-          涵盖情境融合质量、趋势推理能力和动态自适应性等多维度评估维度。
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════ VISION ═══════════════════ -->
-<section id="vision">
-  <div class="container">
-    <h2 class="section-title">研究愿景</h2>
-
-    <p>
-      我们的目标是推动时间序列分析从传统的<strong>模式拟合范式</strong>走向新一代的<strong>情境认知范式</strong>。
-      在这一范式下，模型需要理解历史序列中的统计规律，还需要感知外部情境、推理趋势变化、
-      主动获取证据，并在反馈中持续修正预测。
-    </p>
-
-    <ul class="pillar-list">
-      <li>
-        <div class="pillar-num">1</div>
-        <div class="pillar-text">
-          <strong>可解释 — 不只预测，还要推理</strong>
-          <span>超越"预测误差最小化"的单一目标，让模型能够给出情境驱动的趋势解释，帮助用户理解预测背后的因果机制与关键情境因素。</span>
+    <div class="content-stack">
+      <section class="section-card" id="definition">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Definition</span>
+            <h2>为什么需要情境感知预测</h2>
+          </div>
+          <p class="section-lead">
+            同一段历史序列在不同天气、政策、故障、活动或干预条件下可能走向完全不同的未来；
+            预测模型需要知道系统“处于什么情境”，还要理解情境“如何影响未来”。
+          </p>
         </div>
-      </li>
-      <li>
-        <div class="pillar-num">2</div>
-        <div class="pillar-text">
-          <strong>可泛化 — 跨领域情境理解</strong>
-          <span>在能源、医疗、交通、金融等不同领域，模型能够识别领域特定的情境语义，形成跨领域复用的情境表示与推理能力。</span>
+        <div class="research-position">
+          <strong>研究定位：</strong>
+          将历史数值模式、多源外部情境与系统知识置于同一预测框架中，
+          形成能够条件化判断、证据化解释、主动更新和多情景推演的时间序列智能模型。
         </div>
-      </li>
-      <li>
-        <div class="pillar-num">3</div>
-        <div class="pillar-text">
-          <strong>可交互 — 主动感知与人机协同</strong>
-          <span>模型不再是被动接受输入的预测器，而是能够主动提问、寻求反馈、与领域专家协同完成预测任务的智能体系统。</span>
+        <div class="definition-grid">
+          <article>
+            <strong>相关性</strong>
+            <p>从海量上下文中识别真正影响目标变量、预测窗口与决策问题的情境，而不是无差别拼接信息。</p>
+          </article>
+          <article>
+            <strong>时效性</strong>
+            <p>明确情境何时发生、何时可见、影响持续多久，并与历史窗口和未来预测区间严格对齐。</p>
+          </article>
+          <article>
+            <strong>可验证性</strong>
+            <p>保留来源、证据和作用假设，让情境影响能够被消融、反事实检验或后续观测验证。</p>
+          </article>
         </div>
-      </li>
-      <li>
-        <div class="pillar-num">4</div>
-        <div class="pillar-text">
-          <strong>可自适应 — 动态环境下的持续修正</strong>
-          <span>面对情境漂移、突发事件和信息缺失，模型能够动态获取新证据、更新内部状态，持续修正预测以适应真实世界的开放动态环境。</span>
+        <div class="context-source-list" aria-label="情境来源">
+          <span>事件与日历</span>
+          <span>天气与环境</span>
+          <span>文本与新闻</span>
+          <span>政策与规则</span>
+          <span>领域知识</span>
+          <span>系统状态</span>
+          <span>控制与干预</span>
+          <span>人类反馈</span>
         </div>
-      </li>
-    </ul>
+        <div class="boundary-grid">
+          <article class="boundary-card">
+            <h3>不只是“多加几个协变量”</h3>
+            <p>情境感知要求模型判断信息是否相关、是否及时、是否可信，以及它通过什么机制改变未来轨迹。</p>
+          </article>
+          <article class="boundary-card">
+            <h3>不等于“事后编写解释”</h3>
+            <p>解释需要与预测过程和证据一致，并能通过屏蔽情境、替换条件或回放真实结果进行检验。</p>
+          </article>
+        </div>
+      </section>
 
-    <div class="claim-box">
-      <p>
-        下一代时间序列分析模型需要超越对历史数值序列的模式拟合，
-        走向能够感知外部情境、推理趋势变化、主动获取证据并在反馈中持续修正预测的认知型分析系统。
-        情境感知不是附加模块，而是新一代时间序列建模的核心范式。
-      </p>
-      <p class="claim-sub">
-        The next generation of time series analysis should go beyond pattern fitting on historical values,
-        toward cognitive systems that perceive contextual signals, reason about trend causation,
-        actively acquire evidence, and continuously revise predictions through feedback.
-        Context awareness is not an add-on — it is the core paradigm of next-generation time series modeling.
-      </p>
+      <section class="section-card" id="capabilities">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Core Capabilities</span>
+            <h2>四类核心能力</h2>
+          </div>
+          <p class="section-lead">
+            四类能力共同回答“看见什么、为何影响、还缺什么、未来可能怎样演化”，
+            并通过反馈不断更新模型对当前系统的认识。
+          </p>
+        </div>
+        <div class="capability-grid">
+          <article class="capability-card" data-step="01">
+            <span class="capability-label">Perceive</span>
+            <h3>情境理解</h3>
+            <p>把多源异构上下文转化为与目标序列、预测时点和业务目标一致的情境表示。</p>
+            <ul>
+              <li>文本、事件、知识和数值协变量的统一表征</li>
+              <li>实体、变量、时间粒度与预测窗口对齐</li>
+              <li>情境相关性、可靠性与时效性筛选</li>
+            </ul>
+          </article>
+          <article class="capability-card" data-step="02">
+            <span class="capability-label">Reason</span>
+            <h3>情境推理</h3>
+            <p>分析情境因素如何改变趋势、周期、波动与转折，形成可追溯的影响假设。</p>
+            <ul>
+              <li>情境—状态—未来轨迹的作用路径推理</li>
+              <li>原因解释、证据冲突处理与假设比较</li>
+              <li>“如果条件改变会怎样”的反事实判断</li>
+            </ul>
+          </article>
+          <article class="capability-card" data-step="03">
+            <span class="capability-label">Acquire</span>
+            <h3>情境自主获取</h3>
+            <p>当输入不完整或环境变化时，识别信息缺口并主动寻找最有价值的新证据。</p>
+            <ul>
+              <li>判断何时需要检索、工具调用或专家反馈</li>
+              <li>在信息价值、获取成本与预测时限间权衡</li>
+              <li>根据新证据动态修正情境状态与预测结果</li>
+            </ul>
+          </article>
+          <article class="capability-card" data-step="04">
+            <span class="capability-label">Simulate</span>
+            <h3>情境推演</h3>
+            <p>在不同事件、干预和约束条件下生成多条未来路径，刻画可能性、风险与决策边界。</p>
+            <ul>
+              <li>基线、乐观、悲观与干预情景的轨迹生成</li>
+              <li>趋势延续、增强、削弱、偏移与反转判断</li>
+              <li>情景概率、不确定性与关键转折点评估</li>
+            </ul>
+          </article>
+        </div>
+        <div class="capability-flow" aria-label="情境感知预测能力闭环">
+          <span>情境理解</span><b>→</b>
+          <span>情境推理</span><b>→</b>
+          <span>情境自主获取</span><b>→</b>
+          <span>情境推演</span><b>→</b>
+          <span>反馈更新</span>
+        </div>
+        <p class="flow-caption">能力闭环：理解 → 推理 → 获取 → 推演 → 反馈更新。</p>
+      </section>
+
+      <section class="section-card" id="architecture">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Research Loop</span>
+            <h2>闭环研究架构</h2>
+          </div>
+          <p class="section-lead">
+            预测从数值基线出发，经由情境检索、机制推理和多情景推演，
+            再利用真实观测与新增证据验证并更新下一轮判断。
+          </p>
+        </div>
+        <div class="process-grid">
+          <article class="process-card">
+            <span class="process-index">01</span>
+            <h3>数值基线</h3>
+            <p>从历史序列提取趋势、周期、变量依赖与初始不确定性，形成不含外部情境的基准未来。</p>
+          </article>
+          <article class="process-card">
+            <span class="process-index">02</span>
+            <h3>情境检索与对齐</h3>
+            <p>汇集预测时点可见的事件、环境、文本与知识，并与目标变量和预测窗口对齐。</p>
+          </article>
+          <article class="process-card">
+            <span class="process-index">03</span>
+            <h3>机制推理</h3>
+            <p>识别关键情境的影响方向、强度、持续时间和相互作用，比较多种作用假设。</p>
+          </article>
+          <article class="process-card">
+            <span class="process-index">04</span>
+            <h3>多情景推演</h3>
+            <p>在不同条件和干预下生成未来轨迹，量化各情景概率、转折风险与置信区间。</p>
+          </article>
+          <article class="process-card">
+            <span class="process-index">05</span>
+            <h3>验证与更新</h3>
+            <p>用后续观测检验预测和解释，记录失败模式，并把新证据反馈到下一轮情境状态。</p>
+          </article>
+        </div>
+        <div class="architecture-band">
+          <strong>输入</strong>
+          <p>历史序列 + 预测时点可见情境 + 领域知识 + 任务与成本约束</p>
+          <span>→</span>
+          <strong>输出</strong>
+          <p>条件化预测 + 多情景轨迹 + 证据链 + 不确定性 + 可执行更新建议</p>
+          <span>↺</span>
+        </div>
+      </section>
+
+      <section class="section-card" id="tasks">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Task System</span>
+            <h2>核心研究任务</h2>
+          </div>
+          <p class="section-lead">
+            任务体系同时考察静态给定情境与开放动态环境，避免把情境感知简化为单一数据集上的额外输入。
+          </p>
+        </div>
+        <div class="task-grid">
+          <article class="task-card">
+            <span class="task-index">01</span><h3>条件化预测</h3>
+            <p>在明确给定事件、环境或系统状态的条件下，预测未来数值、区间与状态变化。</p>
+          </article>
+          <article class="task-card">
+            <span class="task-index">02</span><h3>事件冲击与反事实</h3>
+            <p>判断突发事件的影响，并比较事件发生、取消、提前或延迟时的未来差异。</p>
+          </article>
+          <article class="task-card">
+            <span class="task-index">03</span><h3>开放世界情境获取</h3>
+            <p>在上下文不完整时自主确定信息需求、调用来源，并停止于收益不再覆盖成本的时点。</p>
+          </article>
+          <article class="task-card">
+            <span class="task-index">04</span><h3>漂移下动态更新</h3>
+            <p>面对情境漂移、制度变化或系统状态切换，在线更新情境判断与未来分布。</p>
+          </article>
+          <article class="task-card">
+            <span class="task-index">05</span><h3>多情景轨迹生成</h3>
+            <p>生成相互区分且覆盖主要风险的未来路径，估计情景概率与关键转折窗口。</p>
+          </article>
+          <article class="task-card">
+            <span class="task-index">06</span><h3>证据化解释</h3>
+            <p>给出与模型预测一致、可定位到来源、可通过消融或回放验证的情境解释。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card" id="applications">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Application Settings</span>
+            <h2>典型应用场景</h2>
+          </div>
+          <p class="section-lead">
+            不同领域共享“历史信号 + 动态情境 + 决策约束”的基本结构，
+            但情境来源、时间尺度、风险容忍度和可用工具各不相同。
+          </p>
+        </div>
+        <div class="domain-grid">
+          <article class="domain-card">
+            <h3>能源与电力</h3>
+            <span class="domain-contexts">天气 · 电价 · 节假日 · 需求响应</span>
+            <p>推演负荷与新能源出力在极端天气、价格调整和调度干预下的变化，服务风险预警与资源配置。</p>
+          </article>
+          <article class="domain-card">
+            <h3>交通与城市</h3>
+            <span class="domain-contexts">活动 · 事故 · 天气 · 管制策略</span>
+            <p>理解大型活动、突发事故和交通管制对流量、拥堵与出行需求的时空传播影响。</p>
+          </article>
+          <article class="domain-card">
+            <h3>云服务与工业</h3>
+            <span class="domain-contexts">发布变更 · 故障 · 任务队列 · 设备状态</span>
+            <p>结合业务事件和系统拓扑，预测资源需求、延迟与故障风险，支持扩缩容和维护决策。</p>
+          </article>
+          <article class="domain-card">
+            <h3>医疗健康</h3>
+            <span class="domain-contexts">治疗干预 · 病程文本 · 生理状态 · 个体差异</span>
+            <p>在明确临床时间线和可用证据边界的前提下，预测患者状态变化并评估不同干预情景。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card" id="evaluation">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Protocol &amp; Reliability</span>
+            <h2>评测协议</h2>
+          </div>
+          <p class="section-lead">
+            评测不仅比较点预测误差，还要回答模型是否真正利用情境、推理是否有证据、
+            主动获取是否值得，以及多情景结果是否校准。
+          </p>
+        </div>
+        <div class="protocol-note">
+          <strong>时间边界原则</strong>
+          <p>
+            以预测时点为边界冻结可见情境；预测时点之后才出现的信息一律不可用，
+            文本、事件和外部数据库均需保存时间戳快照，避免未来信息泄漏。
+          </p>
+        </div>
+        <div class="setting-grid" aria-label="情境评测设置">
+          <article class="setting-card">
+            <span>Setting A</span>
+            <h3>无情境</h3>
+            <p>仅使用历史数值序列，建立模式拟合基线并测量情境带来的真实增益。</p>
+          </article>
+          <article class="setting-card">
+            <span>Setting B</span>
+            <h3>给定情境</h3>
+            <p>提供统一、时点合法的情境输入，评估模型的理解、对齐、推理与利用能力。</p>
+          </article>
+          <article class="setting-card">
+            <span>Setting C</span>
+            <h3>自主获取</h3>
+            <p>仅给出可访问来源和预算，评估模型发现信息缺口、选择证据与控制成本的能力。</p>
+          </article>
+        </div>
+        <div class="metric-grid">
+          <article class="metric-card">
+            <h3>预测质量</h3>
+            <p>点预测、概率预测、转折检测与长窗口稳定性。</p>
+          </article>
+          <article class="metric-card">
+            <h3>情境利用</h3>
+            <p>相对无情境基线的增益，以及屏蔽、扰动情境后的敏感性。</p>
+          </article>
+          <article class="metric-card">
+            <h3>推理可信度</h3>
+            <p>解释与证据、模型行为和反事实结果的一致程度。</p>
+          </article>
+          <article class="metric-card">
+            <h3>获取效率</h3>
+            <p>单位调用成本、时延或交互轮次带来的预测收益。</p>
+          </article>
+          <article class="metric-card">
+            <h3>推演可靠性</h3>
+            <p>情景覆盖、概率校准、风险召回和分布漂移下的稳健性。</p>
+          </article>
+        </div>
+        <div class="failure-report">
+          <strong>失败也需要被报告：</strong>
+          单独分析无关情境干扰、证据冲突、工具失败、突发事件、跨领域迁移和高风险误判，
+          明确模型在哪些条件下不应被信任。
+        </div>
+        <div class="btn-row">
+          <a class="page-btn page-btn-primary" href="../index.html#context-aware">返回首页研究方向</a>
+          <a class="page-btn page-btn-secondary" href="../papers/">查看论文列表</a>
+        </div>
+      </section>
     </div>
   </div>
-</section>
+</main>
 
-<!-- ═══════════════════ FOOTER ═══════════════════ -->
 <footer>
   <div class="container">
     <p>
@@ -818,61 +1326,59 @@
       <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
       &middot; State Key Laboratory of Cognitive Intelligence, USTC
     </p>
-    <p class="footer-funding">
-      本项目研究资助来源：国家双一流建设经费、国家自然科学基金委
-    </p>
+    <p class="footer-funding">本项目研究资助来源：国家双一流建设经费、国家自然科学基金委</p>
   </div>
 </footer>
 
 <script>
-  (function () {
-    const heroHeader = document.getElementById('heroHeader');
-    if (!heroHeader) return;
+  (() => {
+    const dropdowns = document.querySelectorAll('.nav-dropdown');
+    const closeAll = () => {
+      dropdowns.forEach((dropdown) => {
+        dropdown.classList.remove('open');
+        const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+        if (toggle) toggle.setAttribute('aria-expanded', 'false');
+      });
+    };
 
-    let refreshTimer = null;
+    dropdowns.forEach((dropdown) => {
+      const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+      const menuLinks = dropdown.querySelectorAll('.nav-dropdown-menu a');
+      if (!toggle) return;
 
-    function triggerHeroRefresh(event) {
-      if (event.target.closest('a, button')) return;
+      toggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const willOpen = !dropdown.classList.contains('open');
+        closeAll();
+        dropdown.classList.toggle('open', willOpen);
+        toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      });
 
-      heroHeader.classList.remove('hero-refreshing');
-      void heroHeader.offsetWidth;
-      heroHeader.classList.add('hero-refreshing');
-
-      if (refreshTimer) clearTimeout(refreshTimer);
-      refreshTimer = window.setTimeout(function () {
-        heroHeader.classList.remove('hero-refreshing');
-        window.location.reload();
-      }, 900);
-
-      const rect = heroHeader.getBoundingClientRect();
-      const wave = document.createElement('span');
-      wave.className = 'hero-refresh-wave';
-      wave.style.left = (event.clientX - rect.left) + 'px';
-      wave.style.top = (event.clientY - rect.top) + 'px';
-      heroHeader.appendChild(wave);
-      wave.addEventListener('animationend', function () { wave.remove(); });
-    }
-
-    heroHeader.addEventListener('click', triggerHeroRefresh);
-  })();
-
-  /* smooth-highlight active nav link on scroll */
-  const sections = document.querySelectorAll("section[id]");
-  const navLinks = document.querySelectorAll(".nav-bar a[href^='#']");
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        navLinks.forEach(link => {
-          link.style.color = link.getAttribute("href") === `#${id}` ? "var(--teal)" : "";
-          link.style.borderBottomColor = link.getAttribute("href") === `#${id}` ? "var(--teal)" : "";
-        });
-      }
+      menuLinks.forEach((link) => link.addEventListener('click', closeAll));
     });
-  }, { rootMargin: "-20% 0px -70% 0px" });
 
-  sections.forEach(s => observer.observe(s));
+    document.addEventListener('click', closeAll);
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeAll();
+    });
+
+    const heroHeader = document.querySelector('#hero-header');
+    const refreshPage = () => {
+      if (!heroHeader || heroHeader.classList.contains('is-refreshing')) return;
+      heroHeader.classList.add('is-refreshing');
+      window.setTimeout(() => window.location.reload(), 160);
+    };
+
+    heroHeader?.addEventListener('click', (event) => {
+      if (!event.target.closest('a, button')) refreshPage();
+    });
+
+    heroHeader?.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      refreshPage();
+    });
+  })();
 </script>
 
 </body>
