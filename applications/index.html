@@ -546,44 +546,246 @@
       font-weight: 800;
     }
 
-    .workflow-steps {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
-    .workflow-step {
+    .forecast-decision-section {
       position: relative;
-      min-height: 178px;
-      padding: 18px;
-      border: 1px solid #d5e3eb;
-      border-radius: 14px;
-      background: linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
+      overflow: hidden;
+      padding: 30px;
+      border-color: #c9dbe7;
+      background:
+        radial-gradient(circle at 92% 6%, rgba(15, 127, 143, 0.10), transparent 23%),
+        linear-gradient(145deg, #ffffff 0%, #f8fbfd 56%, #edf7fc 100%);
+      box-shadow: 0 18px 44px rgba(6, 31, 69, 0.08);
     }
-    .workflow-step::before {
-      content: attr(data-step);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 34px;
-      height: 34px;
-      margin-bottom: 14px;
-      border-radius: 50%;
-      background: #091f44;
-      color: #fff;
-      font-size: 0.82rem;
-      font-weight: 800;
+
+    .forecast-decision-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.5;
+      background-image:
+        linear-gradient(rgba(9, 31, 68, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(9, 31, 68, 0.035) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(125deg, transparent 0%, #000 40%, #000 100%);
     }
-    .workflow-step h4 {
+
+    .forecast-decision-section > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .forecast-decision-head {
+      max-width: 820px;
+      margin-bottom: 22px;
+    }
+
+    .forecast-decision-kicker {
+      display: block;
       margin-bottom: 8px;
-      font-size: 0.98rem;
-      font-weight: 800;
-      color: #091f44;
+      color: #0f7f8f;
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
-    .workflow-step p {
+
+    .forecast-decision-section .forecast-decision-head h3 {
+      margin-bottom: 8px;
+      font-size: 1.35rem;
+      line-height: 1.45;
+    }
+
+    .forecast-decision-head p {
+      max-width: 790px;
+      font-size: 0.92rem;
+      line-height: 1.75;
+    }
+
+    .forecast-decision-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .forecast-decision-card {
+      --decision-accent: #163d70;
+      display: flex;
+      min-width: 0;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(181, 203, 219, 0.96);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow:
+        inset 0 3px 0 var(--decision-accent),
+        0 12px 28px rgba(6, 31, 69, 0.07);
+    }
+
+    .forecast-decision-card--action {
+      --decision-accent: #0f7f8f;
+    }
+
+    .forecast-decision-visual {
+      position: relative;
+      overflow: hidden;
+      margin: 18px 18px 0;
+      aspect-ratio: 480 / 190;
+      border: 1px solid rgba(183, 217, 236, 0.95);
+      border-radius: 14px;
+      color: var(--decision-accent);
+      background:
+        linear-gradient(rgba(9, 31, 68, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(9, 31, 68, 0.035) 1px, transparent 1px),
+        linear-gradient(145deg, #ffffff 0%, #edf7fc 100%);
+      background-size: 20px 20px, 20px 20px, auto;
+    }
+
+    .forecast-decision-visual svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .forecast-decision-copy {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 18px;
+    }
+
+    .forecast-decision-label {
+      display: inline-flex;
+      align-self: flex-start;
+      align-items: center;
+      min-height: 26px;
+      margin-bottom: 10px;
+      padding: 0 10px;
+      border: 1px solid color-mix(in srgb, var(--decision-accent) 30%, #d5e3eb);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--decision-accent) 8%, #ffffff);
+      color: var(--decision-accent);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .forecast-decision-card h4 {
+      margin-bottom: 8px;
+      color: #091f44;
+      font-size: 1.08rem;
+      line-height: 1.5;
+    }
+
+    .forecast-decision-card p {
+      color: #4c6176;
       font-size: 0.88rem;
       line-height: 1.75;
-      color: #4c6176;
+    }
+
+    .forecast-decision-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 16px;
+      list-style: none;
+    }
+
+    .forecast-decision-points li {
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid #e0ebf1;
+      border-radius: 12px;
+      background: #f8fbfd;
+    }
+
+    .forecast-decision-points strong,
+    .forecast-decision-points span {
+      display: block;
+    }
+
+    .forecast-decision-points strong {
+      color: #091f44;
+      font-size: 0.76rem;
+      line-height: 1.45;
+    }
+
+    .forecast-decision-points span {
+      margin-top: 3px;
+      color: #5b7187;
+      font-size: 0.68rem;
+      line-height: 1.5;
+    }
+
+    .forecast-decision-path {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      align-items: center;
+      gap: 16px;
+      margin-top: 18px;
+      padding: 14px 16px;
+      border: 1px dashed #9fc4d5;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.76);
+    }
+
+    .forecast-decision-path > strong {
+      color: #0f7f8f;
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      line-height: 1.5;
+    }
+
+    .forecast-decision-path ol {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 20px;
+      list-style: none;
+    }
+
+    .forecast-decision-path li {
+      position: relative;
+      min-width: 0;
+    }
+
+    .forecast-decision-path li:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 12px;
+      right: -13px;
+      width: 7px;
+      height: 7px;
+      border-top: 2px solid #0f7f8f;
+      border-right: 2px solid #0f7f8f;
+      transform: rotate(45deg);
+    }
+
+    .forecast-decision-path span {
+      display: block;
+      margin-bottom: 2px;
+      color: #5a7fa6;
+      font-size: 0.6rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+    }
+
+    .forecast-decision-path b,
+    .forecast-decision-path small {
+      display: block;
+    }
+
+    .forecast-decision-path b {
+      color: #091f44;
+      font-size: 0.78rem;
+      line-height: 1.4;
+    }
+
+    .forecast-decision-path small {
+      margin-top: 2px;
+      color: #5b7187;
+      font-size: 0.66rem;
+      line-height: 1.45;
     }
 
     .focus-figure {
@@ -913,6 +1115,58 @@
     }
 
     @media (max-width: 640px) {
+      .forecast-decision-section {
+        padding: 22px 18px;
+      }
+
+      .forecast-decision-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .forecast-decision-visual {
+        margin: 14px 14px 0;
+      }
+
+      .forecast-decision-copy {
+        padding: 16px 14px;
+      }
+
+      .forecast-decision-points {
+        grid-template-columns: 1fr;
+      }
+
+      .forecast-decision-points li {
+        display: grid;
+        grid-template-columns: 92px 1fr;
+        align-items: start;
+        gap: 8px;
+      }
+
+      .forecast-decision-points span {
+        margin-top: 0;
+      }
+
+      .forecast-decision-path {
+        grid-template-columns: 1fr;
+      }
+
+      .forecast-decision-path ol {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .forecast-decision-path li {
+        padding-left: 22px;
+      }
+
+      .forecast-decision-path li:not(:last-child)::after {
+        top: auto;
+        right: auto;
+        bottom: -8px;
+        left: 3px;
+        transform: rotate(135deg);
+      }
+
       .focus-section {
         padding: 22px 18px;
       }
@@ -966,7 +1220,6 @@
       .scenario-grid,
       .focus-grid,
       .overview-grid,
-      .workflow-steps,
       .hero-workflow-steps,
       .hero-highlights {
         grid-template-columns: 1fr;
@@ -1045,6 +1298,7 @@
         <button class="nav-dropdown-toggle" type="button" aria-expanded="false">研究方向</button>
         <div class="nav-dropdown-menu" role="menu">
           <a href="../forecasting/" role="menuitem">时间序列预测</a>
+          <a href="../context-cast/" role="menuitem">情境感知的时间序列预测</a>
           <a href="../classification-anomaly/" role="menuitem">时间序列分类与异常检测</a>
           <a href="../scientific-time-series/" role="menuitem">科学时序数据建模</a>
         </div>
@@ -1200,28 +1454,151 @@
         </div>
       </section>
 
-      <section class="section-card">
-        <h3>研究流程</h3>
-        <p>
-          面向真实场景的预测研究通常需要多轮迭代。我们将流程拆成四个可复用阶段，让每一次应用研究都能留下数据诊断、模型实验和业务解释资产。
-        </p>
-        <div class="workflow-steps">
-          <article class="workflow-step" data-step="01">
-            <h4>任务界定</h4>
-            <p>明确预测对象、时间粒度、预测窗口、评估指标和业务决策场景，避免模型目标与应用目标脱节。</p>
+      <section class="section-card forecast-decision-section" aria-labelledby="forecast-decision-title">
+        <div class="forecast-decision-head">
+          <span class="forecast-decision-kicker">Forecast → Uncertainty → Decision</span>
+          <h3 id="forecast-decision-title">从确定性点预测走向不确定性决策</h3>
+          <p>
+            真正面向应用的预测系统，不是只输出一个看似确定的数字，而是呈现未来的多种可能，
+            再把这些可能转化为可比较、可执行的决策依据。
+          </p>
+        </div>
+
+        <div class="forecast-decision-grid">
+          <article class="forecast-decision-card">
+            <div class="forecast-decision-visual" data-visual="uncertainty" aria-hidden="true">
+              <svg viewBox="0 0 480 190" focusable="false" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+                <defs>
+                  <linearGradient id="uncertainty-wide" x1="0" x2="1">
+                    <stop offset="0%" stop-color="#5a7fa6" stop-opacity="0.18" />
+                    <stop offset="100%" stop-color="#5a7fa6" stop-opacity="0.06" />
+                  </linearGradient>
+                  <linearGradient id="uncertainty-core" x1="0" x2="1">
+                    <stop offset="0%" stop-color="#0f7f8f" stop-opacity="0.28" />
+                    <stop offset="100%" stop-color="#0f7f8f" stop-opacity="0.10" />
+                  </linearGradient>
+                </defs>
+                <path d="M28 158H454" fill="none" stroke="#c9dbe7" stroke-width="1.5" />
+                <path d="M190 26V160" fill="none" stroke="#9fc4d5" stroke-dasharray="5 5" stroke-width="1.5" />
+                <path d="M30 124C50 122 61 92 82 102S113 136 133 111 158 74 190 101" fill="none" stroke="#163d70" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" />
+                <path d="M190 78C230 65 262 43 301 50S375 31 450 23L450 151C382 143 343 126 302 137S231 125 190 126Z" fill="url(#uncertainty-wide)" />
+                <path d="M190 89C229 81 264 64 302 70S376 53 450 48L450 127C381 121 344 106 303 116S230 115 190 116Z" fill="url(#uncertainty-core)" />
+                <path d="M190 102C226 96 264 84 302 91S374 76 450 78" fill="none" stroke="#0f7f8f" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" />
+                <g fill="#fff" stroke="#163d70" stroke-width="2">
+                  <circle cx="30" cy="124" r="4" />
+                  <circle cx="82" cy="102" r="4" />
+                  <circle cx="133" cy="111" r="4" />
+                  <circle cx="190" cy="101" r="5" />
+                </g>
+                <g font-size="10" font-weight="800">
+                  <text x="34" y="177" fill="#5b7187">已观测历史</text>
+                  <text x="198" y="177" fill="#0f7f8f">未来的多种可能</text>
+                  <text x="198" y="21" fill="#5a7fa6">现在</text>
+                </g>
+                <g transform="translate(324 12)" font-size="9" font-weight="700">
+                  <rect width="130" height="22" rx="11" fill="#fff" stroke="#b7d9ec" />
+                  <circle cx="13" cy="11" r="4" fill="#0f7f8f" />
+                  <text x="23" y="14" fill="#4c6176">区间随未来展开</text>
+                </g>
+              </svg>
+            </div>
+            <div class="forecast-decision-copy">
+              <span class="forecast-decision-label">01 · UNCERTAINTY</span>
+              <h4>未来具有不确定性，不能只给一个答案</h4>
+              <p>
+                未来并非可被唯一数值准确描述的确定状态。噪声、分布漂移与突发事件使确定的点预测很难可靠成立；
+                因此，模型需要进行不确定性预测，同时回答“最可能发生什么”和“偏离这一结果的风险有多大”。
+              </p>
+              <ul class="forecast-decision-points" aria-label="不确定性预测的三种表达">
+                <li><strong>预测区间</strong><span>给出未来可能落入的范围</span></li>
+                <li><strong>分位数</strong><span>刻画不同风险水平下的边界</span></li>
+                <li><strong>情景概率</strong><span>比较常态、极端与突发情景</span></li>
+              </ul>
+            </div>
           </article>
-          <article class="workflow-step" data-step="02">
-            <h4>数据诊断</h4>
-            <p>检查缺失、异常、周期、漂移和外生变量，先理解序列结构，再决定特征与模型路线。</p>
+
+          <article class="forecast-decision-card forecast-decision-card--action">
+            <div class="forecast-decision-visual" data-visual="decision" aria-hidden="true">
+              <svg viewBox="0 0 480 190" focusable="false" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+                <defs>
+                  <marker id="decision-arrow" markerHeight="8" markerWidth="8" orient="auto" refX="6" refY="3">
+                    <path d="M0 0L6 3L0 6Z" fill="#0f7f8f" />
+                  </marker>
+                </defs>
+                <g transform="translate(22 42)">
+                  <rect width="112" height="106" rx="16" fill="#fff" stroke="#b7d9ec" stroke-width="1.5" />
+                  <text x="56" y="22" fill="#091f44" font-size="11" font-weight="900" text-anchor="middle">预测分布</text>
+                  <path d="M17 80C31 78 36 56 49 61S65 83 78 67 92 45 101 51" fill="none" stroke="#163d70" stroke-linecap="round" stroke-width="3" />
+                  <path d="M17 87H101" fill="none" stroke="#c9dbe7" />
+                  <g fill="#edf7fc" stroke="#9fc4d5">
+                    <rect x="17" y="31" width="24" height="14" rx="7" />
+                    <rect x="44" y="31" width="24" height="14" rx="7" />
+                    <rect x="71" y="31" width="30" height="14" rx="7" />
+                  </g>
+                  <g fill="#4c6176" font-size="7" font-weight="700" text-anchor="middle">
+                    <text x="29" y="41">P10</text>
+                    <text x="56" y="41">P50</text>
+                    <text x="86" y="41">P90</text>
+                  </g>
+                </g>
+                <path d="M142 95H166" fill="none" marker-end="url(#decision-arrow)" stroke="#0f7f8f" stroke-width="2.5" />
+                <g transform="translate(174 31)">
+                  <rect width="136" height="128" rx="18" fill="#091f44" />
+                  <text x="68" y="25" fill="#fff" font-size="11" font-weight="900" text-anchor="middle">决策权衡</text>
+                  <g transform="translate(14 38)">
+                    <rect width="108" height="22" rx="11" fill="#fff" fill-opacity="0.12" stroke="#8fd9ff" stroke-opacity="0.42" />
+                    <text x="54" y="15" fill="#d8edfa" font-size="9" font-weight="700" text-anchor="middle">风险与成本</text>
+                  </g>
+                  <g transform="translate(14 67)">
+                    <rect width="108" height="22" rx="11" fill="#fff" fill-opacity="0.12" stroke="#8fd9ff" stroke-opacity="0.42" />
+                    <text x="54" y="15" fill="#d8edfa" font-size="9" font-weight="700" text-anchor="middle">业务约束</text>
+                  </g>
+                  <g transform="translate(14 96)">
+                    <rect width="108" height="22" rx="11" fill="#0f7f8f" />
+                    <text x="54" y="15" fill="#fff" font-size="9" font-weight="800" text-anchor="middle">目标与偏好</text>
+                  </g>
+                </g>
+                <path d="M318 95H342" fill="none" marker-end="url(#decision-arrow)" stroke="#0f7f8f" stroke-width="2.5" />
+                <g transform="translate(350 42)">
+                  <rect width="108" height="106" rx="16" fill="#fff" stroke="#8fc9c9" stroke-width="1.5" />
+                  <text x="54" y="22" fill="#091f44" font-size="11" font-weight="900" text-anchor="middle">决策行动</text>
+                  <g fill="#16805f">
+                    <circle cx="22" cy="45" r="4" />
+                    <circle cx="22" cy="65" r="4" />
+                    <circle cx="22" cy="85" r="4" />
+                  </g>
+                  <g fill="#4c6176" font-size="9" font-weight="700">
+                    <text x="33" y="48">调度</text>
+                    <text x="33" y="68">预警</text>
+                    <text x="33" y="88">资源配置</text>
+                  </g>
+                </g>
+              </svg>
+            </div>
+            <div class="forecast-decision-copy">
+              <span class="forecast-decision-label">02 · DECISION</span>
+              <h4>预测需要服务并支撑决策</h4>
+              <p>
+                在实际应用中，预测的价值不止是降低误差，而是帮助业务选择行动。
+                将预测结果与风险偏好、成本函数、资源限制和任务目标结合，才能形成可执行的调度、预警、配置或干预方案。
+              </p>
+              <ul class="forecast-decision-points" aria-label="从预测到决策的三个要素">
+                <li><strong>风险与成本</strong><span>权衡误报、漏报与行动代价</span></li>
+                <li><strong>业务约束</strong><span>纳入容量、时效与资源边界</span></li>
+                <li><strong>决策行动</strong><span>输出调度、预警或配置方案</span></li>
+              </ul>
+            </div>
           </article>
-          <article class="workflow-step" data-step="03">
-            <h4>实验编排</h4>
-            <p>组合统计模型、深度模型和场景特征，形成可比较的实验矩阵，并保留关键人工确认节点。</p>
-          </article>
-          <article class="workflow-step" data-step="04">
-            <h4>结果沉淀</h4>
-            <p>将误差模式、可解释结论和可迁移策略整理成文档与 Skill，支持后续场景快速复用。</p>
-          </article>
+        </div>
+
+        <div class="forecast-decision-path" aria-label="从预测分布到决策行动的路径">
+          <strong>FORECAST<br>TO ACTION</strong>
+          <ol>
+            <li><span>STEP 01</span><b>预测分布</b><small>未来可能发生什么</small></li>
+            <li><span>STEP 02</span><b>风险与成本</b><small>不同偏差代价多大</small></li>
+            <li><span>STEP 03</span><b>业务约束</b><small>哪些行动现实可行</small></li>
+            <li><span>STEP 04</span><b>决策行动</b><small>选择并执行最优方案</small></li>
+          </ol>
         </div>
       </section>
 

@@ -4,16 +4,59 @@ import test from 'node:test';
 
 const page = await readFile(new URL('../index.html', import.meta.url), 'utf8');
 
-test('homepage labels the context-aware forecasting research track', () => {
+test('homepage omits the standalone context-aware forecasting module', () => {
+  assert.ok(!page.includes('id="context-aware"'));
   assert.ok(
-    page.includes('<h2>情境感知的时间序列预测（Context-Aware Time Series Forecasting）</h2>'),
-    'Context-aware forecasting heading should include its English label',
+    !page.includes('<h2>情境感知的时间序列预测（Context-Aware Time Series Forecasting）</h2>'),
   );
+});
+
+test('homepage research navigation links to context-aware forecasting', () => {
+  const menu = page.match(
+    /<div class="nav-dropdown-menu" role="menu">([\s\S]*?)<\/div>/,
+  )?.[1] ?? '';
+  const forecastingIndex = menu.indexOf(
+    '<a href="forecasting/" role="menuitem">时间序列预测</a>',
+  );
+  const contextAwareIndex = menu.indexOf(
+    '<a href="context-cast/" role="menuitem">情境感知的时间序列预测</a>',
+  );
+  const classificationIndex = menu.indexOf(
+    '<a href="classification-anomaly/" role="menuitem">时间序列分类与异常检测</a>',
+  );
+
+  assert.ok(forecastingIndex >= 0, 'Forecasting should remain in the research menu');
+  assert.ok(contextAwareIndex >= 0, 'Context-aware forecasting should appear in the research menu');
+  assert.ok(classificationIndex >= 0, 'Classification and anomaly detection should remain in the research menu');
+  assert.ok(forecastingIndex < contextAwareIndex);
+  assert.ok(contextAwareIndex < classificationIndex);
+});
+
+test('homepage names the context-cognitive forecasting foundation model', () => {
+  const section = page.match(
+    /<div class="section-intro section-anchor" id="cognitive-llm">([\s\S]*?)<\/div>/,
+  )?.[1] ?? '';
+
+  assert.ok(section.includes('<h2>情境认知推演驱动的时间序列预测基础模型</h2>'));
+  assert.ok(
+    !section.includes(
+      '<h2>情境认知驱动的时间序列推演基础模型（Time Series Foundation Model）</h2>',
+    ),
+  );
+});
+
+test('homepage names the autonomous-interaction forecasting agent', () => {
+  const section = page.match(
+    /<div class="section-intro section-anchor" id="system-integration">([\s\S]*?)<\/div>/,
+  )?.[1] ?? '';
+
+  assert.ok(section.includes('<h2>自主交互驱动的时间序列预测智能体</h2>'));
+  assert.ok(!section.includes('<h2>基于自主交互的时序预测智能体（Agentic TSF）</h2>'));
 });
 
 test('homepage foundation-model card links to the CastMind homepage', () => {
   const card = page.match(
-    /<!-- Foundation Models -->([\s\S]*?)<!-- Scientific Time Series Modeling -->/,
+    /<!-- Foundation Models -->([\s\S]*?)<!-- ── Applied Research ── -->/,
   )?.[1] ?? '';
 
   assert.ok(card.includes('<h3>时间序列基础模型</h3>'));
@@ -22,6 +65,7 @@ test('homepage foundation-model card links to the CastMind homepage', () => {
       '<a class="card-btn btn-enter-foundation" href="https://ustc-time-series.github.io/cast-mind/" target="_blank" rel="noopener">查看主页 →</a>',
     ),
   );
+  assert.ok(!card.includes('CastMind Coming Soon'));
 });
 
 test('homepage navigation places applied research before the paper list', () => {

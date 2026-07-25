@@ -2,8 +2,18 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
-const detail = await readFile(new URL('../context-cast/index.html', import.meta.url), 'utf8');
-const homepage = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+const root = new URL('../', import.meta.url);
+const detail = await readFile(new URL('context-cast/index.html', root), 'utf8');
+const siblingNavigationPages = [
+  'forecasting/index.html',
+  'classification-anomaly/index.html',
+  'applications/index.html',
+  'open-source/index.html',
+  'papers/index.html',
+  'scientific-time-series/index.html',
+  'star-cast/index.html',
+  'systems/index.html',
+];
 
 test('context-aware forecasting page exposes canonical research metadata', () => {
   assert.ok(
@@ -21,21 +31,26 @@ test('context-aware forecasting page exposes canonical research metadata', () =>
   );
 });
 
-test('homepage links the context-aware forecasting card to its dedicated page', () => {
-  assert.ok(
-    homepage.includes(
-      '<h2>情境感知的时间序列预测（Context-Aware Time Series Forecasting）</h2>',
-    ),
-  );
-  const section = homepage.match(
-    /<!-- ── Context-Aware Time Series Forecasting ── -->([\s\S]*?)<!-- ── Generative Reasoning Model for Time Series ── -->/,
-  )?.[1] ?? '';
+test('all research dropdowns link to context-aware forecasting', async () => {
+  for (const path of siblingNavigationPages) {
+    const page = await readFile(new URL(path, root), 'utf8');
+    assert.ok(
+      page.includes(
+        'href="../context-cast/" role="menuitem">情境感知的时间序列预测</a>',
+      ),
+      `Missing context-aware forecasting dropdown entry in ${path}`,
+    );
+  }
 
-  assert.ok(section.includes('<h3>情境感知的时间序列预测</h3>'));
+  const nestedPage = await readFile(
+    new URL('forecasting/load-forecasting/index.html', root),
+    'utf8',
+  );
   assert.ok(
-    section.includes(
-      '<a class="card-btn btn-enter-forecast" href="context-cast/">查看主页 →</a>',
+    nestedPage.includes(
+      'href="../../context-cast/" role="menuitem">情境感知的时间序列预测</a>',
     ),
+    'Nested forecasting page should use the two-level context-aware link',
   );
 });
 

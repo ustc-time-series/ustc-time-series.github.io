@@ -661,6 +661,7 @@
           <button class="nav-dropdown-toggle" type="button" aria-expanded="false">研究方向</button>
           <div class="nav-dropdown-menu" role="menu">
             <a href="forecasting/" role="menuitem">时间序列预测</a>
+            <a href="context-cast/" role="menuitem">情境感知的时间序列预测</a>
             <a href="classification-anomaly/" role="menuitem">时间序列分类与异常检测</a>
             <a href="scientific-time-series/" role="menuitem">科学时序数据建模</a>
           </div>
@@ -861,39 +862,6 @@
             <a class="card-btn btn-outline" href="https://arxiv.org/pdf/2402.16516" target="_blank" rel="noopener">GPHT</a>
             <a class="card-btn btn-outline" href="https://arxiv.org/pdf/2403.12372" target="_blank" rel="noopener">CrossTimeNet</a>
             <a class="card-btn btn-outline" href="https://arxiv.org/abs/2508.09191" target="_blank" rel="noopener">Time-R1</a>
-            <span class="card-btn btn-outline btn-disabled">CastMind Coming Soon</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Scientific Time Series Modeling -->
-      <div class="project-card project-card-wide" id="track-scientific-time-series">
-        <div class="card-accent accent-evaluation"></div>
-        <div class="card-body">
-          <h3>科学时序数据建模</h3>
-          <p class="card-desc">
-            面向物理、地球、生命、分子与材料等科学动力系统，研究科学时序基础模型的跨系统、跨尺度表征、预测、重建与适配能力。
-          </p>
-          <div class="card-meta">
-            <div class="meta-row">
-              <span class="meta-icon">🔭</span>
-              <span>科学系统：四类科学系统 · 八个互补领域任务包</span>
-            </div>
-            <div class="meta-row">
-              <span class="meta-icon">🧭</span>
-              <span>描述尺度：L0 电子/量子 → L4 系统/工程动力学</span>
-            </div>
-            <div class="meta-row">
-              <span class="meta-icon">⚙️</span>
-              <span>核心任务：动力学预测 · 状态重建 · 事件检测 · 跨尺度桥接</span>
-            </div>
-            <div class="meta-row">
-              <span class="meta-icon">📈</span>
-              <span>迁移评测：零样本 · 少样本 · 全量微调 · 物理一致性</span>
-            </div>
-          </div>
-          <div class="card-links">
-            <a class="card-btn btn-enter-context" href="scientific-time-series/">查看主页 →</a>
           </div>
         </div>
       </div>
@@ -984,64 +952,9 @@
 
     <hr class="divider" />
 
-    <!-- ── Context-Aware Time Series Forecasting ── -->
-    <div class="section-intro section-anchor" id="context-aware">
-      <h2>情境感知的时间序列预测（Context-Aware Time Series Forecasting）</h2>
-      <p>面向复杂真实预测场景，研究多源多模情境上下文如何融入时间序列建模，让模型从序列模式拟合走向情境感知的未来趋势预测。</p>
-    </div>
-
-    <div class="project-grid">
-      <div class="project-card project-card-wide">
-        <div class="card-accent accent-forecast"></div>
-        <div class="card-body">
-          <h3>情境感知的时间序列预测</h3>
-          <p class="card-desc">
-            面向复杂真实预测场景，研究多源上下文情境如何参与时间序列建模、推理与动态更新，让模型从序列模式拟合走向情境感知的未来判断。
-          </p>
-          <div class="subdomain-grid">
-            <div class="subdomain-card">
-              <span class="subdomain-label">情境语义对齐与融合</span>
-              <div class="subdomain-header">
-                <span class="subdomain-icon">🧩</span>
-                <div>
-                  <p class="subdomain-desc">多源异构上下文情境如何有效表示、对齐并融入预测模型。</p>
-                </div>
-              </div>
-            </div>
-            <div class="subdomain-card">
-              <span class="subdomain-label">情境上下文推理</span>
-              <div class="subdomain-header">
-                <span class="subdomain-icon">🧠</span>
-                <div>
-                  <p class="subdomain-desc">情境因素如何影响未来趋势，模型如何开展原因分析、假设探索与证据验证。</p>
-                </div>
-              </div>
-            </div>
-            <div class="subdomain-card">
-              <span class="subdomain-label">情境自主获取</span>
-              <div class="subdomain-header">
-                <span class="subdomain-icon">🔁</span>
-                <div>
-                  <p class="subdomain-desc">当情境变化或信息不完整时，模型如何主动获取新证据并动态更新预测。</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="card-links">
-            <a class="card-btn btn-enter-forecast" href="context-cast/">查看主页 →</a>
-            <a class="card-btn btn-outline" href="https://arxiv.org/abs/2508.09191" target="_blank" rel="noopener">TokenCast</a>
-            <a class="card-btn btn-outline" href="https://arxiv.org/abs/2602.03564" target="_blank" rel="noopener">CoGenCast</a>
-            <a class="card-btn btn-outline" href="https://arxiv.org/abs/2601.14968" target="_blank" rel="noopener">InstructTime++</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <hr class="divider" />
-
     <!-- ── Generative Reasoning Model for Time Series ── -->
     <div class="section-intro section-anchor" id="cognitive-llm">
-      <h2>情境认知驱动的时间序列推演基础模型（Time Series Foundation Model）</h2>
+      <h2>情境认知推演驱动的时间序列预测基础模型</h2>
       <p>情境认知驱动的时间序列推演基础模型是一类面向复杂时序场景的新型基础模型。它不仅学习时间序列中的数值模式，还进一步理解序列所处的情境上下文，分析趋势变化背后的原因，并通过慢思考推理与记忆交互不断获取证据，推演未来趋势、状态变化与可能演化路径，从而实现更可靠、更可解释和更具适应性的时序预测。</p>
     </div>
 
@@ -1096,7 +1009,7 @@
 
     <!-- ── System Development ── -->
     <div class="section-intro section-anchor" id="system-integration">
-      <h2>基于自主交互的时序预测智能体（Agentic TSF）</h2>
+      <h2>自主交互驱动的时间序列预测智能体</h2>
       <p>面向时间序列研究与分析工作流，建设可交互、可编排、可沉淀的智能体系统，将任务规划、实验执行、结果评估与研究记忆整合为端到端平台。</p>
     </div>
 

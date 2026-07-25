@@ -104,18 +104,12 @@ test('detail page exposes seven task families and the entity-counted transfer cu
   assert.equal(evaluationGrid.match(/<article>/g)?.length, 3);
 });
 
-test('homepage links the scientific time series research card and dropdown', () => {
-  assert.ok(homepage.includes('<h3>科学时序数据建模</h3>'));
-  assert.ok(homepage.includes('href="scientific-time-series/"'));
-});
+test('homepage keeps the scientific time series dropdown entry without a standalone card', () => {
+  const nav = homepage.match(/<nav class="top-nav"[\s\S]*?<\/nav>/)?.[0] ?? '';
 
-test('homepage card reflects the cross-system and cross-scale research direction', () => {
-  const cardStart = homepage.indexOf('id="track-scientific-time-series"');
-  const card = cardStart >= 0 ? homepage.slice(cardStart, cardStart + 2600) : '';
-
-  assert.ok(card.includes('科学时序基础模型'));
-  assert.ok(card.includes('跨系统'));
-  assert.ok(card.includes('跨尺度'));
+  assert.ok(nav.includes('href="scientific-time-series/"'));
+  assert.ok(!homepage.includes('id="track-scientific-time-series"'));
+  assert.ok(!homepage.includes('<h3>科学时序数据建模</h3>'));
 });
 
 test('homepage mobile research dropdown is not clipped by the navigation row', () => {

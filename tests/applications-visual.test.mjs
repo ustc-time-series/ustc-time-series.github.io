@@ -8,8 +8,85 @@ const page = await readFile(
 );
 
 const focusSection = page.match(
-  /<section class="section-card focus-section">([\s\S]*?)<\/section>\s*<\/div>\s*<\/div>\s*<\/main>/,
+  /<section class="section-card focus-section">([\s\S]*?)<\/section>/,
 )?.[1] ?? '';
+
+const forecastDecisionSection = page.match(
+  /<section class="section-card forecast-decision-section"[\s\S]*?<\/section>/,
+)?.[0] ?? '';
+
+const scenarioHeadingIndex = page.indexOf('<h3>应用研究场景</h3>');
+const focusSectionIndex = page.indexOf(
+  '<section class="section-card focus-section">',
+);
+
+test('applications page explains why forecasting must represent uncertainty', () => {
+  assert.ok(
+    forecastDecisionSection,
+    'The forecast-to-decision section should exist',
+  );
+  assert.ok(forecastDecisionSection.includes('未来具有不确定性'));
+  assert.ok(forecastDecisionSection.includes('不确定性预测'));
+
+  for (const concept of ['预测区间', '分位数', '情景概率']) {
+    assert.ok(
+      forecastDecisionSection.includes(concept),
+      `Missing uncertainty concept: ${concept}`,
+    );
+  }
+});
+
+test('applications page connects forecast distributions to business decisions', () => {
+  assert.ok(forecastDecisionSection.includes('预测需要服务并支撑决策'));
+
+  for (const concept of ['预测分布', '风险与成本', '业务约束', '决策行动']) {
+    assert.ok(
+      forecastDecisionSection.includes(concept),
+      `Missing decision concept: ${concept}`,
+    );
+  }
+
+  assert.ok(forecastDecisionSection.includes('data-visual="uncertainty"'));
+  assert.ok(forecastDecisionSection.includes('data-visual="decision"'));
+  assert.equal(
+    (forecastDecisionSection.match(/class="forecast-decision-visual"/g) ?? [])
+      .length,
+    2,
+    'The two ideas should each have a dedicated visual',
+  );
+});
+
+test('forecast-to-decision module adapts from two columns to one', () => {
+  assert.match(
+    page,
+    /\.forecast-decision-grid\s*\{[\s\S]*?grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/,
+  );
+  assert.match(
+    page,
+    /@media \(max-width: 640px\)[\s\S]*?\.forecast-decision-grid\s*\{[\s\S]*?grid-template-columns:\s*1fr/,
+  );
+});
+
+test('applications page omits the redundant standalone research workflow module', () => {
+  assert.doesNotMatch(
+    page,
+    /<section class="section-card">\s*<h3>研究流程<\/h3>/,
+  );
+  assert.ok(!page.includes('class="workflow-steps"'));
+  assert.doesNotMatch(page, /^\s*\.workflow-steps\s*\{/m);
+  assert.doesNotMatch(page, /^\s*\.workflow-step(?:\s|:|\.)/m);
+});
+
+test('application scenarios are the final content module', () => {
+  assert.ok(
+    scenarioHeadingIndex > focusSectionIndex,
+    'The application scenarios should follow the research-loop module',
+  );
+  assert.match(
+    page.slice(scenarioHeadingIndex),
+    /<h3>应用研究场景<\/h3>[\s\S]*?<\/section>\s*<\/div>\s*<\/div>\s*<\/main>/,
+  );
+});
 
 test('application research loop uses four distinct stage visuals', () => {
   assert.ok(focusSection, 'The enhanced focus section should exist');
