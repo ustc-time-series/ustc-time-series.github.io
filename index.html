@@ -16,13 +16,13 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     :root {
-      --accent: #0b5fc6;
-      --accent-dark: #083f7f;
+      --accent: #091f44;
+      --accent-dark: #06162e;
       --accent-soft: #edf7fc;
       --accent-border: #b7d9ec;
-      --blue: #0b78c4;
+      --blue: #163d70;
       --blue-muted: #5a7fa6;
-      --text-strong: #061f45;
+      --text-strong: #091f44;
       --text: #17324d;
       --text-muted: #4c6176;
       --text-faint: #5b7187;
@@ -82,11 +82,11 @@
       flex-shrink: 0;
       font-size: 0.92rem;
       font-weight: 800;
-      color: #061f45;
+      color: #091f44;
       letter-spacing: 0.01em;
       white-space: nowrap;
     }
-    .nav-brand span { color: #0b5fc6; }
+    .nav-brand span { color: #091f44; }
     .nav-links {
       display: flex;
       align-items: center;
@@ -185,8 +185,8 @@
       overflow: hidden;
       isolation: isolate;
       background:
-        linear-gradient(90deg, rgba(11, 95, 198, 0.055) 1px, transparent 1px) 0 0 / 42px 42px,
-        linear-gradient(180deg, rgba(11, 95, 198, 0.035) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(90deg, rgba(9, 31, 68, 0.055) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(180deg, rgba(9, 31, 68, 0.035) 1px, transparent 1px) 0 0 / 42px 42px,
         linear-gradient(160deg, #ffffff 42%, var(--surface-soft) 74%, var(--accent-soft) 100%);
       border-bottom: 1px solid var(--line);
       padding: 68px 0 58px;
@@ -201,7 +201,7 @@
       z-index: 0;
       background:
         linear-gradient(110deg, transparent 0 18%, rgba(6, 31, 69, 0.035) 18% 18.35%, transparent 18.35% 32%),
-        linear-gradient(110deg, transparent 0 52%, rgba(11, 95, 198, 0.08) 52% 52.35%, transparent 52.35% 100%);
+        linear-gradient(110deg, transparent 0 52%, rgba(9, 31, 68, 0.08) 52% 52.35%, transparent 52.35% 100%);
       opacity: 0.52;
       pointer-events: none;
     }
@@ -248,8 +248,8 @@
     }
     header:hover {
       background:
-        linear-gradient(90deg, rgba(11, 95, 198, 0.065) 1px, transparent 1px) 0 0 / 42px 42px,
-        linear-gradient(180deg, rgba(11, 95, 198, 0.045) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(90deg, rgba(9, 31, 68, 0.065) 1px, transparent 1px) 0 0 / 42px 42px,
+        linear-gradient(180deg, rgba(9, 31, 68, 0.045) 1px, transparent 1px) 0 0 / 42px 42px,
         linear-gradient(160deg, #ffffff 42%, #f3f9fd 74%, #eaf4fa 100%);
     }
     header.is-refreshing {
@@ -647,6 +647,7 @@
       .container { padding: 0 16px; }
     }
   </style>
+  <link rel="stylesheet" href="asset/site-responsive.css" />
 </head>
 <body>
 

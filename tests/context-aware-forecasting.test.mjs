@@ -121,8 +121,8 @@ test('page publishes a leakage-safe evaluation protocol', () => {
 
 test('page matches the shared responsive research-page shell', () => {
   assert.ok(detail.includes('<meta name="theme-color" content="#f4f7f9" />'));
-  assert.ok(detail.includes('--accent: #0b5fc6;'));
-  assert.ok(detail.includes('--text-strong: #061f45;'));
+  assert.ok(detail.includes('--accent: #091f44;'));
+  assert.ok(detail.includes('--text-strong: #091f44;'));
   assert.ok(detail.includes('--text: #17324d;'));
   assert.ok(detail.includes('--line: #d5e3eb;'));
   assert.ok(detail.includes('--bg: #f4f7f9;'));

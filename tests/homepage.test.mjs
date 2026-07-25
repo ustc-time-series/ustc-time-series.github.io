@@ -42,16 +42,16 @@ test('homepage top navigation omits the GitHub shortcut', () => {
 });
 
 test('homepage brand uses the blue-gray research palette', () => {
-  assert.match(page, /\.nav-brand\s*\{[^}]*color:\s*#061f45;/);
-  assert.match(page, /\.nav-brand span\s*\{\s*color:\s*#0b5fc6;\s*\}/);
+  assert.match(page, /\.nav-brand\s*\{[^}]*color:\s*#091f44;/);
+  assert.match(page, /\.nav-brand span\s*\{\s*color:\s*#091f44;\s*\}/);
 });
 
 test('homepage defines the shared AI for Science color system', () => {
   assert.match(page, /<meta name="theme-color" content="#f4f7f9"\s*\/>/);
-  assert.match(page, /--accent:\s*#0b5fc6;/);
-  assert.match(page, /--accent-dark:\s*#083f7f;/);
+  assert.match(page, /--accent:\s*#091f44;/);
+  assert.match(page, /--accent-dark:\s*#06162e;/);
   assert.match(page, /--accent-soft:\s*#edf7fc;/);
-  assert.match(page, /--text-strong:\s*#061f45;/);
+  assert.match(page, /--text-strong:\s*#091f44;/);
   assert.match(page, /--text:\s*#17324d;/);
   assert.match(page, /--line:\s*#d5e3eb;/);
   assert.match(page, /--bg:\s*#f4f7f9;/);

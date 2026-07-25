@@ -10,6 +10,7 @@ const subpagePaths = [
   'cast-claw/index.html',
   'cast-embedding/index.html',
   'cast-factory/index.html',
+  'cast-bench/index.html',
   'cast-mind/index.html',
   'classification-anomaly/index.html',
   'context-cast/index.html',
@@ -38,8 +39,8 @@ test('every subpage exposes the shared AI for Science palette', () => {
       /<meta name="theme-color" content="#f4f7f9"\s*\/>/,
       `${path} should set the shared browser theme color`,
     );
-    assert.match(html, /--accent:\s*#0b5fc6;/, `${path} should define the shared accent`);
-    assert.match(html, /--text-strong:\s*#061f45;/, `${path} should define strong text`);
+    assert.match(html, /--accent:\s*#091f44;/, `${path} should define the shared accent`);
+    assert.match(html, /--text-strong:\s*#091f44;/, `${path} should define strong text`);
     assert.match(html, /--text:\s*#17324d;/, `${path} should define body text`);
     assert.match(html, /--line:\s*#d5e3eb;/, `${path} should define borders`);
     assert.match(html, /--bg:\s*#f4f7f9;/, `${path} should define the page canvas`);

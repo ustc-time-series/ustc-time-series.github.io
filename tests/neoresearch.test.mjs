@@ -139,10 +139,10 @@ test('NeoResearch hero omits the redundant shortcut button group', () => {
 
 test('NeoResearch follows the USTC AGI blue-gray visual system', () => {
   for (const token of [
-    '--accent: #0b5fc6;',
-    '--accent-dark: #083f7f;',
+    '--accent: #091f44;',
+    '--accent-dark: #06162e;',
     '--accent-soft: #edf7fc;',
-    '--text-strong: #061f45;',
+    '--text-strong: #091f44;',
     '--text: #17324d;',
     '--text-muted: #4c6176;',
     '--text-faint: #5b7187;',
@@ -171,6 +171,6 @@ test('NeoResearch follows the USTC AGI blue-gray visual system', () => {
   for (const staleDiagramColor of ['#c0392b', '#b9770e', '#e67e22', '#6c4aa1']) {
     assert.ok(!framework.includes(staleDiagramColor), `Legacy diagram color remains: ${staleDiagramColor}`);
   }
-  assert.ok(framework.includes('#0b5fc6'), 'The framework diagram should share the page accent');
-  assert.ok(framework.includes('#061f45'), 'The framework diagram should share the page title color');
+  assert.ok(framework.includes('#091f44'), 'The framework diagram should share the page accent');
+  assert.ok(framework.includes('#091f44'), 'The framework diagram should share the page title color');
 });
