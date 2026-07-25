@@ -1,0 +1,324 @@
+/*
+ * Shared responsive hardening for every USTC Time Series page.
+ * Page-level styles keep their own visual identity; this layer only supplies
+ * safe fluid sizing and consistent desktop/tablet/mobile behavior.
+ */
+
+html {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body {
+  min-width: 0;
+  overflow-x: clip;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+  height: auto;
+}
+
+iframe {
+  max-width: 100%;
+}
+
+.container,
+main,
+header,
+footer,
+section,
+article,
+.card,
+.project-card,
+.feature-card,
+.system-card,
+.path-card,
+.version-card,
+.evolution-card {
+  min-width: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+li,
+td,
+th,
+a,
+button {
+  overflow-wrap: break-word;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-wrap,
+.table-scroll,
+.table-shell,
+.leaderboard-scroll,
+.benchmark-table-wrap,
+.matrix-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.top-nav .nav-links,
+.nav-bar .container {
+  min-width: 0;
+}
+
+.nav-bar .container {
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 960px) {
+  .project-grid,
+  .feature-grid,
+  .card-grid,
+  .card-grid-3,
+  .system-grid,
+  .tech-grid,
+  .scenario-grid,
+  .overview-grid,
+  .benchmark-grid,
+  .stats-grid,
+  .suite-grid,
+  .evolution-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .top-nav .container {
+    gap: 12px;
+  }
+
+  .hero-logo,
+  .header-logo {
+    max-width: min(100%, 680px);
+  }
+}
+
+@media (max-width: 720px) {
+  .top-nav .container {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0;
+    padding-top: 10px;
+    padding-bottom: 8px;
+  }
+
+  .top-nav .nav-brand {
+    width: 100%;
+    padding: 2px 0 6px;
+  }
+
+  .top-nav .nav-links {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 4px 0 2px;
+    overflow: visible;
+  }
+
+  .top-nav .nav-links > a,
+  .top-nav .nav-dropdown-toggle {
+    min-height: 40px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .nav-dropdown-menu {
+    max-width: calc(100vw - 32px);
+  }
+
+  .nav-bar .container {
+    padding-inline: 16px;
+  }
+
+  .nav-bar a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .project-grid,
+  .feature-grid,
+  .card-grid,
+  .card-grid-2,
+  .card-grid-3,
+  .system-grid,
+  .tech-grid,
+  .scenario-grid,
+  .overview-grid,
+  .benchmark-grid,
+  .stats-grid,
+  .suite-grid,
+  .evolution-grid,
+  .hero-highlights,
+  .hero-workflow-steps,
+  .eval-split,
+  .track-split,
+  .stage-row,
+  .version-grid,
+  .pillar-list {
+    grid-template-columns: 1fr;
+  }
+
+  h1,
+  header h1 {
+    max-width: 100%;
+    font-size: clamp(1.55rem, 7vw, 2.05rem);
+    line-height: 1.25;
+    text-wrap: balance;
+    overflow-wrap: anywhere;
+  }
+
+  h2,
+  .section-title {
+    overflow-wrap: anywhere;
+  }
+
+  .btn-row,
+  .card-links,
+  .page-actions,
+  .resource-actions {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .btn-row .btn,
+  .card-links .card-btn,
+  .page-actions a,
+  .resource-actions a {
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  .hero-workflow-head,
+  .section-heading,
+  .evolution-path {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hero-workflow-step::after,
+  .route-step::after {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --topbar: 84px;
+  }
+
+  .container {
+    width: 100%;
+    padding-inline: 16px !important;
+  }
+
+  .topbar-inner {
+    align-content: center;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    padding-block: 6px;
+  }
+
+  .topbar-left,
+  .topbar-right {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .topbar-left {
+    justify-content: flex-start;
+  }
+
+  .topbar-brand {
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .topbar-right {
+    justify-content: flex-start;
+    gap: 6px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .topbar-right::-webkit-scrollbar {
+    display: none;
+  }
+
+  .topbar-right .topbar-btn {
+    flex: 0 0 auto;
+    height: 28px;
+    padding-inline: 8px;
+  }
+
+  .topbar-right .search-kbd {
+    display: none;
+  }
+
+  .top-nav .nav-links > a,
+  .top-nav .nav-dropdown-toggle {
+    padding-inline: 11px;
+    font-size: 0.8rem;
+  }
+
+  .btn-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .btn-row .btn,
+  .page-actions a,
+  .resource-actions a {
+    width: 100%;
+  }
+
+  .card,
+  .project-card,
+  .feature-card,
+  .system-card,
+  .path-card,
+  .version-card,
+  .evolution-card {
+    max-width: 100%;
+  }
+
+  p,
+  li,
+  td,
+  th {
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

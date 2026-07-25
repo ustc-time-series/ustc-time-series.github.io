@@ -1,0 +1,4133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f9" />
+  <title>CastBench — 多维时间序列模型评测与公开排行榜</title>
+  <meta
+    id="meta-description"
+    name="description"
+    content="CastBench 是面向时间序列基础模型、深度预测模型与情境推理模型的多维评测与公开排行榜，覆盖预测准确性、概率质量、趋势判断、情境理解、鲁棒性与效率。"
+  />
+  <link rel="canonical" href="https://ustc-time-series.github.io/cast-bench/" />
+  <link rel="alternate" hreflang="zh-CN" href="https://ustc-time-series.github.io/cast-bench/" />
+  <link rel="alternate" hreflang="en" href="https://ustc-time-series.github.io/cast-bench/?lang=en" />
+  <link rel="alternate" hreflang="x-default" href="https://ustc-time-series.github.io/cast-bench/?lang=en" />
+  <meta property="og:type" content="website" />
+  <meta id="meta-og-locale" property="og:locale" content="zh_CN" />
+  <meta id="meta-og-title" property="og:title" content="CastBench — 多维时间序列模型评测与公开排行榜" />
+  <meta
+    id="meta-og-description"
+    property="og:description"
+    content="从单一误差走向多维能力剖面：统一比较预测、概率、趋势、情境、鲁棒性与效率。"
+  />
+  <meta id="meta-og-url" property="og:url" content="https://ustc-time-series.github.io/cast-bench/" />
+  <meta property="og:image" content="https://ustc-time-series.github.io/cast-bench/assets/og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta id="meta-og-image-alt" property="og:image:alt" content="CastBench multidimensional time-series benchmark leaderboard" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta id="meta-twitter-title" name="twitter:title" content="CastBench — Time-Series Model Leaderboard" />
+  <meta
+    id="meta-twitter-description"
+    name="twitter:description"
+    content="A multidimensional benchmark and leaderboard for time-series models."
+  />
+  <meta name="twitter:image" content="https://ustc-time-series.github.io/cast-bench/assets/og.png" />
+  <meta id="meta-twitter-image-alt" name="twitter:image:alt" content="CastBench multidimensional time-series benchmark leaderboard" />
+  <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --accent: #091f44;
+      --accent-dark: #06162e;
+      --accent-soft: #edf7fc;
+      --text-strong: #091f44;
+      --text: #17324d;
+      --text-muted: #4c6176;
+      --text-faint: #5b7187;
+      --line: #d5e3eb;
+      --line-soft: #e6f0f5;
+      --bg: #f4f7f9;
+      --surface: #ffffff;
+      --surface-soft: #f8fbfd;
+      --success: #16836b;
+      --success-soft: #eaf7f3;
+      --warning: #a76108;
+      --warning-soft: #fff6e6;
+      --gold: #c58a16;
+      --silver: #788b9c;
+      --bronze: #9a6244;
+      --shadow-sm: 0 4px 14px rgba(6, 31, 69, 0.06);
+      --shadow-md: 0 16px 38px rgba(6, 31, 69, 0.1);
+      --radius-sm: 10px;
+      --radius: 16px;
+      --radius-lg: 24px;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+        "PingFang SC", "Hiragino Sans GB", sans-serif;
+      font-size: 16px;
+      line-height: 1.72;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.dialog-open {
+      overflow: hidden;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(9, 31, 68, 0.35);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 1000;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: var(--text-strong);
+      color: #fff;
+      font-weight: 750;
+      transform: translateY(-160%);
+      transition: transform 0.18s ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 850;
+      letter-spacing: 0.13em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 22px;
+      height: 2px;
+      background: currentColor;
+      content: "";
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 0.7fr);
+      gap: 32px;
+      align-items: end;
+      margin-bottom: 28px;
+    }
+
+    .section-heading h2 {
+      margin-top: 8px;
+      color: var(--text-strong);
+      font-size: clamp(1.75rem, 3vw, 2.45rem);
+      line-height: 1.18;
+      letter-spacing: -0.035em;
+    }
+
+    .section-heading p {
+      color: var(--text-muted);
+      font-size: 0.97rem;
+      line-height: 1.76;
+    }
+
+    .section-heading p strong {
+      color: var(--text-strong);
+    }
+
+    section {
+      padding: 84px 0;
+      scroll-margin-top: 62px;
+    }
+
+    section.alt {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    /* Navigation */
+    .nav-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(213, 227, 235, 0.9);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 4px 16px rgba(6, 31, 69, 0.04);
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      min-height: 58px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-right: 8px;
+      padding: 9px 18px 9px 0;
+      border-right: 1px solid var(--line);
+      color: var(--text-strong);
+      font-size: 0.92rem;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .nav-brand:hover {
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      display: inline-grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border-radius: 9px;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.24), transparent 44%),
+        var(--accent);
+      box-shadow: 0 6px 14px rgba(9, 31, 68, 0.22);
+      color: #fff;
+      font-size: 0.67rem;
+      letter-spacing: -0.04em;
+    }
+
+    .nav-link {
+      position: relative;
+      flex-shrink: 0;
+      padding: 17px 14px 15px;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      font-weight: 650;
+      line-height: 1.5;
+      white-space: nowrap;
+    }
+
+    .nav-link::after {
+      position: absolute;
+      right: 14px;
+      bottom: -1px;
+      left: 14px;
+      height: 2px;
+      border-radius: 99px;
+      background: var(--accent);
+      content: "";
+      opacity: 0;
+      transform: scaleX(0.45);
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.is-active {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.is-active::after {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+
+    .language-switch {
+      display: inline-flex;
+      flex-shrink: 0;
+      gap: 2px;
+      margin-right: 8px;
+      padding: 3px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--surface-soft);
+    }
+
+    .language-switch button {
+      min-width: 43px;
+      min-height: 34px;
+      padding: 5px 9px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.74rem;
+      font-weight: 800;
+      line-height: 1;
+      transition:
+        background 0.18s ease,
+        box-shadow 0.18s ease,
+        color 0.18s ease;
+    }
+
+    .language-switch button:hover {
+      color: var(--accent);
+    }
+
+    .language-switch button[aria-pressed="true"] {
+      background: var(--accent);
+      box-shadow: 0 3px 8px rgba(9, 31, 68, 0.18);
+      color: #fff;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: 78px 0 68px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 81% 24%, rgba(22, 61, 112, 0.15), transparent 23%),
+        radial-gradient(circle at 17% 82%, rgba(9, 31, 68, 0.09), transparent 28%),
+        linear-gradient(152deg, #fff 0%, #f8fbfd 50%, #edf7fc 100%);
+    }
+
+    .hero::before,
+    .hero::after {
+      position: absolute;
+      z-index: -1;
+      border: 1px solid rgba(9, 31, 68, 0.12);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+    }
+
+    .hero::before {
+      top: -260px;
+      right: -150px;
+      width: 620px;
+      height: 620px;
+      box-shadow:
+        0 0 0 58px rgba(9, 31, 68, 0.025),
+        0 0 0 116px rgba(9, 31, 68, 0.018);
+    }
+
+    .hero::after {
+      bottom: -280px;
+      left: -210px;
+      width: 520px;
+      height: 520px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(330px, 0.75fr);
+      gap: 56px;
+      align-items: center;
+    }
+
+    .hero-copy h1 {
+      margin-top: 18px;
+      color: var(--text-strong);
+      font-size: clamp(3rem, 7vw, 5.6rem);
+      font-weight: 900;
+      line-height: 0.96;
+      letter-spacing: -0.07em;
+    }
+
+    .hero-copy h1 > span {
+      position: relative;
+      display: inline-block;
+      color: var(--accent);
+    }
+
+    .hero-copy h1 > span::after {
+      position: absolute;
+      right: 2px;
+      bottom: -10px;
+      left: 5px;
+      height: 7px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent), #56b4e9 72%, transparent);
+      content: "";
+      opacity: 0.75;
+    }
+
+    .hero-copy h1 small {
+      display: block;
+      max-width: 760px;
+      margin-top: 28px;
+      color: var(--text-strong);
+      font-size: clamp(1.45rem, 3vw, 2.35rem);
+      font-weight: 780;
+      line-height: 1.32;
+      letter-spacing: -0.025em;
+    }
+
+    .hero-lead {
+      max-width: 760px;
+      margin-top: 24px;
+      color: var(--text-muted);
+      font-size: 1.03rem;
+      line-height: 1.82;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 760;
+      line-height: 1.45;
+      text-decoration: none;
+      transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        border-color 0.18s ease,
+        background 0.18s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+
+    .button-primary {
+      background: var(--accent);
+      box-shadow: 0 9px 20px rgba(9, 31, 68, 0.2);
+      color: #fff;
+    }
+
+    .button-primary:hover {
+      background: var(--accent-dark);
+      box-shadow: 0 12px 26px rgba(9, 31, 68, 0.26);
+    }
+
+    .button-secondary {
+      border-color: var(--line);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--text);
+    }
+
+    .button-secondary:hover {
+      border-color: #abcada;
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .button-ghost {
+      border-color: var(--line);
+      background: var(--surface);
+      color: var(--accent);
+    }
+
+    .button-small {
+      min-height: 34px;
+      padding: 6px 11px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+    }
+
+    .button[disabled],
+    .button.is-disabled {
+      cursor: not-allowed;
+      opacity: 0.63;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .hero-panel {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(183, 217, 236, 0.96);
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(237, 247, 252, 0.94));
+      box-shadow: 0 24px 70px rgba(6, 31, 69, 0.13);
+    }
+
+    .hero-panel::before {
+      position: absolute;
+      top: -72px;
+      right: -65px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background:
+        repeating-radial-gradient(
+          circle at center,
+          transparent 0 19px,
+          rgba(9, 31, 68, 0.08) 20px 21px
+        );
+      content: "";
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 24px 17px;
+      border-bottom: 1px solid rgba(183, 217, 236, 0.7);
+    }
+
+    .panel-header strong {
+      color: var(--text-strong);
+      font-size: 0.92rem;
+    }
+
+    .live-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--success);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .live-dot::before {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 0 4px rgba(22, 131, 107, 0.12);
+      content: "";
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero-stat {
+      min-height: 118px;
+      padding: 22px 24px;
+      border-right: 1px solid rgba(183, 217, 236, 0.66);
+      border-bottom: 1px solid rgba(183, 217, 236, 0.66);
+    }
+
+    .hero-stat:nth-child(even) {
+      border-right: 0;
+    }
+
+    .hero-stat:nth-last-child(-n + 2) {
+      border-bottom: 0;
+    }
+
+    .hero-stat strong {
+      display: block;
+      color: var(--text-strong);
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .hero-panel-note {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      border-top: 1px solid rgba(183, 217, 236, 0.7);
+      background: rgba(255, 255, 255, 0.55);
+      color: var(--text-muted);
+      font-size: 0.76rem;
+    }
+
+    .version-chip {
+      flex-shrink: 0;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      background: #fff;
+      color: var(--accent);
+      font-size: 0.67rem;
+      font-weight: 850;
+      letter-spacing: 0.05em;
+    }
+
+    .demo-notice {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      padding: 17px 20px;
+      border: 1px solid #efd7a7;
+      border-radius: 12px;
+      background:
+        linear-gradient(90deg, rgba(255, 246, 230, 0.96), rgba(255, 252, 246, 0.96));
+      box-shadow: 0 8px 22px rgba(167, 97, 8, 0.07);
+    }
+
+    .demo-notice strong {
+      color: var(--warning);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .demo-notice span {
+      color: #71522a;
+      font-size: 0.84rem;
+      line-height: 1.58;
+    }
+
+    .demo-notice a {
+      color: #8a560e;
+      font-size: 0.78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    /* Leaderboard */
+    .leaderboard-section {
+      padding-top: 64px;
+    }
+
+    .podium-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+      margin: 26px 0 22px;
+    }
+
+    .podium-card {
+      position: relative;
+      min-height: 174px;
+      overflow: hidden;
+      padding: 21px;
+      border: 1px solid var(--line);
+      border-top: 3px solid var(--rank-color, var(--accent));
+      border-radius: 14px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .podium-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .podium-card::after {
+      position: absolute;
+      right: -26px;
+      bottom: -48px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--rank-color, var(--accent)) 8%, transparent);
+      content: "";
+    }
+
+    .podium-topline {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .podium-rank {
+      display: inline-grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--rank-color, var(--accent)) 42%, white);
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--rank-color, var(--accent)) 10%, white);
+      color: var(--rank-color, var(--accent));
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .podium-score {
+      color: var(--text-strong);
+      font-size: 1.72rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .podium-score small {
+      margin-left: 3px;
+      color: var(--text-faint);
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .podium-card h3 {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      color: var(--text-strong);
+      font-size: 1.02rem;
+      line-height: 1.35;
+    }
+
+    .podium-meta {
+      position: relative;
+      z-index: 1;
+      margin-top: 5px;
+      color: var(--text-muted);
+      font-size: 0.76rem;
+    }
+
+    .podium-footer {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .mini-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      background: var(--surface-soft);
+      color: var(--text-muted);
+      font-size: 0.67rem;
+      font-weight: 750;
+      line-height: 1.4;
+    }
+
+    .text-button {
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+      font-size: 0.74rem;
+      font-weight: 800;
+    }
+
+    .text-button:hover {
+      text-decoration: underline;
+    }
+
+    .leaderboard-shell {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 1.35fr) repeat(3, minmax(145px, 0.72fr)) auto;
+      gap: 12px;
+      align-items: end;
+      padding: 20px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(180deg, #fff 0%, var(--surface-soft) 100%);
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field > span {
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.035em;
+    }
+
+    .input-shell {
+      position: relative;
+    }
+
+    .input-shell::before {
+      position: absolute;
+      top: 50%;
+      left: 13px;
+      color: var(--text-faint);
+      content: "⌕";
+      font-size: 1.05rem;
+      font-weight: 800;
+      transform: translateY(-52%);
+      pointer-events: none;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      min-height: 42px;
+      border: 1px solid #c8dbe6;
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text);
+      font-size: 0.82rem;
+      font-weight: 570;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .field input {
+      padding: 9px 12px 9px 37px;
+    }
+
+    .field select {
+      padding: 9px 34px 9px 11px;
+      cursor: pointer;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(9, 31, 68, 0.11);
+      outline: 0;
+    }
+
+    .reset-button {
+      min-height: 42px;
+      padding: 8px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 760;
+    }
+
+    .reset-button:hover {
+      border-color: #a9c9da;
+      color: var(--accent);
+    }
+
+    .leaderboard-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 50px;
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--line-soft);
+      color: var(--text-muted);
+      font-size: 0.77rem;
+    }
+
+    .leaderboard-meta strong {
+      color: var(--text-strong);
+    }
+
+    .legend-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      justify-content: flex-end;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+
+    .legend-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--dot);
+    }
+
+    .table-scroll {
+      position: relative;
+      max-width: 100%;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scrollbar-color: #b7d1df transparent;
+    }
+
+    .table-scroll:focus-visible {
+      outline-offset: -3px;
+    }
+
+    .leaderboard-table {
+      width: 100%;
+      min-width: 1090px;
+      border-collapse: separate;
+      border-spacing: 0;
+      font-size: 0.8rem;
+    }
+
+    .leaderboard-table caption {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    .leaderboard-table thead {
+      background: #f7fafc;
+    }
+
+    .leaderboard-table th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      padding: 12px 11px;
+      border-bottom: 1px solid var(--line);
+      background: #f7fafc;
+      color: var(--text-muted);
+      font-size: 0.68rem;
+      font-weight: 850;
+      letter-spacing: 0.035em;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .leaderboard-table th:first-child,
+    .leaderboard-table td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      width: 58px;
+      min-width: 58px;
+      text-align: center;
+    }
+
+    .leaderboard-table th:nth-child(2),
+    .leaderboard-table td:nth-child(2) {
+      position: sticky;
+      left: 58px;
+      z-index: 3;
+      min-width: 210px;
+      box-shadow: 8px 0 14px -13px rgba(6, 31, 69, 0.7);
+    }
+
+    .leaderboard-table th:first-child,
+    .leaderboard-table th:nth-child(2) {
+      z-index: 5;
+      background: #f7fafc;
+    }
+
+    .leaderboard-table tbody tr {
+      --row-bg: #fff;
+      transition: background 0.16s ease;
+    }
+
+    .leaderboard-table tbody tr:nth-child(even) {
+      --row-bg: #fbfdfe;
+    }
+
+    .leaderboard-table tbody tr:hover {
+      --row-bg: #f3f9fc;
+    }
+
+    .leaderboard-table td {
+      padding: 13px 11px;
+      border-bottom: 1px solid var(--line-soft);
+      background: var(--row-bg);
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    .leaderboard-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .sort-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      cursor: pointer;
+      font: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+    }
+
+    .sort-button::after {
+      color: #9db1be;
+      content: "↕";
+      font-size: 0.7rem;
+    }
+
+    th[aria-sort="descending"] .sort-button,
+    th[aria-sort="ascending"] .sort-button {
+      color: var(--accent);
+    }
+
+    th[aria-sort="descending"] .sort-button::after {
+      content: "↓";
+    }
+
+    th[aria-sort="ascending"] .sort-button::after {
+      content: "↑";
+    }
+
+    .rank-medal {
+      display: inline-grid;
+      width: 28px;
+      height: 28px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    .rank-medal.rank-1 {
+      border-color: #e8c36c;
+      background: #fff9e8;
+      color: var(--gold);
+    }
+
+    .rank-medal.rank-2 {
+      border-color: #c7d1da;
+      background: #f5f8fa;
+      color: var(--silver);
+    }
+
+    .rank-medal.rank-3 {
+      border-color: #d8b39e;
+      background: #fff5ef;
+      color: var(--bronze);
+    }
+
+    .model-cell {
+      display: grid;
+      gap: 4px;
+    }
+
+    .model-name {
+      border: 0;
+      background: transparent;
+      color: var(--text-strong);
+      cursor: pointer;
+      font-size: 0.84rem;
+      font-weight: 830;
+      text-align: left;
+    }
+
+    .model-name:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .model-meta {
+      color: var(--text-faint);
+      font-size: 0.67rem;
+      line-height: 1.45;
+    }
+
+    .family-tag {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 2px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-size: 0.61rem;
+      font-weight: 780;
+    }
+
+    .score-cell {
+      min-width: 68px;
+    }
+
+    .score-cell strong {
+      display: block;
+      color: var(--text-strong);
+      font-size: 0.81rem;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.25;
+    }
+
+    .score-track {
+      width: 54px;
+      height: 4px;
+      margin-top: 5px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: #e8f0f4;
+    }
+
+    .score-track span {
+      display: block;
+      width: calc(var(--score) * 1%);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--score-color, var(--accent));
+    }
+
+    .overall-score strong {
+      color: var(--accent-dark);
+      font-size: 0.93rem;
+      font-weight: 900;
+    }
+
+    .domain-score {
+      display: block;
+      margin-top: 4px;
+      color: var(--accent);
+      font-size: 0.61rem;
+      font-weight: 750;
+      white-space: nowrap;
+    }
+
+    .result-state {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 7px;
+      border: 1px solid #e7ce9c;
+      border-radius: 99px;
+      background: var(--warning-soft);
+      color: var(--warning);
+      font-size: 0.62rem;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .result-state::before {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      content: "";
+    }
+
+    .row-actions {
+      display: grid;
+      gap: 7px;
+      min-width: 105px;
+    }
+
+    .compare-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.68rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .compare-label input {
+      width: 14px;
+      height: 14px;
+      accent-color: var(--accent);
+    }
+
+    .empty-state {
+      padding: 54px 24px !important;
+      color: var(--text-muted) !important;
+      text-align: center !important;
+    }
+
+    .empty-state strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--text-strong);
+      font-size: 0.95rem;
+    }
+
+    .noscript-note {
+      padding: 18px 20px;
+      border-top: 1px solid var(--line);
+      background: var(--warning-soft);
+      color: #71522a;
+      font-size: 0.82rem;
+    }
+
+    /* Comparison */
+    .comparison-panel {
+      margin-top: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .comparison-panel[hidden] {
+      display: none;
+    }
+
+    .comparison-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-soft);
+    }
+
+    .comparison-header h3 {
+      color: var(--text-strong);
+      font-size: 1rem;
+    }
+
+    .comparison-header p {
+      margin-top: 2px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 138px repeat(3, minmax(180px, 1fr));
+      overflow-x: auto;
+    }
+
+    .comparison-cell {
+      min-height: 68px;
+      padding: 13px 16px;
+      border-right: 1px solid var(--line-soft);
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .comparison-cell:nth-child(4n) {
+      border-right: 0;
+    }
+
+    .comparison-cell.metric-label {
+      display: flex;
+      align-items: center;
+      background: #fbfdfe;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .comparison-cell.model-heading {
+      background: #fbfdfe;
+    }
+
+    .comparison-cell.model-heading strong {
+      display: block;
+      color: var(--text-strong);
+      font-size: 0.78rem;
+    }
+
+    .comparison-cell.model-heading span {
+      color: var(--text-faint);
+      font-size: 0.64rem;
+    }
+
+    .compare-value {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-strong);
+      font-size: 0.78rem;
+      font-weight: 850;
+    }
+
+    .compare-bar {
+      height: 6px;
+      margin-top: 9px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: #e7eff4;
+    }
+
+    .compare-bar span {
+      display: block;
+      width: calc(var(--score) * 1%);
+      height: 100%;
+      border-radius: inherit;
+      background: var(--bar-color, var(--accent));
+    }
+
+    .comparison-placeholder {
+      color: #9aabb6;
+      font-size: 0.7rem;
+    }
+
+    /* Dataset */
+    .suite-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .suite-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 220px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .suite-card::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 4px;
+      background: var(--suite-accent, var(--accent));
+      content: "";
+    }
+
+    .suite-index {
+      display: inline-flex;
+      color: var(--suite-accent, var(--accent));
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .suite-card h3 {
+      margin-top: 12px;
+      color: var(--text-strong);
+      font-size: 1.05rem;
+      line-height: 1.38;
+    }
+
+    .suite-card p {
+      margin-top: 10px;
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      line-height: 1.7;
+    }
+
+    .suite-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 18px;
+    }
+
+    .suite-tags span {
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      background: var(--surface-soft);
+      color: var(--text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+
+    .dataset-boundary {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 28px;
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 10px;
+      background: var(--accent-soft);
+    }
+
+    .dataset-boundary strong {
+      flex-shrink: 0;
+      color: var(--accent-dark);
+      font-size: 0.76rem;
+    }
+
+    .dataset-boundary p {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      line-height: 1.62;
+    }
+
+    .domain-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .domain-card {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface-soft);
+      transition: border-color 0.18s ease, transform 0.18s ease;
+    }
+
+    .domain-card:hover {
+      border-color: #b5d1e0;
+      transform: translateY(-2px);
+    }
+
+    .domain-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .domain-code {
+      color: var(--accent);
+      font-size: 0.67rem;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+    }
+
+    .domain-track {
+      padding: 3px 7px;
+      border: 1px solid var(--line);
+      border-radius: 99px;
+      background: #fff;
+      color: var(--text-faint);
+      font-size: 0.6rem;
+      font-weight: 760;
+    }
+
+    .domain-card h3 {
+      margin-top: 12px;
+      color: var(--text-strong);
+      font-size: 0.95rem;
+    }
+
+    .domain-card p {
+      margin-top: 7px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+
+    .domain-meta {
+      display: grid;
+      gap: 6px;
+      margin-top: 14px;
+      padding-top: 13px;
+      border-top: 1px solid var(--line);
+    }
+
+    .domain-meta span {
+      color: var(--text-faint);
+      font-size: 0.67rem;
+      line-height: 1.55;
+    }
+
+    .domain-meta strong {
+      color: var(--text);
+    }
+
+    /* Metrics */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .metric-card {
+      min-height: 194px;
+      padding: 21px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .metric-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .metric-number {
+      color: var(--accent);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+    }
+
+    .metric-weight {
+      padding: 3px 8px;
+      border-radius: 99px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-size: 0.63rem;
+      font-weight: 850;
+    }
+
+    .metric-card h3 {
+      margin-top: 13px;
+      color: var(--text-strong);
+      font-size: 0.96rem;
+    }
+
+    .metric-card p {
+      margin-top: 8px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+
+    .metric-list {
+      margin-top: 14px;
+      color: var(--text-faint);
+      font-size: 0.68rem;
+      font-weight: 650;
+      line-height: 1.65;
+    }
+
+    .formula-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 26px;
+      align-items: center;
+      margin-top: 18px;
+      padding: 24px 26px;
+      border: 1px solid #b7d9ec;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, #fff 0%, var(--accent-soft) 100%);
+    }
+
+    .formula-card h3 {
+      color: var(--text-strong);
+      font-size: 1rem;
+    }
+
+    .formula {
+      margin-top: 9px;
+      color: var(--accent-dark);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.86rem;
+      font-weight: 800;
+      line-height: 1.72;
+    }
+
+    .formula-note {
+      margin-top: 8px;
+      color: var(--text-muted);
+      font-size: 0.76rem;
+      line-height: 1.64;
+    }
+
+    .score-scale {
+      display: grid;
+      min-width: 180px;
+      gap: 6px;
+    }
+
+    .score-scale-bar {
+      height: 9px;
+      border-radius: 99px;
+      background: linear-gradient(90deg, #dbe8ef, #80bfe0 45%, var(--accent));
+    }
+
+    .score-scale-labels {
+      display: flex;
+      justify-content: space-between;
+      color: var(--text-faint);
+      font-size: 0.62rem;
+      font-weight: 700;
+    }
+
+    /* Protocol */
+    .protocol-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .protocol-card {
+      position: relative;
+      min-height: 188px;
+      padding: 22px 20px 20px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface-soft);
+    }
+
+    .protocol-card::before {
+      position: absolute;
+      top: 21px;
+      left: 0;
+      width: 3px;
+      height: 38px;
+      border-radius: 0 99px 99px 0;
+      background: var(--accent);
+      content: "";
+    }
+
+    .protocol-card span {
+      color: var(--accent);
+      font-size: 0.67rem;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+    }
+
+    .protocol-card h3 {
+      margin-top: 8px;
+      color: var(--text-strong);
+      font-size: 0.96rem;
+    }
+
+    .protocol-card p {
+      margin-top: 8px;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      line-height: 1.65;
+    }
+
+    .status-pipeline {
+      margin-top: 18px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .status-pipeline-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface-soft);
+    }
+
+    .status-pipeline-header h3 {
+      color: var(--text-strong);
+      font-size: 0.94rem;
+    }
+
+    .status-pipeline-header code {
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--accent-dark);
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.68rem;
+      font-weight: 750;
+    }
+
+    .status-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .status-step {
+      position: relative;
+      min-height: 126px;
+      padding: 20px;
+      border-right: 1px solid var(--line-soft);
+    }
+
+    .status-step:last-child {
+      border-right: 0;
+    }
+
+    .status-step:not(:last-child)::after {
+      position: absolute;
+      top: 25px;
+      right: -9px;
+      z-index: 1;
+      display: grid;
+      width: 18px;
+      height: 18px;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #fff;
+      color: var(--text-faint);
+      content: "→";
+      font-size: 0.6rem;
+      font-weight: 900;
+    }
+
+    .status-step strong {
+      display: block;
+      color: var(--text-strong);
+      font-size: 0.83rem;
+    }
+
+    .status-step p {
+      margin-top: 7px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      line-height: 1.58;
+    }
+
+    /* Submission */
+    .submission-section {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 88% 12%, rgba(84, 178, 231, 0.13), transparent 25%),
+        linear-gradient(135deg, #06162e 0%, #091f44 56%, #0b4c8e 100%);
+      color: #fff;
+    }
+
+    .submission-section .section-heading h2,
+    .submission-section .eyebrow {
+      color: #fff;
+    }
+
+    .submission-section .section-heading p {
+      color: #c5d9e7;
+    }
+
+    .submission-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .submission-step {
+      min-height: 188px;
+      padding: 21px;
+      border: 1px solid rgba(181, 217, 238, 0.24);
+      border-radius: 13px;
+      background: rgba(255, 255, 255, 0.065);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+    }
+
+    .submission-step span {
+      display: inline-grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border: 1px solid rgba(181, 217, 238, 0.35);
+      border-radius: 50%;
+      color: #8fd9ff;
+      font-size: 0.72rem;
+      font-weight: 900;
+    }
+
+    .submission-step h3 {
+      margin-top: 16px;
+      color: #fff;
+      font-size: 0.92rem;
+    }
+
+    .submission-step p {
+      margin-top: 8px;
+      color: #bdd2e1;
+      font-size: 0.76rem;
+      line-height: 1.65;
+    }
+
+    .submission-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 24px;
+    }
+
+    .submission-actions .button-primary {
+      background: #fff;
+      box-shadow: none;
+      color: var(--accent-dark);
+    }
+
+    .submission-actions .button-secondary {
+      border-color: rgba(181, 217, 238, 0.34);
+      background: rgba(255, 255, 255, 0.06);
+      color: #e7f5fd;
+    }
+
+    .submission-note {
+      color: #9fbfd4;
+      font-size: 0.72rem;
+    }
+
+    /* Dialog */
+    .model-dialog {
+      width: min(720px, calc(100% - 32px));
+      max-height: min(780px, calc(100vh - 40px));
+      margin: auto;
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+      box-shadow: 0 28px 90px rgba(6, 31, 69, 0.28);
+      color: var(--text);
+    }
+
+    .model-dialog::backdrop {
+      background: rgba(6, 31, 69, 0.55);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+    }
+
+    .model-dialog[open] {
+      animation: dialog-in 0.2s ease both;
+    }
+
+    @keyframes dialog-in {
+      from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .dialog-header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.95);
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+    }
+
+    .dialog-kicker {
+      color: var(--accent);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .dialog-header h2 {
+      margin-top: 5px;
+      color: var(--text-strong);
+      font-size: 1.35rem;
+      line-height: 1.3;
+    }
+
+    .dialog-close {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .dialog-body {
+      padding: 24px;
+    }
+
+    .dialog-summary {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 20px;
+      align-items: center;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface-soft);
+    }
+
+    .dialog-overall {
+      display: grid;
+      width: 104px;
+      height: 104px;
+      place-items: center;
+      border: 9px solid var(--accent-soft);
+      border-top-color: var(--accent);
+      border-right-color: #55a9d8;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--text-strong);
+    }
+
+    .dialog-overall strong {
+      display: block;
+      font-size: 1.65rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      text-align: center;
+    }
+
+    .dialog-overall span {
+      display: block;
+      margin-top: 4px;
+      color: var(--text-faint);
+      font-size: 0.59rem;
+      font-weight: 750;
+      text-align: center;
+    }
+
+    .dialog-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 16px;
+    }
+
+    .dialog-meta-item span {
+      display: block;
+      color: var(--text-faint);
+      font-size: 0.63rem;
+      font-weight: 750;
+    }
+
+    .dialog-meta-item strong {
+      display: block;
+      margin-top: 2px;
+      color: var(--text);
+      font-size: 0.76rem;
+    }
+
+    .dialog-section {
+      margin-top: 22px;
+      padding: 0;
+    }
+
+    .dialog-section h3 {
+      color: var(--text-strong);
+      font-size: 0.9rem;
+    }
+
+    .domain-bars {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px 18px;
+      margin-top: 13px;
+    }
+
+    .domain-bar-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+
+    .domain-bar-label strong {
+      color: var(--text-strong);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .domain-bar-track {
+      height: 6px;
+      margin-top: 5px;
+      overflow: hidden;
+      border-radius: 99px;
+      background: #e7eff4;
+    }
+
+    .domain-bar-track span {
+      display: block;
+      width: calc(var(--score) * 1%);
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #62b3df, var(--accent));
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 13px;
+    }
+
+    .insight-card {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .insight-card strong {
+      display: block;
+      color: var(--accent-dark);
+      font-size: 0.73rem;
+    }
+
+    .insight-card.caution strong {
+      color: var(--warning);
+    }
+
+    .insight-card p {
+      margin-top: 6px;
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      line-height: 1.64;
+    }
+
+    .dialog-demo-note {
+      margin-top: 20px;
+      padding: 12px 14px;
+      border: 1px solid #efd7a7;
+      border-radius: 9px;
+      background: var(--warning-soft);
+      color: #71522a;
+      font-size: 0.7rem;
+      line-height: 1.62;
+    }
+
+    /* Footer */
+    footer {
+      padding: 30px 0;
+      background: var(--text-strong);
+      color: #a9c7db;
+      font-size: 0.78rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .footer-brand {
+      color: #fff;
+      font-weight: 850;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: flex-end;
+    }
+
+    footer a {
+      color: #8fd9ff;
+    }
+
+    /* Responsive */
+    @media (max-width: 1040px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr) 330px;
+        gap: 34px;
+      }
+
+      .filter-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .filter-grid .field:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .domain-grid,
+      .metric-grid,
+      .protocol-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .submission-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        padding-top: 62px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-panel {
+        max-width: 620px;
+      }
+
+      .section-heading {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        align-items: start;
+      }
+
+      .demo-notice {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .demo-notice strong,
+      .demo-notice a {
+        white-space: normal;
+      }
+
+      .suite-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .suite-card {
+        min-height: 0;
+      }
+
+      .status-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .status-step:nth-child(2) {
+        border-right: 0;
+      }
+
+      .status-step:nth-child(-n + 2) {
+        border-bottom: 1px solid var(--line-soft);
+      }
+
+      .status-step:nth-child(2)::after {
+        display: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .container {
+        width: min(100% - 30px, 1180px);
+      }
+
+      section {
+        padding: 60px 0;
+      }
+
+      .nav-inner {
+        min-height: 53px;
+      }
+
+      .nav-brand {
+        padding-right: 13px;
+        font-size: 0.82rem;
+      }
+
+      .brand-mark {
+        width: 28px;
+        height: 28px;
+      }
+
+      .nav-link {
+        padding: 15px 11px 13px;
+        font-size: 0.77rem;
+      }
+
+      .language-switch button {
+        min-height: 38px;
+      }
+
+      .hero {
+        padding: 50px 0 48px;
+      }
+
+      .hero-copy h1 {
+        font-size: clamp(3.1rem, 18vw, 4.8rem);
+      }
+
+      .hero-copy h1 small {
+        margin-top: 24px;
+        font-size: 1.45rem;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .hero-stats,
+      .podium-grid,
+      .suite-grid,
+      .domain-grid,
+      .metric-grid,
+      .protocol-grid,
+      .submission-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-stat {
+        border-right: 0;
+      }
+
+      .hero-stat:nth-last-child(2) {
+        border-bottom: 1px solid rgba(183, 217, 236, 0.66);
+      }
+
+      .filter-grid {
+        grid-template-columns: 1fr 1fr;
+        padding: 16px;
+      }
+
+      .filter-grid .field:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .reset-button {
+        align-self: end;
+      }
+
+      .leaderboard-meta {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .legend-list {
+        justify-content: flex-start;
+      }
+
+      .formula-card {
+        grid-template-columns: 1fr;
+        padding: 20px;
+      }
+
+      .score-scale {
+        min-width: 0;
+      }
+
+      .status-pipeline-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .status-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .status-step {
+        border-right: 0;
+        border-bottom: 1px solid var(--line-soft);
+      }
+
+      .status-step:last-child {
+        border-bottom: 0;
+      }
+
+      .status-step::after {
+        display: none !important;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .footer-links {
+        justify-content: flex-start;
+      }
+
+      .dialog-summary,
+      .dialog-meta-grid,
+      .domain-bars,
+      .insight-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .dialog-overall {
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-copy h1 small {
+        font-size: 1.28rem;
+      }
+
+      .hero-lead {
+        font-size: 0.94rem;
+      }
+
+      .filter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-grid .field:first-child {
+        grid-column: auto;
+      }
+
+      .demo-notice {
+        padding: 15px;
+      }
+
+      .comparison-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .dataset-boundary {
+        flex-direction: column;
+      }
+
+      .dialog-header,
+      .dialog-body {
+        padding: 18px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../asset/site-responsive.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content" data-i18n="skipToContent">跳到主要内容</a>
+
+  <header class="hero" id="top">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow" data-i18n="heroEyebrow">Time-Series Evaluation Observatory</div>
+        <h1><span>CastBench</span>
+          <small data-i18n="heroSubtitle">多维时间序列基础模型评测与公开排行榜</small>
+        </h1>
+        <p class="hero-lead" data-i18n="heroLead">
+          不只比较一个误差数字。CastBench 在统一协议下评估数值预测、概率校准、
+          趋势与转折、情境证据利用、跨域鲁棒性和推理效率，让每个模型的优势与边界都可见。
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#leaderboard"><span data-i18n="heroActionLeaderboard">查看 Leaderboard</span> <span aria-hidden="true">↓</span></a>
+          <a class="button button-secondary" href="#protocol" data-i18n="heroActionProtocol">阅读评测协议</a>
+          <a class="button button-secondary" href="../future-cast/" data-i18n="heroActionFutureCast">了解 FutureCast 数据</a>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="CastBench 首期规划概览" data-i18n-aria-label="heroPanelAria">
+        <div class="panel-header">
+          <strong data-i18n="benchmarkSnapshot">Benchmark Snapshot</strong>
+          <span class="live-dot" data-i18n="protocolReady">Protocol Ready</span>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <strong>12</strong>
+            <span data-i18n-html="statModels">代表模型与算法<br />协议演示阵容</span>
+          </div>
+          <div class="hero-stat">
+            <strong>6</strong>
+            <span data-i18n-html="statDimensions">核心能力维度<br />统一 0–100 剖面</span>
+          </div>
+          <div class="hero-stat">
+            <strong>6</strong>
+            <span data-i18n-html="statDomains">评测数据域<br />含跨域困难集</span>
+          </div>
+          <div class="hero-stat">
+            <strong>3</strong>
+            <span data-i18n-html="statSuites">Benchmark Suites<br />基础 · 情境 · 压测</span>
+          </div>
+        </div>
+        <div class="hero-panel-note">
+          <span class="version-chip">v0.1</span>
+          <span data-i18n="protocolUpdated">Protocol Preview · Updated 2026-07-25</span>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <nav class="nav-bar" aria-label="CastBench 页面导航" data-i18n-aria-label="navigationAria">
+    <div class="container nav-inner">
+      <a class="nav-brand" href="../">
+        <span class="brand-mark" aria-hidden="true">CB</span>
+        <span>CastBench</span>
+      </a>
+      <div class="language-switch" id="language-switch" role="group" aria-label="语言 / Language">
+        <button type="button" data-language="zh-CN" aria-pressed="true" lang="zh-CN">中文</button>
+        <button type="button" data-language="en" aria-pressed="false" lang="en">EN</button>
+      </div>
+      <a class="nav-link is-active" href="#leaderboard" data-i18n="navLeaderboard">排行榜</a>
+      <a class="nav-link" href="#dataset">Benchmark Dataset</a>
+      <a class="nav-link" href="#metrics" data-i18n="navMetrics">评测维度</a>
+      <a class="nav-link" href="#protocol" data-i18n="navProtocol">评测协议</a>
+      <a class="nav-link" href="#submit" data-i18n="navSubmit">提交与复现</a>
+      <a class="nav-link" href="../cast-mind/">CastMind</a>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <section class="leaderboard-section" id="leaderboard" aria-labelledby="leaderboard-title">
+      <div class="container">
+        <aside class="demo-notice" data-result-status="demo">
+          <strong data-i18n="demoTitle">Protocol Preview · 协议演示数据</strong>
+          <span data-i18n="demoBody">
+            当前分数用于展示评测协议和榜单交互，不构成任何模型的正式性能声明；
+            正式榜单将在独立复现完成后按版本发布。
+          </span>
+          <a href="#protocol" data-i18n="demoLink">查看结果状态规则 →</a>
+        </aside>
+
+        <div class="section-heading" style="margin-top: 48px;">
+          <div>
+            <div class="eyebrow">Leaderboard</div>
+            <h2 id="leaderboard-title" data-i18n="leaderboardTitle">模型能力总榜</h2>
+          </div>
+          <p data-i18n-html="leaderboardIntro">
+            默认按六维加权综合分排序。你也可以切换领域、模型类型和单项能力，
+            点击模型查看领域剖面，或选择最多 <strong>3 个模型</strong>并排比较。
+          </p>
+        </div>
+
+        <div class="podium-grid" id="podium-grid" aria-label="当前筛选条件下前三名" data-i18n-aria-label="podiumAria"></div>
+
+        <div class="leaderboard-shell">
+          <div class="filter-grid" role="search" aria-label="筛选排行榜" data-i18n-aria-label="filterAria">
+            <label class="field" for="model-search">
+              <span data-i18n="searchLabel">搜索模型 / 机构</span>
+              <span class="input-shell">
+                <input
+                  id="model-search"
+                  type="search"
+                  autocomplete="off"
+                  placeholder="例如 CastMind、TimesFM、Statistical"
+                  data-i18n-placeholder="searchPlaceholder"
+                />
+              </span>
+            </label>
+
+            <label class="field" for="domain-filter">
+              <span data-i18n="domainFilterLabel">数据领域</span>
+              <select id="domain-filter">
+                <option value="all" data-i18n="domainAllOption">全部领域 · Overall</option>
+                <option value="energy" data-i18n="domainEnergy">能源与电力</option>
+                <option value="traffic" data-i18n="domainTraffic">交通与出行</option>
+                <option value="weather" data-i18n="domainWeather">气象与环境</option>
+                <option value="finance" data-i18n="domainFinance">金融与零售</option>
+                <option value="health" data-i18n="domainHealth">医疗与运营</option>
+                <option value="hard" data-i18n="domainHard">跨域困难集</option>
+              </select>
+            </label>
+
+            <label class="field" for="family-filter">
+              <span data-i18n="familyFilterLabel">模型类型</span>
+              <select id="family-filter">
+                <option value="all" data-i18n="familyAllOption">全部模型类型</option>
+                <option value="Reasoning TSFM">Reasoning TSFM</option>
+                <option value="Foundation Model">Foundation Model</option>
+                <option value="Deep Forecasting">Deep Forecasting</option>
+                <option value="Statistical">Statistical</option>
+              </select>
+            </label>
+
+            <label class="field" for="metric-filter">
+              <span data-i18n="metricFilterLabel">排名维度</span>
+              <select id="metric-filter">
+                <option value="overall" data-i18n="metricOverall">综合分</option>
+                <option value="accuracy" data-i18n="metricAccuracy">点预测</option>
+                <option value="probabilistic" data-i18n="metricProbabilistic">概率预测</option>
+                <option value="trend" data-i18n="metricTrend">趋势判断</option>
+                <option value="context" data-i18n="metricContext">情境理解</option>
+                <option value="robustness" data-i18n="metricRobustness">鲁棒性</option>
+                <option value="efficiency" data-i18n="metricEfficiency">效率</option>
+              </select>
+            </label>
+
+            <button class="reset-button" id="reset-filters" type="button" data-i18n="resetFilters">重置筛选</button>
+          </div>
+
+          <div class="leaderboard-meta">
+            <p id="leaderboard-status" aria-live="polite" data-i18n="leaderboardLoading">正在加载协议演示榜单…</p>
+            <div class="legend-list" aria-label="分数图例" data-i18n-aria-label="legendAria">
+              <span class="legend-item"><i class="legend-dot" style="--dot:#091f44"></i> <span data-i18n="legendStrong">85–100 强</span></span>
+              <span class="legend-item"><i class="legend-dot" style="--dot:#4c9ecb"></i> <span data-i18n="legendMedium">70–84 中</span></span>
+              <span class="legend-item"><i class="legend-dot" style="--dot:#9ab2c0"></i> <span data-i18n="legendBaseline">&lt;70 基线</span></span>
+            </div>
+          </div>
+
+          <div class="table-scroll" tabindex="0" aria-label="CastBench 排行榜，可横向滚动" data-i18n-aria-label="tableAria">
+            <table class="leaderboard-table" id="leaderboard-table">
+              <caption data-i18n="tableCaption">
+                CastBench 协议演示排行榜。当前分数不构成正式模型性能声明。
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col" data-i18n="tableRank">排名</th>
+                  <th scope="col" data-i18n="tableModel">模型 / 类型</th>
+                  <th scope="col" aria-sort="descending">
+                    <button class="sort-button" type="button" data-sort-key="overall" data-i18n="metricOverall">综合分</button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="sort-button" type="button" data-sort-key="accuracy" data-i18n="metricAccuracy">点预测</button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="sort-button" type="button" data-sort-key="probabilistic" data-i18n="metricProbabilisticShort">概率</button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="sort-button" type="button" data-sort-key="trend" data-i18n="metricTrendShort">趋势</button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="sort-button" type="button" data-sort-key="context" data-i18n="metricContextShort">情境</button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="sort-button" type="button" data-sort-key="robustness" data-i18n="metricRobustness">鲁棒性</button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="sort-button" type="button" data-sort-key="efficiency" data-i18n="metricEfficiency">效率</button>
+                  </th>
+                  <th scope="col" data-i18n="tableStatus">状态 / 操作</th>
+                </tr>
+              </thead>
+              <tbody id="leaderboard-body"></tbody>
+            </table>
+          </div>
+
+          <noscript>
+            <p class="noscript-note" data-i18n="noscriptNote">
+              榜单筛选和模型对比需要 JavaScript；Benchmark Dataset、评测维度和协议内容仍可继续阅读。
+            </p>
+          </noscript>
+        </div>
+
+        <aside
+          class="comparison-panel"
+          id="comparison-panel"
+          aria-labelledby="comparison-title"
+          hidden
+        >
+          <div class="comparison-header">
+            <div>
+              <h3 id="comparison-title" data-i18n="comparisonTitle">多模型能力对比</h3>
+              <p id="comparison-status" aria-live="polite" data-i18n="comparisonDefault">最多选择 3 个模型。</p>
+            </div>
+            <button class="button button-ghost button-small" id="clear-comparison" type="button" data-i18n="clearComparison">
+              清空对比
+            </button>
+          </div>
+          <div class="comparison-grid" id="comparison-grid"></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="alt" id="dataset" aria-labelledby="dataset-title">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Benchmark Dataset</div>
+            <h2 id="dataset-title" data-i18n="datasetTitle">三层数据轨道，覆盖真实预测难点</h2>
+          </div>
+          <p data-i18n="datasetIntro">
+            CastBench 首期规划把通用数值预测、FutureCast 情境任务和压力测试组织成互补数据轨道，
+            让模型既要“预测得准”，也要“理解为什么变化、遇到新情境能否修正”。
+          </p>
+        </div>
+
+        <div class="suite-grid">
+          <article class="suite-card" style="--suite-accent:#091f44">
+            <span class="suite-index">Suite 01 · Foundation</span>
+            <h3>General Forecasting Suite</h3>
+            <p data-i18n="suiteFoundationDescription">
+              统一评估多领域、多频率和多预测跨度下的基础数值预测与概率预测能力，
+              为深度模型和时间序列基础模型提供可比底座。
+            </p>
+            <div class="suite-tags">
+              <span>Point Forecast</span>
+              <span>Probabilistic</span>
+              <span>Zero-shot</span>
+              <span>Long Horizon</span>
+            </div>
+          </article>
+
+          <article class="suite-card" style="--suite-accent:#16836b">
+            <span class="suite-index">Suite 02 · Context</span>
+            <h3>FutureCast Context Suite</h3>
+            <p data-i18n="suiteContextDescription">
+              把历史序列、天气、日历、事件、政策、文本和领域规则组织为联合实例，
+              检验情境选择、证据对齐、趋势推理与预测修正。
+            </p>
+            <div class="suite-tags">
+              <span>Context Alignment</span>
+              <span>Evidence Use</span>
+              <span>Revision Gain</span>
+              <span>Reasoning</span>
+            </div>
+          </article>
+
+          <article class="suite-card" style="--suite-accent:#a76108">
+            <span class="suite-index">Suite 03 · Stress</span>
+            <h3>Stress Test Suite</h3>
+            <p data-i18n="suiteStressDescription">
+              面向分布漂移、极端事件、缺失情境、跨域迁移和受限推理预算，
+              检验平均成绩之外的最差场景表现与系统稳定性。
+            </p>
+            <div class="suite-tags">
+              <span>Distribution Shift</span>
+              <span>Extreme Events</span>
+              <span>Missing Context</span>
+              <span>Worst-group</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="dataset-boundary">
+          <strong data-i18n="datasetBoundaryTitle">数据发布边界</strong>
+          <p data-i18n="datasetBoundaryBody">
+            本页展示的是首期规划与评测结构，不虚构尚未冻结的数据规模、样本数量或完成状态。
+            具体数据清单、许可、版本与下载入口将在数据审计完成后独立发布。
+          </p>
+        </div>
+
+        <div class="domain-grid">
+          <article class="domain-card">
+            <div class="domain-card-top">
+              <span class="domain-code">ENERGY</span>
+              <span class="domain-track">General + Context</span>
+            </div>
+            <h3 data-i18n="domainEnergy">能源与电力</h3>
+            <p data-i18n="energyDescription">负荷、发电与价格序列，强调峰谷转换、需求响应和新能源出力不确定性。</p>
+            <div class="domain-meta">
+              <span data-i18n-html="energyContext"><strong>情境：</strong>温度、节假日、电价、设备与政策</span>
+              <span data-i18n-html="energyChallenges"><strong>挑战：</strong>多跨度预测 · 爬坡事件 · 跨区域迁移</span>
+            </div>
+          </article>
+
+          <article class="domain-card">
+            <div class="domain-card-top">
+              <span class="domain-code">MOBILITY</span>
+              <span class="domain-track">General + Context</span>
+            </div>
+            <h3 data-i18n="domainTraffic">交通与出行</h3>
+            <p data-i18n="trafficDescription">道路流量、速度、客流和共享出行序列，覆盖明显周期与突发扰动。</p>
+            <div class="domain-meta">
+              <span data-i18n-html="trafficContext"><strong>情境：</strong>天气、事故、活动、路网与日历</span>
+              <span data-i18n-html="trafficChallenges"><strong>挑战：</strong>空间迁移 · 突发拥堵 · 缺失传感器</span>
+            </div>
+          </article>
+
+          <article class="domain-card">
+            <div class="domain-card-top">
+              <span class="domain-code">WEATHER</span>
+              <span class="domain-track">General + Stress</span>
+            </div>
+            <h3 data-i18n="domainWeather">气象与环境</h3>
+            <p data-i18n="weatherDescription">天气、空气质量、水文与环境监测序列，强调多变量耦合和极端事件。</p>
+            <div class="domain-meta">
+              <span data-i18n-html="weatherContext"><strong>情境：</strong>空间邻近、季节、预警与外部驱动</span>
+              <span data-i18n-html="weatherChallenges"><strong>挑战：</strong>多尺度变化 · 极值 · 长预测窗口</span>
+            </div>
+          </article>
+
+          <article class="domain-card">
+            <div class="domain-card-top">
+              <span class="domain-code">MARKET</span>
+              <span class="domain-track">Context + Stress</span>
+            </div>
+            <h3 data-i18n="domainFinance">金融与零售</h3>
+            <p data-i18n="financeDescription">价格、销量、库存和客流序列，考察事件、促销与制度变化下的需求漂移。</p>
+            <div class="domain-meta">
+              <span data-i18n-html="financeContext"><strong>情境：</strong>新闻、促销、节庆、价格与业务规则</span>
+              <span data-i18n-html="financeChallenges"><strong>挑战：</strong>冷启动 · 结构突变 · 反事实情境</span>
+            </div>
+          </article>
+
+          <article class="domain-card">
+            <div class="domain-card-top">
+              <span class="domain-code">HEALTH + OPS</span>
+              <span class="domain-track">Context + Stress</span>
+            </div>
+            <h3 data-i18n="domainHealth">医疗与运营</h3>
+            <p data-i18n="healthDescription">生理监护、就诊需求、服务流量和资源负载，强调不规则观测与高风险误差。</p>
+            <div class="domain-meta">
+              <span data-i18n-html="healthContext"><strong>情境：</strong>干预、状态、发布变更与系统事件</span>
+              <span data-i18n-html="healthChallenges"><strong>挑战：</strong>个体差异 · 稀疏观测 · 可靠性约束</span>
+            </div>
+          </article>
+
+          <article class="domain-card">
+            <div class="domain-card-top">
+              <span class="domain-code">HARD SET</span>
+              <span class="domain-track">Stress Only</span>
+            </div>
+            <h3 data-i18n="domainHard">跨域困难集</h3>
+            <p data-i18n="hardDescription">把未见领域、未见实体、未见事件与缺失情境组合起来，单独衡量性能下界。</p>
+            <div class="domain-meta">
+              <span data-i18n-html="hardSplit"><strong>划分：</strong>时间、实体、区域、事件与情境组合隔离</span>
+              <span data-i18n-html="hardChallenges"><strong>挑战：</strong>零样本 · 分布漂移 · 最差组表现</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="metrics" aria-labelledby="metrics-title">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Evaluation Dimensions</div>
+            <h2 id="metrics-title" data-i18n="metricsTitle">六维评测，不用单一误差定义“最好”</h2>
+          </div>
+          <p data-i18n="metricsIntro">
+            原始指标先按数据域、尺度和方向标准化，再汇总为越高越好的能力分。
+            这样既保留 MAE、CRPS 等原始结果，也能形成清晰、可解释的统一能力剖面。
+          </p>
+        </div>
+
+        <div class="metric-grid">
+          <article class="metric-card">
+            <div class="metric-card-top">
+              <span class="metric-number">DIM 01</span>
+              <span class="metric-weight">30%</span>
+            </div>
+            <h3 data-i18n="dimensionAccuracyTitle">点预测准确性</h3>
+            <p data-i18n="dimensionAccuracyBody">衡量单一预测轨迹与真实未来之间的偏差，并对不同量纲和预测跨度进行归一化。</p>
+            <div class="metric-list">MAE · RMSE · sMAPE · MASE · NRMSE</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-card-top">
+              <span class="metric-number">DIM 02</span>
+              <span class="metric-weight">15%</span>
+            </div>
+            <h3 data-i18n="dimensionProbabilisticTitle">概率预测质量</h3>
+            <p data-i18n="dimensionProbabilisticBody">联合评估预测分布、分位数和预测区间的准确性、校准性与锐度。</p>
+            <div class="metric-list">CRPS · Pinball Loss · Coverage · Interval Width</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-card-top">
+              <span class="metric-number">DIM 03</span>
+              <span class="metric-weight">15%</span>
+            </div>
+            <h3 data-i18n="dimensionTrendTitle">趋势与转折判断</h3>
+            <p data-i18n="dimensionTrendBody">衡量模型是否抓住未来方向、斜率变化和关键转折，而不是只优化平均数值误差。</p>
+            <div class="metric-list">Direction Accuracy · Trend Accuracy · Turning-point F1</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-card-top">
+              <span class="metric-number">DIM 04</span>
+              <span class="metric-weight">20%</span>
+            </div>
+            <h3 data-i18n="dimensionContextTitle">情境理解与证据利用</h3>
+            <p data-i18n="dimensionContextBody">检验模型能否选择相关情境、对齐事件与序列变化，并利用新增证据修正预测。</p>
+            <div class="metric-list">Evidence F1 · Context Attribution · Revision Gain</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-card-top">
+              <span class="metric-number">DIM 05</span>
+              <span class="metric-weight">15%</span>
+            </div>
+            <h3 data-i18n="dimensionRobustnessTitle">跨域鲁棒性</h3>
+            <p data-i18n="dimensionRobustnessBody">报告未见实体、事件和领域下的性能退化、最差数据域结果与有效任务覆盖率。</p>
+            <div class="metric-list">OOD Gap · Worst-group Score · Coverage · Stability</div>
+          </article>
+
+          <article class="metric-card">
+            <div class="metric-card-top">
+              <span class="metric-number">DIM 06</span>
+              <span class="metric-weight">5%</span>
+            </div>
+            <h3 data-i18n="dimensionEfficiencyTitle">推理效率</h3>
+            <p data-i18n="dimensionEfficiencyBody">在统一硬件和调用预算下比较延迟、峰值显存、参数规模与外部工具成本。</p>
+            <div class="metric-list">Latency · Memory · FLOPs · Tool Calls · Cost</div>
+          </article>
+        </div>
+
+        <div class="formula-card">
+          <div>
+            <h3 data-i18n="formulaTitle">默认综合分公式</h3>
+            <p class="formula">
+              Overall = 30% Accuracy + 15% Probabilistic + 15% Trend + 20% Context + 15% Robustness + 5% Efficiency
+            </p>
+            <p class="formula-note" data-i18n="formulaNote">
+              MAE、RMSE、CRPS 等原始误差指标越低越好；经基线、尺度和方向校正后统一映射为 0–100
+              的“越高越好”能力分。缺失维度不静默填补，正式总榜至少覆盖五个维度和全部必选数据域。
+            </p>
+          </div>
+          <div class="score-scale" aria-label="能力分从 0 到 100" data-i18n-aria-label="scoreScaleAria">
+            <div class="score-scale-bar"></div>
+            <div class="score-scale-labels"><span>0</span><span>50</span><span>100</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="alt" id="protocol" aria-labelledby="protocol-title">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Evaluation Protocol</div>
+            <h2 id="protocol-title" data-i18n="protocolTitle">可复现比一个漂亮分数更重要</h2>
+          </div>
+          <p data-i18n-html="protocolIntro">
+            CastBench 把数据隔离、预算一致、分组报告和产物留存写入协议。
+            每个正式成绩必须能回答：<strong>用什么数据、何种设置、付出多少成本、能否复现。</strong>
+          </p>
+        </div>
+
+        <div class="protocol-grid">
+          <article class="protocol-card">
+            <span>RULE 01</span>
+            <h3 data-i18n="ruleTimeTitle">时间顺序切分</h3>
+            <p data-i18n="ruleTimeBody">训练、验证与测试严格遵循真实时间顺序；窗口只能在各自 split 内构造，禁止随机窗口泄漏。</p>
+          </article>
+          <article class="protocol-card">
+            <span>RULE 02</span>
+            <h3 data-i18n="ruleUnseenTitle">未见实体与事件</h3>
+            <p data-i18n="ruleUnseenBody">跨域赛道隔离实体、区域、事件和情境组合，检验真正的未见场景泛化，而非近邻记忆。</p>
+          </article>
+          <article class="protocol-card">
+            <span>RULE 03</span>
+            <h3 data-i18n="ruleBudgetTitle">统一推理预算</h3>
+            <p data-i18n="ruleBudgetBody">固定上下文、预测跨度、采样次数、工具调用次数和时间上限，使模型与智能体成本可比。</p>
+          </article>
+          <article class="protocol-card">
+            <span>RULE 04</span>
+            <h3 data-i18n="ruleWorstTitle">均值与最差数据域</h3>
+            <p data-i18n="ruleWorstBody">同时报告微平均、宏平均、最差数据域、有效任务覆盖率和跨域退化，避免平均分掩盖短板。</p>
+          </article>
+          <article class="protocol-card">
+            <span>RULE 05</span>
+            <h3 data-i18n="ruleStabilityTitle">统计稳定性</h3>
+            <p data-i18n="ruleStabilityBody">训练型方法报告三个随机种子；确定性与 API 模型记录版本、时间戳、参数和解码配置。</p>
+          </article>
+          <article class="protocol-card">
+            <span>RULE 06</span>
+            <h3 data-i18n="ruleArtifactsTitle">完整复现产物</h3>
+            <p data-i18n="ruleArtifactsBody">保存配置、模型卡、预测文件与运行日志、环境摘要和指标明细，支持独立重算与审计。</p>
+          </article>
+        </div>
+
+        <div class="status-pipeline">
+          <div class="status-pipeline-header">
+            <h3 data-i18n="statusPipelineTitle">成绩状态必须逐级升级</h3>
+            <code>Demo → Submitted → Reproduced → Verified</code>
+          </div>
+          <div class="status-steps">
+            <article class="status-step">
+              <strong>Demo</strong>
+              <p data-i18n="statusDemoBody">仅用于界面、协议或方法演示；当前页面中的全部分数均处于此状态。</p>
+            </article>
+            <article class="status-step">
+              <strong>Submitted</strong>
+              <p data-i18n="statusSubmittedBody">提交方上传了完整结果包，等待自动校验和复现排期。</p>
+            </article>
+            <article class="status-step">
+              <strong>Reproduced</strong>
+              <p data-i18n="statusReproducedBody">独立环境复跑成功，核心指标在允许误差范围内一致。</p>
+            </article>
+            <article class="status-step">
+              <strong>Verified</strong>
+              <p data-i18n="statusVerifiedBody">通过数据、配置、成本和结果审查，进入指定版本的正式榜单。</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="submission-section" id="submit" aria-labelledby="submit-title">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">Submit & Reproduce</div>
+            <h2 id="submit-title" data-i18n="submitTitle">提交一次，留下完整复现链</h2>
+          </div>
+          <p data-i18n="submitIntro">
+            提交不只是上传一个分数。CastBench 要求结果包同时包含预测、指标明细、配置和成本，
+            让后续的复现、误差归因和版本比较都有据可查。
+          </p>
+        </div>
+
+        <div class="submission-steps">
+          <article class="submission-step">
+            <span>01</span>
+            <h3 data-i18n="submitTrackTitle">选择评测轨道</h3>
+            <p data-i18n="submitTrackBody">选择基础预测、FutureCast 情境任务或 Stress Test，并锁定数据与协议版本。</p>
+          </article>
+          <article class="submission-step">
+            <span>02</span>
+            <h3 data-i18n="submitAdapterTitle">运行标准适配器</h3>
+            <p data-i18n="submitAdapterBody">通过统一输入输出接口运行模型，自动记录硬件、时延、调用预算和异常。</p>
+          </article>
+          <article class="submission-step">
+            <span>03</span>
+            <h3 data-i18n="submitPackageTitle">生成结果包</h3>
+            <p data-i18n="submitPackageBody">导出配置、预测文件、运行日志、环境摘要、模型卡和逐数据集指标明细。</p>
+          </article>
+          <article class="submission-step">
+            <span>04</span>
+            <h3 data-i18n="submitReviewTitle">复现审查与发布</h3>
+            <p data-i18n="submitReviewBody">通过格式校验、独立复跑与人工审查后，成绩进入对应版本的 Verified 榜单。</p>
+          </article>
+        </div>
+
+        <div class="submission-actions">
+          <span class="button button-primary is-disabled" aria-disabled="true" data-i18n="submitComingSoon">提交入口筹备中</span>
+          <a class="button button-secondary" href="../future-cast/" data-i18n="viewFutureCast">查看 FutureCast</a>
+          <a class="button button-secondary" href="../cast-mind/" data-i18n="backCastMind">返回 CastMind</a>
+          <span class="submission-note" data-i18n="submitNote">首版暂不收集在线提交，协议与适配器冻结后开放。</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p>
+        <span class="footer-brand">CastBench</span> · USTC-AGI Time Series ·
+        Protocol Preview 2026
+      </p>
+      <div class="footer-links">
+        <a href="../" data-i18n="footerHome">研究组主页</a>
+        <a href="../cast-mind/">CastMind</a>
+        <a href="../future-cast/">FutureCast</a>
+        <a href="#top" data-i18n="footerTop">返回顶部 ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <dialog
+    class="model-dialog"
+    id="model-dialog"
+    aria-labelledby="dialog-title"
+    aria-describedby="dialog-description"
+  >
+    <div class="dialog-header">
+      <div>
+        <div class="dialog-kicker" data-i18n="dialogKicker">Model Capability Profile</div>
+        <h2 id="dialog-title" data-i18n="dialogTitle">模型详情</h2>
+      </div>
+      <button class="dialog-close" id="dialog-close" type="button" aria-label="关闭模型详情" data-i18n-aria-label="dialogCloseAria">×</button>
+    </div>
+    <div class="dialog-body" id="dialog-content"></div>
+  </dialog>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const LANGUAGE_STORAGE_KEY = 'castbench-language';
+      const supportedLanguages = ['zh-CN', 'en'];
+      let currentLanguage = 'zh-CN';
+
+      const translations = {
+        'zh-CN': {},
+        en: {
+          pageTitle: 'CastBench — Multidimensional Time-Series Model Evaluation and Open Leaderboard',
+          metaDescription: 'CastBench is a multidimensional benchmark and open leaderboard for time-series foundation models, deep forecasting systems, and context-aware reasoning models.',
+          metaOgDescription: 'Move beyond a single error metric with a unified profile of accuracy, uncertainty, trends, context, robustness, and efficiency.',
+          metaTwitterTitle: 'CastBench — Time-Series Model Leaderboard',
+          metaTwitterDescription: 'A multidimensional benchmark and open leaderboard for time-series models.',
+          metaLocale: 'en_US',
+          metaOgUrl: 'https://ustc-time-series.github.io/cast-bench/?lang=en',
+          metaImageAlt: 'CastBench multidimensional time-series benchmark and open leaderboard',
+          skipToContent: 'Skip to main content',
+          heroEyebrow: 'Time-Series Evaluation Observatory',
+          heroSubtitle: 'Multidimensional Time-Series Model Evaluation and Open Leaderboard',
+          heroLead: 'Beyond a single error number. Under one protocol, CastBench evaluates numerical forecasts, probabilistic calibration, trends and turning points, contextual evidence use, cross-domain robustness, and inference efficiency—making every model’s strengths and boundaries visible.',
+          heroActionLeaderboard: 'View Leaderboard',
+          heroActionProtocol: 'Read Evaluation Protocol',
+          heroActionFutureCast: 'Explore FutureCast Data',
+          heroPanelAria: 'CastBench initial benchmark plan overview',
+          benchmarkSnapshot: 'Benchmark Snapshot',
+          protocolReady: 'Protocol Ready',
+          statModels: 'Representative models & algorithms<br />Protocol Demo lineup',
+          statDimensions: 'Core capability dimensions<br />Unified 0–100 profiles',
+          statDomains: 'Evaluation domains<br />Including a cross-domain hard set',
+          statSuites: 'Benchmark Suites<br />Foundation · Context · Stress',
+          protocolUpdated: 'Protocol Preview · Updated 2026-07-25',
+          navigationAria: 'CastBench page navigation',
+          navLeaderboard: 'Leaderboard',
+          navMetrics: 'Dimensions',
+          navProtocol: 'Protocol',
+          navSubmit: 'Submit & Reproduce',
+          demoTitle: 'Protocol Preview · Protocol Demo data',
+          demoBody: 'Current scores demonstrate the evaluation protocol and leaderboard interactions. Each value is Protocol Demo data and does not constitute an official performance claim for any model; official releases will follow independent reproduction and versioned review.',
+          demoLink: 'Review result-state rules →',
+          leaderboardTitle: 'Model Capability Leaderboard',
+          leaderboardIntro: 'The default ranking uses a weighted score across six dimensions. Switch domains, model families, or individual capabilities; open a model for its domain profile; or compare up to <strong>3 models</strong> side by side.',
+          podiumAria: 'Top three models under the current filters',
+          filterAria: 'Filter the leaderboard',
+          searchLabel: 'Search model / organization',
+          searchPlaceholder: 'Try CastMind, TimesFM, or Statistical',
+          domainFilterLabel: 'Data domain',
+          domainAllOption: 'All domains · Overall',
+          domainEnergy: 'Energy & Power',
+          domainTraffic: 'Traffic & Mobility',
+          domainWeather: 'Weather & Environment',
+          domainFinance: 'Finance & Retail',
+          domainHealth: 'Health & Operations',
+          domainHard: 'Cross-domain Hard Set',
+          familyFilterLabel: 'Model family',
+          familyAllOption: 'All model families',
+          metricFilterLabel: 'Ranking dimension',
+          metricOverall: 'Overall',
+          metricAccuracy: 'Point Forecast',
+          metricProbabilistic: 'Probabilistic Forecast',
+          metricProbabilisticShort: 'Probabilistic',
+          metricTrend: 'Trend Detection',
+          metricTrendShort: 'Trend',
+          metricContext: 'Context Understanding',
+          metricContextShort: 'Context',
+          metricRobustness: 'Robustness',
+          metricEfficiency: 'Efficiency',
+          resetFilters: 'Reset filters',
+          leaderboardLoading: 'Loading the Protocol Demo leaderboard…',
+          legendAria: 'Score legend',
+          legendStrong: '85–100 Strong',
+          legendMedium: '70–84 Moderate',
+          legendBaseline: '<70 Baseline',
+          tableAria: 'CastBench leaderboard; scroll horizontally for all metrics',
+          tableCaption: 'CastBench Protocol Demo leaderboard. Current scores do not constitute official model performance claims.',
+          tableRank: 'Rank',
+          tableModel: 'Model / Family',
+          tableStatus: 'Status / Action',
+          noscriptNote: 'Leaderboard filtering and model comparison require JavaScript. The Benchmark Dataset, evaluation dimensions, and protocol remain readable.',
+          comparisonTitle: 'Multi-model Capability Comparison',
+          comparisonDefault: 'Select up to 3 models.',
+          clearComparison: 'Clear comparison',
+          datasetTitle: 'Three benchmark tracks for real-world forecasting challenges',
+          datasetIntro: 'The initial CastBench plan organizes general numerical forecasting, FutureCast context tasks, and stress tests into complementary tracks. Models must both forecast accurately and understand why conditions change—and whether new evidence should revise a forecast.',
+          suiteFoundationDescription: 'Evaluate foundational point and probabilistic forecasting across domains, frequencies, and horizons, providing a comparable base for deep forecasting systems and time-series foundation models.',
+          suiteContextDescription: 'Combine historical series with weather, calendars, events, policy, text, and domain rules to test context selection, evidence alignment, trend reasoning, and forecast revision.',
+          suiteStressDescription: 'Test worst-case behavior and system stability under distribution shift, extreme events, missing context, cross-domain transfer, and constrained inference budgets.',
+          datasetBoundaryTitle: 'Data release boundary',
+          datasetBoundaryBody: 'This page presents the initial benchmark plan and evaluation structure. It does not invent data scale, sample counts, or completion status before the corpus is frozen. Dataset manifests, licenses, versions, and download links will be released after the data audit.',
+          energyDescription: 'Load, generation, and price series emphasizing peak–valley transitions, demand response, and uncertainty from renewable generation.',
+          energyContext: '<strong>Context:</strong> Temperature, holidays, electricity prices, equipment, and policy',
+          energyChallenges: '<strong>Challenges:</strong> Multi-horizon forecasts · Ramping events · Cross-region transfer',
+          trafficDescription: 'Traffic volume, speed, passenger flow, and shared-mobility series with pronounced cycles and sudden disruptions.',
+          trafficContext: '<strong>Context:</strong> Weather, incidents, events, road networks, and calendars',
+          trafficChallenges: '<strong>Challenges:</strong> Spatial transfer · Sudden congestion · Missing sensors',
+          weatherDescription: 'Weather, air quality, hydrology, and environmental monitoring series with multivariate coupling and extreme events.',
+          weatherContext: '<strong>Context:</strong> Spatial proximity, seasons, alerts, and external drivers',
+          weatherChallenges: '<strong>Challenges:</strong> Multi-scale change · Extremes · Long horizons',
+          financeDescription: 'Price, sales, inventory, and footfall series that test demand drift under events, promotions, and policy changes.',
+          financeContext: '<strong>Context:</strong> News, promotions, festivals, prices, and business rules',
+          financeChallenges: '<strong>Challenges:</strong> Cold start · Structural breaks · Counterfactual context',
+          healthDescription: 'Physiological monitoring, care demand, service traffic, and resource-load series with irregular observations and high-cost errors.',
+          healthContext: '<strong>Context:</strong> Interventions, states, release changes, and system events',
+          healthChallenges: '<strong>Challenges:</strong> Individual variation · Sparse observations · Reliability constraints',
+          hardDescription: 'Combine unseen domains, entities, and events with missing context to measure a model’s performance floor separately.',
+          hardSplit: '<strong>Split:</strong> Isolate time, entity, region, event, and context combinations',
+          hardChallenges: '<strong>Challenges:</strong> Zero-shot · Distribution shift · Worst-group performance',
+          metricsTitle: 'Six dimensions—not a single error metric—define what “best” means',
+          metricsIntro: 'Raw metrics are normalized by domain, scale, and direction before aggregation into higher-is-better capability scores. This preserves MAE, CRPS, and other raw results while producing a clear and interpretable capability profile.',
+          dimensionAccuracyTitle: 'Point Forecast Accuracy',
+          dimensionAccuracyBody: 'Measures deviation between a single forecast trajectory and the observed future, normalized across units and forecast horizons.',
+          dimensionProbabilisticTitle: 'Probabilistic Forecast Quality',
+          dimensionProbabilisticBody: 'Jointly evaluates the accuracy, calibration, and sharpness of predictive distributions, quantiles, and intervals.',
+          dimensionTrendTitle: 'Trend & Turning-point Detection',
+          dimensionTrendBody: 'Measures whether a model captures future direction, slope changes, and critical turning points instead of optimizing only average numerical error.',
+          dimensionContextTitle: 'Context Understanding & Evidence Use',
+          dimensionContextBody: 'Tests whether a model selects relevant context, aligns events with time-series changes, and revises forecasts when new evidence arrives.',
+          dimensionRobustnessTitle: 'Cross-domain Robustness',
+          dimensionRobustnessBody: 'Reports performance degradation, worst-domain results, and valid task coverage for unseen entities, events, and domains.',
+          dimensionEfficiencyTitle: 'Inference Efficiency',
+          dimensionEfficiencyBody: 'Compares latency, peak memory, model scale, and external tool cost under a unified hardware and invocation budget.',
+          formulaTitle: 'Default Overall-score Formula',
+          formulaNote: 'Raw error metrics such as MAE, RMSE, and CRPS are lower-is-better. After baseline, scale, and direction correction, they are mapped to higher-is-better 0–100 capability scores. Missing dimensions are never silently imputed; the official overall leaderboard requires at least five dimensions and every mandatory domain.',
+          scoreScaleAria: 'Capability score from 0 to 100',
+          protocolTitle: 'Reproducibility matters more than a polished score',
+          protocolIntro: 'CastBench makes data isolation, budget parity, grouped reporting, and artifact retention part of the protocol. Every official result must answer: <strong>Which data and settings were used, what did it cost, and can it be reproduced?</strong>',
+          ruleTimeTitle: 'Chronological Splits',
+          ruleTimeBody: 'Training, validation, and test data follow real temporal order. Windows are built only within their own split; random-window leakage is prohibited.',
+          ruleUnseenTitle: 'Unseen Entities & Events',
+          ruleUnseenBody: 'Cross-domain tracks isolate entities, regions, events, and context combinations to test genuine unseen-scenario generalization rather than nearest-neighbor memory.',
+          ruleBudgetTitle: 'Unified Inference Budget',
+          ruleBudgetBody: 'Context length, forecast horizon, sampling count, tool calls, and time limits are fixed so model and agent costs remain comparable.',
+          ruleWorstTitle: 'Mean & Worst-domain Reporting',
+          ruleWorstBody: 'Micro average, macro average, worst-domain score, valid task coverage, and cross-domain degradation are reported together so averages cannot hide weak groups.',
+          ruleStabilityTitle: 'Statistical Stability',
+          ruleStabilityBody: 'Trainable methods report three random seeds. Deterministic and API models record version, timestamp, parameters, and decoding configuration.',
+          ruleArtifactsTitle: 'Complete Reproduction Artifacts',
+          ruleArtifactsBody: 'Configurations, model cards, predictions, runtime logs, environment summaries, and metric details are retained for independent recomputation and audit.',
+          statusPipelineTitle: 'Result status must advance through every stage',
+          statusDemoBody: 'For interface, protocol, or method demonstrations only. Every score currently shown on this page has this status.',
+          statusSubmittedBody: 'The submitter uploaded a complete result package, pending automated validation and reproduction scheduling.',
+          statusReproducedBody: 'An independent rerun succeeded and the core metrics agree within the permitted tolerance.',
+          statusVerifiedBody: 'Data, configuration, cost, and results passed review and entered the official leaderboard for a named version.',
+          submitTitle: 'Submit once, retain a complete reproducibility trail',
+          submitIntro: 'Submission is more than uploading one score. CastBench requires predictions, metric details, configurations, and cost records so later reproduction, error attribution, and version comparison remain traceable.',
+          submitTrackTitle: 'Choose an Evaluation Track',
+          submitTrackBody: 'Select general forecasting, FutureCast context tasks, or the Stress Test, then lock the dataset and protocol versions.',
+          submitAdapterTitle: 'Run the Standard Adapter',
+          submitAdapterBody: 'Run the model through a unified input/output interface that records hardware, latency, invocation budget, and exceptions.',
+          submitPackageTitle: 'Generate a Result Package',
+          submitPackageBody: 'Export configurations, predictions, runtime logs, environment summaries, a model card, and per-dataset metric details.',
+          submitReviewTitle: 'Reproduce, Review & Publish',
+          submitReviewBody: 'After format validation, an independent rerun, and human review, the result enters the Verified leaderboard for its version.',
+          submitComingSoon: 'Submission portal in preparation',
+          viewFutureCast: 'View FutureCast',
+          backCastMind: 'Back to CastMind',
+          submitNote: 'The first release does not collect online submissions. Access will open after the protocol and adapters are frozen.',
+          footerHome: 'Research Group Home',
+          footerTop: 'Back to top ↑',
+          dialogKicker: 'Model Capability Profile',
+          dialogTitle: 'Model Details',
+          dialogCloseAria: 'Close model details',
+          noMatchingModels: 'No matching models',
+          noMatchingModelsHelp: 'Shorten the query, switch model families, or select “Reset filters.”',
+          viewProfile: 'View profile →',
+          addComparison: 'Add to comparison',
+          protocolDemoStatus: 'Protocol Demo',
+          protocolDemoData: 'Protocol Demo data',
+          showing: 'Showing',
+          modelsCount: 'models',
+          sortBy: 'sorted by',
+          descending: 'high to low',
+          ascending: 'low to high',
+          domainScore: 'domain score',
+          comparisonLimit: 'Select up to 3 models.',
+          comparisonSelected: 'selected',
+          comparisonDisclaimer: 'All values are Protocol Demo data.',
+          comparisonChoose: 'Select a model to compare',
+          capabilityDimension: 'Capability dimension',
+          dialogDemoIntro: 'Protocol Demo: The following scores illustrate the CastBench capability profile and do not constitute an official reproduction result.',
+          overallLabel: 'OVERALL',
+          modelOrganization: 'Organization / Source',
+          modelFamily: 'Model family',
+          evaluationMode: 'Evaluation mode',
+          scaleNote: 'Scale note',
+          openness: 'Availability',
+          resultStatus: 'Result status',
+          domainProfileTitle: 'Six-domain Performance',
+          modelInsightTitle: 'Capability Interpretation',
+          relativeStrength: 'Relative strength',
+          interpretationBoundary: 'Interpretation boundary',
+          dialogFinalNote: 'After reproduction, the official page will add the data version, evaluation configuration, runtime cost, prediction-file summary, and traceable submission ID.',
+          maxComparisonWarning: 'You can compare at most 3 models; remove one before adding another.',
+        },
+      };
+
+      const captureSourceTranslations = () => {
+        document.querySelectorAll('[data-i18n]').forEach((element) => {
+          translations['zh-CN'][element.dataset.i18n] = element.textContent.trim();
+        });
+        document.querySelectorAll('[data-i18n-html]').forEach((element) => {
+          translations['zh-CN'][element.dataset.i18nHtml] = element.innerHTML.trim();
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+          translations['zh-CN'][element.dataset.i18nPlaceholder] = element.getAttribute('placeholder');
+        });
+        document.querySelectorAll('[data-i18n-aria-label]').forEach((element) => {
+          translations['zh-CN'][element.dataset.i18nAriaLabel] = element.getAttribute('aria-label');
+        });
+      };
+
+      captureSourceTranslations();
+      Object.assign(translations['zh-CN'], {
+        pageTitle: 'CastBench — 多维时间序列模型评测与公开排行榜',
+        metaDescription: 'CastBench 是面向时间序列基础模型、深度预测模型与情境推理模型的多维评测与公开排行榜，覆盖预测准确性、概率质量、趋势判断、情境理解、鲁棒性与效率。',
+        metaOgDescription: '从单一误差走向多维能力剖面：统一比较预测、概率、趋势、情境、鲁棒性与效率。',
+        metaTwitterTitle: 'CastBench — Time-Series Model Leaderboard',
+        metaTwitterDescription: '面向时间序列模型的多维评测与公开排行榜。',
+        metaLocale: 'zh_CN',
+        metaOgUrl: 'https://ustc-time-series.github.io/cast-bench/',
+        metaImageAlt: 'CastBench 多维时间序列模型评测与公开排行榜',
+        noMatchingModels: '没有匹配的模型',
+        noMatchingModelsHelp: '尝试缩短关键词、切换模型类型，或点击“重置筛选”。',
+        viewProfile: '查看剖面 →',
+        addComparison: '加入对比',
+        protocolDemoStatus: 'Protocol Demo',
+        protocolDemoData: '协议演示数据',
+        showing: '显示',
+        modelsCount: '个模型',
+        sortBy: '按',
+        descending: '从高到低',
+        ascending: '从低到高',
+        domainScore: '领域分',
+        comparisonLimit: '最多选择 3 个模型。',
+        comparisonSelected: '已选择',
+        comparisonDisclaimer: '所有数值均为协议演示数据。',
+        comparisonChoose: '选择模型加入对比',
+        capabilityDimension: '能力维度',
+        dialogDemoIntro: 'Protocol Demo：以下分数用于展示 CastBench 的能力剖面，不构成正式复现结论。',
+        overallLabel: 'OVERALL',
+        modelOrganization: '机构 / 来源',
+        modelFamily: '模型类型',
+        evaluationMode: '评测模式',
+        scaleNote: '规模说明',
+        openness: '开放性',
+        resultStatus: '结果状态',
+        domainProfileTitle: '六领域表现',
+        modelInsightTitle: '能力解读',
+        relativeStrength: '相对优势',
+        interpretationBoundary: '解释边界',
+        dialogFinalNote: '正式页面将在结果复现后补充数据版本、评测配置、运行成本、预测文件摘要与可追溯提交编号。',
+        maxComparisonWarning: '最多只能选择 3 个模型；请先移除一个模型。',
+      });
+
+      const t = (key) => (
+        translations[currentLanguage]?.[key]
+        ?? translations['zh-CN'][key]
+        ?? key
+      );
+
+      const models = [
+        {
+          id: 'castmind-agentic',
+          name: 'CastMind-Agentic',
+          organization: 'USTC AGI',
+          family: 'Reasoning TSFM',
+          mode: 'Context + Agentic',
+          parameters: 'Research preview',
+          openness: 'Planned',
+          overall: 87.6,
+          accuracy: 84.9,
+          probabilistic: 82.4,
+          trend: 91.2,
+          context: 94.6,
+          robustness: 87.8,
+          efficiency: 64.1,
+          domains: { energy: 91.2, traffic: 88.7, weather: 84.3, finance: 86.1, health: 82.4, hard: 78.8 },
+          strength: '情境证据利用、趋势转折判断与获得新信息后的预测修正。',
+          strengthEn: 'Strong contextual evidence use, turning-point detection, and forecast revision after new information arrives.',
+          caution: '当前为研究预览，效率和完整公开复现链路仍需验证。',
+          cautionEn: 'This is a research preview; efficiency and the complete public reproduction trail still require verification.',
+        },
+        {
+          id: 'castmind-structured',
+          name: 'CastMind-Structured',
+          organization: 'USTC AGI',
+          family: 'Reasoning TSFM',
+          mode: 'Context + Structured Reasoning',
+          parameters: 'Research preview',
+          openness: 'Planned',
+          overall: 85.2,
+          accuracy: 84.1,
+          probabilistic: 80.8,
+          trend: 89.4,
+          context: 91.3,
+          robustness: 84.6,
+          efficiency: 69.2,
+          domains: { energy: 89.6, traffic: 86.1, weather: 83.7, finance: 84.5, health: 80.8, hard: 76.5 },
+          strength: '结构化情境推理和趋势解释之间保持较好的平衡。',
+          strengthEn: 'A balanced combination of structured contextual reasoning and interpretable trend analysis.',
+          caution: '动态工具交互能力不在该版本范围内，困难集仍有提升空间。',
+          cautionEn: 'Dynamic tool interaction is outside this version, and the hard-set performance still has room to improve.',
+        },
+        {
+          id: 'timesfm-2',
+          name: 'TimesFM 2.0',
+          organization: 'Google Research',
+          family: 'Foundation Model',
+          mode: 'Decoder-only TSFM',
+          parameters: 'Foundation scale',
+          openness: 'Open weights',
+          overall: 82.7,
+          accuracy: 88.4,
+          probabilistic: 83.1,
+          trend: 84.2,
+          context: 68.7,
+          robustness: 86.5,
+          efficiency: 78.6,
+          domains: { energy: 87.8, traffic: 85.1, weather: 86.6, finance: 79.7, health: 77.9, hard: 75.3 },
+          strength: '跨数据集零样本预测、长跨度数值建模和稳定的基础预测能力。',
+          strengthEn: 'Stable zero-shot forecasting across datasets, long-horizon numerical modeling, and strong foundational accuracy.',
+          caution: '原生情境证据推理并非主要设计目标，本页分数仅为协议演示。',
+          cautionEn: 'Native contextual evidence reasoning is not the primary design goal, and every score shown here is a protocol demonstration.',
+        },
+        {
+          id: 'chronos-bolt',
+          name: 'Chronos-Bolt',
+          organization: 'Amazon Science',
+          family: 'Foundation Model',
+          mode: 'Tokenized probabilistic TSFM',
+          parameters: 'Foundation scale',
+          openness: 'Open weights',
+          overall: 81.8,
+          accuracy: 86.9,
+          probabilistic: 87.5,
+          trend: 81.6,
+          context: 65.8,
+          robustness: 84.3,
+          efficiency: 82.1,
+          domains: { energy: 86.5, traffic: 83.7, weather: 84.9, finance: 80.1, health: 77.4, hard: 73.8 },
+          strength: '概率预测质量、零样本适配和较高推理效率。',
+          strengthEn: 'High-quality probabilistic forecasts, zero-shot adaptation, and efficient inference.',
+          caution: '显式外部情境选择与证据归因能力需要额外适配。',
+          cautionEn: 'Explicit external-context selection and evidence attribution require additional adaptation.',
+        },
+        {
+          id: 'moirai-11',
+          name: 'Moirai 1.1',
+          organization: 'Salesforce Research',
+          family: 'Foundation Model',
+          mode: 'Universal forecasting',
+          parameters: 'Foundation scale',
+          openness: 'Open weights',
+          overall: 80.9,
+          accuracy: 85.6,
+          probabilistic: 84.8,
+          trend: 82.7,
+          context: 66.4,
+          robustness: 83.9,
+          efficiency: 77.3,
+          domains: { energy: 85.7, traffic: 83.2, weather: 84.2, finance: 77.8, health: 79.1, hard: 74.6 },
+          strength: '多频率、多变量任务的统一预测接口与稳健覆盖。',
+          strengthEn: 'A unified forecasting interface with robust coverage across frequencies and multivariate tasks.',
+          caution: '复杂情境解释和主动证据获取不属于基础模型原生能力。',
+          cautionEn: 'Complex context interpretation and active evidence acquisition are not native capabilities of the base model.',
+        },
+        {
+          id: 'timer-xl',
+          name: 'Timer-XL',
+          organization: 'Tsinghua University',
+          family: 'Foundation Model',
+          mode: 'Generative TSFM',
+          parameters: 'Foundation scale',
+          openness: 'Research release',
+          overall: 79.8,
+          accuracy: 85.1,
+          probabilistic: 80.4,
+          trend: 84.8,
+          context: 64.9,
+          robustness: 82.3,
+          efficiency: 75.4,
+          domains: { energy: 84.3, traffic: 84.8, weather: 81.9, finance: 77.2, health: 76.8, hard: 72.9 },
+          strength: '长上下文建模与生成式时序预测的统一建模路线。',
+          strengthEn: 'A unified approach to long-context modeling and generative time-series forecasting.',
+          caution: '本页未给出任何正式复现结论，情境维度为协议占位演示。',
+          cautionEn: 'This page reports no official reproduction conclusion; the context dimension is a protocol-preview placeholder.',
+        },
+        {
+          id: 'timegpt',
+          name: 'TimeGPT',
+          organization: 'Nixtla',
+          family: 'Foundation Model',
+          mode: 'API forecasting model',
+          parameters: 'Hosted API',
+          openness: 'API',
+          overall: 79.2,
+          accuracy: 84.4,
+          probabilistic: 82.6,
+          trend: 82.1,
+          context: 63.7,
+          robustness: 80.5,
+          efficiency: 78.4,
+          domains: { energy: 84.8, traffic: 81.5, weather: 82.6, finance: 79.8, health: 75.9, hard: 70.7 },
+          strength: '统一 API 使用体验与跨领域基础预测能力。',
+          strengthEn: 'A consistent API experience and broad foundational forecasting capability across domains.',
+          caution: '闭源服务的版本与成本审计需要通过时间戳和调用日志完成。',
+          cautionEn: 'Auditing a hosted service requires timestamps, version records, cost records, and complete invocation logs.',
+        },
+        {
+          id: 'itransformer',
+          name: 'iTransformer',
+          organization: 'Academic baseline',
+          family: 'Deep Forecasting',
+          mode: 'Multivariate Transformer',
+          parameters: 'Dataset-trained',
+          openness: 'Open source',
+          overall: 77.4,
+          accuracy: 86.1,
+          probabilistic: 72.8,
+          trend: 81.3,
+          context: 58.2,
+          robustness: 76.9,
+          efficiency: 83.6,
+          domains: { energy: 85.9, traffic: 84.1, weather: 82.5, finance: 74.3, health: 73.8, hard: 66.2 },
+          strength: '多变量预测、变量关系建模和标准监督训练场景。',
+          strengthEn: 'Strong multivariate forecasting, variable-relation modeling, and performance in standard supervised settings.',
+          caution: '跨域零样本和文本情境处理需要额外模块与训练。',
+          cautionEn: 'Cross-domain zero-shot forecasting and textual context handling require additional modules and training.',
+        },
+        {
+          id: 'patchtst',
+          name: 'PatchTST',
+          organization: 'Academic baseline',
+          family: 'Deep Forecasting',
+          mode: 'Patch-based Transformer',
+          parameters: 'Dataset-trained',
+          openness: 'Open source',
+          overall: 75.9,
+          accuracy: 84.7,
+          probabilistic: 70.6,
+          trend: 80.5,
+          context: 55.4,
+          robustness: 74.8,
+          efficiency: 86.7,
+          domains: { energy: 84.7, traffic: 82.8, weather: 80.6, finance: 72.4, health: 70.9, hard: 64.1 },
+          strength: '简洁有效的 patch 表征和稳定的监督预测基线。',
+          strengthEn: 'Simple and effective patch representations with a stable supervised forecasting baseline.',
+          caution: '概率、跨域与情境能力不应由点预测成绩直接外推。',
+          cautionEn: 'Probabilistic, cross-domain, and contextual capabilities should not be inferred directly from point-forecast scores.',
+        },
+        {
+          id: 'dlinear',
+          name: 'DLinear',
+          organization: 'Academic baseline',
+          family: 'Deep Forecasting',
+          mode: 'Decomposition linear model',
+          parameters: 'Lightweight',
+          openness: 'Open source',
+          overall: 69.8,
+          accuracy: 77.9,
+          probabilistic: 61.8,
+          trend: 75.2,
+          context: 48.3,
+          robustness: 68.7,
+          efficiency: 95.4,
+          domains: { energy: 79.6, traffic: 75.3, weather: 73.1, finance: 67.9, health: 65.4, hard: 57.2 },
+          strength: '极低推理成本、清晰结构和强可复现性。',
+          strengthEn: 'Very low inference cost, a transparent structure, and strong reproducibility.',
+          caution: '复杂非线性、概率校准和情境推理能力有限。',
+          cautionEn: 'Capacity for complex nonlinear patterns, probabilistic calibration, and contextual reasoning is limited.',
+        },
+        {
+          id: 'prophet',
+          name: 'Prophet',
+          organization: 'Statistical baseline',
+          family: 'Statistical',
+          mode: 'Additive trend-seasonality',
+          parameters: 'Lightweight',
+          openness: 'Open source',
+          overall: 64.5,
+          accuracy: 69.4,
+          probabilistic: 65.7,
+          trend: 71.8,
+          context: 44.1,
+          robustness: 60.2,
+          efficiency: 91.6,
+          domains: { energy: 72.1, traffic: 67.4, weather: 63.8, finance: 61.7, health: 62.3, hard: 51.4 },
+          strength: '趋势、季节项与节假日结构清晰，部署和解释成本较低。',
+          strengthEn: 'Clear trend, seasonality, and holiday structure with low deployment and interpretation cost.',
+          caution: '高维依赖、复杂分布漂移和跨域泛化能力有限。',
+          cautionEn: 'High-dimensional dependencies, complex distribution shifts, and cross-domain generalization remain limited.',
+        },
+        {
+          id: 'seasonal-naive',
+          name: 'Seasonal Naïve',
+          organization: 'Statistical baseline',
+          family: 'Statistical',
+          mode: 'Seasonal carry-forward',
+          parameters: 'No training',
+          openness: 'Reference baseline',
+          overall: 58.1,
+          accuracy: 62.5,
+          probabilistic: 48.8,
+          trend: 60.7,
+          context: 36.4,
+          robustness: 54.3,
+          efficiency: 99.6,
+          domains: { energy: 66.7, traffic: 64.5, weather: 58.6, finance: 53.8, health: 55.1, hard: 45.2 },
+          strength: '近乎零训练成本，是检验复杂模型是否真正带来增益的必要基线。',
+          strengthEn: 'Near-zero training cost makes it an essential baseline for testing whether complex models provide genuine gains.',
+          caution: '无法主动建模趋势变化、概率分布或外部情境。',
+          cautionEn: 'It cannot actively model trend changes, predictive distributions, or external context.',
+        },
+      ];
+
+      const MAX_COMPARE = 3;
+      const metricKeys = ['overall', 'accuracy', 'probabilistic', 'trend', 'context', 'robustness', 'efficiency'];
+      const metricLabels = {
+        'zh-CN': {
+          overall: '综合分',
+          accuracy: '点预测',
+          probabilistic: '概率预测',
+          trend: '趋势判断',
+          context: '情境理解',
+          robustness: '鲁棒性',
+          efficiency: '效率',
+        },
+        en: {
+          overall: 'Overall',
+          accuracy: 'Point Forecast',
+          probabilistic: 'Probabilistic Forecast',
+          trend: 'Trend Detection',
+          context: 'Context Understanding',
+          robustness: 'Robustness',
+          efficiency: 'Efficiency',
+        },
+      };
+      const domainLabels = {
+        'zh-CN': {
+          all: '全部领域',
+          energy: '能源与电力',
+          traffic: '交通与出行',
+          weather: '气象与环境',
+          finance: '金融与零售',
+          health: '医疗与运营',
+          hard: '跨域困难集',
+        },
+        en: {
+          all: 'All domains',
+          energy: 'Energy & Power',
+          traffic: 'Traffic & Mobility',
+          weather: 'Weather & Environment',
+          finance: 'Finance & Retail',
+          health: 'Health & Operations',
+          hard: 'Cross-domain Hard Set',
+        },
+      };
+      const metricLabel = (key) => metricLabels[currentLanguage][key];
+      const domainLabel = (key) => domainLabels[currentLanguage][key];
+      const rankColors = ['#c58a16', '#788b9c', '#9a6244'];
+
+      const state = {
+        search: '',
+        domain: 'all',
+        family: 'all',
+        metric: 'overall',
+        sortKey: 'overall',
+        sortDirection: 'desc',
+        selected: [],
+        activeModelId: null,
+      };
+
+      const elements = {
+        body: document.getElementById('leaderboard-body'),
+        podium: document.getElementById('podium-grid'),
+        status: document.getElementById('leaderboard-status'),
+        search: document.getElementById('model-search'),
+        domain: document.getElementById('domain-filter'),
+        family: document.getElementById('family-filter'),
+        metric: document.getElementById('metric-filter'),
+        reset: document.getElementById('reset-filters'),
+        comparisonPanel: document.getElementById('comparison-panel'),
+        comparisonGrid: document.getElementById('comparison-grid'),
+        comparisonStatus: document.getElementById('comparison-status'),
+        clearComparison: document.getElementById('clear-comparison'),
+        dialog: document.getElementById('model-dialog'),
+        dialogTitle: document.getElementById('dialog-title'),
+        dialogContent: document.getElementById('dialog-content'),
+        dialogClose: document.getElementById('dialog-close'),
+        languageButtons: [...document.querySelectorAll('[data-language]')],
+        metaDescription: document.getElementById('meta-description'),
+        metaOgLocale: document.getElementById('meta-og-locale'),
+        metaOgTitle: document.getElementById('meta-og-title'),
+        metaOgDescription: document.getElementById('meta-og-description'),
+        metaOgUrl: document.getElementById('meta-og-url'),
+        metaOgImageAlt: document.getElementById('meta-og-image-alt'),
+        metaTwitterTitle: document.getElementById('meta-twitter-title'),
+        metaTwitterDescription: document.getElementById('meta-twitter-description'),
+        metaTwitterImageAlt: document.getElementById('meta-twitter-image-alt'),
+      };
+
+      const escapeHtml = (value) => String(value)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
+
+      const scoreColor = (value) => {
+        if (value >= 85) return '#091f44';
+        if (value >= 70) return '#4c9ecb';
+        return '#9ab2c0';
+      };
+
+      const currentRankKey = () => state.domain === 'all' ? state.sortKey : 'domain';
+
+      const rankValue = (model) => {
+        if (state.domain !== 'all') return model.domains[state.domain];
+        return model[state.sortKey];
+      };
+
+      const filteredModels = () => {
+        const query = state.search.trim().toLowerCase();
+        return models
+          .filter((model) => {
+            if (!query) return true;
+            return [model.name, model.organization, model.family, model.mode]
+              .some((value) => value.toLowerCase().includes(query));
+          })
+          .filter((model) => state.family === 'all' || model.family === state.family)
+          .sort((a, b) => {
+            const aValue = rankValue(a);
+            const bValue = rankValue(b);
+            const direction = state.sortDirection === 'desc' ? -1 : 1;
+            if (aValue !== bValue) return (aValue - bValue) * direction;
+            return a.name.localeCompare(b.name);
+          });
+      };
+
+      const scoreCell = (model, key, extraClass = '') => {
+        const value = model[key];
+        const domainNote = key === 'overall' && state.domain !== 'all'
+          ? `<span class="domain-score">${escapeHtml(domainLabel(state.domain))} ${model.domains[state.domain].toFixed(1)}</span>`
+          : '';
+        return `
+          <td class="score-cell ${extraClass}">
+            <strong>${value.toFixed(1)}</strong>
+            <div class="score-track" aria-hidden="true" style="--score:${value};--score-color:${scoreColor(value)}">
+              <span></span>
+            </div>
+            ${domainNote}
+          </td>
+        `;
+      };
+
+      const renderRows = (visibleModels) => {
+        if (!visibleModels.length) {
+          elements.body.innerHTML = `
+            <tr>
+              <td class="empty-state" colspan="10">
+                <strong>${escapeHtml(t('noMatchingModels'))}</strong>
+                ${escapeHtml(t('noMatchingModelsHelp'))}
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        elements.body.innerHTML = visibleModels.map((model, index) => {
+          const isSelected = state.selected.includes(model.id);
+          const compareDisabled = !isSelected && state.selected.length >= MAX_COMPARE;
+          return `
+            <tr>
+              <td><span class="rank-medal rank-${index + 1}">${index + 1}</span></td>
+              <td>
+                <div class="model-cell">
+                  <button class="model-name" type="button" data-model-detail="${escapeHtml(model.id)}">
+                    ${escapeHtml(model.name)}
+                  </button>
+                  <span class="model-meta">${escapeHtml(model.organization)} · ${escapeHtml(model.mode)}</span>
+                  <span class="family-tag">${escapeHtml(model.family)}</span>
+                </div>
+              </td>
+              ${scoreCell(model, 'overall', 'overall-score')}
+              ${scoreCell(model, 'accuracy')}
+              ${scoreCell(model, 'probabilistic')}
+              ${scoreCell(model, 'trend')}
+              ${scoreCell(model, 'context')}
+              ${scoreCell(model, 'robustness')}
+              ${scoreCell(model, 'efficiency')}
+              <td>
+                <div class="row-actions">
+                  <span class="result-state">Protocol Demo</span>
+                  <label class="compare-label">
+                    <input
+                      type="checkbox"
+                      data-compare-id="${escapeHtml(model.id)}"
+                      aria-label="${escapeHtml(`${t('addComparison')} ${model.name}`)}"
+                      ${isSelected ? 'checked' : ''}
+                      ${compareDisabled ? 'disabled' : ''}
+                    />
+                    ${escapeHtml(t('addComparison'))}
+                  </label>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join('');
+      };
+
+      const renderPodium = (visibleModels) => {
+        const leaders = visibleModels.slice(0, 3);
+        if (!leaders.length) {
+          elements.podium.innerHTML = '';
+          elements.podium.hidden = true;
+          return;
+        }
+        elements.podium.hidden = false;
+        elements.podium.innerHTML = leaders.map((model, index) => {
+          const value = rankValue(model);
+          const label = state.domain !== 'all'
+            ? domainLabel(state.domain)
+            : metricLabel(state.sortKey);
+          return `
+            <article class="podium-card" style="--rank-color:${rankColors[index]}">
+              <div class="podium-topline">
+                <span class="podium-rank">#${index + 1}</span>
+                <span class="podium-score">${value.toFixed(1)}<small>/100</small></span>
+              </div>
+              <h3>${escapeHtml(model.name)}</h3>
+              <p class="podium-meta">${escapeHtml(model.organization)} · ${escapeHtml(model.family)}</p>
+              <div class="podium-footer">
+                <span class="mini-badge">${escapeHtml(label)}</span>
+                <button class="text-button" type="button" data-model-detail="${escapeHtml(model.id)}">${escapeHtml(t('viewProfile'))}</button>
+              </div>
+            </article>
+          `;
+        }).join('');
+      };
+
+      const renderStatus = (visibleModels) => {
+        const rankLabel = state.domain !== 'all'
+          ? `${domainLabel(state.domain)}${currentLanguage === 'zh-CN' ? '领域分' : ` ${t('domainScore')}`}`
+          : metricLabel(state.sortKey);
+        const directionLabel = state.sortDirection === 'desc' ? t('descending') : t('ascending');
+        if (currentLanguage === 'en') {
+          elements.status.innerHTML = `
+            ${escapeHtml(t('showing'))} <strong>${visibleModels.length}</strong> / ${models.length}
+            ${escapeHtml(t('modelsCount'))} · ${escapeHtml(t('sortBy'))}
+            <strong>${escapeHtml(rankLabel)}</strong> ${escapeHtml(directionLabel)} ·
+            ${escapeHtml(t('protocolDemoData'))}
+          `;
+        } else {
+          elements.status.innerHTML = `
+            ${escapeHtml(t('showing'))} <strong>${visibleModels.length}</strong> / ${models.length}
+            ${escapeHtml(t('modelsCount'))} · ${escapeHtml(t('sortBy'))}
+            <strong>${escapeHtml(rankLabel)}</strong> ${escapeHtml(directionLabel)}排列 ·
+            全部为${escapeHtml(t('protocolDemoData'))}
+          `;
+        }
+      };
+
+      const updateSortHeaders = () => {
+        document.querySelectorAll('[data-sort-key]').forEach((button) => {
+          const th = button.closest('th');
+          const isCurrent = state.domain === 'all' && button.dataset.sortKey === state.sortKey;
+          th.setAttribute(
+            'aria-sort',
+            isCurrent ? (state.sortDirection === 'desc' ? 'descending' : 'ascending') : 'none',
+          );
+        });
+      };
+
+      const renderComparison = () => {
+        const selectedModels = state.selected
+          .map((id) => models.find((model) => model.id === id))
+          .filter(Boolean);
+
+        elements.comparisonPanel.hidden = selectedModels.length === 0;
+        if (!selectedModels.length) {
+          elements.comparisonGrid.innerHTML = '';
+          elements.comparisonStatus.textContent = t('comparisonLimit');
+          return;
+        }
+
+        elements.comparisonStatus.textContent = currentLanguage === 'en'
+          ? `${selectedModels.length} / ${MAX_COMPARE} ${t('comparisonSelected')}. ${t('comparisonDisclaimer')}`
+          : `${t('comparisonSelected')} ${selectedModels.length} / ${MAX_COMPARE} 个模型。${t('comparisonDisclaimer')}`;
+
+        const placeholderCount = MAX_COMPARE - selectedModels.length;
+        const headings = selectedModels.map((model) => `
+          <div class="comparison-cell model-heading">
+            <strong>${escapeHtml(model.name)}</strong>
+            <span>${escapeHtml(model.family)}</span>
+          </div>
+        `).join('') + Array.from({ length: placeholderCount }, () => `
+          <div class="comparison-cell model-heading">
+            <span class="comparison-placeholder">${escapeHtml(t('comparisonChoose'))}</span>
+          </div>
+        `).join('');
+
+        const rows = metricKeys.map((key) => {
+          const metricRanks = new Map(
+            [...selectedModels]
+              .sort((a, b) => b[key] - a[key])
+              .map((model, rankIndex) => [model.id, rankIndex + 1]),
+          );
+          const values = selectedModels.map((model) => `
+            <div class="comparison-cell">
+              <div class="compare-value">
+                <span>${model[key].toFixed(1)}</span>
+                <span>#${metricRanks.get(model.id)}</span>
+              </div>
+              <div class="compare-bar" aria-hidden="true" style="--score:${model[key]};--bar-color:${scoreColor(model[key])}">
+                <span></span>
+              </div>
+            </div>
+          `).join('');
+          const placeholders = Array.from({ length: placeholderCount }, () => `
+            <div class="comparison-cell"><span class="comparison-placeholder">—</span></div>
+          `).join('');
+          return `
+            <div class="comparison-cell metric-label">${escapeHtml(metricLabel(key))}</div>
+            ${values}
+            ${placeholders}
+          `;
+        }).join('');
+
+        elements.comparisonGrid.innerHTML = `
+          <div class="comparison-cell metric-label">${escapeHtml(t('capabilityDimension'))}</div>
+          ${headings}
+          ${rows}
+        `;
+      };
+
+      const renderModelDialog = (model) => {
+        elements.dialogTitle.textContent = model.name;
+        const domainBars = Object.entries(model.domains).map(([key, value]) => `
+          <div>
+            <div class="domain-bar-label">
+              <span>${escapeHtml(domainLabel(key))}</span>
+              <strong>${value.toFixed(1)}</strong>
+            </div>
+            <div class="domain-bar-track" aria-hidden="true" style="--score:${value}"><span></span></div>
+          </div>
+        `).join('');
+
+        elements.dialogContent.innerHTML = `
+          <p id="dialog-description" class="dialog-demo-note" style="margin-top:0">
+            ${escapeHtml(t('dialogDemoIntro'))}
+          </p>
+          <div class="dialog-summary">
+            <div class="dialog-overall">
+              <div><strong>${model.overall.toFixed(1)}</strong><span>${escapeHtml(t('overallLabel'))}</span></div>
+            </div>
+            <div class="dialog-meta-grid">
+              <div class="dialog-meta-item"><span>${escapeHtml(t('modelOrganization'))}</span><strong>${escapeHtml(model.organization)}</strong></div>
+              <div class="dialog-meta-item"><span>${escapeHtml(t('modelFamily'))}</span><strong>${escapeHtml(model.family)}</strong></div>
+              <div class="dialog-meta-item"><span>${escapeHtml(t('evaluationMode'))}</span><strong>${escapeHtml(model.mode)}</strong></div>
+              <div class="dialog-meta-item"><span>${escapeHtml(t('scaleNote'))}</span><strong>${escapeHtml(model.parameters)}</strong></div>
+              <div class="dialog-meta-item"><span>${escapeHtml(t('openness'))}</span><strong>${escapeHtml(model.openness)}</strong></div>
+              <div class="dialog-meta-item"><span>${escapeHtml(t('resultStatus'))}</span><strong>${escapeHtml(t('protocolDemoStatus'))}</strong></div>
+            </div>
+          </div>
+          <section class="dialog-section" aria-labelledby="domain-profile-title">
+            <h3 id="domain-profile-title">${escapeHtml(t('domainProfileTitle'))}</h3>
+            <div class="domain-bars">${domainBars}</div>
+          </section>
+          <section class="dialog-section" aria-labelledby="model-insight-title">
+            <h3 id="model-insight-title">${escapeHtml(t('modelInsightTitle'))}</h3>
+            <div class="insight-grid">
+              <article class="insight-card">
+                <strong>${escapeHtml(t('relativeStrength'))}</strong>
+                <p>${escapeHtml(currentLanguage === 'en' ? model.strengthEn : model.strength)}</p>
+              </article>
+              <article class="insight-card caution">
+                <strong>${escapeHtml(t('interpretationBoundary'))}</strong>
+                <p>${escapeHtml(currentLanguage === 'en' ? model.cautionEn : model.caution)}</p>
+              </article>
+            </div>
+          </section>
+          <p class="dialog-demo-note">
+            ${escapeHtml(t('dialogFinalNote'))}
+          </p>
+        `;
+      };
+
+      const openModel = (id) => {
+        const model = models.find((item) => item.id === id);
+        if (!model) return;
+        state.activeModelId = id;
+        renderModelDialog(model);
+        if (typeof elements.dialog.showModal === 'function') {
+          elements.dialog.showModal();
+        } else {
+          elements.dialog.setAttribute('open', '');
+        }
+        document.body.classList.add('dialog-open');
+      };
+
+      const closeDialog = () => {
+        if (typeof elements.dialog.close === 'function' && elements.dialog.open) {
+          elements.dialog.close();
+        } else {
+          elements.dialog.removeAttribute('open');
+        }
+        state.activeModelId = null;
+        document.body.classList.remove('dialog-open');
+      };
+
+      const toggleCompare = (id, shouldSelect) => {
+        const alreadySelected = state.selected.includes(id);
+        if (shouldSelect && !alreadySelected) {
+          if (state.selected.length >= MAX_COMPARE) {
+            elements.comparisonStatus.textContent = t('maxComparisonWarning');
+            return false;
+          }
+          state.selected.push(id);
+        } else if (!shouldSelect && alreadySelected) {
+          state.selected = state.selected.filter((modelId) => modelId !== id);
+        }
+        return true;
+      };
+
+      const render = () => {
+        const visibleModels = filteredModels();
+        renderRows(visibleModels);
+        renderPodium(visibleModels);
+        renderStatus(visibleModels);
+        renderComparison();
+        updateSortHeaders();
+      };
+
+      const normalizeLanguage = (value) => {
+        if (!value) return null;
+        const normalized = value.toLowerCase();
+        if (normalized === 'en' || normalized.startsWith('en-')) return 'en';
+        if (normalized === 'zh' || normalized.startsWith('zh-')) return 'zh-CN';
+        return null;
+      };
+
+      const resolveInitialLanguage = () => {
+        const requestedLanguage = new URLSearchParams(window.location.search).get('lang');
+        const queryLanguage = normalizeLanguage(requestedLanguage);
+        if (queryLanguage) return queryLanguage;
+
+        try {
+          const storedLanguage = normalizeLanguage(localStorage.getItem(LANGUAGE_STORAGE_KEY));
+          if (storedLanguage) return storedLanguage;
+        } catch {
+          // Storage can be unavailable on restricted or local-file origins.
+        }
+
+        const browserLanguage = navigator.languages?.[0] ?? navigator.language;
+        return normalizeLanguage(browserLanguage) ?? 'en';
+      };
+
+      const updateLanguageUrl = (language) => {
+        try {
+          const url = new URL(window.location.href);
+          if (language === 'en') {
+            url.searchParams.set('lang', 'en');
+          } else {
+            url.searchParams.delete('lang');
+          }
+          history.replaceState(null, '', url.href);
+        } catch {
+          // Language switching must remain functional if URL replacement is restricted.
+        }
+      };
+
+      const applyTranslations = (language, options = {}) => {
+        if (!supportedLanguages.includes(language)) return;
+        const { persist = true, updateUrl = true } = options;
+        currentLanguage = language;
+        document.documentElement.lang = language;
+
+        document.querySelectorAll('[data-i18n]').forEach((element) => {
+          element.textContent = t(element.dataset.i18n);
+        });
+        document.querySelectorAll('[data-i18n-html]').forEach((element) => {
+          element.innerHTML = t(element.dataset.i18nHtml);
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach((element) => {
+          element.setAttribute('placeholder', t(element.dataset.i18nPlaceholder));
+        });
+        document.querySelectorAll('[data-i18n-aria-label]').forEach((element) => {
+          element.setAttribute('aria-label', t(element.dataset.i18nAriaLabel));
+        });
+
+        document.title = t('pageTitle');
+        elements.metaDescription.setAttribute('content', t('metaDescription'));
+        elements.metaOgLocale.setAttribute('content', t('metaLocale'));
+        elements.metaOgTitle.setAttribute('content', t('pageTitle'));
+        elements.metaOgDescription.setAttribute('content', t('metaOgDescription'));
+        elements.metaOgUrl.setAttribute('content', t('metaOgUrl'));
+        elements.metaOgImageAlt.setAttribute('content', t('metaImageAlt'));
+        elements.metaTwitterTitle.setAttribute('content', t('metaTwitterTitle'));
+        elements.metaTwitterDescription.setAttribute('content', t('metaTwitterDescription'));
+        elements.metaTwitterImageAlt.setAttribute('content', t('metaImageAlt'));
+
+        elements.languageButtons.forEach((button) => {
+          button.setAttribute('aria-pressed', String(button.dataset.language === language));
+        });
+
+        if (persist) {
+          try {
+            localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+          } catch {
+            // A saved preference is optional; the active page language still updates.
+          }
+        }
+        if (updateUrl) updateLanguageUrl(language);
+
+        render();
+        if (state.activeModelId && elements.dialog.open) {
+          const activeModel = models.find((model) => model.id === state.activeModelId);
+          if (activeModel) renderModelDialog(activeModel);
+        }
+      };
+
+      elements.search.addEventListener('input', (event) => {
+        state.search = event.target.value.toLowerCase();
+        render();
+      });
+
+      elements.domain.addEventListener('change', (event) => {
+        state.domain = event.target.value;
+        state.sortDirection = 'desc';
+        render();
+      });
+
+      elements.family.addEventListener('change', (event) => {
+        state.family = event.target.value;
+        render();
+      });
+
+      elements.metric.addEventListener('change', (event) => {
+        state.metric = event.target.value;
+        state.sortKey = event.target.value;
+        state.sortDirection = 'desc';
+        render();
+      });
+
+      elements.reset.addEventListener('click', () => {
+        state.search = '';
+        state.domain = 'all';
+        state.family = 'all';
+        state.metric = 'overall';
+        state.sortKey = 'overall';
+        state.sortDirection = 'desc';
+        elements.search.value = '';
+        elements.domain.value = 'all';
+        elements.family.value = 'all';
+        elements.metric.value = 'overall';
+        render();
+        elements.search.focus();
+      });
+
+      document.querySelectorAll('[data-sort-key]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const key = button.dataset.sortKey;
+          if (state.domain !== 'all') {
+            state.domain = 'all';
+            elements.domain.value = 'all';
+          }
+          if (state.sortKey === key) {
+            state.sortDirection = state.sortDirection === 'desc' ? 'asc' : 'desc';
+          } else {
+            state.sortKey = key;
+            state.metric = key;
+            state.sortDirection = 'desc';
+            elements.metric.value = key;
+          }
+          render();
+        });
+      });
+
+      const handleDetailClick = (event) => {
+        const button = event.target.closest('[data-model-detail]');
+        if (button) openModel(button.dataset.modelDetail);
+      };
+
+      elements.body.addEventListener('click', handleDetailClick);
+      elements.podium.addEventListener('click', handleDetailClick);
+
+      elements.body.addEventListener('change', (event) => {
+        const checkbox = event.target.closest('[data-compare-id]');
+        if (!checkbox) return;
+        const accepted = toggleCompare(checkbox.dataset.compareId, checkbox.checked);
+        if (!accepted) checkbox.checked = false;
+        render();
+      });
+
+      elements.clearComparison.addEventListener('click', () => {
+        state.selected = [];
+        render();
+      });
+
+      elements.languageButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const language = button.dataset.language;
+          applyTranslations(language);
+        });
+      });
+
+      elements.dialogClose.addEventListener('click', closeDialog);
+      elements.dialog.addEventListener('click', (event) => {
+        if (event.target === elements.dialog) closeDialog();
+      });
+      elements.dialog.addEventListener('close', () => {
+        state.activeModelId = null;
+        document.body.classList.remove('dialog-open');
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === "Escape") {
+          if (elements.dialog.open) {
+            closeDialog();
+          } else if (elements.search.value) {
+            elements.search.value = '';
+            state.search = '';
+            render();
+            elements.search.focus();
+          }
+        }
+      });
+
+      const navLinks = [...document.querySelectorAll('.nav-link[href^="#"]')];
+      const observedSections = navLinks
+        .map((link) => document.querySelector(link.getAttribute('href')))
+        .filter(Boolean);
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            navLinks.forEach((link) => {
+              link.classList.toggle('is-active', link.getAttribute('href') === `#${entry.target.id}`);
+            });
+          });
+        }, { rootMargin: '-25% 0px -68% 0px' });
+        observedSections.forEach((section) => observer.observe(section));
+      }
+
+      applyTranslations(resolveInitialLanguage(), { updateUrl: false });
+    })();
+  </script>
+</body>
+</html>
