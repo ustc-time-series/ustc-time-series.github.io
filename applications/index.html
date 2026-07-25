@@ -1377,83 +1377,6 @@
         </div>
       </section>
 
-      <section class="section-card">
-        <h3>应用研究场景</h3>
-        <div class="scenario-grid">
-          <article class="scenario-card">
-            <div class="scenario-media">
-              <img src="./assets/power-load-scene.svg" alt="城市电力负荷预测场景示意图" />
-              <div class="figure-caption">将城市、气象与负荷曲线放进同一张分析视图，突出周期结构与调度需求。</div>
-            </div>
-            <span class="scenario-tag">城市电力负荷</span>
-            <h4>面向城市级与区域级用电需求预测</h4>
-            <p>
-              聚焦负荷曲线中的强周期性、节假日扰动、天气影响与突发变化，
-              支撑调度规划、峰谷平衡与需求侧响应等关键任务。
-            </p>
-            <div class="chip-list">
-              <span>天气感知</span>
-              <span>节假日效应</span>
-              <span>多尺度周期</span>
-              <span>负荷调度</span>
-            </div>
-            <div class="scenario-detail">
-              <div><strong>问题</strong><span>峰谷变化和异常天气会破坏稳定周期，单纯历史外推难以支撑高峰调度。</span></div>
-              <div><strong>方法</strong><span>结合日历、气象和多粒度负荷特征，分析短期波动与长期季节结构。</span></div>
-              <div><strong>价值</strong><span>服务负荷预案、资源调度和需求响应策略，降低高峰运行风险。</span></div>
-            </div>
-          </article>
-
-          <article class="scenario-card">
-            <div class="scenario-media">
-              <img src="./assets/renewable-energy-scene.svg" alt="新能源发电预测场景示意图" />
-              <div class="figure-caption">围绕风电与光伏出力波动，连接天气场、功率区间和爬坡事件。</div>
-            </div>
-            <span class="scenario-tag">新能源发电</span>
-            <h4>面向光伏与风电出力的波动预测</h4>
-            <p>
-              针对新能源出力的间歇性、爬坡事件与气象耦合问题，
-              关注多源观测融合、短临波动刻画与不确定性建模。
-            </p>
-            <div class="chip-list">
-              <span>光伏预测</span>
-              <span>风电预测</span>
-              <span>气象耦合</span>
-              <span>不确定性</span>
-            </div>
-            <div class="scenario-detail">
-              <div><strong>问题</strong><span>风速、云量和辐照变化带来强随机性，输出功率存在明显爬坡和短临突变。</span></div>
-              <div><strong>方法</strong><span>融合气象观测、出力曲线和不确定性估计，刻画波动区间和异常事件。</span></div>
-              <div><strong>价值</strong><span>支撑新能源并网、备用容量配置和短临调度，提升电力系统韧性。</span></div>
-            </div>
-          </article>
-
-          <article class="scenario-card">
-            <div class="scenario-media">
-              <img src="./assets/cloud-traffic-scene.svg" alt="云服务流量预测场景示意图" />
-              <div class="figure-caption">把服务流量、资源池和告警波动关联起来，强调容量规划与弹性伸缩。</div>
-            </div>
-            <span class="scenario-tag">云服务流量</span>
-            <h4>面向云资源调度与容量规划的流量预测</h4>
-            <p>
-              围绕流量突发、业务周期变化与资源成本约束，
-              探索支持弹性伸缩、容量预算和服务稳定性的预测策略。
-            </p>
-            <div class="chip-list">
-              <span>弹性伸缩</span>
-              <span>流量突发</span>
-              <span>容量规划</span>
-              <span>成本约束</span>
-            </div>
-            <div class="scenario-detail">
-              <div><strong>问题</strong><span>业务活动和用户行为会造成非平稳流量，资源过配与欠配都会带来成本或稳定性问题。</span></div>
-              <div><strong>方法</strong><span>识别业务周期、突发窗口和资源使用关系，建立面向容量决策的预测视图。</span></div>
-              <div><strong>价值</strong><span>辅助弹性伸缩、容量预算和告警前置，减少服务抖动与资源浪费。</span></div>
-            </div>
-          </article>
-        </div>
-      </section>
-
       <section class="section-card forecast-decision-section" aria-labelledby="forecast-decision-title">
         <div class="forecast-decision-head">
           <span class="forecast-decision-kicker">Forecast → Uncertainty → Decision</span>
@@ -1777,6 +1700,83 @@
             <path d="M25 9L30 14 24 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" />
           </svg>
           <span><strong>闭环反馈</strong>实验结果进入结果诊断并沉淀为研究记忆，再回到下一轮场景理解与方案设计。</span>
+        </div>
+      </section>
+
+      <section class="section-card">
+        <h3>应用研究场景</h3>
+        <div class="scenario-grid">
+          <article class="scenario-card">
+            <div class="scenario-media">
+              <img src="./assets/power-load-scene.svg" alt="城市电力负荷预测场景示意图" />
+              <div class="figure-caption">将城市、气象与负荷曲线放进同一张分析视图，突出周期结构与调度需求。</div>
+            </div>
+            <span class="scenario-tag">城市电力负荷</span>
+            <h4>面向城市级与区域级用电需求预测</h4>
+            <p>
+              聚焦负荷曲线中的强周期性、节假日扰动、天气影响与突发变化，
+              支撑调度规划、峰谷平衡与需求侧响应等关键任务。
+            </p>
+            <div class="chip-list">
+              <span>天气感知</span>
+              <span>节假日效应</span>
+              <span>多尺度周期</span>
+              <span>负荷调度</span>
+            </div>
+            <div class="scenario-detail">
+              <div><strong>问题</strong><span>峰谷变化和异常天气会破坏稳定周期，单纯历史外推难以支撑高峰调度。</span></div>
+              <div><strong>方法</strong><span>结合日历、气象和多粒度负荷特征，分析短期波动与长期季节结构。</span></div>
+              <div><strong>价值</strong><span>服务负荷预案、资源调度和需求响应策略，降低高峰运行风险。</span></div>
+            </div>
+          </article>
+
+          <article class="scenario-card">
+            <div class="scenario-media">
+              <img src="./assets/renewable-energy-scene.svg" alt="新能源发电预测场景示意图" />
+              <div class="figure-caption">围绕风电与光伏出力波动，连接天气场、功率区间和爬坡事件。</div>
+            </div>
+            <span class="scenario-tag">新能源发电</span>
+            <h4>面向光伏与风电出力的波动预测</h4>
+            <p>
+              针对新能源出力的间歇性、爬坡事件与气象耦合问题，
+              关注多源观测融合、短临波动刻画与不确定性建模。
+            </p>
+            <div class="chip-list">
+              <span>光伏预测</span>
+              <span>风电预测</span>
+              <span>气象耦合</span>
+              <span>不确定性</span>
+            </div>
+            <div class="scenario-detail">
+              <div><strong>问题</strong><span>风速、云量和辐照变化带来强随机性，输出功率存在明显爬坡和短临突变。</span></div>
+              <div><strong>方法</strong><span>融合气象观测、出力曲线和不确定性估计，刻画波动区间和异常事件。</span></div>
+              <div><strong>价值</strong><span>支撑新能源并网、备用容量配置和短临调度，提升电力系统韧性。</span></div>
+            </div>
+          </article>
+
+          <article class="scenario-card">
+            <div class="scenario-media">
+              <img src="./assets/cloud-traffic-scene.svg" alt="云服务流量预测场景示意图" />
+              <div class="figure-caption">把服务流量、资源池和告警波动关联起来，强调容量规划与弹性伸缩。</div>
+            </div>
+            <span class="scenario-tag">云服务流量</span>
+            <h4>面向云资源调度与容量规划的流量预测</h4>
+            <p>
+              围绕流量突发、业务周期变化与资源成本约束，
+              探索支持弹性伸缩、容量预算和服务稳定性的预测策略。
+            </p>
+            <div class="chip-list">
+              <span>弹性伸缩</span>
+              <span>流量突发</span>
+              <span>容量规划</span>
+              <span>成本约束</span>
+            </div>
+            <div class="scenario-detail">
+              <div><strong>问题</strong><span>业务活动和用户行为会造成非平稳流量，资源过配与欠配都会带来成本或稳定性问题。</span></div>
+              <div><strong>方法</strong><span>识别业务周期、突发窗口和资源使用关系，建立面向容量决策的预测视图。</span></div>
+              <div><strong>价值</strong><span>辅助弹性伸缩、容量预算和告警前置，减少服务抖动与资源浪费。</span></div>
+            </div>
+          </article>
         </div>
       </section>
     </div>
