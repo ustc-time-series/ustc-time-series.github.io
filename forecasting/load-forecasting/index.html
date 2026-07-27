@@ -7,8 +7,16 @@
   <title>电力负荷预测 | USTC-AGI Time Series</title>
   <meta
     name="description"
-    content="电力负荷预测任务综述与公开 Benchmark 数据集整理，涵盖 GEFCom、AEMO、ISO-NE、ETT、ECL 等主流数据集。"
+    content="电力负荷预测专题：介绍任务定义、多源驱动、预测建模、不确定性评估、调度决策与公开 Benchmark 数据集。"
   />
+  <link rel="canonical" href="https://ustc-time-series.github.io/forecasting/load-forecasting/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="电力负荷预测 | USTC-AGI Time Series" />
+  <meta
+    property="og:description"
+    content="从历史负荷、气象和日历事件出发，理解电力负荷预测如何连接预测建模、风险评估与调度决策。"
+  />
+  <meta property="og:url" content="https://ustc-time-series.github.io/forecasting/load-forecasting/" />
   <link rel="icon" href="../../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -177,16 +185,6 @@
       border-bottom: 1px solid #d5e3eb;
       padding: 64px 0 48px;
       text-align: center;
-      cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-    header.is-refreshing {
-      transform: scale(0.995);
-      opacity: 0.82;
-    }
-    header:focus-visible {
-      outline: 3px solid #b7d9ec;
-      outline-offset: -6px;
     }
     .breadcrumb {
       font-size: 0.84rem;
@@ -225,10 +223,55 @@
       font-weight: 700;
     }
 
+    /* ── SECTION NAV ── */
+    .section-nav {
+      position: sticky;
+      top: 64px;
+      z-index: 110;
+      border-bottom: 1px solid #d5e3eb;
+      background: rgba(248, 251, 253, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .section-nav .container {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .section-nav .container::-webkit-scrollbar { display: none; }
+    .section-nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: max-content;
+      min-width: 100%;
+      padding: 8px 0;
+    }
+    .section-nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 7px 12px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: #4c6176;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .section-nav a:hover,
+    .section-nav a:focus-visible {
+      border-color: #b7d9ec;
+      background: #ffffff;
+      color: #091f44;
+      text-decoration: none;
+    }
+
     /* ── MAIN ── */
     main { flex: 1; padding: 40px 0 80px; }
 
     .content-stack { display: grid; gap: 20px; }
+    main section[id] { scroll-margin-top: 126px; }
 
     .section-card {
       background: #fff;
@@ -254,6 +297,279 @@
       font-size: 0.97rem;
     }
     .section-card p + p { margin-top: 10px; }
+
+    /* Value and significance */
+    .value-section {
+      position: relative;
+      overflow: hidden;
+      border-color: #c9dbe7;
+      background:
+        linear-gradient(135deg, rgba(237, 247, 252, 0.72), transparent 42%),
+        #ffffff;
+    }
+    .value-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .value-heading-copy {
+      max-width: 790px;
+    }
+    .value-heading-copy p {
+      max-width: 760px;
+    }
+    .value-thesis {
+      flex: 0 0 240px;
+      padding: 16px 18px;
+      border-radius: 14px;
+      background: #091f44;
+      color: #d8edfa;
+      font-size: 0.84rem;
+      font-weight: 700;
+      line-height: 1.65;
+      text-align: left;
+    }
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .value-card {
+      position: relative;
+      min-height: 218px;
+      padding: 48px 18px 18px;
+      border: 1px solid #d5e3eb;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.94);
+    }
+    .value-card::before {
+      content: attr(data-index);
+      position: absolute;
+      top: 16px;
+      left: 18px;
+      color: #5a7fa6;
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+    .value-card h3 {
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+    .value-card p {
+      font-size: 0.86rem;
+      line-height: 1.7;
+    }
+    .value-card strong {
+      color: #163d70;
+    }
+    .research-significance {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.34fr) minmax(0, 1fr);
+      gap: 20px;
+      margin-top: 14px;
+      padding: 20px;
+      border: 1px solid #b7d9ec;
+      border-radius: 14px;
+      background: #edf7fc;
+    }
+    .research-significance h3 {
+      margin-bottom: 5px;
+    }
+    .research-significance p {
+      font-size: 0.86rem;
+      line-height: 1.65;
+    }
+    .research-shifts {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: start;
+      gap: 8px;
+    }
+    .research-shifts span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 6px 11px;
+      border: 1px solid #c9dbe7;
+      border-radius: 999px;
+      background: #ffffff;
+      color: #163d70;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    /* Load forecasting overview */
+    .forecast-overview {
+      position: relative;
+      overflow: hidden;
+      border-color: #c9dbe7;
+      background:
+        radial-gradient(circle at 94% 8%, rgba(22, 61, 112, 0.10), transparent 23%),
+        linear-gradient(145deg, #ffffff 0%, #f8fbfd 58%, #edf7fc 100%);
+      box-shadow: 0 18px 42px rgba(6, 31, 69, 0.07);
+    }
+    .overview-heading {
+      max-width: 820px;
+    }
+    .section-kicker {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      margin-bottom: 10px;
+      padding: 0 11px;
+      border: 1px solid #b7d9ec;
+      border-radius: 999px;
+      background: rgba(237, 247, 252, 0.88);
+      color: #163d70;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+    }
+    .overview-flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .overview-step {
+      position: relative;
+      min-height: 174px;
+      padding: 48px 17px 18px;
+      border: 1px solid #d5e3eb;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+    .overview-step::before {
+      content: attr(data-step);
+      position: absolute;
+      top: 16px;
+      left: 17px;
+      color: #5a7fa6;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+    .overview-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      top: 50%;
+      right: -10px;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      border: 1px solid #b7d9ec;
+      border-radius: 50%;
+      background: #fff;
+      color: #163d70;
+      font-size: 0.75rem;
+      font-weight: 900;
+      transform: translateY(-50%);
+    }
+    .overview-step h3 {
+      font-size: 0.98rem;
+    }
+    .overview-step p {
+      font-size: 0.86rem;
+      line-height: 1.65;
+    }
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .signal-item {
+      display: grid;
+      gap: 5px;
+      padding: 15px 16px;
+      border: 1px solid #d5e3eb;
+      border-radius: 12px;
+      background: #f8fbfd;
+    }
+    .signal-item span,
+    .evaluation-card span {
+      color: #5a7fa6;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .signal-item strong {
+      color: #091f44;
+      font-size: 0.92rem;
+    }
+    .signal-item small {
+      color: #5b7187;
+      font-size: 0.78rem;
+      line-height: 1.55;
+    }
+    .evaluation-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid #d5e3eb;
+    }
+    .evaluation-head h2 {
+      margin-bottom: 0;
+    }
+    .evaluation-head p {
+      max-width: 620px;
+      font-size: 0.9rem;
+    }
+    .evaluation-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .evaluation-card {
+      min-height: 145px;
+      padding: 16px;
+      border: 1px solid #d5e3eb;
+      border-radius: 12px;
+      background: #ffffff;
+    }
+    .evaluation-card h3 {
+      margin: 5px 0 7px;
+      font-size: 0.94rem;
+    }
+    .evaluation-card p {
+      font-size: 0.82rem;
+      line-height: 1.62;
+    }
+    .evaluation-card p strong {
+      color: #163d70;
+    }
+
+    .scope-note {
+      display: grid;
+      grid-template-columns: minmax(190px, 0.38fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      margin-top: 18px;
+      padding: 18px 20px;
+      border: 1px solid #b7d9ec;
+      border-radius: 14px;
+      background: #edf7fc;
+    }
+    .scope-note > strong {
+      color: #091f44;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .scope-note p {
+      font-size: 0.86rem;
+      line-height: 1.65;
+    }
+    .scope-note p strong { color: #163d70; }
 
     /* Task type cards */
     .task-grid {
@@ -546,6 +862,17 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
+      .section-nav { position: static; }
+      .value-heading { align-items: start; flex-direction: column; gap: 14px; }
+      .value-thesis { flex-basis: auto; width: 100%; }
+      .value-grid { grid-template-columns: 1fr 1fr; }
+      .research-significance { grid-template-columns: 1fr; gap: 10px; }
+      .overview-flow,
+      .signal-grid,
+      .evaluation-grid { grid-template-columns: 1fr 1fr; }
+      .overview-step:nth-child(2)::after { display: none; }
+      .evaluation-head { align-items: start; flex-direction: column; gap: 8px; }
+      .scope-note { grid-template-columns: 1fr; gap: 8px; }
       .task-grid { grid-template-columns: 1fr 1fr; }
       .cat-grid  { grid-template-columns: 1fr 1fr; }
       .rec-grid  { grid-template-columns: 1fr; }
@@ -562,7 +889,17 @@
       .nav-links { justify-content: flex-start; flex-wrap: wrap; padding-top: 2px; }
       .nav-links a { padding: 7px 12px; font-size: 0.81rem; }
       .nav-dropdown-menu { left: 0; min-width: 200px; }
+      .section-nav .container { padding: 0 12px; }
+      .section-nav-links { justify-content: flex-start; min-width: max-content; }
+      .section-nav a { min-height: 44px; }
       header h1 { font-size: 1.65rem; }
+      .value-grid { grid-template-columns: 1fr; }
+      .value-card { min-height: 0; }
+      .overview-flow,
+      .signal-grid,
+      .evaluation-grid { grid-template-columns: 1fr; }
+      .overview-step { min-height: 0; }
+      .overview-step::after { display: none !important; }
       .task-grid { grid-template-columns: 1fr; }
       .cat-grid  { grid-template-columns: 1fr; }
       main { padding: 36px 0 56px; }
@@ -570,6 +907,7 @@
     }
   </style>
   <link rel="stylesheet" href="../../asset/site-responsive.css" />
+  <link rel="stylesheet" href="./load-forecasting-demo.css" />
 </head>
 <body>
 
@@ -596,35 +934,292 @@
 </nav>
 
 <!-- ═══════════════════ HEADER ═══════════════════ -->
-<header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
+<header id="hero-header">
   <div class="container">
     <div class="breadcrumb">
       <a href="../../forecasting/">时间序列预测</a>
       <span>/</span>
       电力负荷预测
     </div>
-    <h1><span class="highlight">电力负荷预测</span> 任务与 Benchmark 数据集</h1>
+    <h1><span class="highlight">电力负荷预测</span>：从需求感知到调度决策</h1>
     <p class="header-sub">
-      Electric Load Forecasting · 任务综述、公开数据集全景与推荐使用指引<br>
-      整理自 28 个主流数据集，覆盖竞赛、系统运营商、深度学习 Benchmark、智能电表等六大来源
+      Electric Load Forecasting · 任务定义、多源驱动、预测建模、不确定性评估与决策支持<br>
+      同时整理主流公开数据资源，覆盖竞赛、系统运营商、深度学习 Benchmark 与智能电表等六大来源
     </p>
     <div class="header-tags">
-      <span>28 个数据集</span>
-      <span>6 大类别</span>
-      <span>GEFCom · ETT · ECL · AEMO</span>
-      <span>ISO-NE · ENTSO-E · PJM</span>
-      <span>BuildingsBench · Monash</span>
+      <span>历史负荷</span>
+      <span>气象与日历</span>
+      <span>多尺度预测</span>
+      <span>概率预测</span>
+      <span>调度决策</span>
     </div>
   </div>
 </header>
+
+<nav class="section-nav" aria-label="页面章节导航">
+  <div class="container">
+    <div class="section-nav-links">
+      <a href="#load-demo">预测演示</a>
+      <a href="#value">价值意义</a>
+      <a href="#overview">研究闭环</a>
+      <a href="#task-types">任务分类</a>
+      <a href="#dataset-map">数据地图</a>
+      <a href="#dataset-details">重点数据</a>
+      <a href="#dataset-comparison">横向对比</a>
+      <a href="#dataset-recommendations">场景推荐</a>
+    </div>
+  </div>
+</nav>
 
 <!-- ═══════════════════ MAIN ═══════════════════ -->
 <main>
   <div class="container">
     <div class="content-stack">
 
+      <!-- Interactive load forecasting demo -->
+      <section class="section-card load-demo-card" id="load-demo" aria-labelledby="load-demo-title">
+        <div class="load-console-heading">
+          <div>
+            <span class="section-kicker">INTERACTIVE LOAD FORECAST</span>
+            <h2 id="load-demo-title">短期用电负荷预测演示台</h2>
+            <p>切换预测对象、运行情景与时间窗口，观察负荷峰值、爬坡和不确定性如何变化。</p>
+          </div>
+          <span class="load-demo-badge">交互演示 · 页面数值为模拟数据，不代表真实实验结果</span>
+        </div>
+
+        <div class="load-forecast-console">
+          <aside class="load-console-controls" aria-label="用电负荷预测参数">
+            <div class="load-control-group">
+              <label for="load-scope-select">预测对象</label>
+              <select id="load-scope-select">
+                <option value="urban">城市电网</option>
+                <option value="industrial">产业园区</option>
+                <option value="commercial">商业建筑</option>
+              </select>
+            </div>
+
+            <div class="load-control-group">
+              <label for="load-scenario-select">运行情景</label>
+              <select id="load-scenario-select">
+                <option value="moderate">温和工作日</option>
+                <option value="heatwave">高温工作日</option>
+                <option value="holiday">节假日</option>
+              </select>
+            </div>
+
+            <div class="load-control-group">
+              <label for="load-horizon-select">预测窗口</label>
+              <select id="load-horizon-select">
+                <option value="6">未来 6 小时</option>
+                <option value="12" selected>未来 12 小时</option>
+                <option value="24">未来 24 小时</option>
+              </select>
+            </div>
+
+            <button class="load-update-button" id="load-update-forecast" type="button">
+              更新模拟预测
+            </button>
+
+            <div class="load-scenario-note">
+              <strong>情景说明</strong>
+              <span id="load-scenario-description">
+                早晚高峰清晰，午间负荷平稳，适合作为常规调度基线。
+              </span>
+            </div>
+
+            <p class="load-demo-boundary">
+              本页演示数据不构成模型性能或业务效果结论；真实部署需重新校准数据、容量边界和风险阈值。
+            </p>
+          </aside>
+
+          <div class="load-chart-workspace">
+            <div class="load-chart-toolbar">
+              <h3>负荷轨迹与预测区间</h3>
+              <div class="load-chart-legend" aria-label="图例">
+                <span><i></i>历史观测</span>
+                <span class="is-forecast"><i></i>点预测</span>
+                <span class="is-interval"><i></i>P10–P90 区间</span>
+              </div>
+            </div>
+
+            <div class="load-chart-shell">
+              <canvas
+                id="load-forecast-chart"
+                role="img"
+                aria-label="用电负荷预测演示曲线"
+              ></canvas>
+            </div>
+
+            <p class="load-chart-summary" id="load-chart-summary" aria-live="polite">
+              正在生成用电负荷模拟预测……
+            </p>
+
+            <div class="load-metric-grid" aria-label="模拟预测关键指标">
+              <div class="load-metric">
+                <span>预测峰值</span>
+                <strong id="load-metric-peak">—</strong>
+              </div>
+              <div class="load-metric">
+                <span>峰值时刻</span>
+                <strong id="load-metric-time">—</strong>
+              </div>
+              <div class="load-metric">
+                <span>最大爬坡</span>
+                <strong id="load-metric-ramp">—</strong>
+              </div>
+              <div class="load-metric">
+                <span>平均区间宽度</span>
+                <strong id="load-metric-width">—</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Value and significance -->
+      <section class="section-card value-section" id="value" aria-labelledby="value-title">
+        <div class="value-heading">
+          <div class="value-heading-copy">
+            <span class="section-kicker">WHY LOAD FORECASTING MATTERS</span>
+            <h2 id="value-title">电力负荷预测的价值与意义</h2>
+            <p>
+              电能难以大规模、低成本地即时储存，供给与需求又必须持续保持平衡。
+              因此，负荷预测是连接用电需求感知、资源配置与调度行动的关键环节，其价值不只体现在更低的预测误差，
+              更体现在能否提前识别风险、减少无效冗余并支撑可靠决策。
+            </p>
+          </div>
+          <div class="value-thesis">
+            核心价值：把未来用电的不确定性转化为可提前准备、可量化权衡、可执行响应的调度依据。
+          </div>
+        </div>
+
+        <div class="value-grid" role="list" aria-label="电力负荷预测的四类实践价值">
+          <article class="value-card" data-index="01" role="listitem">
+            <h3>保障电网安全稳定</h3>
+            <p>
+              提前识别<strong>负荷峰值、快速爬坡与供需缺口</strong>，为机组组合、备用容量和应急预案提供依据，
+              降低准备不足或过度备用带来的运行风险。
+            </p>
+          </article>
+          <article class="value-card" data-index="02" role="listitem">
+            <h3>提升调度与市场效率</h3>
+            <p>
+              为日前调度、电力交易、储能充放电、设备检修和容量规划提供更可信的需求基线，
+              将负荷不确定性转化为<strong>成本、约束与资源配置</strong>问题。
+            </p>
+          </article>
+          <article class="value-card" data-index="03" role="listitem">
+            <h3>促进新能源消纳与低碳转型</h3>
+            <p>
+              将负荷预测与风电、光伏出力预测结合，协调“源—网—荷—储”，帮助判断供需错配与灵活性需求，
+              支撑新能源并网和<strong>低碳调度</strong>。
+            </p>
+          </article>
+          <article class="value-card" data-index="04" role="listitem">
+            <h3>支撑需求响应与城市韧性</h3>
+            <p>
+              在极端天气、节假日和重大活动等情景下预判异常需求，辅助削峰填谷、分时定价与重点设施保供，
+              提升城市能源系统的<strong>响应能力与韧性</strong>。
+            </p>
+          </article>
+        </div>
+
+        <div class="research-significance">
+          <div>
+            <h3>研究意义</h3>
+            <p>电力负荷场景为时序智能提供了一个同时检验预测、推理、不确定性与决策能力的典型试验场。</p>
+          </div>
+          <div class="research-shifts" aria-label="电力负荷预测研究范式演进">
+            <span>历史拟合走向多源情境理解</span>
+            <span>点预测走向概率与情景预测</span>
+            <span>平均误差走向峰谷风险与决策价值</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 0. Forecast-to-decision overview -->
+      <section class="section-card forecast-overview" id="overview">
+        <div class="overview-heading">
+          <span class="section-kicker">LOAD → FORECAST → ACTION</span>
+          <h2>从负荷曲线到调度决策</h2>
+          <p>
+            电力负荷预测并不是简单地延长一条历史曲线，而是把用电规律、外部驱动和电网运行目标放进同一个预测闭环。
+            一个可靠系统既要回答“未来需要多少电”，也要说明预测的不确定性，以及不同结果会触发怎样的调度行动。
+          </p>
+        </div>
+
+        <div class="overview-flow" role="list" aria-label="电力负荷预测四阶段流程">
+          <article class="overview-step" data-step="01" role="listitem">
+            <h3>明确预测任务</h3>
+            <p>根据实时调度、日前计划、检修安排或容量规划，确定对象、粒度、预测窗口与更新频率。</p>
+          </article>
+          <article class="overview-step" data-step="02" role="listitem">
+            <h3>融合多源驱动</h3>
+            <p>对齐历史负荷、气温湿度、工作日与节假日、价格事件及设备运行状态。</p>
+          </article>
+          <article class="overview-step" data-step="03" role="listitem">
+            <h3>建模未来负荷</h3>
+            <p>组合统计、机器学习、深度学习和基础模型，输出点预测、分位数或多情景轨迹。</p>
+          </article>
+          <article class="overview-step" data-step="04" role="listitem">
+            <h3>评估风险与价值</h3>
+            <p>同时检查误差、区间可靠性、峰谷刻画和业务成本，让预测进入调度与需求响应。</p>
+          </article>
+        </div>
+
+        <div class="signal-grid" aria-label="电力负荷预测核心输入">
+          <div class="signal-item">
+            <span>Signal 01</span>
+            <strong>历史负荷</strong>
+            <small>趋势、日周周期、峰谷形态与近期变化</small>
+          </div>
+          <div class="signal-item">
+            <span>Signal 02</span>
+            <strong>气象条件</strong>
+            <small>温度、湿度、体感温度及极端天气过程</small>
+          </div>
+          <div class="signal-item">
+            <span>Signal 03</span>
+            <strong>日历事件</strong>
+            <small>工作日、节假日、重大活动与季节切换</small>
+          </div>
+          <div class="signal-item">
+            <span>Signal 04</span>
+            <strong>运行约束</strong>
+            <small>容量边界、价格信号、检修与需求响应策略</small>
+          </div>
+        </div>
+
+        <div class="evaluation-head">
+          <h2>评价不止一个误差数字</h2>
+          <p>研究评测需要同时覆盖数值精度、概率可靠性、关键事件刻画和决策后果，避免平均误差掩盖高峰风险。</p>
+        </div>
+        <div class="evaluation-grid" aria-label="电力负荷预测评价维度">
+          <article class="evaluation-card">
+            <span>Accuracy</span>
+            <h3>点预测误差</h3>
+            <p><strong>MAE / RMSE</strong> 衡量整体偏差，MAPE 适合比例比较但需谨慎处理低负荷时段。</p>
+          </article>
+          <article class="evaluation-card">
+            <span>Uncertainty</span>
+            <h3>概率预测质量</h3>
+            <p><strong>Pinball Loss</strong>、区间覆盖率与区间宽度共同检查风险边界是否可靠。</p>
+          </article>
+          <article class="evaluation-card">
+            <span>Critical Events</span>
+            <h3>峰谷与爬坡</h3>
+            <p>单独评估峰值时间、峰值幅度与快速爬坡误差，关注对调度最敏感的时段。</p>
+          </article>
+          <article class="evaluation-card">
+            <span>Decision Value</span>
+            <h3>业务决策价值</h3>
+            <p>将误差映射到备用容量、购电成本、削峰填谷与需求响应效果，评估真实使用价值。</p>
+          </article>
+        </div>
+      </section>
+
       <!-- 1. Task Introduction -->
-      <section class="section-card">
+      <section class="section-card" id="task-types">
         <h2>任务定义与分类</h2>
         <p>
           电力负荷预测（Electricity Load Forecasting）是根据历史用电量、气象条件、日历信息等输入，预测未来电力系统需求的时间序列预测任务。
@@ -632,8 +1227,8 @@
         </p>
         <div class="stats-bar">
           <div class="stat-item">
-            <div class="stat-num">28</div>
-            <div class="stat-label">公开数据集</div>
+            <div class="stat-num">多源</div>
+            <div class="stat-label">公开数据资源</div>
           </div>
           <div class="stat-item">
             <div class="stat-num">6</div>
@@ -677,9 +1272,17 @@
       </section>
 
       <!-- 2. Dataset Categories Overview -->
-      <section class="section-card">
+      <section class="section-card" id="dataset-map">
         <h2>数据集分类概览</h2>
         <p>公开电力负荷预测数据集按来源性质可划分为六大类，各有不同的覆盖尺度、粒度和适用场景：</p>
+        <aside class="scope-note">
+          <strong>负荷数据与通用时序对照</strong>
+          <p>
+            <strong>ISO-NE、AEMO、PJM、ECL</strong> 等直接记录区域或用户用电需求，可用于负荷预测；
+            <strong>ETT、Traffic、Weather</strong> 主要用于检验长序列建模与跨域泛化，不能混写为电力负荷数据。
+            页面保留它们作为方法学对照，并在推荐时单独标注。
+          </p>
+        </aside>
         <div class="cat-grid">
           <article class="cat-card">
             <span class="task-tag tag-rose">竞赛数据集</span>
@@ -716,7 +1319,7 @@
           <article class="cat-card">
             <span class="task-tag tag-orange">深度学习 Benchmark</span>
             <h4>TSLib / ETT 系列</h4>
-            <p>专为长序列时序预测（LTSF）设计，配套代码丰富，是所有主流模型的必测基准。</p>
+            <p>长序列时序预测常用的通用评测对照；其中 ETT、Traffic、Weather 不属于负荷数据。</p>
             <div class="chip-list">
               <span>ETTh1/h2</span>
               <span>ETTm1/m2</span>
@@ -750,7 +1353,7 @@
       </section>
 
       <!-- 3. Key Datasets Details -->
-      <section class="section-card">
+      <section class="section-card" id="dataset-details">
         <h2>重点数据集详情</h2>
 
         <!-- 3.1 Competition -->
@@ -1055,7 +1658,7 @@
       </section>
 
       <!-- 4. Comparison Tables -->
-      <section class="section-card">
+      <section class="section-card" id="dataset-comparison">
         <h2>数据集横向对比</h2>
 
         <h3 style="margin-top:0;margin-bottom:10px;">系统运营商数据集对比</h3>
@@ -1246,7 +1849,7 @@
       </section>
 
       <!-- 5. Recommendations -->
-      <section class="section-card">
+      <section class="section-card" id="dataset-recommendations">
         <h2>按研究场景的推荐数据集</h2>
         <div class="rec-grid">
           <article class="rec-card">
@@ -1299,7 +1902,7 @@
             <span class="task-tag tag-gray" style="margin-bottom:10px;">国内场景 / 中国数据</span>
             <h4>中国大陆数据现状说明</h4>
             <ul class="rec-list">
-              <li><strong>ETT</strong> — 唯一广泛使用的中国大陆电网公开数据</li>
+              <li><strong>ETT</strong> — 变压器温度时序基准，可作设备侧对照但不等同于区域负荷</li>
               <li><strong>2016 电工杯数据集</strong> — 含气象特征，国内引用 10 次</li>
               <li>国家电网 / 南方电网数据整体保密，公开资源极为有限</li>
             </ul>
@@ -1350,29 +1953,9 @@
     });
     document.addEventListener('click', closeAll);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAll(); });
-
-    const heroHeader = document.querySelector('#hero-header');
-    const refreshPage = () => {
-      if (!heroHeader || heroHeader.classList.contains('is-refreshing')) return;
-      heroHeader.classList.add('is-refreshing');
-      window.setTimeout(() => {
-        window.location.reload();
-      }, 160);
-    };
-
-    if (heroHeader) {
-      heroHeader.addEventListener('click', (event) => {
-        if (event.target.closest('a, button')) return;
-        refreshPage();
-      });
-      heroHeader.addEventListener('keydown', (event) => {
-        if (event.key !== 'Enter' && event.key !== ' ') return;
-        event.preventDefault();
-        refreshPage();
-      });
-    }
   })();
 </script>
+<script type="module" src="./load-forecasting.mjs"></script>
 
 </body>
 </html>

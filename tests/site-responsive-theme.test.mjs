@@ -21,6 +21,7 @@ const pagePaths = [
   'NeoResearch/index.html',
   'open-source/index.html',
   'papers/index.html',
+  'power-forecasting/index.html',
   'scientific-time-series/index.html',
   'star-cast/index.html',
   'systems/index.html',

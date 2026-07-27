@@ -546,6 +546,30 @@
       font-weight: 800;
     }
 
+    .scenario-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      margin-top: 18px;
+      padding: 9px 15px;
+      border: 1px solid #091f44;
+      border-radius: 999px;
+      background: #091f44;
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 800;
+      transition: background .18s, border-color .18s, transform .18s;
+    }
+    .scenario-link:hover,
+    .scenario-link:focus-visible {
+      border-color: #163d70;
+      background: #163d70;
+      color: #ffffff;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
     .forecast-decision-section {
       position: relative;
       overflow: hidden;
@@ -1728,6 +1752,9 @@
               <div><strong>方法</strong><span>结合日历、气象和多粒度负荷特征，分析短期波动与长期季节结构。</span></div>
               <div><strong>价值</strong><span>服务负荷预案、资源调度和需求响应策略，降低高峰运行风险。</span></div>
             </div>
+            <a class="scenario-link" href="../forecasting/load-forecasting/">
+              查看电力负荷预测专题 →
+            </a>
           </article>
 
           <article class="scenario-card">
@@ -1752,6 +1779,7 @@
               <div><strong>方法</strong><span>融合气象观测、出力曲线和不确定性估计，刻画波动区间和异常事件。</span></div>
               <div><strong>价值</strong><span>支撑新能源并网、备用容量配置和短临调度，提升电力系统韧性。</span></div>
             </div>
+            <a class="scenario-link" href="../power-forecasting/">进入发电功率预测页面 →</a>
           </article>
 
           <article class="scenario-card">
