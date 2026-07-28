@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f9" />
+  <title>可预测性认知驱动的自适应情境感知时序研究框架 | USTC-AGI Time Series</title>
+  <meta
+    name="description"
+    content="CogCast 可预测性认知驱动的自适应情境感知时序研究框架：围绕可预测性分析、诊断、增强与校准，构建从因果情境认知到决策效用的可信预测闭环。"
+  />
+  <link rel="canonical" href="https://ustc-time-series.github.io/cog-cast/" />
+  <meta property="og:title" content="可预测性认知驱动的自适应情境感知时序研究框架 | USTC-AGI Time Series" />
+  <meta
+    property="og:description"
+    content="从可预测性分析与困难归因，到情境增强、风险校准和决策效用，构建自适应情境感知时序预测闭环。"
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ustc-time-series.github.io/cog-cast/" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --accent: #091f44;
+      --accent-dark: #06162e;
+      --accent-soft: #edf7fc;
+      --accent-border: #b7d9ec;
+      --blue: #163d70;
+      --blue-muted: #5a7fa6;
+      --signal: #0f7f8f;
+      --signal-soft: #e8f5f7;
+      --violet: #6d5f9f;
+      --green: #16805f;
+      --text-strong: #091f44;
+      --text: #17324d;
+      --text-muted: #4c6176;
+      --text-faint: #5b7187;
+      --line: #d5e3eb;
+      --line-soft: #e6f0f5;
+      --bg: #f4f7f9;
+      --card: #ffffff;
+      --surface-soft: #f8fbfd;
+      --footer-text: #a9c7db;
+      --footer-faint: #8eb4cc;
+      --footer-link: #8fd9ff;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC",
+                   "PingFang SC", "Hiragino Sans GB", sans-serif;
+      font-size: 16px;
+      line-height: 1.8;
+      text-align: justify;
+      text-justify: inter-ideograph;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 300;
+      padding: 9px 14px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 750;
+      transform: translateY(-160%);
+      transition: transform .18s ease;
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 120;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 2px 12px rgba(9, 31, 68, 0.05);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .top-nav .container {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .nav-brand {
+      flex-shrink: 0;
+      color: var(--text-strong);
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+    }
+
+    .nav-brand span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 10px 0;
+      overflow: visible;
+    }
+
+    .nav-links a,
+    .nav-dropdown-toggle {
+      min-height: 44px;
+      display: inline-flex;
+      flex-shrink: 0;
+      align-items: center;
+      padding: 8px 14px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: var(--text-muted);
+      font: inherit;
+      font-size: 0.84rem;
+      font-weight: 500;
+      line-height: 1.2;
+      transition: color .18s ease, background .18s ease, border-color .18s ease,
+                  transform .18s ease;
+    }
+
+    .nav-dropdown {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .nav-dropdown-toggle {
+      appearance: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .nav-dropdown-toggle::after {
+      content: "";
+      display: inline-block;
+      margin-left: 7px;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid currentColor;
+      vertical-align: middle;
+      transition: transform .18s ease;
+    }
+
+    .nav-dropdown.open .nav-dropdown-toggle::after {
+      transform: rotate(180deg);
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      z-index: 30;
+      display: none;
+      min-width: 268px;
+      padding: 8px;
+      gap: 4px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 12px 28px rgba(9, 31, 68, 0.10);
+    }
+
+    .nav-dropdown.open .nav-dropdown-menu {
+      display: grid;
+    }
+
+    .nav-dropdown-menu a {
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      font-weight: 650;
+      line-height: 1.4;
+    }
+
+    .nav-links a:hover,
+    .nav-dropdown-toggle:hover,
+    .nav-dropdown.open .nav-dropdown-toggle,
+    .nav-dropdown-menu a:hover {
+      border-color: var(--accent-border);
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .nav-active {
+      border-color: var(--accent-border) !important;
+      background: var(--accent-soft) !important;
+      color: var(--accent) !important;
+      font-weight: 700 !important;
+    }
+
+    header {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      padding: 82px 0 68px;
+      border-bottom: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 13% 18%, rgba(15, 127, 143, 0.16), transparent 28%),
+        radial-gradient(circle at 87% 77%, rgba(109, 95, 159, 0.12), transparent 29%),
+        linear-gradient(145deg, #ffffff 34%, var(--accent-soft) 100%);
+      text-align: center;
+      cursor: pointer;
+      transition: opacity .2s ease, transform .2s ease;
+    }
+
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: 0.22;
+      background-image:
+        linear-gradient(rgba(9, 31, 68, .09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(9, 31, 68, .09) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, #000, transparent 92%);
+    }
+
+    header.is-refreshing {
+      opacity: 0.82;
+      transform: scale(0.995);
+    }
+
+    header:focus-visible {
+      outline: 3px solid var(--accent-border);
+      outline-offset: -6px;
+    }
+
+    .eyebrow {
+      color: var(--signal);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    header h1 {
+      max-width: 960px;
+      margin: 12px auto 0;
+      color: var(--text-strong);
+      font-size: clamp(2rem, 5vw, 3.28rem);
+      font-weight: 860;
+      letter-spacing: -0.035em;
+      line-height: 1.2;
+      text-align: center;
+      text-wrap: balance;
+    }
+
+    .header-sub {
+      max-width: 880px;
+      margin: 20px auto 0;
+      color: var(--text-muted);
+      font-size: 1.02rem;
+      line-height: 1.85;
+      text-align: center;
+      text-justify: auto;
+    }
+
+    .hero-path {
+      max-width: 1000px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 30px auto 0;
+      text-align: left;
+    }
+
+    .hero-path span {
+      position: relative;
+      min-height: 86px;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      border: 1px solid rgba(183, 217, 236, 0.95);
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.84);
+      color: var(--text-strong);
+      font-size: 0.84rem;
+      font-weight: 780;
+      line-height: 1.5;
+      box-shadow: 0 10px 24px rgba(9, 31, 68, 0.055);
+    }
+
+    .hero-path span::before {
+      content: attr(data-step);
+      position: absolute;
+      top: 12px;
+      left: 16px;
+      color: var(--signal);
+      font-size: 0.66rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+    }
+
+    .hero-path span:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -9px;
+      z-index: 2;
+      width: 10px;
+      height: 10px;
+      border-top: 2px solid var(--signal);
+      border-right: 2px solid var(--signal);
+      background: transparent;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .hero-equation {
+      max-width: 1020px;
+      margin: 18px auto 0;
+      color: var(--accent-dark);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1rem, 2.2vw, 1.35rem);
+      letter-spacing: 0.01em;
+      text-align: center;
+    }
+
+    main {
+      flex: 1;
+      padding: 50px 0 82px;
+    }
+
+    .content-stack {
+      display: grid;
+      gap: 26px;
+    }
+
+    .section-card {
+      scroll-margin-top: 86px;
+      padding: 34px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: var(--card);
+      box-shadow: 0 14px 34px rgba(9, 31, 68, 0.055);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, .82fr) minmax(300px, 1.18fr);
+      align-items: end;
+      gap: 34px;
+      margin-bottom: 24px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line-soft);
+    }
+
+    .section-kicker {
+      color: var(--signal);
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2,
+    .section-card > h2 {
+      margin-top: 5px;
+      color: var(--text-strong);
+      font-size: clamp(1.42rem, 3vw, 2rem);
+      line-height: 1.32;
+      text-align: left;
+    }
+
+    .section-lead {
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      line-height: 1.78;
+    }
+
+    .question-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .question-card {
+      position: relative;
+      min-height: 206px;
+      grid-column: span 2;
+      overflow: hidden;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(155deg, #fff 0%, var(--surface-soft) 100%);
+    }
+
+    .question-card:nth-child(4),
+    .question-card:nth-child(5) {
+      grid-column: span 3;
+      min-height: 180px;
+    }
+
+    .question-card::after {
+      content: attr(data-number);
+      position: absolute;
+      right: 13px;
+      bottom: -24px;
+      color: rgba(9, 31, 68, 0.055);
+      font-size: 6.3rem;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .question-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .question-card .question-en {
+      display: block;
+      color: var(--signal);
+      font-size: 0.74rem;
+      font-weight: 850;
+      letter-spacing: 0.05em;
+      line-height: 1.5;
+    }
+
+    .question-card h3 {
+      margin-top: 10px;
+      color: var(--text-strong);
+      font-size: 1.05rem;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .question-card p {
+      margin-top: 10px;
+      color: var(--text-muted);
+      font-size: 0.87rem;
+      line-height: 1.72;
+    }
+
+    .logic-line {
+      margin-top: 20px;
+      padding: 16px 18px;
+      border-left: 4px solid var(--signal);
+      border-radius: 0 13px 13px 0;
+      background: var(--signal-soft);
+      color: var(--accent-dark);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1rem, 2vw, 1.32rem);
+      text-align: center;
+    }
+
+    .loop-shell {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 95% 3%, rgba(15, 127, 143, 0.09), transparent 25%),
+        linear-gradient(145deg, #ffffff 0%, #f8fbfd 58%, #edf7fc 100%);
+    }
+
+    .loop-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.48;
+      background-image:
+        linear-gradient(rgba(9, 31, 68, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(9, 31, 68, 0.035) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(125deg, transparent 0%, #000 45%, #000 100%);
+    }
+
+    .loop-shell > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .loop-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .loop-card {
+      --stage: var(--blue);
+      position: relative;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      border: 1px solid rgba(181, 203, 219, 0.95);
+      border-radius: 19px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow:
+        inset 0 4px 0 var(--stage),
+        0 12px 28px rgba(9, 31, 68, 0.06);
+    }
+
+    .loop-card--diagnosis {
+      --stage: var(--violet);
+    }
+
+    .loop-card--enhancement {
+      --stage: var(--signal);
+    }
+
+    .loop-card--calibration {
+      --stage: var(--green);
+    }
+
+    .loop-card-head {
+      display: grid;
+      grid-template-columns: 52px 1fr;
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+
+    .loop-index {
+      min-height: 58px;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+      color: var(--stage);
+      font-size: 1.08rem;
+      font-weight: 900;
+      line-height: 1.05;
+      box-shadow: 0 8px 18px rgba(9, 31, 68, 0.055);
+    }
+
+    .loop-index small {
+      display: block;
+      font-size: 0.48rem;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+
+    .loop-card h2 {
+      color: var(--text-strong);
+      font-size: 1.36rem;
+      line-height: 1.35;
+      text-align: left;
+    }
+
+    .loop-card .stage-en {
+      display: block;
+      margin-top: 4px;
+      color: var(--stage);
+      font-size: 0.7rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .stage-question {
+      margin-bottom: 16px;
+      padding: 13px 15px;
+      border-left: 4px solid var(--stage);
+      border-radius: 0 11px 11px 0;
+      background: color-mix(in srgb, var(--stage) 7%, #ffffff);
+      color: var(--text-strong);
+      font-size: 0.93rem;
+      font-weight: 760;
+      line-height: 1.65;
+    }
+
+    .stage-copy {
+      color: var(--text-muted);
+      font-size: 0.89rem;
+      line-height: 1.75;
+    }
+
+    .stage-list {
+      display: grid;
+      gap: 7px;
+      margin: 14px 0 0;
+      padding-left: 20px;
+      color: var(--text);
+      font-size: 0.87rem;
+      line-height: 1.65;
+    }
+
+    .stage-list li::marker {
+      color: var(--stage);
+    }
+
+    .stage-example {
+      margin-top: 17px;
+      padding-top: 15px;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .stage-example strong {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--stage);
+      font-size: 0.76rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .stage-example p,
+    .stage-example li {
+      color: var(--text-muted);
+      font-size: 0.84rem;
+      line-height: 1.68;
+    }
+
+    .stage-example ul {
+      display: grid;
+      gap: 5px;
+      padding-left: 20px;
+    }
+
+    .stage-formula {
+      margin-top: 17px;
+      padding: 13px 15px;
+      border: 1px solid color-mix(in srgb, var(--stage) 25%, var(--line));
+      border-radius: 12px;
+      background: color-mix(in srgb, var(--stage) 5%, #ffffff);
+      color: var(--accent-dark);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.08rem;
+      text-align: center;
+    }
+
+    .loop-return {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 18px;
+      padding: 14px 17px;
+      border: 1px dashed #9fc4d5;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      line-height: 1.65;
+    }
+
+    .loop-return-icon {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #9fc4d5;
+      border-radius: 50%;
+      background: var(--signal-soft);
+      color: var(--signal);
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    .loop-return strong {
+      color: var(--text-strong);
+    }
+
+    .credibility-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .credibility-card {
+      min-height: 330px;
+      display: flex;
+      flex-direction: column;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: linear-gradient(155deg, #fff 0%, var(--surface-soft) 100%);
+    }
+
+    .credibility-card .card-index {
+      display: inline-flex;
+      width: max-content;
+      min-height: 28px;
+      align-items: center;
+      padding: 0 10px;
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+    }
+
+    .credibility-card h3 {
+      margin-top: 15px;
+      color: var(--text-strong);
+      font-size: 1.18rem;
+      line-height: 1.4;
+      text-align: left;
+    }
+
+    .credibility-card > p {
+      margin-top: 9px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.75;
+    }
+
+    .credibility-card ul {
+      display: grid;
+      gap: 7px;
+      margin-top: 15px;
+      padding-left: 20px;
+      color: var(--text);
+      font-size: 0.84rem;
+      line-height: 1.62;
+    }
+
+    .credibility-card .card-emphasis {
+      margin-top: auto;
+      padding: 13px 14px;
+      border-left: 4px solid var(--signal);
+      border-radius: 0 11px 11px 0;
+      background: var(--signal-soft);
+      color: var(--text-strong);
+      font-size: 0.84rem;
+      font-weight: 760;
+      line-height: 1.62;
+    }
+
+    .utility-section {
+      overflow: hidden;
+      color: #d8edfa;
+      background:
+        radial-gradient(circle at 86% 14%, rgba(143, 217, 255, 0.13), transparent 26%),
+        linear-gradient(145deg, var(--accent) 0%, var(--accent-dark) 100%);
+      border-color: rgba(143, 217, 255, 0.24);
+    }
+
+    .utility-section .section-kicker {
+      color: var(--footer-link);
+    }
+
+    .utility-section .section-heading {
+      border-bottom-color: rgba(143, 217, 255, 0.18);
+    }
+
+    .utility-section .section-heading h2 {
+      color: #fff;
+    }
+
+    .utility-section .section-lead {
+      color: #b8d3e4;
+    }
+
+    .utility-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+      gap: 18px;
+    }
+
+    .utility-question,
+    .utility-balance {
+      padding: 22px;
+      border: 1px solid rgba(143, 217, 255, 0.22);
+      border-radius: 17px;
+      background: rgba(255, 255, 255, 0.07);
+    }
+
+    .utility-question h3,
+    .utility-balance h3 {
+      color: #fff;
+      font-size: 1.08rem;
+      line-height: 1.5;
+      text-align: left;
+    }
+
+    .utility-question > p,
+    .utility-balance > p {
+      margin-top: 9px;
+      color: #b8d3e4;
+      font-size: 0.88rem;
+      line-height: 1.75;
+    }
+
+    .utility-factors {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .utility-factors span {
+      min-height: 76px;
+      display: grid;
+      place-items: center;
+      align-content: center;
+      padding: 10px;
+      border: 1px solid rgba(143, 217, 255, 0.20);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 760;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    .balance-scale {
+      display: grid;
+      gap: 10px;
+      margin-top: 17px;
+    }
+
+    .balance-scale div {
+      display: grid;
+      grid-template-columns: 76px 1fr;
+      align-items: center;
+      gap: 10px;
+      color: #cfe3ef;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .balance-bar {
+      height: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.10);
+    }
+
+    .balance-bar i {
+      height: 100%;
+      display: block;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #8fd9ff, #66c3bf);
+    }
+
+    .utility-formula {
+      margin-top: 17px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(143, 217, 255, 0.18);
+      color: #fff;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.04rem;
+      text-align: center;
+    }
+
+    .back-link {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 18px;
+      padding: 9px 16px;
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--accent);
+      font-size: 0.84rem;
+      font-weight: 800;
+      transition: background .18s ease, border-color .18s ease, transform .18s ease;
+    }
+
+    .back-link:hover,
+    .back-link:focus-visible {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--accent-border);
+      outline-offset: 3px;
+    }
+
+    footer {
+      padding: 26px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: var(--accent-dark);
+      color: var(--footer-text);
+      font-size: 0.82rem;
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--footer-link);
+    }
+
+    .footer-funding {
+      margin-top: 5px;
+      color: var(--footer-faint);
+      font-size: 0.76rem;
+    }
+
+    @media (max-width: 960px) {
+      .section-heading {
+        grid-template-columns: 1fr;
+        align-items: start;
+        gap: 12px;
+      }
+
+      .hero-path {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero-path span:nth-child(2)::after {
+        display: none;
+      }
+
+      .question-card,
+      .question-card:nth-child(4),
+      .question-card:nth-child(5) {
+        grid-column: span 3;
+      }
+
+      .credibility-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .credibility-card {
+        min-height: 0;
+      }
+
+      .utility-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      header {
+        padding: 60px 0 50px;
+      }
+
+      header h1 {
+        font-size: clamp(1.82rem, 9vw, 2.45rem);
+      }
+
+      .header-sub br {
+        display: none;
+      }
+
+      .hero-path,
+      .question-grid,
+      .loop-grid,
+      .utility-factors {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-path span {
+        min-height: 78px;
+      }
+
+      .hero-path span:not(:last-child)::after {
+        top: auto;
+        right: auto;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%) rotate(135deg);
+      }
+
+      .hero-path span:nth-child(2)::after {
+        display: block;
+      }
+
+      .question-card,
+      .question-card:nth-child(4),
+      .question-card:nth-child(5) {
+        min-height: 0;
+        grid-column: auto;
+      }
+
+      .section-card {
+        padding: 24px 19px;
+        border-radius: 18px;
+      }
+
+      .loop-card {
+        padding: 21px 18px;
+      }
+
+      .loop-card-head {
+        grid-template-columns: 46px 1fr;
+      }
+
+      .loop-index {
+        min-height: 52px;
+      }
+
+      .loop-return {
+        align-items: flex-start;
+      }
+
+      .utility-factors {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .utility-factors span {
+        min-height: 66px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        width: min(100% - 28px, 1180px);
+      }
+
+      main {
+        padding: 34px 0 58px;
+      }
+
+      .content-stack {
+        gap: 18px;
+      }
+
+      .utility-factors {
+        grid-template-columns: 1fr;
+      }
+
+      .balance-scale div {
+        grid-template-columns: 64px 1fr;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="../asset/site-responsive.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+  <nav class="top-nav" aria-label="首页顶部导航">
+    <div class="container">
+      <a class="nav-brand" href="../index.html">USTC-AGI <span>Time Series</span></a>
+      <div class="nav-links">
+        <a href="../index.html#hero-header">首页</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle" type="button" aria-expanded="false">研究方向</button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="../forecasting/" role="menuitem">时间序列预测</a>
+            <a href="../context-cast/" role="menuitem">情境感知的时间序列预测</a>
+            <a href="../classification-anomaly/" role="menuitem">时间序列分类与异常检测</a>
+            <a href="../scientific-time-series/" role="menuitem">科学时序数据建模</a>
+          </div>
+        </div>
+        <a class="nav-active" href="../applications/" aria-current="page">应用研究</a>
+        <a href="../papers/">论文列表</a>
+        <a href="../star-cast/">逐星方舟</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
+    <div class="container">
+      <p class="eyebrow">CogCast · Adaptive Context-Aware Forecasting</p>
+      <h1>可预测性认知驱动的自适应情境感知时序研究框架</h1>
+      <p class="header-sub">
+        不把预测看作一次固定的模型调用，而是先认知“什么可预测、为什么困难”，
+        再决定调用何种情境、模型、知识与人工，并让预测置信度与真实风险相匹配。
+      </p>
+      <div class="hero-path" aria-label="CogCast 四阶段研究路径">
+        <span data-step="01 · ANALYZE">分析可预测边界</span>
+        <span data-step="02 · DIAGNOSE">归因预测困难</span>
+        <span data-step="03 · ENHANCE">自适应增强预测</span>
+        <span data-step="04 · CALIBRATE">校准不确定性与风险</span>
+      </div>
+      <p class="hero-equation">
+        Predictability → Causality and Context → Adaptive Intelligence → Decision Utility
+      </p>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="container">
+      <div class="content-stack">
+        <section class="section-card" id="questions">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">Five Cognitive Questions</span>
+              <h2>从五个问题组织预测认知</h2>
+            </div>
+            <p class="section-lead">
+              CogCast 围绕五个核心问题展开：先识别可预测边界与困难来源，再判断关键情境及其作用机制，
+              最后根据任务价值配置恰当的预测智能。
+            </p>
+          </div>
+
+          <div class="question-grid">
+            <article class="question-card" data-number="01">
+              <span class="question-en">What is predictable?</span>
+              <h3>什么样的序列、实例和情境是可预测的？</h3>
+              <p>比较不同区域、尺度、预测窗口与场景，识别稳定规律、误差上下界和不可消除的不确定性。</p>
+            </article>
+            <article class="question-card" data-number="02">
+              <span class="question-en">Why is it difficult to predict?</span>
+              <h3>预测困难来自噪声、稀缺样本、机制变化，还是情境缺失？</h3>
+              <p>把“难预测”进一步拆解为可解释、可验证、可干预的原因，而非笼统归结为模型能力不足。</p>
+            </article>
+            <article class="question-card" data-number="03">
+              <span class="question-en">Which context matters?</span>
+              <h3>面对大量外部信息，哪些情境真正影响未来？</h3>
+              <p>从气象、日历、事件、政策与领域知识中筛选与目标变量存在真实关联的证据。</p>
+            </article>
+            <article class="question-card" data-number="04">
+              <span class="question-en">How does context reshape the future?</span>
+              <h3>情境以何种方向、时滞、持续时间和强度改变未来轨迹？</h3>
+              <p>理解情境不是简单拼接特征，而是分析其影响对象、传导路径、作用窗口与反事实结果。</p>
+            </article>
+            <article class="question-card" data-number="05">
+              <span class="question-en">How much forecasting intelligence is worthwhile?</span>
+              <h3>考虑价值和成本后，应使用多复杂的模型、情境、计算和人工？</h3>
+              <p>根据预测收益、失败代价、响应时限与资源消耗，自适应选择值得投入的智能强度。</p>
+            </article>
+          </div>
+
+          <p class="logic-line">
+            Predictability → Causality and Context → Adaptive Intelligence → Decision Utility
+          </p>
+        </section>
+
+        <section class="section-card loop-shell" id="adaptive-loop">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">Adaptive Predictability Loop</span>
+              <h2>分析、诊断、增强、校准的闭环</h2>
+            </div>
+            <p class="section-lead">
+              四个阶段不是静态流水线。校准结果会回流到下一轮分析与诊断，持续更新可预测性认知、
+              情境选择和模型配置。
+            </p>
+          </div>
+
+          <div class="loop-grid" role="list" aria-label="四阶段自适应可预测性闭环">
+            <article class="loop-card loop-card--analysis" role="listitem">
+              <div class="loop-card-head">
+                <span class="loop-index"><small>STEP</small>01</span>
+                <div>
+                  <h2>可预测性分析</h2>
+                  <span class="stage-en">Predictability Analysis</span>
+                </div>
+              </div>
+              <p class="stage-question">什么样的时间序列、区域、尺度、预测窗口和情境更容易被预测？</p>
+              <p class="stage-copy">
+                分析阶段建立任务的可预测性地图，回答不同对象在不同条件下能达到怎样的预测水平。
+              </p>
+              <ul class="stage-list">
+                <li>不同城市、区域和聚合尺度的可预测性；</li>
+                <li>不同预测长度下的可预测性；</li>
+                <li>周期性、趋势性、噪声和结构变化的影响；</li>
+                <li>稀缺情境和极端事件下的可预测性；</li>
+                <li>可预测性上界与误差下界；</li>
+                <li>历史相似性与未来可辨识性。</li>
+              </ul>
+              <div class="stage-example">
+                <strong>电力负荷示例</strong>
+                <ul>
+                  <li>为什么省级预测比城市级预测更准确？</li>
+                  <li>哪些城市在高温时期更难预测？</li>
+                  <li>哪些时间段的负荷具有稳定规律？</li>
+                  <li>哪些场景存在不可消除的不确定性？</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="loop-card loop-card--diagnosis" role="listitem">
+              <div class="loop-card-head">
+                <span class="loop-index"><small>STEP</small>02</span>
+                <div>
+                  <h2>可预测性诊断</h2>
+                  <span class="stage-en">Predictability Diagnosis</span>
+                </div>
+              </div>
+              <p class="stage-question">当前预测为什么困难？</p>
+              <p class="stage-copy">
+                诊断层不只输出“不确定性高”，而是说明困难来自哪里，并为后续增强策略提供依据。
+              </p>
+              <ul class="stage-list">
+                <li>数据噪声与历史样本不足；</li>
+                <li>训练集中缺少类似情境；</li>
+                <li>结构突变与外部事件冲击；</li>
+                <li>原有预测假设失效；</li>
+                <li>多个情境复合作用；</li>
+                <li>预测模型能力不足。</li>
+              </ul>
+              <div class="stage-formula">Forecast Difficulty → Cause Attribution</div>
+              <div class="stage-example">
+                <strong>原因归因示例</strong>
+                <p>
+                  城市负荷预测困难可能并非模型没有学到日周期，而是持续高温叠加工厂错峰生产，
+                  使居民负荷与工业负荷产生方向相反的变化。
+                </p>
+              </div>
+            </article>
+
+            <article class="loop-card loop-card--enhancement" role="listitem">
+              <div class="loop-card-head">
+                <span class="loop-index"><small>STEP</small>03</span>
+                <div>
+                  <h2>可预测性增强</h2>
+                  <span class="stage-en">Predictability Enhancement</span>
+                </div>
+              </div>
+              <p class="stage-question">根据困难来源，选择何种有针对性的增强手段？</p>
+              <p class="stage-copy">
+                不是所有困难都用更大的模型解决，而是根据原因自适应调配情境、历史、模型、知识与人工。
+              </p>
+              <ul class="stage-list">
+                <li>引入有效情境；</li>
+                <li>检索类似历史事件；</li>
+                <li>选择更合适的时间窗口；</li>
+                <li>切换预测模型；</li>
+                <li>使用大模型进行情境推理；</li>
+                <li>调用领域知识并进行多场景推演；</li>
+                <li>请求专家补充信息。</li>
+              </ul>
+              <div class="stage-example">
+                <strong>策略匹配示例</strong>
+                <ul>
+                  <li>历史规律清晰：使用轻量模型；</li>
+                  <li>情境变化显著：调用情境推理；</li>
+                  <li>新事件无历史样本：调用知识和专家；</li>
+                  <li>预测违反物理规律：进行约束校正。</li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="loop-card loop-card--calibration" role="listitem">
+              <div class="loop-card-head">
+                <span class="loop-index"><small>STEP</small>04</span>
+                <div>
+                  <h2>可预测性校准</h2>
+                  <span class="stage-en">Predictability Calibration</span>
+                </div>
+              </div>
+              <p class="stage-question">增强之后，模型表达的置信程度是否与实际预测风险相匹配？</p>
+              <p class="stage-copy">
+                校准不只是修正点预测，而是检查模型是否过度自信、情境作用是否被夸大，以及风险区间是否可靠。
+              </p>
+              <ul class="stage-list">
+                <li>模型是否过度自信；</li>
+                <li>情境影响是否被夸大；</li>
+                <li>是否发生过度修正；</li>
+                <li>预测是否符合时间规律；</li>
+                <li>是否符合知识定律和领域约束；</li>
+                <li>风险区间是否可靠。</li>
+              </ul>
+              <div class="stage-formula">Predicted Uncertainty ≈ Actual Forecast Risk</div>
+              <div class="stage-example">
+                <strong>校准目标</strong>
+                <p>
+                  对高风险任务，精准预测不仅意味着平均误差低，还意味着模型知道自己什么时候可能出错。
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="loop-return">
+            <span class="loop-return-icon" aria-hidden="true">↻</span>
+            <span>
+              <strong>自适应反馈：</strong>
+              真实误差、风险覆盖和决策结果回流到可预测性地图，更新下一轮的原因诊断、情境检索与智能投入。
+            </span>
+          </div>
+        </section>
+
+        <section class="section-card" id="credible-forecasting">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">Credible Forecasting</span>
+              <h2>从“误差更低”走向可信预测</h2>
+            </div>
+            <p class="section-lead">
+              一个可用于真实决策的预测系统，需要同时满足准确性、稳定性和可解释性；
+              单一平均误差无法完整描述预测质量。
+            </p>
+          </div>
+
+          <div class="credibility-grid">
+            <article class="credibility-card">
+              <span class="card-index">01 · ACCURACY</span>
+              <h3>准确性</h3>
+              <p>
+                预测结果是否接近真实未来。这是最基础的要求，但不是唯一要求。
+                即使平均误差较低，若结果频繁波动、无法解释或置信度失真，仍难以支持真实决策。
+              </p>
+              <ul>
+                <li>比较不同时间尺度与预测窗口的误差；</li>
+                <li>分别评估常态、稀缺与极端情境；</li>
+                <li>同时检查点预测、区间与尾部风险。</li>
+              </ul>
+              <p class="card-emphasis">准确性回答“预测有多接近未来”，但不独立等于可用性。</p>
+            </article>
+
+            <article class="credibility-card">
+              <span class="card-index">02 · STABILITY</span>
+              <h3>稳定性</h3>
+              <p>
+                预测应“应稳则稳、应变则变”。稳定不等于曲线平滑，也不意味着对情境变化不敏感。
+              </p>
+              <ul>
+                <li>相似历史与相似情境下，结果保持一致；</li>
+                <li>多次运行或不同提示下，结果不会大幅漂移；</li>
+                <li>少量噪声、缺失数据或无关文本不会导致预测崩溃；</li>
+                <li>情境修正幅度与证据强度相匹配；</li>
+                <li>不会因大模型推理随意推翻可靠预测先验。</li>
+              </ul>
+              <p class="card-emphasis">对无关扰动保持稳定，对真实变化保持敏感。</p>
+            </article>
+
+            <article class="credibility-card">
+              <span class="card-index">03 · INTERPRETABILITY</span>
+              <h3>可解释性</h3>
+              <p>
+                CogCast 的可解释性不是生成一段看似合理的自然语言，而是形成证据驱动的预测解释链。
+              </p>
+              <ul>
+                <li>当前预测主要依据哪些历史规律？</li>
+                <li>哪些情境被认为与未来相关？</li>
+                <li>情境影响哪些时间段或序列成分？</li>
+                <li>作用方向、时滞和持续效应是什么？</li>
+                <li>修正了多少，为什么修正这么多？</li>
+                <li>哪些预测区间仍然不确定？</li>
+                <li>结果是否满足领域知识和演化约束？</li>
+              </ul>
+              <p class="card-emphasis">解释必须能追溯到数据、情境、机制与约束证据。</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section-card utility-section" id="decision-utility">
+          <div class="section-heading">
+            <div>
+              <span class="section-kicker">Decision Utility</span>
+              <h2>预测智能的投入应由价值决定</h2>
+            </div>
+            <p class="section-lead">
+              模型更大、情境更多、推理更长并不自动带来更高价值。CogCast 把预测收益、
+              风险降低与资源消耗放入同一个效用函数。
+            </p>
+          </div>
+
+          <div class="utility-grid">
+            <article class="utility-question">
+              <h3>How much forecasting intelligence is worthwhile?</h3>
+              <p>考虑价值和成本后，应使用多复杂的模型、情境、计算和人工？</p>
+              <div class="utility-factors" aria-label="预测智能投入要素">
+                <span>模型复杂度</span>
+                <span>情境获取量</span>
+                <span>计算与时延</span>
+                <span>专家参与度</span>
+              </div>
+              <p class="utility-formula">
+                Decision Utility = Forecast Value + Risk Reduction − Intelligence Cost
+              </p>
+            </article>
+
+            <article class="utility-balance">
+              <h3>自适应配置原则</h3>
+              <p>低风险、规律清晰的任务优先使用轻量路径；高风险、机制突变的任务再升级情境、推理和人工投入。</p>
+              <div class="balance-scale" aria-label="预测智能配置示意">
+                <div><span>规律清晰</span><span class="balance-bar"><i style="width: 34%"></i></span></div>
+                <div><span>情境变化</span><span class="balance-bar"><i style="width: 62%"></i></span></div>
+                <div><span>高风险决策</span><span class="balance-bar"><i style="width: 88%"></i></span></div>
+              </div>
+              <a class="back-link" href="../applications/">← 返回应用研究</a>
+            </article>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        &copy; 2024–2026 Time Series Analysis Group &middot;
+        <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
+        &middot; State Key Laboratory of Cognitive Intelligence, USTC
+      </p>
+      <p class="footer-funding">本项目研究资助来源：国家双一流建设经费、国家自然科学基金委</p>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const dropdowns = document.querySelectorAll('.nav-dropdown');
+      const closeAll = () => {
+        dropdowns.forEach((dropdown) => {
+          dropdown.classList.remove('open');
+          const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+          if (toggle) toggle.setAttribute('aria-expanded', 'false');
+        });
+      };
+
+      dropdowns.forEach((dropdown) => {
+        const toggle = dropdown.querySelector('.nav-dropdown-toggle');
+        const menuLinks = dropdown.querySelectorAll('.nav-dropdown-menu a');
+        if (!toggle) return;
+
+        toggle.addEventListener('click', (event) => {
+          event.stopPropagation();
+          const willOpen = !dropdown.classList.contains('open');
+          closeAll();
+          dropdown.classList.toggle('open', willOpen);
+          toggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        });
+
+        menuLinks.forEach((link) => {
+          link.addEventListener('click', closeAll);
+        });
+      });
+
+      document.addEventListener('click', closeAll);
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') closeAll();
+      });
+
+      const heroHeader = document.querySelector('#hero-header');
+      const refreshPage = () => {
+        if (!heroHeader || heroHeader.classList.contains('is-refreshing')) return;
+        heroHeader.classList.add('is-refreshing');
+        window.setTimeout(() => window.location.reload(), 160);
+      };
+
+      if (heroHeader) {
+        heroHeader.addEventListener('click', (event) => {
+          if (event.target.closest('a, button')) return;
+          refreshPage();
+        });
+        heroHeader.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== ' ') return;
+          event.preventDefault();
+          refreshPage();
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

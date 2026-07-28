@@ -570,6 +570,171 @@
       transform: translateY(-1px);
     }
 
+    .framework-spotlight {
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+      align-items: center;
+      gap: 34px;
+      padding: 32px;
+      border-color: #b9d1df;
+      background:
+        radial-gradient(circle at 92% 10%, rgba(15, 127, 143, 0.11), transparent 27%),
+        linear-gradient(145deg, #ffffff 0%, #f8fbfd 58%, #edf7fc 100%);
+      box-shadow: 0 18px 44px rgba(6, 31, 69, 0.08);
+    }
+
+    .framework-spotlight::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.48;
+      background-image:
+        linear-gradient(rgba(9, 31, 68, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(9, 31, 68, 0.035) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(125deg, transparent 0%, #000 52%, #000 100%);
+    }
+
+    .framework-spotlight > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .framework-kicker {
+      display: block;
+      margin-bottom: 8px;
+      color: #0f7f8f;
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .framework-copy h3 {
+      margin-bottom: 12px;
+      font-size: 1.36rem;
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .framework-copy p {
+      max-width: 560px;
+      font-size: 0.91rem;
+      line-height: 1.75;
+      text-align: left;
+    }
+
+    .framework-signals {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .framework-signals span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 10px;
+      border: 1px solid #b7d9ec;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.84);
+      color: #163d70;
+      font-size: 0.72rem;
+      font-weight: 780;
+    }
+
+    .framework-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      margin-top: 20px;
+      padding: 9px 16px;
+      border: 1px solid #091f44;
+      border-radius: 999px;
+      background: #091f44;
+      color: #fff;
+      font-size: 0.84rem;
+      font-weight: 820;
+      transition: background .18s, border-color .18s, transform .18s;
+    }
+
+    .framework-link:hover,
+    .framework-link:focus-visible {
+      border-color: #163d70;
+      background: #163d70;
+      color: #fff;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
+
+    .framework-map {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      padding: 18px;
+      border: 1px solid rgba(183, 217, 236, 0.95);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.80);
+      box-shadow: 0 12px 28px rgba(6, 31, 69, 0.06);
+    }
+
+    .framework-step {
+      position: relative;
+      min-height: 142px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px 12px;
+      border: 1px solid #d5e3eb;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
+      text-align: left;
+    }
+
+    .framework-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -8px;
+      z-index: 2;
+      width: 9px;
+      height: 9px;
+      border-top: 2px solid #0f7f8f;
+      border-right: 2px solid #0f7f8f;
+      background: #fff;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .framework-step b {
+      color: #091f44;
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .framework-step small {
+      color: #5b7187;
+      font-size: 0.68rem;
+      line-height: 1.55;
+    }
+
+    .framework-step span {
+      display: inline-flex;
+      width: 30px;
+      height: 24px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #edf7fc;
+      color: #0f7f8f;
+      font-size: 0.66rem;
+      font-weight: 900;
+    }
+
     .forecast-decision-section {
       position: relative;
       overflow: hidden;
@@ -1094,6 +1259,10 @@
     }
 
     @media (min-width: 641px) and (max-width: 960px) {
+      .framework-spotlight {
+        grid-template-columns: 1fr;
+      }
+
       .focus-section .focus-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -1139,6 +1308,28 @@
     }
 
     @media (max-width: 640px) {
+      .framework-spotlight {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding: 24px 18px;
+      }
+
+      .framework-map {
+        grid-template-columns: 1fr;
+      }
+
+      .framework-step {
+        min-height: 96px;
+      }
+
+      .framework-step:not(:last-child)::after {
+        top: auto;
+        right: auto;
+        bottom: -7px;
+        left: 50%;
+        transform: translateX(-50%) rotate(135deg);
+      }
+
       .forecast-decision-section {
         padding: 22px 18px;
       }
@@ -1724,6 +1915,48 @@
             <path d="M25 9L30 14 24 18" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" />
           </svg>
           <span><strong>闭环反馈</strong>实验结果进入结果诊断并沉淀为研究记忆，再回到下一轮场景理解与方案设计。</span>
+        </div>
+      </section>
+
+      <section class="section-card framework-spotlight" aria-labelledby="cog-cast-title">
+        <div class="framework-copy">
+          <span class="framework-kicker">CogCast Research Framework</span>
+          <h3 id="cog-cast-title">可预测性认知驱动的自适应情境感知时序研究框架</h3>
+          <p>
+            从“什么可预测、为什么困难”出发，识别真正影响未来的情境及其作用机制，
+            再根据任务价值自适应调用模型、知识、计算与人工，并校准预测置信度和真实风险。
+          </p>
+          <div class="framework-signals" aria-label="CogCast 研究关键词">
+            <span>可预测性认知</span>
+            <span>困难归因</span>
+            <span>情境因果推理</span>
+            <span>自适应智能</span>
+            <span>决策效用</span>
+          </div>
+          <a class="framework-link" href="../cog-cast/">查看完整研究框架 →</a>
+        </div>
+
+        <div class="framework-map" aria-label="CogCast 四阶段研究闭环">
+          <article class="framework-step">
+            <span>01</span>
+            <b>可预测性分析</b>
+            <small>识别对象、尺度与情境的可预测边界</small>
+          </article>
+          <article class="framework-step">
+            <span>02</span>
+            <b>可预测性诊断</b>
+            <small>将预测困难归因到数据、机制与情境</small>
+          </article>
+          <article class="framework-step">
+            <span>03</span>
+            <b>可预测性增强</b>
+            <small>按困难来源调用合适的增强手段</small>
+          </article>
+          <article class="framework-step">
+            <span>04</span>
+            <b>可预测性校准</b>
+            <small>让预测不确定性匹配真实风险</small>
+          </article>
         </div>
       </section>
 

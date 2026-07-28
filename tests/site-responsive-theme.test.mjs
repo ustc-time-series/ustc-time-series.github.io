@@ -10,6 +10,7 @@ const pagePaths = [
   'cast-claw/docs/en.html',
   'cast-claw/docs/index.html',
   'cast-claw/index.html',
+  'cog-cast/index.html',
   'cast-embedding/index.html',
   'cast-factory/index.html',
   'cast-mind/index.html',
