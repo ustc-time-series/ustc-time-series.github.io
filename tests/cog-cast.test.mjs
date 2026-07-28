@@ -10,6 +10,30 @@ const applications = await readFile(
   new URL('applications/index.html', root),
   'utf8',
 );
+const homepage = await readFile(new URL('index.html', root), 'utf8');
+const nestedLoadPage = await readFile(
+  new URL('forecasting/load-forecasting/index.html', root),
+  'utf8',
+);
+const oneLevelNavigationPaths = [
+  'applications/index.html',
+  'classification-anomaly/index.html',
+  'cog-cast/index.html',
+  'context-cast/index.html',
+  'forecasting/index.html',
+  'open-source/index.html',
+  'papers/index.html',
+  'power-forecasting/index.html',
+  'scientific-time-series/index.html',
+  'star-cast/index.html',
+  'systems/index.html',
+];
+const oneLevelNavigationPages = await Promise.all(
+  oneLevelNavigationPaths.map(async (path) => ({
+    path,
+    html: await readFile(new URL(path, root), 'utf8'),
+  })),
+);
 
 test('applications page links to the CogCast research framework', () => {
   assert.ok(
@@ -36,6 +60,60 @@ test('CogCast page publishes canonical research metadata', () => {
   assert.ok(
     detail.includes(
       '<meta property="og:url" content="https://ustc-time-series.github.io/cog-cast/" />',
+    ),
+  );
+});
+
+test('all research dropdowns expose predictive cognition in the shared order', () => {
+  const homepageMenu =
+    homepage.match(
+      /<div class="nav-dropdown-menu"[^>]*>([\s\S]*?)<\/div>/,
+    )?.[1] ?? '';
+  assert.ok(
+    homepageMenu.includes(
+      '<a href="cog-cast/" role="menuitem">预测认知</a>',
+    ),
+    'Homepage should link to predictive cognition',
+  );
+
+  for (const { path, html } of oneLevelNavigationPages) {
+    const menu =
+      html.match(
+        /<div class="nav-dropdown-menu"[^>]*>([\s\S]*?)<\/div>/,
+      )?.[1] ?? '';
+    const expectedLink =
+      path === 'cog-cast/index.html'
+        ? '<a class="nav-active" href="../cog-cast/" role="menuitem" aria-current="page">预测认知</a>'
+        : '<a href="../cog-cast/" role="menuitem">预测认知</a>';
+
+    assert.ok(menu.includes(expectedLink), `${path} should link to predictive cognition`);
+    assert.ok(
+      menu.indexOf('情境感知的时间序列预测') < menu.indexOf('预测认知'),
+      `${path} should place predictive cognition after context-aware forecasting`,
+    );
+    assert.ok(
+      menu.indexOf('预测认知') < menu.indexOf('时间序列分类与异常检测'),
+      `${path} should place predictive cognition before classification`,
+    );
+  }
+
+  assert.ok(
+    nestedLoadPage.includes(
+      '<a href="../../cog-cast/" role="menuitem">预测认知</a>',
+    ),
+    'Nested load page should use the two-level predictive cognition link',
+  );
+});
+
+test('CogCast marks predictive cognition as the current research direction', () => {
+  assert.ok(
+    detail.includes(
+      '<button class="nav-dropdown-toggle nav-active" type="button" aria-expanded="false">研究方向</button>',
+    ),
+  );
+  assert.ok(
+    !detail.includes(
+      '<a class="nav-active" href="../applications/" aria-current="page">应用研究</a>',
     ),
   );
 });
