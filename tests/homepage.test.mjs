@@ -45,6 +45,52 @@ test('homepage names the context-cognitive forecasting foundation model', () => 
   );
 });
 
+test('homepage introduces TimeReasoner and Time-R1 before CastMind', () => {
+  const foundationSection = page.match(
+    /<!-- ── Generative Reasoning Model for Time Series ── -->([\s\S]*?)<!-- ── System Development ── -->/,
+  )?.[1] ?? '';
+  const timeReasonerCard = foundationSection.match(
+    /<!-- TimeReasoner -->([\s\S]*?)<!-- Time-R1 -->/,
+  )?.[1] ?? '';
+  const timeR1Card = foundationSection.match(
+    /<!-- Time-R1 -->([\s\S]*?)<!-- CastMind -->/,
+  )?.[1] ?? '';
+
+  assert.ok(timeReasonerCard, 'TimeReasoner should appear before Time-R1');
+  assert.ok(timeReasonerCard.includes('<div class="project-card">'));
+  assert.ok(timeReasonerCard.includes('<h3>TimeReasoner</h3>'));
+  assert.ok(timeReasonerCard.includes('训练外慢思考'));
+  assert.ok(timeReasonerCard.includes('One-Shot'));
+  assert.ok(timeReasonerCard.includes('Decoupled'));
+  assert.ok(timeReasonerCard.includes('Rollout'));
+  assert.ok(
+    timeReasonerCard.includes('https://github.com/realwangjiahao/TimeReasoner'),
+  );
+
+  assert.ok(timeR1Card, 'Time-R1 should appear before CastMind');
+  assert.ok(timeR1Card.includes('<div class="project-card">'));
+  assert.ok(timeR1Card.includes('<h3>Time-R1</h3>'));
+  assert.ok(timeR1Card.includes('两阶段强化微调'));
+  assert.ok(timeR1Card.includes('SFT'));
+  assert.ok(timeR1Card.includes('GRIP'));
+  assert.ok(timeR1Card.includes('https://arxiv.org/abs/2506.10630'));
+  assert.ok(timeR1Card.includes('https://github.com/ustc-time-series/Time-R1'));
+
+  const headingIndex = foundationSection.indexOf(
+    '<h2>情境认知推演驱动的时间序列预测基础模型</h2>',
+  );
+  const timeReasonerIndex = foundationSection.indexOf('<!-- TimeReasoner -->');
+  const timeR1Index = foundationSection.indexOf('<!-- Time-R1 -->');
+  const castMindIndex = foundationSection.indexOf('<!-- CastMind -->');
+  assert.ok(headingIndex < timeReasonerIndex);
+  assert.ok(timeReasonerIndex < timeR1Index);
+  assert.ok(timeR1Index < castMindIndex);
+});
+
+test('homepage does not mislabel the TokenCast paper as Time-R1', () => {
+  assert.ok(!page.includes('href="https://arxiv.org/abs/2508.09191" target="_blank" rel="noopener">Time-R1</a>'));
+});
+
 test('homepage names the autonomous-interaction forecasting agent', () => {
   const section = page.match(
     /<div class="section-intro section-anchor" id="system-integration">([\s\S]*?)<\/div>/,
@@ -52,6 +98,37 @@ test('homepage names the autonomous-interaction forecasting agent', () => {
 
   assert.ok(section.includes('<h2>自主交互驱动的时间序列预测智能体</h2>'));
   assert.ok(!section.includes('<h2>基于自主交互的时序预测智能体（Agentic TSF）</h2>'));
+});
+
+test('homepage introduces CastFSR as the first Fast-Slow-Reflection agent card', () => {
+  const systemSection = page.match(
+    /<!-- ── System Development ── -->([\s\S]*?)<!-- ── AutoResearch ── -->/,
+  )?.[1] ?? '';
+  const castFsrCard = systemSection.match(
+    /<!-- CastFSR -->([\s\S]*?)<!-- CastStar -->/,
+  )?.[1] ?? '';
+
+  assert.ok(castFsrCard, 'CastFSR should appear before CastStar');
+  assert.ok(castFsrCard.includes('<h3>CastFSR</h3>'));
+  assert.ok(castFsrCard.includes('Fast-Slow-Reflection'));
+  assert.ok(castFsrCard.includes('快速预测先验'));
+  assert.ok(castFsrCard.includes('长上下文情境推理'));
+  assert.ok(castFsrCard.includes('知识约束反思'));
+  assert.equal(
+    (castFsrCard.match(/class="meta-row"/g) ?? []).length,
+    3,
+    'CastFSR should explain Fast, Slow, and Reflection as three mechanisms',
+  );
+
+  const headingIndex = systemSection.indexOf(
+    '<h2>自主交互驱动的时间序列预测智能体</h2>',
+  );
+  const castFsrIndex = systemSection.indexOf('<!-- CastFSR -->');
+  const castStarIndex = systemSection.indexOf('<!-- CastStar -->');
+  const castClawIndex = systemSection.indexOf('<!-- CastClaw -->');
+  assert.ok(headingIndex < castFsrIndex);
+  assert.ok(castFsrIndex < castStarIndex);
+  assert.ok(castStarIndex < castClawIndex);
 });
 
 test('homepage foundation-model card links to the CastMind homepage', () => {
