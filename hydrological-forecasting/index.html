@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f4f7f9" />
+  <title>水文时序预测 | USTC-AGI Time Series</title>
+  <meta
+    name="description"
+    content="面向降雨—径流过程、洪峰风险与水资源调度的水文时序预测应用研究页面，包含可解释的模拟预测演示、方法闭环与可信评测边界。"
+  />
+  <link rel="canonical" href="https://ustc-time-series.github.io/hydrological-forecasting/" />
+  <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
+  <style>
+    :root {
+      --accent: #091f44;
+      --blue: #163d70;
+      --blue-muted: #5a7fa6;
+      --hydro: #0f7f8f;
+      --accent-soft: #edf7fc;
+      --accent-border: #b7d9ec;
+      --text: #17324d;
+      --muted: #4c6176;
+      --faint: #5b7187;
+      --line: #d5e3eb;
+      --line-soft: #e6f0f5;
+      --bg: #f4f7f9;
+      --card: #ffffff;
+      --surface: #f8fbfd;
+    }
+  </style>
+  <link rel="stylesheet" href="../asset/site-responsive.css" />
+  <link rel="stylesheet" href="./hydrological-forecasting.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+  <nav class="top-nav" aria-label="首页顶部导航">
+    <div class="container">
+      <a class="nav-brand" href="../index.html">USTC-AGI <span>Time Series</span></a>
+      <div class="nav-links">
+        <a href="../index.html#hero-header">首页</a>
+        <div class="nav-dropdown">
+          <button class="nav-dropdown-toggle" type="button" aria-expanded="false">
+            研究方向
+          </button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="../forecasting/" role="menuitem">时间序列预测</a>
+            <a href="../context-cast/" role="menuitem">情境感知的时间序列预测</a>
+            <a href="../cog-cast/" role="menuitem">预测认知</a>
+            <a href="../classification-anomaly/" role="menuitem">时间序列分类与异常检测</a>
+            <a href="../scientific-time-series/" role="menuitem">科学时序数据建模</a>
+          </div>
+        </div>
+        <a class="nav-active" href="../applications/" aria-current="page">应用研究</a>
+        <a href="../papers/">论文列表</a>
+        <a href="../star-cast/">逐星方舟</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="hero-header">
+    <div class="container">
+      <div class="hero-copy">
+        <p class="eyebrow">Hydrological Forecasting · Water Intelligence</p>
+        <h1><span>应用研究方向</span>水文时序预测</h1>
+        <p class="hero-summary">
+          面向洪水预警、水资源调度与生态管理，将降雨观测、前期土壤湿度、流域汇流过程和人类调控信息放进同一条预测链，研究具有物理一致性和风险表达能力的水文时序预测方法。
+        </p>
+        <div class="hero-tags" aria-label="研究能力标签">
+          <span>降雨—径流耦合</span>
+          <span>洪峰概率预测</span>
+          <span>风险预警决策</span>
+        </div>
+        <p class="demo-disclosure">
+          交互演示 · 页面数值为模拟数据，不代表真实监测或实验结果
+        </p>
+      </div>
+
+      <div class="hydro-visual" aria-hidden="true">
+        <div class="cloud"></div>
+        <div class="rain"><i></i><i></i><i></i><i></i></div>
+        <div class="basin-station">
+          <div class="station-head">
+            <span>概念流域响应</span>
+            <span>RAIN → RUNOFF → RISK</span>
+          </div>
+          <div class="mini-hydrograph"><span></span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="section-nav" aria-label="页面章节导航">
+    <div class="container">
+      <a href="#forecast-demo">预测演示</a>
+      <a href="#value">价值意义</a>
+      <a href="#research-questions">研究问题</a>
+      <a href="#workflow">方法闭环</a>
+      <a href="#evaluation">可信评测</a>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <div class="container content-stack">
+      <section class="section-card forecast-section" id="forecast-demo">
+        <div class="section-head">
+          <span class="section-kicker">Interactive Basin Forecast</span>
+          <h2>降雨—径流与洪峰风险演示</h2>
+          <p>
+            选择概念流域、降雨情景和预测窗口，观察流域状态如何把降雨输入转化为流量响应、概率区间与风险窗口。所有序列由固定公式生成，用于解释机制而非替代业务预报。
+          </p>
+        </div>
+
+        <div class="forecast-console">
+          <div class="control-panel">
+            <span class="panel-label">FORECAST SETTINGS</span>
+            <div class="control-grid">
+              <div class="field">
+                <label for="basin-select">概念流域</label>
+                <select id="basin-select">
+                  <option value="mountain">山地流域</option>
+                  <option value="plain">湿润平原流域</option>
+                  <option value="urban">城市河网</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="scenario-select">降雨情景</label>
+                <select id="scenario-select">
+                  <option value="normal">常态降雨</option>
+                  <option value="persistent">持续降雨</option>
+                  <option value="storm">短时暴雨</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="horizon-select">预测窗口</label>
+                <select id="horizon-select">
+                  <option value="6">未来 6 小时</option>
+                  <option value="12" selected>未来 12 小时</option>
+                  <option value="24">未来 24 小时</option>
+                </select>
+              </div>
+            </div>
+            <button class="update-button" id="update-forecast" type="button">
+              更新模拟预测
+            </button>
+
+            <p class="scenario-summary" id="scenario-summary">
+              山地流域：坡陡流急，汇流时间短。常态降雨下重点观察基流与短记忆汇流过程。
+            </p>
+
+            <div class="metric-grid" aria-label="预测摘要指标">
+              <article class="metric-card">
+                <span>洪峰流量</span>
+                <strong id="metric-peak">—</strong>
+                <small id="metric-peak-note">等待生成</small>
+              </article>
+              <article class="metric-card">
+                <span>峰现时间</span>
+                <strong id="metric-time">—</strong>
+                <small id="metric-time-note">等待生成</small>
+              </article>
+              <article class="metric-card">
+                <span>最大涨水速率</span>
+                <strong id="metric-rise">—</strong>
+                <small id="metric-rise-note">等待生成</small>
+              </article>
+              <article class="metric-card">
+                <span>风险窗口</span>
+                <strong id="metric-risk">—</strong>
+                <small id="metric-risk-note">等待生成</small>
+              </article>
+            </div>
+          </div>
+
+          <div class="chart-panel">
+            <div class="chart-head">
+              <h3>逐时降雨与流量响应</h3>
+              <div class="chart-legend" aria-label="图例">
+                <span><i></i>历史流量</span>
+                <span><i></i>预测流量</span>
+                <span><i></i>P10–P90</span>
+                <span><i></i>逐时降雨</span>
+              </div>
+            </div>
+            <div class="canvas-wrap">
+              <canvas
+                id="hydro-chart"
+                role="img"
+                aria-label="水文时序预测演示图"
+              ></canvas>
+            </div>
+            <p class="sr-only" id="chart-summary" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <div class="simulation-boundary">
+          <strong>演示边界</strong>
+          <span>
+            曲线由固定公式生成，概念流域参数不对应任何真实站点；本页演示不构成真实流域预报、预警或业务效果结论。实际应用需接入经质量控制的水雨情、气象预报、工程调控与流域属性数据。
+          </span>
+        </div>
+      </section>
+
+      <section class="section-card" id="value">
+        <div class="section-head">
+          <span class="section-kicker">Why It Matters</span>
+          <h2>水文预测的价值与意义</h2>
+          <p>
+            水文预测的价值不只体现在平均误差降低，而在于能否更早识别风险、更稳妥地配置水资源，并把不确定性转成可执行的预警与调度依据。
+          </p>
+        </div>
+        <div class="value-grid">
+          <article class="value-card">
+            <span class="card-index">01</span>
+            <h3>增强洪水预警提前量</h3>
+            <p>提前刻画洪峰流量、峰现时间和可能区间，为巡查、转移和应急响应保留决策时间。</p>
+          </article>
+          <article class="value-card">
+            <span class="card-index">02</span>
+            <h3>支撑水库与水资源调度</h3>
+            <p>联合来水预测、库容约束与下游需求，辅助防洪、供水和发电目标之间的动态权衡。</p>
+          </article>
+          <article class="value-card">
+            <span class="card-index">03</span>
+            <h3>服务干旱与生态流量管理</h3>
+            <p>从洪水事件扩展到低流量与季节尺度，支持旱情识别、生态基流维护和用水计划。</p>
+          </article>
+          <article class="value-card">
+            <span class="card-index">04</span>
+            <h3>提升气候变化适应能力</h3>
+            <p>评估极端降雨、分布漂移和流域下垫面变化下的模型失效边界，增强系统韧性。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card" id="research-questions">
+        <div class="section-head">
+          <span class="section-kicker">Research Questions</span>
+          <h2>关键研究问题</h2>
+          <p>
+            水文时序同时受到气象输入、流域状态记忆、空间异质性与工程调控影响。研究重点是让数据驱动能力服从水文过程边界，并能在极端事件中表达可靠风险。
+          </p>
+        </div>
+        <div class="question-grid">
+          <article class="question-card">
+            <span class="card-index">A</span>
+            <div>
+              <h3>多源观测如何在同一预测时点对齐？</h3>
+              <p>统一雨量站、雷达、数值天气预报、流量水位、蒸散发和工程调控信息的空间尺度、时间粒度与可用时刻。</p>
+            </div>
+          </article>
+          <article class="question-card">
+            <span class="card-index">B</span>
+            <div>
+              <h3>如何表征前期土壤湿度与流域汇流记忆？</h3>
+              <p>显式建模蓄水、产流、汇流和退水过程，避免只凭短窗口相关性解释同量降雨下的不同流量响应。</p>
+            </div>
+          </article>
+          <article class="question-card">
+            <span class="card-index">C</span>
+            <div>
+              <h3>极端事件和分布漂移下如何保持可靠？</h3>
+              <p>针对样本稀少的暴雨洪水、长期干旱与下垫面变化，联合事件级学习、迁移适配和不确定性校准。</p>
+            </div>
+          </article>
+          <article class="question-card">
+            <span class="card-index">D</span>
+            <div>
+              <h3>数据驱动模型如何满足物理一致性？</h3>
+              <p>把非负流量、水量平衡、合理响应滞后与工程约束纳入结构或损失，减少数值准确但过程失真的预测。</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card workflow-section" id="workflow">
+        <div class="section-head">
+          <span class="section-kicker">Predict · Verify · Update</span>
+          <h2>预测方法闭环</h2>
+          <p>
+            从可用数据而不是理想数据出发，依次完成时间对齐、流域状态建模、概率预测和风险反馈，并用新观测持续校准下一轮预测。
+          </p>
+        </div>
+        <div class="workflow-grid">
+          <article class="workflow-card">
+            <span class="card-index">01</span>
+            <h3>数据与时间对齐</h3>
+            <p>围绕预测起点记录观测、预报、缺测和修订版本，先建立无泄漏的数据快照。</p>
+            <div class="workflow-tags"><span>质量控制</span><span>时空配准</span><span>可用性审计</span></div>
+          </article>
+          <article class="workflow-card">
+            <span class="card-index">02</span>
+            <h3>流域状态表征</h3>
+            <p>融合历史流量、前期降雨、土壤湿度与流域属性，估计蓄水和响应记忆。</p>
+            <div class="workflow-tags"><span>状态空间</span><span>多尺度记忆</span><span>空间异质性</span></div>
+          </article>
+          <article class="workflow-card">
+            <span class="card-index">03</span>
+            <h3>物理约束概率预测</h3>
+            <p>同时输出点预测、分位数或情景集合，并约束流量非负、响应滞后和水量关系。</p>
+            <div class="workflow-tags"><span>混合模型</span><span>分位数</span><span>过程约束</span></div>
+          </article>
+          <article class="workflow-card">
+            <span class="card-index">04</span>
+            <h3>风险反馈与更新</h3>
+            <p>把洪峰、警戒窗口与调度约束转成风险信号，结合新观测滚动更新模型状态。</p>
+            <div class="workflow-tags"><span>预警阈值</span><span>滚动校准</span><span>人机协同</span></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-card" id="evaluation">
+        <div class="section-head">
+          <span class="section-kicker">Evaluation Boundary</span>
+          <h2>评测与可信边界</h2>
+          <p>
+            面向水文业务的评测必须复现真实预测时点：既要评价整体流量轨迹，也要单独检查洪峰、峰现时间、低流量和概率区间，不能用未来修订后的输入制造理想化结果。
+          </p>
+        </div>
+        <div class="evaluation-grid">
+          <article class="evaluation-card">
+            <span class="section-kicker">Protocol</span>
+            <h3>按时间与事件建立可追溯评测</h3>
+            <ul>
+              <li>训练、验证与测试严格按时间顺序划分，并保留独立洪水和干旱事件。</li>
+              <li>降雨、气象和调控输入必须是预测起点可获得的版本，避免未来信息泄漏。</li>
+              <li>分别报告常态、暴雨、持续降雨、枯水和跨流域迁移表现。</li>
+              <li>对数据缺测、预报偏差和阈值变化开展压力测试与失效复盘。</li>
+            </ul>
+          </article>
+          <article class="evaluation-card">
+            <span class="section-kicker">Metrics</span>
+            <h3>从平均误差走向过程与风险质量</h3>
+            <div class="metric-family">
+              <div><strong>轨迹精度</strong><span>MAE、RMSE 与分时段误差</span></div>
+              <div><strong>水文一致性</strong><span>NSE、KGE 与水量偏差</span></div>
+              <div><strong>事件质量</strong><span>洪峰流量误差、峰现时间误差</span></div>
+              <div><strong>概率可靠性</strong><span>区间覆盖率、平均区间宽度</span></div>
+              <div><strong>低流量表现</strong><span>枯水期偏差与生态阈值命中</span></div>
+              <div><strong>决策价值</strong><span>预警提前量、漏报与误报代价</span></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="page-cta" aria-label="返回应用研究">
+        <div>
+          <h2>连接模型研究与真实水文决策</h2>
+          <p>返回应用研究页，查看电力负荷、新能源发电、云服务流量等其他时序预测场景。</p>
+        </div>
+        <a href="../applications/">返回应用研究 →</a>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>
+        &copy; 2024–2026 Time Series Analysis Group &middot;
+        <a href="https://ustcagi.github.io/" target="_blank" rel="noopener">USTC-AGI 研究组</a>
+        &middot; State Key Laboratory of Cognitive Intelligence, USTC
+      </p>
+      <p class="footer-funding">本项目研究资助来源：国家双一流建设经费、国家自然科学基金委</p>
+    </div>
+  </footer>
+
+  <script type="module" src="./hydrological-forecasting.mjs"></script>
+</body>
+</html>

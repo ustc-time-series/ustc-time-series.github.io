@@ -19,6 +19,7 @@ const pagePaths = [
   'forecasting/index.html',
   'forecasting/load-forecasting/index.html',
   'future-cast/index.html',
+  'hydrological-forecasting/index.html',
   'NeoResearch/index.html',
   'open-source/index.html',
   'papers/index.html',

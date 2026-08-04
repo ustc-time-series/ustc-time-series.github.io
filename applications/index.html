@@ -7,8 +7,19 @@
   <title>应用研究 | USTC-AGI Time Series</title>
   <meta
     name="description"
-    content="USTC-AGI 研究组在城市电力负荷、新能源发电、云服务流量等时间序列预测应用场景中的应用研究探索，以及 CastClaw 研发系统介绍。"
+    content="USTC-AGI 研究组在城市电力负荷、新能源发电、水文时序预测、云服务流量等真实场景中的应用研究探索，以及 CastClaw 研发系统介绍。"
   />
+  <link rel="canonical" href="https://ustc-time-series.github.io/applications/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ustc-time-series.github.io/applications/" />
+  <meta property="og:title" content="应用研究 | USTC-AGI Time Series" />
+  <meta property="og:description" content="面向城市电力负荷、新能源发电、水文过程与云服务流量，连接场景诊断、不确定性预测、决策效用和可复用研究系统。" />
+  <meta property="og:image" content="https://ustc-time-series.github.io/asset/ts_logo.png" />
+  <meta property="og:image:alt" content="USTC-AGI Time Series 应用研究" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="应用研究 | USTC-AGI Time Series" />
+  <meta name="twitter:description" content="面向电力、水文与云服务等真实时序场景的预测、风险校准与决策研究。" />
+  <meta name="twitter:image" content="https://ustc-time-series.github.io/asset/ts_logo.png" />
   <link rel="icon" href="../asset/ts_mark.svg" type="image/svg+xml" sizes="any" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -50,6 +61,21 @@
 
     a { color: #091f44; text-decoration: none; }
     a:hover { text-decoration: underline; }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 300;
+      padding: 9px 14px;
+      border-radius: 8px;
+      background: #091f44;
+      color: #ffffff;
+      font-weight: 750;
+      transform: translateY(-160%);
+      transition: transform .18s ease;
+    }
+    .skip-link:focus { transform: translateY(0); }
 
     .container {
       max-width: 1180px;
@@ -183,19 +209,6 @@
       border-bottom: 1px solid #d5e3eb;
       padding: 72px 0 56px;
       text-align: center;
-      cursor: pointer;
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-    header:hover {
-      background: linear-gradient(160deg, #f8fbfd 50%, #edf7fc 100%);
-    }
-    header.is-refreshing {
-      transform: scale(0.995);
-      opacity: 0.82;
-    }
-    header:focus-visible {
-      outline: 3px solid #b7d9ec;
-      outline-offset: -6px;
     }
     header h1 {
       font-size: 2.3rem;
@@ -209,6 +222,49 @@
       font-size: 0.97rem;
       color: #5b7187;
       line-height: 1.75;
+    }
+
+    .section-nav {
+      position: sticky;
+      top: 64px;
+      z-index: 110;
+      border-bottom: 1px solid #d5e3eb;
+      background: rgba(248, 251, 253, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .section-nav .container {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .section-nav .container::-webkit-scrollbar { display: none; }
+    .section-nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      width: max-content;
+      min-width: 100%;
+      padding: 8px 0;
+    }
+    .section-nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 38px;
+      padding: 7px 12px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      color: #4c6176;
+      font-size: 0.8rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .section-nav a:hover,
+    .section-nav a:focus-visible {
+      border-color: #b7d9ec;
+      background: #ffffff;
+      color: #091f44;
+      text-decoration: none;
     }
 
     .hero-highlights {
@@ -246,6 +302,7 @@
       flex: 1;
       padding: 40px 0 80px;
     }
+    main section[id] { scroll-margin-top: 126px; }
 
     .section-intro {
       text-align: center;
@@ -274,6 +331,8 @@
       margin-top: 18px;
     }
     .overview-item {
+      display: flex;
+      flex-direction: column;
       border: 1px solid #d5e3eb;
       border-radius: 14px;
       background: linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
@@ -299,6 +358,22 @@
     .overview-item p {
       font-size: 0.9rem;
       line-height: 1.75;
+    }
+    .overview-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      width: fit-content;
+      margin-top: auto;
+      padding-top: 14px;
+      color: #163d70;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+    .overview-link:hover,
+    .overview-link:focus-visible {
+      color: #091f44;
+      text-decoration: none;
     }
 
     .hero-workflow {
@@ -436,6 +511,10 @@
       margin-top: 18px;
     }
 
+    .scenario-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .focus-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
@@ -474,6 +553,107 @@
       font-size: 0.8rem;
       color: #4c6176;
       line-height: 1.6;
+    }
+
+    .hydro-scene {
+      position: relative;
+      height: 176px;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.8)),
+        linear-gradient(150deg, #dceff5 0%, #edf8f6 58%, #ffffff 100%);
+    }
+    .hydro-scene::before {
+      content: "";
+      position: absolute;
+      right: -8%;
+      bottom: -42%;
+      width: 108%;
+      height: 88%;
+      border-radius: 52% 48% 0 0;
+      background: linear-gradient(145deg, #bed5c9 0%, #dce7d2 54%, #edf2df 100%);
+      transform: rotate(-6deg);
+    }
+    .hydro-scene::after {
+      content: "";
+      position: absolute;
+      right: -9%;
+      bottom: 2%;
+      width: 83%;
+      height: 25%;
+      border: 7px solid rgba(15, 127, 143, 0.82);
+      border-top-color: transparent;
+      border-left-color: transparent;
+      border-radius: 50%;
+      transform: rotate(10deg);
+    }
+    .hydro-cloud {
+      position: absolute;
+      top: 28px;
+      right: 54px;
+      z-index: 2;
+      width: 86px;
+      height: 28px;
+      border-radius: 20px;
+      background: #ffffff;
+      box-shadow: 0 10px 22px rgba(6, 31, 69, 0.12);
+    }
+    .hydro-cloud::before,
+    .hydro-cloud::after {
+      content: "";
+      position: absolute;
+      bottom: 8px;
+      border-radius: 50%;
+      background: #ffffff;
+    }
+    .hydro-cloud::before {
+      left: 12px;
+      width: 36px;
+      height: 36px;
+    }
+    .hydro-cloud::after {
+      right: 12px;
+      width: 42px;
+      height: 42px;
+    }
+    .hydro-rain {
+      position: absolute;
+      top: 68px;
+      right: 62px;
+      z-index: 3;
+      display: flex;
+      gap: 11px;
+    }
+    .hydro-rain i {
+      display: block;
+      width: 3px;
+      height: 24px;
+      border-radius: 999px;
+      background: #0f7f8f;
+      transform: rotate(12deg);
+    }
+    .hydro-rain i:nth-child(2) { height: 34px; }
+    .hydro-gauge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      z-index: 4;
+      display: grid;
+      gap: 2px;
+      min-width: 110px;
+      padding: 9px 11px;
+      border: 1px solid rgba(183, 217, 236, 0.95);
+      border-radius: 11px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #091f44;
+      font-size: 0.7rem;
+      font-weight: 850;
+      box-shadow: 0 10px 24px rgba(6, 31, 69, 0.09);
+    }
+    .hydro-gauge span {
+      color: #0f7f8f;
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
     }
 
     .scenario-tag,
@@ -734,6 +914,83 @@
       font-size: 0.66rem;
       font-weight: 900;
     }
+
+    .evidence-section {
+      position: relative;
+      overflow: hidden;
+      padding: 30px;
+      border-color: #c9dbe7;
+      background: linear-gradient(145deg, #ffffff 0%, #f8fbfd 100%);
+    }
+    .evidence-heading {
+      max-width: 820px;
+      margin-bottom: 20px;
+    }
+    .evidence-kicker {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      margin-bottom: 10px;
+      padding: 0 11px;
+      border: 1px solid #b7d9ec;
+      border-radius: 999px;
+      background: #edf7fc;
+      color: #163d70;
+      font-size: 0.72rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+    }
+    .evidence-heading h3 {
+      margin-bottom: 8px;
+      font-size: 1.3rem;
+    }
+    .evidence-heading p {
+      font-size: 0.92rem;
+      line-height: 1.75;
+    }
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .evidence-card {
+      min-height: 174px;
+      padding: 17px;
+      border: 1px solid #d5e3eb;
+      border-radius: 14px;
+      background: #ffffff;
+      box-shadow: 0 8px 20px rgba(6, 31, 69, 0.05);
+    }
+    .evidence-card span {
+      display: block;
+      margin-bottom: 12px;
+      color: #5a7fa6;
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+    .evidence-card h4 {
+      margin-bottom: 8px;
+      color: #091f44;
+      font-size: 0.98rem;
+      line-height: 1.4;
+    }
+    .evidence-card p {
+      font-size: 0.84rem;
+      line-height: 1.68;
+      text-align: left;
+    }
+    .evidence-boundary-note {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-left: 4px solid #0f7f8f;
+      border-radius: 0 12px 12px 0;
+      background: #edf7fc;
+      color: #17324d;
+      font-size: 0.84rem;
+      line-height: 1.7;
+    }
+    .evidence-boundary-note strong { color: #091f44; }
 
     .forecast-decision-section {
       position: relative;
@@ -1263,6 +1520,10 @@
         grid-template-columns: 1fr;
       }
 
+      .evidence-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .focus-section .focus-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -1312,6 +1573,18 @@
         grid-template-columns: 1fr;
         gap: 22px;
         padding: 24px 18px;
+      }
+
+      .evidence-section {
+        padding: 24px 18px;
+      }
+
+      .evidence-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .evidence-card {
+        min-height: 0;
       }
 
       .framework-map {
@@ -1432,6 +1705,7 @@
     }
 
     @media (max-width: 960px) {
+      .section-nav { position: static; }
       .scenario-grid,
       .focus-grid,
       .overview-grid,
@@ -1481,6 +1755,9 @@
         left: 0;
         min-width: 200px;
       }
+      .section-nav .container { padding: 0 12px; }
+      .section-nav-links { justify-content: flex-start; min-width: max-content; }
+      .section-nav a { min-height: 44px; }
       header h1 { font-size: 1.7rem; }
       .scenario-grid,
       .focus-grid {
@@ -1504,6 +1781,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">跳到主要内容</a>
+
 <nav class="top-nav" aria-label="首页顶部导航">
   <div class="container">
     <a class="nav-brand" href="../index.html">USTC-AGI <span>Time Series</span></a>
@@ -1526,12 +1805,12 @@
   </div>
 </nav>
 
-<header id="hero-header" role="button" tabindex="0" aria-label="刷新当前页面">
+<header id="hero-header">
   <div class="container">
     <h1><span class="highlight">Applied Research</span> 应用研究</h1>
     <p class="header-sub">
       中国科学技术大学 · 认知智能全国重点实验室 AGI 研究组<br>
-      面向城市电力负荷、新能源发电、云服务流量等真实预测场景，持续推进时间序列预测的应用研究与系统建设
+      面向城市电力负荷、新能源发电、水文过程、云服务流量等真实预测场景，持续推进时间序列预测的应用研究与系统建设
     </p>
     <div class="hero-workflow" aria-label="应用研究闭环">
       <div class="hero-workflow-head">
@@ -1564,11 +1843,24 @@
   </div>
 </header>
 
-<main>
+<nav class="section-nav" aria-label="页面章节导航">
+  <div class="container">
+    <div class="section-nav-links">
+      <a href="#research-map">研究地图</a>
+      <a href="#forecast-decision">预测与决策</a>
+      <a href="#research-loop">研究闭环</a>
+      <a href="#cog-cast-framework">CogCast 框架</a>
+      <a href="#evidence-boundary">评估边界</a>
+      <a href="#application-scenarios">应用场景</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
   <div class="container">
 
     <div class="content-stack">
-      <section class="section-card">
+      <section class="section-card" id="research-map">
         <h3>研究地图</h3>
         <p>
           应用研究的目标不是把公开数据集上的模型指标直接搬到真实场景，而是把业务机制、外部变量、工程约束和模型能力放在同一个研发闭环中评估。
@@ -1579,21 +1871,24 @@
             <span class="label">Problem</span>
             <h3>真实预测问题</h3>
             <p>面对周期变化、突发波动、外生因素和容量约束，先明确预测任务服务的调度、规划或运维目标。</p>
+            <a class="overview-link" href="#application-scenarios">查看应用场景 →</a>
           </div>
           <div class="overview-item">
             <span class="label">Method</span>
             <h3>场景化建模路径</h3>
             <p>围绕数据诊断、多源变量接入、模型组合和误差分析，形成可以随场景调整的研究流程。</p>
+            <a class="overview-link" href="#research-loop">查看研究闭环 →</a>
           </div>
           <div class="overview-item">
             <span class="label">System</span>
             <h3>CastClaw 系统</h3>
             <p>用智能体框架承载实验编排、工具调用、预测复盘和经验沉淀，让一次性实验逐步变成可复用能力。</p>
+            <a class="overview-link" href="../cast-claw/">进入 CastClaw →</a>
           </div>
         </div>
       </section>
 
-      <section class="section-card forecast-decision-section" aria-labelledby="forecast-decision-title">
+      <section class="section-card forecast-decision-section" id="forecast-decision" aria-labelledby="forecast-decision-title">
         <div class="forecast-decision-head">
           <span class="forecast-decision-kicker">Forecast → Uncertainty → Decision</span>
           <h3 id="forecast-decision-title">从确定性点预测走向不确定性决策</h3>
@@ -1741,7 +2036,7 @@
         </div>
       </section>
 
-      <section class="section-card focus-section">
+      <section class="section-card focus-section" id="research-loop">
         <div class="focus-section-head">
           <div class="focus-section-title">
             <span class="focus-kicker">Application Research Loop</span>
@@ -1919,7 +2214,7 @@
         </div>
       </section>
 
-      <section class="section-card framework-spotlight" aria-labelledby="cog-cast-title">
+      <section class="section-card framework-spotlight" id="cog-cast-framework" aria-labelledby="cog-cast-title">
         <div class="framework-copy">
           <span class="framework-kicker">CogCast Research Framework</span>
           <h3 id="cog-cast-title">可预测性认知驱动的自适应情境感知时序研究框架</h3>
@@ -1961,7 +2256,43 @@
         </div>
       </section>
 
-      <section class="section-card">
+      <section class="section-card evidence-section" id="evidence-boundary" aria-labelledby="evidence-title">
+        <div class="evidence-heading">
+          <span class="evidence-kicker">EVIDENCE BEFORE CLAIMS</span>
+          <h3 id="evidence-title">应用结论必须经过四道证据门</h3>
+          <p>
+            从研究原型走向场景决策，需要同时检查数据切分、比较协议、风险校准与行动价值，
+            避免把单一误差指标或演示结果直接解释为真实应用能力。
+          </p>
+        </div>
+        <div class="evidence-grid" aria-label="应用研究四项评估原则">
+          <article class="evidence-card">
+            <span>GATE 01</span>
+            <h4>时间切分</h4>
+            <p>按真实预测时点进行滚动回测，训练、调参与特征构造只使用当时可获得的信息，防止未来信息泄漏。</p>
+          </article>
+          <article class="evidence-card">
+            <span>GATE 02</span>
+            <h4>基线对照</h4>
+            <p>在相同数据切分、预测窗口与评价指标下，对照季节朴素、统计模型、机器学习方法和业务规则。</p>
+          </article>
+          <article class="evidence-card">
+            <span>GATE 03</span>
+            <h4>不确定性校准</h4>
+            <p>除 MAE、RMSE 外，同时检查区间覆盖率、区间宽度、分位数损失以及高风险情境下的可靠性。</p>
+          </article>
+          <article class="evidence-card">
+            <span>GATE 04</span>
+            <h4>决策效用</h4>
+            <p>将预测映射到调度、预警和容量配置，报告误报漏报、行动代价、资源收益与计算时延。</p>
+          </article>
+        </div>
+        <p class="evidence-boundary-note">
+          <strong>证据边界：</strong>页面中的交互演示与概念示意用于说明研究流程；演示数据不等同于实验结果，也不构成生产部署承诺。
+        </p>
+      </section>
+
+      <section class="section-card" id="application-scenarios">
         <h3>应用研究场景</h3>
         <div class="scenario-grid">
           <article class="scenario-card">
@@ -2014,6 +2345,35 @@
               <div><strong>价值</strong><span>支撑新能源并网、备用容量配置和短临调度，提升电力系统韧性。</span></div>
             </div>
             <a class="scenario-link" href="../power-forecasting/">进入发电功率预测页面 →</a>
+          </article>
+
+          <article class="scenario-card">
+            <div class="scenario-media scenario-media--hydro">
+              <div class="hydro-scene" aria-hidden="true">
+                <div class="hydro-cloud"></div>
+                <div class="hydro-rain"><i></i><i></i><i></i></div>
+                <div class="hydro-gauge">概念流域响应<span>RAIN → RUNOFF → RISK</span></div>
+              </div>
+              <div class="figure-caption">连接降雨输入、流域状态、径流响应与洪峰风险，强调过程约束和预警提前量。</div>
+            </div>
+            <span class="scenario-tag">水文时序预测</span>
+            <h4>面向洪水预警与水资源调度的流量预测</h4>
+            <p>
+              围绕降雨—径流耦合、前期土壤湿度、流域汇流与极端事件，
+              研究兼顾洪峰、峰现时间和概率区间的水文时序预测方法。
+            </p>
+            <div class="chip-list">
+              <span>降雨—径流</span>
+              <span>洪峰预测</span>
+              <span>物理约束</span>
+              <span>风险预警</span>
+            </div>
+            <div class="scenario-detail">
+              <div><strong>问题</strong><span>强降雨、流域状态与空间汇流共同决定洪峰，极端事件样本少且过程变化快。</span></div>
+              <div><strong>方法</strong><span>融合水雨情、气象预报和流域属性，进行物理约束的点与概率预测。</span></div>
+              <div><strong>价值</strong><span>服务洪水预警、水库调度、干旱管理与生态流量保障，提升水系统韧性。</span></div>
+            </div>
+            <a class="scenario-link" href="../hydrological-forecasting/">进入水文时序预测页面 →</a>
           </article>
 
           <article class="scenario-card">
@@ -2095,26 +2455,6 @@
       if (event.key === 'Escape') closeAll();
     });
 
-    const heroHeader = document.querySelector('#hero-header');
-    const refreshPage = () => {
-      if (!heroHeader || heroHeader.classList.contains('is-refreshing')) return;
-      heroHeader.classList.add('is-refreshing');
-      window.setTimeout(() => {
-        window.location.reload();
-      }, 160);
-    };
-
-    if (heroHeader) {
-      heroHeader.addEventListener('click', (event) => {
-        if (event.target.closest('a, button')) return;
-        refreshPage();
-      });
-      heroHeader.addEventListener('keydown', (event) => {
-        if (event.key !== 'Enter' && event.key !== ' ') return;
-        event.preventDefault();
-        refreshPage();
-      });
-    }
   })();
 </script>
 
