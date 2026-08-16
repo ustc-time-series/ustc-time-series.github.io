@@ -285,6 +285,34 @@
       text-align: center;
       text-justify: auto;
     }
+    .hero-vision-entry {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: center;
+      margin: -22px auto 0;
+    }
+    .hero-vision-link {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 17px;
+      border: 1px solid var(--accent-border);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--accent);
+      font-size: 0.84rem;
+      font-weight: 750;
+      box-shadow: 0 8px 20px rgba(9, 31, 68, 0.07);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+    .hero-vision-link:hover {
+      border-color: var(--blue-muted);
+      background: #fff;
+      text-decoration: none;
+      transform: translateY(-1px);
+    }
     header .header-motto {
       max-width: 920px;
       margin: 14px auto 0;
@@ -699,6 +727,10 @@
     </p>
   </div>
 </header>
+
+<div class="hero-vision-entry" aria-label="研究愿景入口">
+  <a class="hero-vision-link" href="time-series-intelligence/">了解研究愿景 →</a>
+</div>
 
 <!-- ═══════════════════ MAIN ═══════════════════ -->
 <main>
