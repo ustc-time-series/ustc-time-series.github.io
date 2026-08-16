@@ -24,6 +24,7 @@ const subpagePaths = [
   'scientific-time-series/index.html',
   'star-cast/index.html',
   'systems/index.html',
+  'time-series-data/index.html',
 ];
 
 const pages = await Promise.all(
@@ -145,6 +146,7 @@ test('shared subpage navigation matches the homepage order and omits GitHub', ()
     'scientific-time-series/index.html',
     'star-cast/index.html',
     'systems/index.html',
+    'time-series-data/index.html',
   ];
 
   for (const path of globalNavPaths) {

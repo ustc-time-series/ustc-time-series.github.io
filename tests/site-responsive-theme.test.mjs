@@ -27,6 +27,7 @@ const pagePaths = [
   'scientific-time-series/index.html',
   'star-cast/index.html',
   'systems/index.html',
+  'time-series-data/index.html',
 ];
 
 const pages = await Promise.all(
