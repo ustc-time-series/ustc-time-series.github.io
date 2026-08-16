@@ -21,6 +21,7 @@ const oneLevelNavigationPaths = [
   'cog-cast/index.html',
   'context-cast/index.html',
   'forecasting/index.html',
+  'hydrological-forecasting/index.html',
   'open-source/index.html',
   'papers/index.html',
   'power-forecasting/index.html',
@@ -64,45 +65,29 @@ test('CogCast page publishes canonical research metadata', () => {
   );
 });
 
-test('all research dropdowns expose predictive cognition in the shared order', () => {
+test('all research dropdowns omit the predictive cognition menu item', () => {
   const homepageMenu =
     homepage.match(
       /<div class="nav-dropdown-menu"[^>]*>([\s\S]*?)<\/div>/,
     )?.[1] ?? '';
-  assert.ok(
-    homepageMenu.includes(
-      '<a href="cog-cast/" role="menuitem">预测认知</a>',
-    ),
-    'Homepage should link to predictive cognition',
-  );
+  assert.ok(!homepageMenu.includes('预测认知'));
+  assert.ok(!homepageMenu.includes('href="cog-cast/"'));
 
   for (const { path, html } of oneLevelNavigationPages) {
     const menu =
       html.match(
         /<div class="nav-dropdown-menu"[^>]*>([\s\S]*?)<\/div>/,
       )?.[1] ?? '';
-    const expectedLink =
-      path === 'cog-cast/index.html'
-        ? '<a class="nav-active" href="../cog-cast/" role="menuitem" aria-current="page">预测认知</a>'
-        : '<a href="../cog-cast/" role="menuitem">预测认知</a>';
-
-    assert.ok(menu.includes(expectedLink), `${path} should link to predictive cognition`);
-    assert.ok(
-      menu.indexOf('情境感知的时间序列预测') < menu.indexOf('预测认知'),
-      `${path} should place predictive cognition after context-aware forecasting`,
-    );
-    assert.ok(
-      menu.indexOf('预测认知') < menu.indexOf('时间序列分类与异常检测'),
-      `${path} should place predictive cognition before classification`,
-    );
+    assert.ok(!menu.includes('预测认知'), `${path} should omit predictive cognition`);
+    assert.ok(!menu.includes('href="../cog-cast/"'), `${path} should omit the CogCast menu link`);
   }
 
-  assert.ok(
-    nestedLoadPage.includes(
-      '<a href="../../cog-cast/" role="menuitem">预测认知</a>',
-    ),
-    'Nested load page should use the two-level predictive cognition link',
-  );
+  const nestedLoadMenu =
+    nestedLoadPage.match(
+      /<div class="nav-dropdown-menu"[^>]*>([\s\S]*?)<\/div>/,
+    )?.[1] ?? '';
+  assert.ok(!nestedLoadMenu.includes('预测认知'));
+  assert.ok(!nestedLoadMenu.includes('href="../../cog-cast/"'));
 });
 
 test('CogCast marks predictive cognition as the current research direction', () => {

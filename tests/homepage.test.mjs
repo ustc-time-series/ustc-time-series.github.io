@@ -4,6 +4,17 @@ import test from 'node:test';
 
 const page = await readFile(new URL('../index.html', import.meta.url), 'utf8');
 
+test('homepage brands the research direction as Time Series Intelligence', () => {
+  assert.ok(page.includes('<title>Time Series Intelligence 研究方向 | USTC-AGI</title>'));
+  assert.ok(
+    page.includes(
+      '<meta property="og:title" content="Time Series Intelligence 研究方向 | USTC-AGI" />',
+    ),
+  );
+  assert.ok(page.includes('<h1><span class="highlight">Time Series Intelligence</span></h1>'));
+  assert.ok(!page.includes('Time Series Cognition'));
+});
+
 test('homepage omits the standalone context-aware forecasting module', () => {
   assert.ok(!page.includes('id="context-aware"'));
   assert.ok(
