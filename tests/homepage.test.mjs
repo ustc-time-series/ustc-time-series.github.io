@@ -3,6 +3,10 @@ import { readFile } from 'node:fs/promises';
 import test from 'node:test';
 
 const page = await readFile(new URL('../index.html', import.meta.url), 'utf8');
+const heroStatement =
+  '以时间序列为复杂系统认知接口，以预测为连接认知与决策的桥梁，构建推理驱动、自主交互、价值导向的预测智能。';
+const heroMotto =
+  '星思启时序认知之智，观星阁观未来之势，智多星谋自主之研，天星台立评测之尺。';
 
 test('homepage brands the research direction as Time Series Intelligence', () => {
   assert.ok(page.includes('<title>Time Series Intelligence 研究方向 | USTC-AGI</title>'));
@@ -13,6 +17,41 @@ test('homepage brands the research direction as Time Series Intelligence', () =>
   );
   assert.ok(page.includes('<h1><span class="highlight">Time Series Intelligence</span></h1>'));
   assert.ok(!page.includes('Time Series Cognition'));
+});
+
+test('homepage presents the predictive intelligence thesis in the hero', () => {
+  const visibleStatement = page.match(
+    /<p class="header-sub">\s*([\s\S]*?)\s*<\/p>/,
+  )?.[1].trim() ?? '';
+
+  assert.equal(visibleStatement, heroStatement);
+  assert.ok(
+    page.includes(`<meta property="og:description" content="${heroStatement}" />`),
+  );
+  assert.ok(!page.includes('Our research explores how LLMs and Agentic AI can transform forecasting'));
+});
+
+test('homepage retains only the four selected Chinese project brands', () => {
+  const visibleMotto = page.match(
+    /<p class="header-motto">\s*([\s\S]*?)\s*<\/p>/,
+  )?.[1].trim() ?? '';
+  const openSourceSection = page.match(
+    /<!-- ── Open Source Projects ── -->([\s\S]*?)<\/main>/,
+  )?.[1] ?? '';
+
+  assert.equal(visibleMotto, heroMotto);
+  assert.ok(page.includes('CastMind（星思）'));
+  assert.ok(page.includes('CastClaw（观星阁）'));
+  assert.ok(page.includes('NeoResearch（智多星）'));
+  assert.ok(page.includes('FutureCast（天星台）'));
+  assert.ok(!page.includes('铸星坊'));
+  assert.ok(!page.includes('href="cast-factory/"'));
+  assert.ok(
+    openSourceSection.includes(
+      '<div class="project-card project-card-wide">\n        <div class="card-accent accent-futurecast">',
+    ),
+    'The remaining FutureCast card should fill the open-source row',
+  );
 });
 
 test('homepage omits the standalone context-aware forecasting module', () => {
